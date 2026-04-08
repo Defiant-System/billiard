@@ -1,0 +1,26 @@
+<Application>
+	<Build>
+		<task action="skip" source="src/js/bundle.js" destination="public/js/bundle.js"/>
+	</Build>
+	<Head>
+		<meta name="id" value="billiard"/>
+		<meta name="title" value="Billiard" version="1.0"/>
+		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
+		<meta name="license" value="AGPL-3.0"/>
+		<meta name="repository" value="https://github.com/Defiant-System/billiard"/>
+		<meta name="width" value="1050"/>
+		<meta name="height" value="660"/>
+		<meta name="top" value="190"/>
+		<meta name="left" value="60"/>
+		<meta name="minimize"/>
+		<meta name="maximize" value="disabled"/>
+		<meta name="resize" value="disabled"/>
+		<meta name="script" value="src/js/main.js"/>
+		<meta name="style" value="src/css/main.less"/>
+		<meta name="icons" value="src/svg/icons.svg"/>
+		<meta name="content" value="src/partials/content.htm"/>
+		<meta name="xsl" value="src/partials/templates.xsl"/>
+
+		@import "src/partials/menubar.xml"
+	</Head>
+</Application>
