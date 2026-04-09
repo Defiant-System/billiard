@@ -2,13 +2,10 @@
 var Maths = function() {
 
 }
-	
 
 var Point = function(x, y){
-
 	this.x = x;
 	this.y = y;
-
 }
 
 Point.interpolate = function(p1, p2, f){

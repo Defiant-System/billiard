@@ -1,9 +1,9 @@
-var setBallPositions = function(gameInfo){
+
+var setBallPositions = function(gameInfo) {
 
 	//console.log("setBallPositions");
 	//console.log("projectInfo: " + projectInfo);
 	//console.log("level: " + projectInfo.level);
-	
 	
 	var ballPositionArray = new Array();
 	var px = 15000 * gameInfo.adjustmentScale; 
@@ -11,143 +11,79 @@ var setBallPositions = function(gameInfo){
 	var spacingY = 0.05 + Math.random() * 0.05; //0.05
 	var j = 1 + spacingY;
 	var k = 1.732 + spacingX; //1.732 spacing
-	
 	var level = projectInfo.level;
-	if(level > gameInfo.numLevels){
+	
+	if(level > gameInfo.numLevels) {
 		level = gameInfo.numLevels;
 	}
 
-	if(projectInfo.tutorial == true){
+	if(projectInfo.tutorial == true) {
 		level = 100;
 	}
 
 	level = 15;
 	
-	
 	switch(level) {
-		
 		case 1:
-			
-			
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
-
-		break;
-
-
-
+			break;
 		case 2:
-			
-			
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[4] = new Point(px + 2 * k * gameInfo.ballRadius, 0);
-			
-
-			
-			
-
-		break;
-
+			break;
 		case 3:
-
-
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
-
 			ballPositionArray[4] = new Point(px + 2 * k * gameInfo.ballRadius, 2 * gameInfo.ballRadius * j);
 			ballPositionArray[5] = new Point(px + 2 * k * gameInfo.ballRadius, - 2 * gameInfo.ballRadius * j);
 			ballPositionArray[6] = new Point(px + 2 * k * gameInfo.ballRadius, 0);
-		break;
-
-
+			break;
 		case 4:
-
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[6] = new Point(px + 2 * k * gameInfo.ballRadius, 0);
 			ballPositionArray[4] = new Point(px + 2 * k * gameInfo.ballRadius, 2 * gameInfo.ballRadius * j);
 			ballPositionArray[5] = new Point(px + 2 * k * gameInfo.ballRadius, - 2 * gameInfo.ballRadius * j);
-
 			ballPositionArray[7] = new Point(px + 3 * k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
 			ballPositionArray[8] = new Point(px + 3 * k * gameInfo.ballRadius, gameInfo.ballRadius * j);
-
-
-		break;
-
+			break;
 		case 5:
-
-
 			//nine ball setup
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[9] = new Point(px + 2 * k * gameInfo.ballRadius, 0);
 			ballPositionArray[4] = new Point(px + 2 * k * gameInfo.ballRadius, 2 * gameInfo.ballRadius * j);
 			ballPositionArray[5] = new Point(px + 2 * k * gameInfo.ballRadius, - 2 * gameInfo.ballRadius * j);
-			
 			ballPositionArray[6] = new Point(px + 3 * k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[7] = new Point(px + 3 * k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[8] = new Point(px + 4 * k * gameInfo.ballRadius, 0);
-
-
-
-		break;
-
+			break;
 		case 6:
-
-
 			//nine ball setup
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px, 0);
-			
 			ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[9] = new Point(px + 2 * k * gameInfo.ballRadius, 0);
 			ballPositionArray[4] = new Point(px + 2 * k * gameInfo.ballRadius, 2 * gameInfo.ballRadius * j);
 			ballPositionArray[5] = new Point(px + 2 * k * gameInfo.ballRadius, - 2 * gameInfo.ballRadius * j);
-			
 			ballPositionArray[6] = new Point(px + 3 * k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			ballPositionArray[7] = new Point(px + 3 * k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
 			ballPositionArray[8] = new Point(px + 4 * k * gameInfo.ballRadius, 0);
-
-
-
-		break;
-
-
-		
-
+			break;
 		case 15:
-
 			//15 ball setup
 			ballPositionArray[0] = new Point( -px, 0);
 			ballPositionArray[1] = new Point( px, 0);
@@ -165,28 +101,14 @@ var setBallPositions = function(gameInfo){
 			ballPositionArray[13] = new Point(px + 4 * k * gameInfo.ballRadius, - 2 * gameInfo.ballRadius * j);
 			ballPositionArray[14] = new Point(px + 4 * k * gameInfo.ballRadius, 4 * gameInfo.ballRadius * j);
 			ballPositionArray[3] = new Point(px + 4 * k * gameInfo.ballRadius, - 4 * gameInfo.ballRadius * j);
-			
-		break;
-
-
+			break;
 		case 100:
-			
-			
 			ballPositionArray[0] = new Point( -px, 0);
-			
 			ballPositionArray[1] = new Point( px + 10000, -10000);
-			
 			//ballPositionArray[2] = new Point(px + k * gameInfo.ballRadius, gameInfo.ballRadius * j);
 			//ballPositionArray[3] = new Point(px + k * gameInfo.ballRadius, - gameInfo.ballRadius * j);
-			
-
-		break;
-
-
-	
+			break;
 	}
 	
-	
 	return ballPositionArray;
-
 }

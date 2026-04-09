@@ -23330,11 +23330,11 @@ Phaser.Utils = {
 
                 if (dimension === 0)
                 {
-                    px = fenster.innerWidth * f;
+                    px = window.innerWidth * f;
                 }
                 else
                 {
-                    px = fenster.innerHeight * f;
+                    px = window.innerHeight * f;
                 }
             }
             else
@@ -78825,7 +78825,7 @@ Phaser.ScaleManager.prototype = {
         {
             // (This came from older code, by why is it here?)
             // Set minimum height of content to new window height
-            document.documentElement.style.minHeight = fenster.innerHeight + 'px';
+            document.documentElement.style.minHeight = window.innerHeight + 'px';
         }
 
         if (this.incorrectOrientation)
@@ -81094,8 +81094,8 @@ Phaser.Device.whenReady(function (device) {
     });
 
     var treatAsDesktop = device.desktop &&
-        (document.documentElement.clientWidth <= fenster.innerWidth) &&
-        (document.documentElement.clientHeight <= fenster.innerHeight);
+        (document.documentElement.clientWidth <= window.innerWidth) &&
+        (document.documentElement.clientHeight <= window.innerHeight);
 
     // Desktop browsers align the layout viewport with the visual viewport.
     // This differs from mobile browsers with their zooming design.
@@ -81106,10 +81106,10 @@ Phaser.Device.whenReady(function (device) {
         // PST- When scrollbars are not included this causes upstream issues in ScaleManager.
         // So reverted to the old "include scrollbars."
         var clientWidth = function () {
-            return Math.max(fenster.innerWidth, document.documentElement.clientWidth);
+            return Math.max(window.innerWidth, document.documentElement.clientWidth);
         };
         var clientHeight = function () {
-            return Math.max(fenster.innerHeight, document.documentElement.clientHeight);
+            return Math.max(window.innerHeight, document.documentElement.clientHeight);
         };
 
         // Interested in area sans-scrollbar
@@ -81133,13 +81133,13 @@ Phaser.Device.whenReady(function (device) {
 
         Object.defineProperty(Phaser.DOM.visualBounds, "width", {
             get: function () {
-                return fenster.innerWidth;
+                return window.innerWidth;
             }
         });
 
         Object.defineProperty(Phaser.DOM.visualBounds, "height", {
             get: function () {
-                return fenster.innerHeight;
+                return window.innerHeight;
             }
         });
 
@@ -81147,7 +81147,7 @@ Phaser.Device.whenReady(function (device) {
 
             get: function () {
                 var a = document.documentElement.clientWidth;
-                var b = fenster.innerWidth;
+                var b = window.innerWidth;
 
                 return a < b ? b : a; // max
             }
@@ -81158,7 +81158,7 @@ Phaser.Device.whenReady(function (device) {
 
             get: function () {
                 var a = document.documentElement.clientHeight;
-                var b = fenster.innerHeight;
+                var b = window.innerHeight;
 
                 return a < b ? b : a; // max
             }

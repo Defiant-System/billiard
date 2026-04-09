@@ -5,165 +5,434 @@ playState.init = function () {
 };
 
 playState.create = function () {
+	window.famobi.onOrientationChange(function () {
+		//console.log(window.famobi.getOrientation(), fenster.innerWidth, fenster.innerHeight); // Output example: landscape 732 480
+		resizeGame();
 
-	function resizeGame(scale, bounds) {
+		//game.scale.setResizeCallback(onResize, this);
+
+		//onResize = function(scale, bounds) {
+		//this.resizeGame(scale, bounds);
+
+		//}
+	});
+
+	resizeGame = function (scale, bounds) {
 		//console.log("resized game");
 		//this.resizeGame();
 		//game.state.resize(R.gameWidth, R.gameHeight);
 		var clientWidth = Math.min(
-			window.innerWidth,
+			fenster.innerWidth,
 			document.documentElement.clientWidth
 		);
 		var clientHeight = Math.min(
-			window.innerHeight,
+			fenster.innerHeight,
 			document.documentElement.clientHeight
 		);
 
-		//set to landscape mode
-		gameInfo.landscape = true;
-		//game.scale.setGameSize(1024, 690);
-		game.scale.setGameSize(1920, 1080);
+		if (window.famobi.getOrientation() == "portrait") {
+			//set to portrait mode
+			gameInfo.landscape = false;
+			//game.scale.setGameSize(690, 1024);
+			game.scale.setGameSize(1080, 1920);
 
-		gameInfo.gameCanvas.x = game.width / 2;
-		gameInfo.gameCanvas.y = game.height / 2 - 75;
+			gameInfo.gameCanvas.x = game.width / 2 + 30;
+			gameInfo.gameCanvas.y = game.height / 2 - 50;
 
-		//tutorial
-		if (projectInfo.tutorial) {
-			gameInfo.skipText.x = game.world.centerX;
-			gameInfo.skipText.y = game.world.centerY + 230;
+			//rotate table
+			gameInfo.gameCanvas.angle = -90;
 
-			gameInfo.tutorialText.x = game.world.centerX;
-			gameInfo.tutorialText.y = game.world.centerY - 320;
-			if (game.device.touch) {
-				gameInfo.hand.scale.x = 1;
-				gameInfo.hand.scale.y = 1;
+			//tutorial
+			if (projectInfo.tutorial) {
+				gameInfo.skipText.x = game.world.centerX + 30;
+				gameInfo.skipText.y = game.world.centerY + 230;
 
-				if (gameInfo.tutStage >= 6) {
-					gameInfo.hand.angle = 180;
+				gameInfo.tutorialText.x = game.world.centerX + 30;
+				gameInfo.tutorialText.y = 320;
+				if (game.device.touch) {
+					//if(gameInfo.tutStage <= 4){
+					gameInfo.hand.scale.x = -1;
+					//}
 
-					gameInfo.pointerStart = gameInfo.pointerStartL;
-					gameInfo.pointerEnd = gameInfo.pointerEndL;
-				}
+					if (gameInfo.tutStage >= 6) {
+						gameInfo.hand.angle = 0;
 
-				if (gameInfo.tutStage == 6 || gameInfo.tutStage == 7) {
-					gameInfo.hand.x = gameInfo.pointerStart.x;
-					gameInfo.hand.y = gameInfo.pointerStart.y;
-				}
+						gameInfo.pointerStart = gameInfo.pointerStartP;
+						gameInfo.pointerEnd = gameInfo.pointerEndP;
+					}
 
-				if (gameInfo.tutStage >= 8) {
-					gameInfo.hand.x =
-						gameInfo.pointerStart.x - gameInfo.pointerProgress;
-					gameInfo.hand.y = gameInfo.pointerStart.y;
+					if (gameInfo.tutStage == 6 || gameInfo.tutStage == 7) {
+						gameInfo.hand.x = gameInfo.pointerStart.x;
+						gameInfo.hand.y = gameInfo.pointerStart.y;
+					}
 
-					gameInfo.powerBarMask.y = 0;
-					gameInfo.powerBarMask.x = -gameInfo.pointerProgress;
+					if (gameInfo.tutStage >= 8) {
+						gameInfo.hand.x =
+							gameInfo.pointerStart.x - gameInfo.pointerProgress;
+						gameInfo.hand.y = gameInfo.pointerStart.y;
+
+						gameInfo.powerBarMask.x = 0;
+						gameInfo.powerBarMask.y = gameInfo.pointerProgress;
+					}
 				}
 			}
-		}
 
-		//racks
-		gameInfo.rackSolids.x = game.width / 4;
-		gameInfo.rackSolids.y = game.height - 40;
+			gameInfo.guiPanel1.x =
+				game.width / 2 - gameInfo.guiPanel2.width / 2 - 20 + 25;
+			gameInfo.guiPanel1.y = 90 + 10;
 
-		gameInfo.rackStripes.x = (3 * game.width) / 4;
-		gameInfo.rackStripes.y = game.height - 40;
+			gameInfo.guiPanel2.x = game.width / 2 + 25;
+			gameInfo.guiPanel2.y = 90 + 10;
 
-		//if target types have already been set, may need to swap racks accordingly
-		if (gameInfo.p1TargetType == "SOLIDS") {
+			gameInfo.guiPanel3.x =
+				game.width / 2 + gameInfo.guiPanel2.width / 2 + 20 + 25;
+			gameInfo.guiPanel3.y = 90 + 10;
+
+			gameInfo.timerText.x =
+				gameInfo.guiPanel3.x + gameInfo.guiPanel3.width / 2;
+			gameInfo.timerText.y = 90 + 10;
+
+			(gameInfo.scoreText.x = game.width / 2 + 25),
+				(gameInfo.scoreText.y = 90 + 10);
+
+			gameInfo.multiplierText.x =
+				gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
+			gameInfo.multiplierText.y = 90 + 10;
+
+			gameInfo.menuButton.x = game.width - 65;
+			gameInfo.menuButton.y = 10;
+			gameInfo.menuButton.scale = new Point(0.35, 0.35);
+
+			//power bar
+
+			if (game.device.touch) {
+				gameInfo.powerBar.angle = -90;
+				gameInfo.powerBar.x = 60;
+				gameInfo.powerBar.y = game.height / 2;
+				gameInfo.powerBarCueMask.clear();
+				gameInfo.powerBarCueMask.beginFill(0xffffff);
+				gameInfo.powerBarCueMask.drawRect(
+					gameInfo.powerBar.x,
+					gameInfo.powerBar.y - 250,
+					26,
+					500
+				);
+
+				gameInfo.powerBarMask.clear();
+				gameInfo.powerBarMask.beginFill(0xff0000);
+				gameInfo.powerBarMask.drawRect(
+					gameInfo.powerBar.x - 26,
+					gameInfo.powerBar.y - 750,
+					26,
+					500
+				);
+			}
+
+			gameInfo.successIcon.angle = 90;
+
+			gameInfo.gameOverPanel.x = game.width / 2 + 35;
+			gameInfo.gameOverPanel.y = game.height / 2;
+			gameInfo.gameOverPanelBG.angle = -90;
+			gameInfo.GOhighScoreIcon.x = 80;
+			gameInfo.GOhighScoreIcon.y = -346;
+			gameInfo.gameOverPanel.text2.x = 145;
+			gameInfo.gameOverPanel.text2.y = -349;
+			gameInfo.playerWin.x = -240;
+			gameInfo.playerWin.y = -405;
+
+			gameInfo.popUpPanel.x = game.width / 2 + 25;
+			gameInfo.popUpPanel.y = game.height / 2;
+			//gameInfo.popUpPanelBG.scale.x = 0.6;
+			gameInfo.popUpPanelBG.angle = 0;
+
+			let externalMute = famobi.hasFeature("external_mute");
+
+			gameInfo.playButtonPU.x = 0;
+			gameInfo.playButtonPU.y = -90;
+
+			gameInfo.muteButtonPU.x = -170;
+			gameInfo.muteButtonPU.y = 130;
+
+			gameInfo.replayButtonPU.x = externalMute ? -85 : 0;
+			gameInfo.replayButtonPU.y = 130;
+
+			gameInfo.quitButtonPU.x = externalMute ? 85 : 170;
+			gameInfo.quitButtonPU.y = 130;
+
+			//icons
+			gameInfo.humanIcon.x = 170;
+			gameInfo.humanIcon.y = game.height - 95;
+			gameInfo.humanIcon.scale = new Point(0.35, 0.35);
+
+			gameInfo.aiIcon.x = 170;
+			gameInfo.aiIcon.y = game.height - 0;
+			gameInfo.aiIcon.anchor = new Point(0, 1);
+			gameInfo.aiIcon.scale = new Point(0.35, 0.35);
+
+			gameInfo.turnArrow1.x = 125;
+			gameInfo.turnArrow1.scale = new Point(0.5, 0.5);
+			gameInfo.turnArrow1.y = game.height - 110;
+
+			gameInfo.turnArrow2.x = 125;
+			gameInfo.turnArrow2.scale = new Point(0.5, 0.5);
+			gameInfo.turnArrow2.y = game.height - 20;
+
+			//racks
+			gameInfo.rackSolids.x = game.width / 2 + 25;
+			gameInfo.rackSolids.y = game.height - 100;
+
+			gameInfo.rackStripes.x = game.width / 2 + 25;
+			gameInfo.rackStripes.y = game.height - 10;
+
+			//if target types have already been set, may need to swap racks accordingly
+			if (gameInfo.p1TargetType == "SOLIDS") {
+				gameInfo.rackStripes.y = game.height - 10;
+				gameInfo.rackSolids.y = game.height - 100;
+			}
+
+			if (gameInfo.p1TargetType == "STRIPES") {
+				gameInfo.rackSolids.y = game.height - 10;
+				gameInfo.rackStripes.y = game.height - 100;
+			}
+
+			gameInfo.spinSetter.x = game.width - 135;
+			gameInfo.spinSetter.y = game.height - 105;
+
+			gameInfo.spinSetterZoom.x = game.width / 2 + 30;
+			gameInfo.spinSetterZoom.y = game.height / 2 - 50;
+
+			gameInfo.foulWindow.x = game.width / 2 + 25;
+			gameInfo.foulWindow.y = game.height / 2;
+
+			gameInfo.quitButton2.y = 250;
+			gameInfo.replayButton.y = 250;
+		} else {
+			//set to landscape mode
+			gameInfo.landscape = true;
+			//game.scale.setGameSize(1024, 690);
+			game.scale.setGameSize(1920, 1080);
+
+			gameInfo.gameCanvas.x = game.width / 2;
+			gameInfo.gameCanvas.y = game.height / 2 - 75;
+
+			//tutorial
+			if (projectInfo.tutorial) {
+				gameInfo.skipText.x = game.world.centerX;
+				gameInfo.skipText.y = game.world.centerY + 230;
+
+				gameInfo.tutorialText.x = game.world.centerX;
+				gameInfo.tutorialText.y = game.world.centerY - 320;
+				if (game.device.touch) {
+					gameInfo.hand.scale.x = 1;
+					gameInfo.hand.scale.y = 1;
+
+					if (gameInfo.tutStage >= 6) {
+						gameInfo.hand.angle = 180;
+
+						gameInfo.pointerStart = gameInfo.pointerStartL;
+						gameInfo.pointerEnd = gameInfo.pointerEndL;
+					}
+
+					if (gameInfo.tutStage == 6 || gameInfo.tutStage == 7) {
+						gameInfo.hand.x = gameInfo.pointerStart.x;
+						gameInfo.hand.y = gameInfo.pointerStart.y;
+					}
+
+					if (gameInfo.tutStage >= 8) {
+						gameInfo.hand.x =
+							gameInfo.pointerStart.x - gameInfo.pointerProgress;
+						gameInfo.hand.y = gameInfo.pointerStart.y;
+
+						gameInfo.powerBarMask.y = 0;
+						gameInfo.powerBarMask.x = -gameInfo.pointerProgress;
+					}
+				}
+			}
+
+			//racks
 			gameInfo.rackSolids.x = game.width / 4;
+			gameInfo.rackSolids.y = game.height - 40;
+
 			gameInfo.rackStripes.x = (3 * game.width) / 4;
+			gameInfo.rackStripes.y = game.height - 40;
+
+			//if target types have already been set, may need to swap racks accordingly
+			if (gameInfo.p1TargetType == "SOLIDS") {
+				gameInfo.rackSolids.x = game.width / 4;
+				gameInfo.rackStripes.x = (3 * game.width) / 4;
+			}
+
+			if (gameInfo.p1TargetType == "STRIPES") {
+				gameInfo.rackSolids.x = (3 * game.width) / 4;
+				gameInfo.rackStripes.x = game.width / 4;
+			}
+
+			//top panels
+
+			/*
+			gameInfo.guiPanel1.x = game.width / 2 - gameInfo.guiPanel2.width / 2 - 20;
+			gameInfo.guiPanel1.y = 20;
+
+			gameInfo.guiPanel2.x = game.width / 2;
+			gameInfo.guiPanel2.y = 20;
+
+			gameInfo.guiPanel3.x = game.width / 2 + gameInfo.guiPanel2.width / 2 + 20;
+			gameInfo.guiPanel3.y = 20;
+
+			gameInfo.timerText.x = gameInfo.guiPanel3.x + gameInfo.guiPanel3.width / 2;
+			gameInfo.timerText.y = 40;
+
+			gameInfo.scoreText.x = game.width / 2,
+			gameInfo.scoreText.y = 40;
+
+			gameInfo.multiplierText.x = gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
+			gameInfo.multiplierText.y = 40;
+			*/
+
+			gameInfo.guiPanel1.x = game.width / 2 - gameInfo.guiPanel2.width / 2 - 20;
+			gameInfo.guiPanel1.y = game.height - 40;
+
+			gameInfo.guiPanel2.x = game.width / 2;
+			gameInfo.guiPanel2.y = game.height - 40;
+
+			gameInfo.guiPanel3.x = game.width / 2 + gameInfo.guiPanel2.width / 2 + 20;
+			gameInfo.guiPanel3.y = game.height - 40;
+
+			gameInfo.timerText.x =
+				gameInfo.guiPanel3.x + gameInfo.guiPanel3.width / 2;
+			gameInfo.timerText.y = game.height - 40;
+
+			(gameInfo.scoreText.x = game.width / 2),
+				(gameInfo.scoreText.y = game.height - 40);
+
+			gameInfo.multiplierText.x =
+				gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
+			gameInfo.multiplierText.y = game.height - 40;
+
+			//rotate table
+			gameInfo.gameCanvas.angle = 0;
+
+			//icons
+			gameInfo.humanIcon.x = 120;
+			gameInfo.humanIcon.y = game.height - 20;
+			gameInfo.humanIcon.anchor = new Point(0, 1);
+			gameInfo.humanIcon.scale = new Point(0.4, 0.4);
+
+			gameInfo.aiIcon.x = game.width - 120 - gameInfo.aiIcon.width;
+			gameInfo.aiIcon.y = game.height - 20;
+			gameInfo.aiIcon.anchor = new Point(0, 1);
+			gameInfo.aiIcon.scale = new Point(0.4, 0.4);
+
+			gameInfo.turnArrow1.x = 75;
+			gameInfo.turnArrow1.y = game.height - 40;
+			gameInfo.turnArrow2.scale = new Point(0.5, 0.5);
+
+			gameInfo.turnArrow2.x = game.width - 75;
+			gameInfo.turnArrow2.y = game.height - 40;
+			gameInfo.turnArrow2.scale = new Point(-0.5, 0.5);
+
+			//buttons
+			gameInfo.menuButton.x = game.width - 80;
+			gameInfo.menuButton.y = 20;
+			gameInfo.menuButton.scale = new Point(0.5, 0.5);
+
+			gameInfo.spinSetter.x = game.width - 90;
+			gameInfo.spinSetter.y = game.height / 2;
+
+			gameInfo.spinSetterZoom.x = game.width / 2;
+			gameInfo.spinSetterZoom.y = game.height / 2 - 75;
+
+			//gameInfo.menuButton.scale = new Point(.5, .5);
+
+			//gameInfo.muteButton.x = gameInfo.quitButton.x + gameInfo.quitButton.width + 5;
+			//gameInfo.muteButton.y = game.height - 30;
+			//gameInfo.muteButton.scale = new Point(.5, .5);
+
+			//power bar
+			/*
+			if(game.device.touch){
+				gameInfo.powerBar.angle = 0;
+				gameInfo.powerBar.x = game.width / 2;
+				gameInfo.powerBar.y = game.height - 100;
+				gameInfo.powerBarCueMask.clear();
+				gameInfo.powerBarCueMask.beginFill(0xffffff);
+				gameInfo.powerBarCueMask.drawRect(gameInfo.powerBar.x - 250, gameInfo.powerBar.y, 500, 26);
+
+				gameInfo.powerBarMask.clear();
+				gameInfo.powerBarMask.beginFill(0xff0000);
+				gameInfo.powerBarMask.drawRect(gameInfo.powerBar.x + 250, gameInfo.powerBar.y - 26, 500, 26);
+			}
+			*/
+
+			if (game.device.touch) {
+				gameInfo.powerBar.angle = -90;
+				gameInfo.powerBar.x = 100;
+				gameInfo.powerBar.y = game.height / 2;
+				gameInfo.powerBarCueMask.clear();
+				gameInfo.powerBarCueMask.beginFill(0xffffff);
+				gameInfo.powerBarCueMask.drawRect(
+					gameInfo.powerBar.x,
+					gameInfo.powerBar.y - 250,
+					26,
+					500
+				);
+
+				gameInfo.powerBarMask.clear();
+				gameInfo.powerBarMask.beginFill(0xff0000);
+				gameInfo.powerBarMask.drawRect(
+					gameInfo.powerBar.x - 26,
+					gameInfo.powerBar.y - 750,
+					26,
+					500
+				);
+			}
+
+			gameInfo.successIcon.angle = 0;
+
+			gameInfo.gameOverPanel.x = game.width / 2;
+			gameInfo.gameOverPanel.y = game.height / 2 - 10 - 75;
+			gameInfo.gameOverPanelBG.angle = 0;
+			gameInfo.GOhighScoreIcon.x = 220;
+			gameInfo.GOhighScoreIcon.y = -246;
+			gameInfo.gameOverPanel.text2.x = 285;
+			gameInfo.gameOverPanel.text2.y = -249;
+			gameInfo.playerWin.x = -400;
+			gameInfo.playerWin.y = -265;
+
+			gameInfo.popUpPanel.x = game.width / 2;
+			gameInfo.popUpPanel.y = game.height / 2 - 75;
+			gameInfo.popUpPanelBG.angle = 0;
+
+			let externalMute = famobi.hasFeature("external_mute");
+
+			gameInfo.playButtonPU.x = 0;
+			gameInfo.playButtonPU.y = -90;
+
+			gameInfo.muteButtonPU.x = -170;
+			gameInfo.muteButtonPU.y = 130;
+
+			gameInfo.replayButtonPU.x = externalMute ? -85 : 0;
+			gameInfo.replayButtonPU.y = 130;
+
+			gameInfo.quitButtonPU.x = externalMute ? 85 : 170;
+			gameInfo.quitButtonPU.y = 130;
+
+			gameInfo.foulWindow.x = game.width / 2;
+			gameInfo.foulWindow.y = game.height / 2 - 75;
+
+			gameInfo.quitButton2.y = 170;
+			gameInfo.replayButton.y = 170;
 		}
-
-		if (gameInfo.p1TargetType == "STRIPES") {
-			gameInfo.rackSolids.x = (3 * game.width) / 4;
-			gameInfo.rackStripes.x = game.width / 4;
-		}
-
-		//top panels
-
-		gameInfo.guiPanel1.x = game.width / 2 - gameInfo.guiPanel2.width / 2 - 20;
-		gameInfo.guiPanel1.y = game.height - 40;
-
-		gameInfo.guiPanel2.x = game.width / 2;
-		gameInfo.guiPanel2.y = game.height - 40;
-
-		gameInfo.guiPanel3.x = game.width / 2 + gameInfo.guiPanel2.width / 2 + 20;
-		gameInfo.guiPanel3.y = game.height - 40;
-
-		gameInfo.timerText.x = gameInfo.guiPanel3.x + gameInfo.guiPanel3.width / 2;
-		gameInfo.timerText.y = game.height - 40;
-
-		(gameInfo.scoreText.x = game.width / 2), (gameInfo.scoreText.y = game.height - 40);
-
-		gameInfo.multiplierText.x = gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
-		gameInfo.multiplierText.y = game.height - 40;
-
-		//rotate table
-		gameInfo.gameCanvas.angle = 0;
-
-		//icons
-		gameInfo.humanIcon.x = 120;
-		gameInfo.humanIcon.y = game.height - 20;
-		gameInfo.humanIcon.anchor = new Point(0, 1);
-		gameInfo.humanIcon.scale = new Point(0.4, 0.4);
-		gameInfo.aiIcon.x = game.width - 120 - gameInfo.aiIcon.width;
-		gameInfo.aiIcon.y = game.height - 20;
-		gameInfo.aiIcon.anchor = new Point(0, 1);
-		gameInfo.aiIcon.scale = new Point(0.4, 0.4);
-		gameInfo.turnArrow1.x = 75;
-		gameInfo.turnArrow1.y = game.height - 40;
-		gameInfo.turnArrow2.scale = new Point(0.5, 0.5);
-		gameInfo.turnArrow2.x = game.width - 75;
-		gameInfo.turnArrow2.y = game.height - 40;
-		gameInfo.turnArrow2.scale = new Point(-0.5, 0.5);
-
-		//buttons
-		gameInfo.menuButton.x = game.width - 80;
-		gameInfo.menuButton.y = 20;
-		gameInfo.menuButton.scale = new Point(0.5, 0.5);
-		gameInfo.spinSetter.x = game.width - 90;
-		gameInfo.spinSetter.y = game.height / 2;
-		gameInfo.spinSetterZoom.x = game.width / 2;
-		gameInfo.spinSetterZoom.y = game.height / 2 - 75;
-
-		gameInfo.successIcon.angle = 0;
-		gameInfo.gameOverPanel.x = game.width / 2;
-		gameInfo.gameOverPanel.y = game.height / 2 - 10 - 75;
-		gameInfo.gameOverPanelBG.angle = 0;
-		gameInfo.GOhighScoreIcon.x = 220;
-		gameInfo.GOhighScoreIcon.y = -246;
-		gameInfo.gameOverPanel.text2.x = 285;
-		gameInfo.gameOverPanel.text2.y = -249;
-		gameInfo.playerWin.x = -400;
-		gameInfo.playerWin.y = -265;
-		gameInfo.popUpPanel.x = game.width / 2;
-		gameInfo.popUpPanel.y = game.height / 2 - 75;
-		gameInfo.popUpPanelBG.angle = 0;
-
-		let externalMute = false;
-
-		gameInfo.playButtonPU.x = 0;
-		gameInfo.playButtonPU.y = -90;
-		gameInfo.muteButtonPU.x = -170;
-		gameInfo.muteButtonPU.y = 130;
-		gameInfo.replayButtonPU.x = externalMute ? -85 : 0;
-		gameInfo.replayButtonPU.y = 130;
-		gameInfo.quitButtonPU.x = externalMute ? 85 : 170;
-		gameInfo.quitButtonPU.y = 130;
-		gameInfo.foulWindow.x = game.width / 2;
-		gameInfo.foulWindow.y = game.height / 2 - 75;
-		gameInfo.quitButton2.y = 170;
-		gameInfo.replayButton.y = 170;
 
 		//objects which need moving but take the same values regardless of orientation (eg. relative to other items which have changed)
 
-		//console.log("window height: " + window.innerHeight);
+		//console.log("window height: " + fenster.innerHeight);
 		//console.log("game height: " + document.getElementById("game").clientHeight);
 
 		var margin =
 			String(
 				Math.abs(
-					window.innerHeight - document.getElementById("mygame").clientHeight
+					fenster.innerHeight - document.getElementById("mygame").clientHeight
 				) / 2
 			) + "px";
 		//document.getElementById("game").style.marginTop = margin;
@@ -184,7 +453,7 @@ playState.create = function () {
 	initCanvases();
 	initBG();
 	initTable();
-	// initBonusStar();
+	initBonusStar();
 	initBalls();
 	initGuide();
 	initGUI();
@@ -194,10 +463,10 @@ playState.create = function () {
 	renderScreen();
 	initTimer();
 	initLevelText();
-	// initTutorial();
+	initTutorial();
 	setTurn();
-	// initSkipText();
-	// initTutorialText();
+	initSkipText();
+	initTutorialText();
 
 	resizeGame();
 
@@ -257,7 +526,7 @@ playState.create = function () {
 		}
 
 		if (projectInfo.tutorial == false) {
-			// window.famobi_analytics.trackScreen("SCREEN_LEVEL");
+			window.famobi_analytics.trackScreen("SCREEN_LEVEL");
 		}
 	}
 
@@ -499,11 +768,11 @@ playState.create = function () {
 			gameInfo.guiCanvas,
 			"rackSolids"
 		);
-		// gameInfo.rackBGSolids = new Phaser.Sprite(game, 0, 0, "rackBG");
-		// gameInfo.rackSolids.addChild(gameInfo.rackBGSolids);
-		// gameInfo.rackBGSolids.x = 1;
-		// gameInfo.rackBGSolids.y = 0;
-		// gameInfo.rackBGSolids.anchor = new Point(0.5, 1);
+		gameInfo.rackBGSolids = new Phaser.Sprite(game, 0, 0, "rackBG");
+		gameInfo.rackSolids.addChild(gameInfo.rackBGSolids);
+		gameInfo.rackBGSolids.x = 1;
+		gameInfo.rackBGSolids.y = 0;
+		gameInfo.rackBGSolids.anchor = new Point(0.5, 1);
 
 		gameInfo.rackSolidsArray = new Array();
 
@@ -545,11 +814,11 @@ playState.create = function () {
 			gameInfo.guiCanvas,
 			"rackStripes"
 		);
-		// gameInfo.rackBGStripes = new Phaser.Sprite(game, 0, 0, "rackBG");
-		// gameInfo.rackStripes.addChild(gameInfo.rackBGStripes);
-		// gameInfo.rackBGStripes.x = 1;
-		// gameInfo.rackBGStripes.y = 0;
-		// gameInfo.rackBGStripes.anchor = new Point(0.5, 1);
+		gameInfo.rackBGStripes = new Phaser.Sprite(game, 0, 0, "rackBG");
+		gameInfo.rackStripes.addChild(gameInfo.rackBGStripes);
+		gameInfo.rackBGStripes.x = 1;
+		gameInfo.rackBGStripes.y = 0;
+		gameInfo.rackBGStripes.anchor = new Point(0.5, 1);
 
 		gameInfo.rackStripesArray = new Array();
 
@@ -649,7 +918,7 @@ playState.create = function () {
 		gameInfo.timerText.anchor.x = 0.5;
 		gameInfo.timerText.anchor.y = 1;
 		//gameInfo.timerText.alpha = 0.2;
-		
+
 		window.gi = gameInfo;
 
 		//gameInfo.timerText.visible = false;
@@ -950,7 +1219,6 @@ playState.create = function () {
 		gameInfo.quitButton2.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.gameOverPanel.addChild(gameInfo.quitButton2);
 
-		
 		//restart game
 		gameInfo.replayButton = new Phaser.Button(
 			game,
@@ -1054,18 +1322,18 @@ playState.create = function () {
 		gameInfo.muteButtonPU.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.muteButtonPU.scale = new Phaser.Point(0.5, 0.5);
 
-		// if (Sound.slave == true) {
-		// 	gameInfo.muteButtonPU.setFrames(1, 0, 1, 0);
-		// } else {
-		// 	gameInfo.muteButtonPU.setFrames(3, 2, 3, 2);
-		// }
+		if (Sound.slave == true) {
+			gameInfo.muteButtonPU.setFrames(1, 0, 1, 0);
+		} else {
+			gameInfo.muteButtonPU.setFrames(3, 2, 3, 2);
+		}
 
 		gameInfo.quitButtonPU.input.enabled = false;
 		gameInfo.replayButtonPU.input.enabled = false;
 		gameInfo.playButtonPU.input.enabled = false;
 		gameInfo.muteButtonPU.input.enabled = false;
 
-		gameInfo.muteButtonPU.visible = false;
+		gameInfo.muteButtonPU.visible = !famobi.hasFeature("external_mute");
 
 		//=========================================================================================
 
@@ -1168,14 +1436,25 @@ playState.create = function () {
 	}
 
 	function toggleSound() {
-		return;
 		if (Sound.slave == false) {
 			Sound.setMute(false);
+
 			gameInfo.muteButtonPU.setFrames(1, 0, 1, 0);
+
+			window.famobi_analytics.trackEvent(famobi_analytics.EVENT_VOLUMECHANGE, {
+				bgmVolume: 0,
+				sfxVolume: 1,
+			});
 		} else {
 			//Sound.on = false;
 			Sound.setMute(true);
+
 			gameInfo.muteButtonPU.setFrames(3, 2, 3, 2);
+
+			window.famobi_analytics.trackEvent(famobi_analytics.EVENT_VOLUMECHANGE, {
+				bgmVolume: 0,
+				sfxVolume: 0,
+			});
 		}
 
 		playState.resumeGame();
@@ -1183,7 +1462,7 @@ playState.create = function () {
 
 	function gameToPopUpMenu() {
 		if (gameInfo.foulWindow.visible != true && gameInfo.gameOver == false) {
-			// window.famobi_analytics.trackScreen("SCREEN_PAUSE");
+			window.famobi_analytics.trackScreen("SCREEN_PAUSE");
 
 			gameInfo.gameRunning = false;
 			gameInfo.popUpPanel.visible = true;
@@ -1215,7 +1494,19 @@ playState.create = function () {
 				return;
 			}
 
-			game.state.start("mainMenu");
+			window.famobi_analytics
+				.trackEvent("EVENT_LEVELFAIL", {
+					levelName: projectInfo.levelName,
+					reason: "quit",
+				})
+				.then(
+					function () {
+						game.state.start("mainMenu");
+					},
+					function () {
+						game.state.start("mainMenu");
+					}
+				);
 		}
 	}
 
@@ -1223,11 +1514,35 @@ playState.create = function () {
 		projectInfo.lastBreaker = "none";
 
 		if (gameInfo.gameOver) {
-			game.state.start("play");
+			window.famobi_analytics
+				.trackEvent("EVENT_LEVELRESTART", { levelName: projectInfo.levelName })
+				.then(
+					function () {
+						game.state.start("play");
+					},
+					function () {
+						game.state.start("play");
+					}
+				);
 			return;
 		}
 
-		game.state.start("play");
+		Promise.all([
+			window.famobi_analytics.trackEvent("EVENT_LEVELFAIL", {
+				levelName: projectInfo.levelName,
+				reason: "quit",
+			}),
+			window.famobi_analytics.trackEvent("EVENT_LEVELRESTART", {
+				levelName: projectInfo.levelName,
+			}),
+		]).then(
+			function () {
+				game.state.start("play");
+			},
+			function () {
+				game.state.start("play");
+			}
+		);
 	}
 
 	function initCanvases() {
@@ -1312,7 +1627,6 @@ playState.create = function () {
 		//create table sprites
 
 		gameInfo.pockets = new Phaser.Sprite(game, 0, 0, "pockets");
-		gameInfo.pockets.alpha = .5;
 		gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.pockets);
 
@@ -1323,7 +1637,6 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.cloth = new Phaser.Sprite(game, 0, 0, "cloth");
-		gameInfo.cloth.alpha = .5;
 		gameInfo.cloth.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.cloth);
 
@@ -1334,7 +1647,6 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.tableTop = new Phaser.Sprite(game, 0, 0, "tableTop");
-		gameInfo.tableTop.alpha = .5;
 		gameInfo.tableTop.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
 
@@ -1676,7 +1988,6 @@ playState.create = function () {
 		);
 		// set a fill and line style
 		//graphics.beginFill(0xFFFFFF);
-		let dY = 5800;
 
 		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
 		for (var n = 0; n < gameInfo.lineArray.length; n++) {
@@ -1699,22 +2010,23 @@ playState.create = function () {
 
 			//debug drawings
 			/*
-			*/
 			graphics.lineStyle(1, 0xffffff, 1);
-			graphics.moveTo(line.p1.x * gameInfo.physScale, (line.p1.y-dY) * gameInfo.physScale);
-			graphics.lineTo(line.p2.x * gameInfo.physScale, (line.p2.y-dY) * gameInfo.physScale);
+			graphics.moveTo(gameInfo.lineArray[n].p1.x * gameInfo.physScale, gameInfo.lineArray[n].p1.y * gameInfo.physScale);
+			graphics.lineTo(gameInfo.lineArray[n].p2.x * gameInfo.physScale, gameInfo.lineArray[n].p2.y * gameInfo.physScale);
 
 			graphics.lineStyle(1, 0x000000, 1);
-			graphics.moveTo(line.p3.x * gameInfo.physScale, (line.p3.y-dY) * gameInfo.physScale);
-			graphics.lineTo(line.p4.x * gameInfo.physScale, (line.p4.y-dY) * gameInfo.physScale);
+			graphics.moveTo(gameInfo.lineArray[n].p3.x * gameInfo.physScale, gameInfo.lineArray[n].p3.y * gameInfo.physScale);
+			graphics.lineTo(gameInfo.lineArray[n].p4.x * gameInfo.physScale, gameInfo.lineArray[n].p4.y * gameInfo.physScale);
+			*/
 		}
 
-		/**/
+		/*
 		for(var n = 0; n < gameInfo.vertexArray.length; n ++){
+
 			var vertex = gameInfo.vertexArray[n];
-			graphics.drawCircle(vertex.position.x * gameInfo.physScale, (vertex.position.y-dY) * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
+			graphics.drawCircle(vertex.position.x * gameInfo.physScale, vertex.position.y * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
 		}
-		
+		*/
 	}
 
 	function initBalls() {
@@ -1755,22 +2067,54 @@ playState.create = function () {
 			//ball mc
 			var s;
 			switch (n) {
-				case 0: s = 0;   break;
-				case 1: s = 12;  break;
-				case 2: s = 13;  break;
-				case 3: s = 8;   break;
-				case 4: s = 14;  break;
-				case 5: s = 3;   break;
-				case 6: s = 11;  break;
-				case 7: s = 4;   break;
-				case 8: s = 15;  break;
-				case 9: s = 5;   break;
-				case 10: s = 1;  break;
-				case 11: s = 6;  break;
-				case 12: s = 10; break;
-				case 13: s = 7;  break;
-				case 14: s = 9;  break;
-				case 15: s = 2;  break;
+				case 0:
+					s = 0;
+					break;
+				case 1:
+					s = 12;
+					break;
+				case 2:
+					s = 13;
+					break;
+				case 3:
+					s = 8;
+					break;
+				case 4:
+					s = 14;
+					break;
+				case 5:
+					s = 3;
+					break;
+				case 6:
+					s = 11;
+					break;
+				case 7:
+					s = 4;
+					break;
+				case 8:
+					s = 15;
+					break;
+				case 9:
+					s = 5;
+					break;
+				case 10:
+					s = 1;
+					break;
+				case 11:
+					s = 6;
+					break;
+				case 12:
+					s = 10;
+					break;
+				case 13:
+					s = 7;
+					break;
+				case 14:
+					s = 9;
+					break;
+				case 15:
+					s = 2;
+					break;
 			}
 			ball.mc = new Ball(gameInfo.ballRadius * gameInfo.physScale, n);
 			gameInfo.ballCanvas.add(ball.mc);
@@ -1863,3 +2207,68 @@ playState.create = function () {
 		gameInfo.phys.ballRestitution = gameInfo.ballRestitution;
 	}
 };
+
+playState.resumeGame = function () {
+	var gameInfo = this.gameInfo;
+
+	if (gameInfo.gameOver != true) {
+		window.famobi_analytics.trackScreen("SCREEN_LEVEL");
+		gameInfo.gameRunning = true;
+	}
+
+	gameInfo.popUpPanel.visible = false;
+
+	gameInfo.quitButtonPU.input.enabled = false;
+	gameInfo.replayButtonPU.input.enabled = false;
+	gameInfo.playButtonPU.input.enabled = false;
+	gameInfo.muteButtonPU.input.enabled = false;
+};
+
+playState.shutdown = function () {
+	//console.log("cleaning");
+
+	var gameInfo = this.gameInfo;
+
+	gameInfo.gameCanvas.destroy();
+	gameInfo.guiCanvas.destroy();
+	gameInfo.guiBaseCanvas.destroy();
+	gameInfo.cueBaseCanvas.destroy();
+};
+
+/*
+playState.resize = function (width, height) {
+
+	console.log("resizing game");
+
+	var gameInfo = this.gameInfo;
+
+
+
+	gameInfo.playButton.x = width / 2;
+	gameInfo.playButton.y = height;
+
+	gameInfo.gameCanvas.x = width / 2;
+	gameInfo.gameCanvas.y = height / 2;
+}
+*/
+
+/*
+playState.resize = function (width, height) {
+
+	var gameInfo = this.gameInfo;
+
+		console.log("width: " + width);
+		console.log("height: " + height);
+
+		if(width > 800 || height > 600){
+			game.scale.setGameSize(800, 600);
+		}
+
+
+		projectInfo.quitButton.x = width / 2;
+		projectInfo.quitButton.y = height;
+
+		gameInfo.gameCanvas.x = width / 2;
+		gameInfo.gameCanvas.y = height / 2;
+	}
+*/

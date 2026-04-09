@@ -76,4 +76,4 @@ Sound.isSuspended = function() {
 	return game.sound.usingWebAudio && game.sound.context.state === 'suspended';
 }
 
-setInterval(Sound.checkAudioContext.bind(Sound), 1000);
+// setInterval(Sound.checkAudioContext.bind(Sound), 1000);
