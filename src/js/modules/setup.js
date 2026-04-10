@@ -80,7 +80,7 @@ playState.create = function () {
 		}
 
 		//top panels
-
+		/*
 		gameInfo.guiPanel1.x = game.width / 2 - gameInfo.guiPanel2.width / 2 - 20;
 		gameInfo.guiPanel1.y = game.height - 40;
 
@@ -97,10 +97,18 @@ playState.create = function () {
 
 		gameInfo.multiplierText.x = gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
 		gameInfo.multiplierText.y = game.height - 40;
+		*/
 
 		//rotate table
 		gameInfo.gameCanvas.angle = 0;
 
+		gameInfo.spinSetter.x = game.width - 90;
+		gameInfo.spinSetter.y = game.height / 2;
+
+		gameInfo.spinSetterZoom.x = game.width / 2;
+		gameInfo.spinSetterZoom.y = game.height / 2 - 75;
+
+		/*
 		//icons
 		gameInfo.humanIcon.x = 120;
 		gameInfo.humanIcon.y = game.height - 20;
@@ -154,6 +162,7 @@ playState.create = function () {
 		gameInfo.foulWindow.y = game.height / 2 - 75;
 		gameInfo.quitButton2.y = 170;
 		gameInfo.replayButton.y = 170;
+		*/
 
 		//objects which need moving but take the same values regardless of orientation (eg. relative to other items which have changed)
 
@@ -171,8 +180,8 @@ playState.create = function () {
 		gameInfo.debugText.x = game.width - 25;
 		gameInfo.debugText.y = 30;
 
-		gameInfo.successIcon.x = 0;
-		gameInfo.successIcon.y = 0;
+		// gameInfo.successIcon.x = 0;
+		// gameInfo.successIcon.y = 0;
 	};
 
 	this.gameInfo = new Object(); //gameInfo is a property of playState
@@ -204,28 +213,31 @@ playState.create = function () {
 	gameInfo.gameRunning = true;
 
 	function setTurn() {
-		if (projectInfo.lastBreaker == "none") {
-			if (Math.random() < 0.5) {
-				gameInfo.turn = "p1";
-				gameInfo.turnArrow1.frame = 1;
-				gameInfo.turnArrow2.frame = 0;
-			} else {
-				gameInfo.turn = "p2";
-				gameInfo.turnArrow1.frame = 0;
-				gameInfo.turnArrow2.frame = 1;
-			}
-		} else {
-			//this is a re-rack due to a foul, so switch turns
-			if (projectInfo.lastBreaker == "p2") {
-				gameInfo.turn = "p1";
-				gameInfo.turnArrow1.frame = 1;
-				gameInfo.turnArrow2.frame = 0;
-			} else {
-				gameInfo.turn = "p2";
-				gameInfo.turnArrow1.frame = 0;
-				gameInfo.turnArrow2.frame = 1;
-			}
-		}
+		gameInfo.turn = "p1";
+		// gameInfo.turnArrow1.frame = 1;
+		// gameInfo.turnArrow2.frame = 0;
+		// if (projectInfo.lastBreaker == "none") {
+		// 	if (Math.random() < 0.5) {
+		// 		gameInfo.turn = "p1";
+		// 		gameInfo.turnArrow1.frame = 1;
+		// 		gameInfo.turnArrow2.frame = 0;
+		// 	} else {
+		// 		gameInfo.turn = "p2";
+		// 		gameInfo.turnArrow1.frame = 0;
+		// 		gameInfo.turnArrow2.frame = 1;
+		// 	}
+		// } else {
+		// 	//this is a re-rack due to a foul, so switch turns
+		// 	if (projectInfo.lastBreaker == "p2") {
+		// 		gameInfo.turn = "p1";
+		// 		gameInfo.turnArrow1.frame = 1;
+		// 		gameInfo.turnArrow2.frame = 0;
+		// 	} else {
+		// 		gameInfo.turn = "p2";
+		// 		gameInfo.turnArrow1.frame = 0;
+		// 		gameInfo.turnArrow2.frame = 1;
+		// 	}
+		// }
 	}
 
 	function initTutorial() {
@@ -384,11 +396,11 @@ playState.create = function () {
 		gameInfo.levelText.anchor.y = 0.5;
 		gameInfo.levelText.alpha = 0.2;
 
-		gameInfo.successIcon = new Phaser.Sprite(game, 0, 0, "success");
-		gameInfo.timerCanvas.addChild(gameInfo.successIcon);
-		gameInfo.successIcon.visible = false;
-		gameInfo.successIcon.anchor = new Point(0.5, 0.5);
-		gameInfo.successIcon.alpha = 0.25;
+		// gameInfo.successIcon = new Phaser.Sprite(game, 0, 0, "success");
+		// gameInfo.timerCanvas.addChild(gameInfo.successIcon);
+		// gameInfo.successIcon.visible = false;
+		// gameInfo.successIcon.anchor = new Point(0.5, 0.5);
+		// gameInfo.successIcon.alpha = 0.25;
 
 		if (projectInfo.tutorial == true) {
 			gameInfo.levelText.visible = false;
@@ -581,6 +593,7 @@ playState.create = function () {
 		//gameInfo.guiStripe4.visible = false;
 		//gameInfo.guiStripe6.visible = false;
 
+		/*
 		gameInfo.turnArrow1 = new Phaser.Sprite(game, 0, 0, "turnArrow");
 		gameInfo.guiCanvas.addChild(gameInfo.turnArrow1);
 		gameInfo.turnArrow1.anchor = new Point(0.5, 1);
@@ -649,6 +662,7 @@ playState.create = function () {
 		gameInfo.timerText.anchor.x = 0.5;
 		gameInfo.timerText.anchor.y = 1;
 		//gameInfo.timerText.alpha = 0.2;
+		*/
 		
 		window.gi = gameInfo;
 
@@ -662,17 +676,17 @@ playState.create = function () {
 		//gameInfo.scoreIcon.alpha = 0.8;
 		//gameInfo.scoreIcon.scale = new Point(.35, .35);
 
-		gameInfo.scoreText = new Phaser.BitmapText(
-			game,
-			0,
-			0,
-			"font7",
-			projectInfo.score,
-			56
-		);
-		gameInfo.guiCanvas.addChild(gameInfo.scoreText);
-		gameInfo.scoreText.anchor.x = 0.5;
-		gameInfo.scoreText.anchor.y = 1;
+		// gameInfo.scoreText = new Phaser.BitmapText(
+		// 	game,
+		// 	0,
+		// 	0,
+		// 	"font7",
+		// 	projectInfo.score,
+		// 	56
+		// );
+		// gameInfo.guiCanvas.addChild(gameInfo.scoreText);
+		// gameInfo.scoreText.anchor.x = 0.5;
+		// gameInfo.scoreText.anchor.y = 1;
 
 		//gameInfo.scoreText.alpha = 0.8;
 
@@ -703,6 +717,7 @@ playState.create = function () {
 		//gameInfo.bonusText.anchor.y = 1;
 		//gameInfo.bonusText.alpha = 0;
 
+		/*
 		gameInfo.multiplierText = new Phaser.BitmapText(
 			game,
 			0,
@@ -739,7 +754,7 @@ playState.create = function () {
 		gameInfo.guiCanvas.addChild(gameInfo.menuButton);
 		gameInfo.menuButton.anchor = new Phaser.Point(0.5, 0);
 		//gameInfo.menuButton.scale = new Point(.6, .6);
-
+		
 		//power bar on touch devices
 		if (game.device.touch) {
 			//gameInfo.gameCanvas.x -= 30;
@@ -832,13 +847,14 @@ playState.create = function () {
 		gameInfo.GOclockIcon.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.GOclockIcon.scale = new Phaser.Point(0.55, 0.55);
 		gameInfo.gameOverPanel.addChild(gameInfo.GOclockIcon);
-
+		*/
 		// MULTIPLAYER
 
 		// PLAYER ONE
 
 		let p1Position = { x: -140, y: -120 };
 
+		/*
 		gameInfo.p1Icon = new Phaser.Sprite(
 			game,
 			p1Position.x,
@@ -1144,6 +1160,7 @@ playState.create = function () {
 			"foulHighlight"
 		);
 		gameInfo.foulWindow.addChild(gameInfo.foulWindow.highlight);
+		*/
 
 		//============================================================================
 
@@ -1152,14 +1169,14 @@ playState.create = function () {
 				//gameInfo.guiPanel1.visible = false;
 			}
 
-			gameInfo.menuButton.visible = false;
-			gameInfo.turnArrow1.visible = false;
-			gameInfo.turnArrow2.visible = false;
-			gameInfo.humanIcon.visible = false;
-			gameInfo.aiIcon.visible = false;
-			gameInfo.rackSolids.visible = false;
-			gameInfo.rackStripes.visible = false;
-			gameInfo.spinSetter.visible = false;
+			// gameInfo.menuButton.visible = false;
+			// gameInfo.turnArrow1.visible = false;
+			// gameInfo.turnArrow2.visible = false;
+			// gameInfo.humanIcon.visible = false;
+			// gameInfo.aiIcon.visible = false;
+			// gameInfo.rackSolids.visible = false;
+			// gameInfo.rackStripes.visible = false;
+			// gameInfo.spinSetter.visible = false;
 		}
 	}
 
@@ -1287,16 +1304,16 @@ playState.create = function () {
 
 		var tween = game.add
 			.tween(gameInfo.cueBaseCanvas)
-			.from({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 500);
+			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 		var tween = game.add
 			.tween(gameInfo.guiCanvas)
-			.from({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 500);
+			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 		var tween = game.add
 			.tween(gameInfo.guiBaseCanvas)
-			.from({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 500);
+			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 		var tween = game.add
 			.tween(gameInfo.gameCanvas)
-			.from({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 500);
+			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 
 		//gameInfo.gameCanvas.add(gameInfo.ballCanvas);
 	}
@@ -1841,13 +1858,13 @@ playState.create = function () {
 	}
 
 	function initContactListener() {
-		this.contactEvent = new Phaser.Signal();
-		this.contactEvent.add(onContact, this);
+		playState.contactEvent = new Phaser.Signal();
+		playState.contactEvent.add(onContact, playState);
 	}
 
 	function initPhysics() {
 		gameInfo.phys = new billiardPhysics(
-			this.contactEvent,
+			playState.contactEvent,
 			gameInfo.ballArray,
 			gameInfo.lineArray,
 			gameInfo.vertexArray,
@@ -1863,3 +1880,31 @@ playState.create = function () {
 		gameInfo.phys.ballRestitution = gameInfo.ballRestitution;
 	}
 };
+
+playState.resumeGame = function () {
+	var gameInfo = this.gameInfo;
+
+	if (gameInfo.gameOver != true) {
+		// window.famobi_analytics.trackScreen("SCREEN_LEVEL");
+		gameInfo.gameRunning = true;
+	}
+
+	gameInfo.popUpPanel.visible = false;
+
+	gameInfo.quitButtonPU.input.enabled = false;
+	gameInfo.replayButtonPU.input.enabled = false;
+	gameInfo.playButtonPU.input.enabled = false;
+	gameInfo.muteButtonPU.input.enabled = false;
+};
+
+playState.shutdown = function () {
+	//console.log("cleaning");
+
+	var gameInfo = this.gameInfo;
+
+	gameInfo.gameCanvas.destroy();
+	gameInfo.guiCanvas.destroy();
+	gameInfo.guiBaseCanvas.destroy();
+	gameInfo.cueBaseCanvas.destroy();
+};
+

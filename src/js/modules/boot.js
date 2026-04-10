@@ -33,14 +33,14 @@ var bootState = {
 
 	preload: function() {
 		//load preloader assets
-		//this.load.image('bgL', 'images/bgL.png');
-		//this.load.image('bgP', 'images/bgP.png');
-		// this.load.image('title', 'images/title.png');
-		// this.load.image('rack', 'images/rack.png');
-		// this.load.image('loaderBase', 'images/loaderBase.png');
-		// this.load.image('loaderFill', 'images/loaderFill.png');
-		// this.load.image('loaderHighlight', 'images/loaderHighlight.png');
-		//this.load.image('guiFrame', 'images/frame.png');
+		//this.load.image('bgL', '~/img/bgL.png');
+		//this.load.image('bgP', '~/img/bgP.png');
+		// this.load.image('title', '~/img/title.png');
+		// this.load.image('rack', '~/img/rack.png');
+		this.load.image('loaderBase', '~/img/loaderBase.png');
+		this.load.image('loaderFill', '~/img/loaderFill.png');
+		this.load.image('loaderHighlight', '~/img/loaderHighlight.png');
+		//this.load.image('guiFrame', '~/img/frame.png');
 	},
 
 	create: function () {

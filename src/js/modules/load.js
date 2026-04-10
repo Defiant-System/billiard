@@ -26,6 +26,7 @@ loadState.init = function() {
 	loaderInfo.rack = new Phaser.Sprite(game, 0, 0, 'rack');
 	loaderInfo.loaderCanvas.addChild(loaderInfo.rack);
 	loaderInfo.rack.anchor = new Point(.5, .5);
+	*/
 	
 
 	loaderInfo.loaderBase = new Phaser.Sprite(game, 0, 800, 'loaderBase');
@@ -42,7 +43,6 @@ loadState.init = function() {
 	loaderInfo.loaderHighlight = new Phaser.Sprite(game, 0, 80, 'loaderHighlight');
 	loaderInfo.loaderHighlight.anchor = new Point(.5, 0);
 	loaderInfo.loaderCanvas.addChild(loaderInfo.loaderHighlight);
-	*/
 
 	loaderInfo.progress = new Object();
 	loaderInfo.progress.val = 0;
@@ -71,8 +71,8 @@ loadState.resizeGame = function(scale, bounds){
 	var margin = String(Math.abs(clientHeight - document.getElementById("mygame").clientHeight) / 2) + "px";
 	//document.getElementById("game").style.marginTop = margin;
 	
-	loaderInfo.loaderCanvas.x = game.width / 2;
-	loaderInfo.loaderCanvas.y = game.height / 2;
+	// loaderInfo.loaderCanvas.x = game.width / 2;
+	// loaderInfo.loaderCanvas.y = game.height / 2;
 	//loaderInfo.bgL.x = 0;
 	//loaderInfo.bgL.y = 0;
 	// loaderInfo.loaderBase.y = 0.6 * game.height / 2;
@@ -85,14 +85,15 @@ loadState.resizeGame = function(scale, bounds){
 	//loaderInfo.graphics.beginFill(0xffffff);
 	//loaderInfo.graphics.drawRect( - 375/2, loaderInfo.loaderBase.y, game.load.progress * 3.75, 30);
 
-	// loaderInfo.graphics.clear();
-    // loaderInfo.graphics.beginFill(0xffffff);
+	loaderInfo.graphics.clear();
+    loaderInfo.graphics.beginFill(0xffffff);
 	//loaderInfo.graphics.drawRect(game.width / 2 - 375 / 2, game.height / 2, game.load.progress * 3.75, 30);
 	//console.log("progress: " + loaderInfo.loaderProgress)
-	// loaderInfo.graphics.drawRect(game.width / 2 - 375 / 2, game.height / 2 + loaderInfo.loaderBase.y + 8, loaderInfo.loaderProgress * 3.75, 30);
+	loaderInfo.graphics.drawRect(game.width / 2 - 375 / 2, game.height / 2 + loaderInfo.loaderBase.y + 8, loaderInfo.loaderProgress * 3.75, 30);
 }
 
 loadState.onResize = function(scale, bounds) {
+	// console.log("onResize");
  	this.resizeGame(scale, bounds);
 }
 
@@ -118,7 +119,7 @@ loadState.preload = function() {
     this.load.image('shade', '~/img/shade.png');
     this.load.image('shadow', '~/img/shadow.png');
     this.load.image('cue', '~/img/cue.webp');
-    // this.load.image('cueShadow', '~/img/cueShadow.png');
+    this.load.image('cueShadow', '~/img/cueShadow.png');
     //this.load.image('guiBar', '~/img/guiBar.png');
     // this.load.image('bonusDisc', '~/img/bonusDisc.png');
     // this.load.image('powerBarBase', '~/img/powerBarBase.png');
@@ -148,14 +149,20 @@ loadState.preload = function() {
     this.load.image('cueBallSpot', '~/img/cueBallSpot.png');
     this.load.image('spinSetterZoom', '~/img/spinSetterZoom.png');
     this.load.image('cueBallSpotZoom', '~/img/cueBallSpotZoom.png');
+    this.load.spritesheet('guiSolids', '~/img/guiSolids.png', 102,102);
+    this.load.spritesheet('guiStripes', '~/img/guiStripes.png', 101,102);
 
     this.load.atlas('marker', '~/img/marker.png', '~/js/marker.json');
 
+    game.load.bitmapFont('font1', '~/fonts/font1.png', '~/fonts/font1.fnt');
+    game.load.bitmapFont('font2', '~/fonts/font2.png', '~/fonts/font2.fnt'); 
+    game.load.bitmapFont('font3', '~/fonts/font3.png', '~/fonts/font3.fnt');
+    //game.load.bitmapFont('font4', '~/fonts/font4.png', '~/fonts/font4.fnt');
+    game.load.bitmapFont('font5', '~/fonts/font5.png', '~/fonts/font5.fnt');
+    game.load.bitmapFont('font6', '~/fonts/font6.png', '~/fonts/font6.fnt');
     game.load.bitmapFont('font7', '~/fonts/Font.png', '~/fonts/Font.fnt');
 
     /*
-    this.load.spritesheet('guiSolids', '~/img/guiSolids.png', 102,102);
-    this.load.spritesheet('guiStripes', '~/img/guiStripes.png', 101,102);
     this.load.spritesheet('turnArrow', '~/img/turnArrow.png', 128,128);
     // this.load.spritesheet('pVpButton', '~/img/pVpButton.png', 460,195);
     // this.load.spritesheet('pVAIButton', '~/img/pVAIButton.png', 460,195);
@@ -166,14 +173,6 @@ loadState.preload = function() {
     
     // this.load.spritesheet('plusButton', '~/img/plusButton.png', 128, 128);
     // this.load.spritesheet('minusButton', '~/img/minusButton.png', 128, 128);
-
-
-    game.load.bitmapFont('font1', 'assets/fonts/font1.png', 'assets/fonts/font1.fnt');
-    game.load.bitmapFont('font2', 'assets/fonts/font2.png', 'assets/fonts/font2.fnt'); 
-    game.load.bitmapFont('font3', 'assets/fonts/font3.png', 'assets/fonts/font3.fnt');
-    //game.load.bitmapFont('font4', 'assets/fonts/font4.png', 'assets/fonts/font4.fnt');
-    game.load.bitmapFont('font5', 'assets/fonts/font5.png', 'assets/fonts/font5.fnt');
-    game.load.bitmapFont('font6', 'assets/fonts/font6.png', 'assets/fonts/font6.fnt');
 
     //this.load.image('backgroundImageL', '~/img/bgLandscape2.png');
     //this.load.image('backgroundImageP', '~/img/bgPortrait2.png');
@@ -216,8 +215,8 @@ loadState.preload = function() {
     this.load.audio('ding', ['assets/audio/ding.wav', 'assets/audio/ding.mp3']);
     this.load.audio('cheer', ['assets/audio/cheer.wav', 'assets/audio/cheer.mp3']);
 	
-    game.load.onFileComplete.add(this.updateProgressBar, this);
     */
+    game.load.onFileComplete.add(this.updateProgressBar, this);
 }
 
 loadState.updateProgressBar = function() {   
@@ -244,25 +243,21 @@ loadState.render = function() {
 
 loadState.create = function() {
 	var loaderInfo = this.loaderInfo;
-	//console.log("loaded");
-	game.time.events.add(Phaser.Timer.SECOND * 2, fadeLoader, this);
 
-	function fadeLoader() {
-		initMenu();
-		// var tween = game.add.tween(loaderInfo.loaderCanvas).to({alpha: 0}, 150, Phaser.Easing.Linear.None, true);
-		// tween.onComplete.add(initMenu, this);
-	}
-
-	function initMenu() {
-        // initProjectInfoBeforeMenu();
-		// applyMainMenuCompatibleProjectDefaults();
-        projectInfo.mode = 2;
-        projectInfo.levelName = "1player_" + String(projectInfo.aiRating);
-        projectInfo.lastBreaker = "none";
-        projectInfo.tutorial = false;
-        projectInfo.clickedHelpButton = false;
-        game.state.start("play");
-	}
+    projectInfo.levelComplete = false;
+    projectInfo.guideOn = 1;
+    projectInfo.aiRating = 2;
+    projectInfo.bestScore = 0;
+    projectInfo.numGames = 0;
+    projectInfo.bestTime = 0;
+	
+	projectInfo.mode = 2;
+    projectInfo.levelName = "1player_" + String(projectInfo.aiRating);
+    projectInfo.lastBreaker = "none";
+    projectInfo.tutorial = false;
+    projectInfo.clickedHelpButton = false;
+    game.state.start("play");
+    console.log("play");
 }
 
 loadState.update = function() {
@@ -271,7 +266,8 @@ loadState.update = function() {
 
 loadState.shutdown = function() {
 	var loaderInfo = this.loaderInfo;
-	//console.log("cleaning loader");
+	// console.log("cleaning loader");
+    game.scale.setResizeCallback(null, null);
 	game.stage.removeChild(loaderInfo.loaderCanvas);
 	loaderInfo.loaderCanvas = null;
 	loaderInfo = null;

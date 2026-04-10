@@ -15705,7 +15705,7 @@ PIXI.canUseNewCanvasBlendModes = function()
     yellow.src = pngHead + '/wCKxvRF' + pngEnd;
 
     var canvas = PIXI.CanvasPool.create(this, 6, 1);
-    var context = canvas.getContext('2d');
+    var context = canvas.getContext('2d', { willReadFrequently: true });
     context.globalCompositeOperation = 'multiply';
     context.drawImage(magenta, 0, 0);
     context.drawImage(yellow, 2, 0);
@@ -19750,7 +19750,7 @@ PIXI.CanvasBuffer = function(width, height)
      * @property context
      * @type CanvasRenderingContext2D
      */
-    this.context = this.canvas.getContext("2d");
+    this.context = this.canvas.getContext("2d", { willReadFrequently: true });
 
     this.canvas.width = width;
     this.canvas.height = height;
@@ -35854,11 +35854,11 @@ Phaser.Game.prototype = {
                 }
             }
 
-            console.log.apply(console, args);
+            // console.log.apply(console, args);
         }
         else if (window['console'])
         {
-            console.log('Phaser v' + v + ' | Pixi.js ' + PIXI.VERSION + ' | ' + r + ' | ' + a + ' | http://phaser.io');
+            // console.log('Phaser v' + v + ' | Pixi.js ' + PIXI.VERSION + ' | ' + r + ' | ' + a + ' | http://phaser.io');
         }
 
     },

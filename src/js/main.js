@@ -7,14 +7,14 @@ const { Phaser } = await window.fetch("~/js/bundle.js");
 @import "./modules/levelData.js"
 @import "./modules/maths.js"
 @import "./modules/vector2d.js"
-// @imp-ort "./modules/render.js"
-// @imp-ort "./modules/sound.js"
-// @imp-ort "./modules/effects.js"
-// @imp-ort "./modules/timer.js"
+@import "./modules/render.js"
+  @import "./modules/sound.js"
+  @import "./modules/effects.js"
+  @import "./modules/timer.js"
 @import "./modules/load.js"
-// @imp-ort "./modules/mainMenu.js"
+  // @i1mport "./modules/mainMenu.js"
 @import "./modules/setup.js"
-// @imp-ort "./modules/gameController.js"
+  @import "./modules/gameController.js"
 @import "./modules/boot.js"
 
 @import "./modules/test.js"
@@ -28,8 +28,6 @@ const billiard = {
 		// DEV-ONLY-START
 		Test.init(this);
 		// DEV-ONLY-END
-
-		console.log( game );
 	},
 	dispatch(event) {
 		switch (event.type) {

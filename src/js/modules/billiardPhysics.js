@@ -1,14 +1,9 @@
 
 
 function billiardPhysics(contactEvent, balls, lines, vertices, pockets, sim) {
-
 	//we could create setters for each of these as they are public variables that get injected into the class, but as each value is simply used 'as is' (ie we don't need a special setter function which modifies the values in any way), we can simply allow these variables to be created dynamically when they are injected from outside the class.
-
-
 	//these are private vars used only within the function - some of which are passed in as params of the construtor
 	this.targetID = -1; //for the presim, where only a single target ball needs to be simulated - set in reslove collision once target assigned, otherwise has value -1 to show it hasn't been assigned.
-
-
 	this.omissionArray = new Array();
 	this.ballArray = balls;
 	this.lineArray = lines;
@@ -18,67 +13,32 @@ function billiardPhysics(contactEvent, balls, lines, vertices, pockets, sim) {
 	this.simType = 0;
 	this.contactEvent = contactEvent;
 
-
-
 	//OverwriteManager.init(OverwriteManager.NONE);
 }
 
-
 //setter for resetting ballArray (which includes positions, velocities etc.) if we move the balls between real shots for AI
-
-
-
 billiardPhysics.prototype = {
-
 	set ballData(array){
-
 		this.ballArray = array;
 	},
-
 	set frameNumber(value){
-
 		this.frame = value;
 	}
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
 billiardPhysics.prototype.updatePhysics = function(){
-
 	this.predictCollisions();
 	this.updateFriction();
 }
 
 billiardPhysics.prototype.predictCollisions = function() {
-
-
-
 	//predict collisions which will occur between now and the next frame, for each ball
-
 	//Any collisions found will have the collision details (ball, target, position, and time) stored in an object 'collision'.  After all possibilities have been checked, the collision (if any) with the foremost time will be resolved (ie. new velocities applied), the ball(s) involved will be moved to the collision positions, and moveballs() will be called for all other balls to move them to their new positions for that time interval. The prediction process will then start again, until no further collisions occur before the next frame. Once no more collisions are predicted, moveBalls() is called for the remainder of the time step to the next frame.
-
-
-
 	var time = 0; //0 is the time at the beginning of the frame, 1 is the time at the end
 	var sanityCheck = 0;
 
 	do {
-
-
-
 		//start new iteration, checking all balls against all targets to check for earliest collision.  Iterations repeated until no collisions found before next frame
-
 		//var collisionDetected:Boolean = false;
 		var collisionTime = 1; //max default value, represents an entire frame
 		var collision;
@@ -89,10 +49,8 @@ billiardPhysics.prototype.predictCollisions = function() {
 			}
 		}
 
-
 		var collisionArray = new Array();
 		var omegaTime = Maths.fixNumber(1 - time); //time between most recent collision and end of frame
-
 		var numBalls = 0;
 
 		if (this.simType == 0) {
@@ -137,16 +95,11 @@ billiardPhysics.prototype.predictCollisions = function() {
 				for (var t = s; t < this.ballArray.length; t ++) { //t = b prevents double checks like 1:2 and 2:1. t = 0 checks all balls
 					var target = this.ballArray[t];
 
-
-
 					if(ball.velocity.magnitudeSquared != 0 || target.velocity.magnitudeSquared != 0){ // balls can't collide if neither are moving.  However, keeping this in won't tell us if balls are touching (if that is actually possible - not sure).
-
-
 						//check for collisions with all other balls except the current object ball
 						//first check balls are in proximity of each other to prevent unnecessary checks.  Doesn't apply for sim1 where balls are moving much faster
 						var close = true;
 						if (this.simType != 1) {
-
 							//if (Math.abs(ball.position.x - target.position.x) < 8000 && Math.abs(ball.position.y - target.position.y) < 8000) {
 								//close = true;
 							//}else {
@@ -154,36 +107,21 @@ billiardPhysics.prototype.predictCollisions = function() {
 							//}
 						}
 
-
-
-
-
 						if (target != ball && target.active == true && close == true) { //ball cannot collide with itself
 							// ball.velocity.magnitude == 0 && target.velocity.magnitude == 0 represents touching balls - still need to consider these
-
-
 							//NEW - check if balls are closing - if they aren't, they don't need to be resolved
-
 							if(Maths.checkObjectsConverging(ball.position, target.position, ball.velocity, target.velocity)){
 
 							//if(target != ball.lastCollisionObject || ball != target.lastCollisionObject){
-
 								//treat target ball as stationary object, and subtract it's velocity vector from object ball to get object's velocity vector in the target's frame of reference
-
-
 								////////window.famobi.log("checking " + ball.id + " on " + target.id);
-
 								var ballReferenceVector = ball.velocity.minus(target.velocity); //ball's velocity vector in targets f.o.r.
 								var nextBallReferencePoint = ball.position.plus(ballReferenceVector.times(omegaTime));
-
-
 								var A = new Point(ball.position.x, ball.position.y); //starting point of object ball
 								var B = new Point(nextBallReferencePoint.x, nextBallReferencePoint.y); //point of object ball at next frame
 								var C = new Point(target.position.x, target.position.y);
 								var r = 2 * this.ballRadius;
-
 								var intersection = Maths.lineIntersectCircle(A, B, C, r);
-
 								/*
 										//////window.famobi.log("_____________________");
 										//////window.famobi.log("testing " + ball.id + " on " + target.id);
@@ -193,9 +131,6 @@ billiardPhysics.prototype.predictCollisions = function() {
 										//////window.famobi.log("enter: " + intersection.enter);
 										//////window.famobi.log("exit: " + intersection.exit);
 										//////window.famobi.log("_____________________");
-
-
-
 								if (intersection.inside == true){
 									//////window.famobi.log("WTF??");
 								}
