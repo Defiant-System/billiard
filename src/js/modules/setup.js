@@ -1,3 +1,7 @@
+
+
+var diffY = 100;
+var diffX = 0;
 var playState = new Object();
 
 playState.init = function () {
@@ -100,6 +104,8 @@ playState.create = function () {
 		*/
 
 		//rotate table
+		gameInfo.gameCanvas.y += diffY;
+		gameInfo.gameCanvas.x += diffX;
 		gameInfo.gameCanvas.angle = 0;
 
 		gameInfo.spinSetter.x = game.width - 90;
@@ -534,7 +540,7 @@ playState.create = function () {
 			);
 
 			gameInfo.rackSolids.addChild(gameInfo.rackSolidsArray[n]);
-			gameInfo.rackSolidsArray[n].x = -200 + n * 50;
+			gameInfo.rackSolidsArray[n].x = -200 + diffY + n * 50;
 			gameInfo.rackSolidsArray[n].y = 7;
 			gameInfo.rackSolidsArray[n].anchor = new Point(0, 1);
 			gameInfo.rackSolidsArray[n].visible = false;
@@ -1848,9 +1854,9 @@ playState.create = function () {
 	}
 
 	function initCue() {
-		gameInfo.cueShadow = new Phaser.Sprite(game, 0, 0, "cueShadow");
-		gameInfo.cueCanvas.addChild(gameInfo.cueShadow);
-		gameInfo.cueShadow.anchor = new Point(1.0, 8 / 53);
+		// gameInfo.cueShadow = new Phaser.Sprite(game, 0, 0, "cueShadow");
+		// gameInfo.cueCanvas.addChild(gameInfo.cueShadow);
+		// gameInfo.cueShadow.anchor = new Point(1.0, 8 / 53);
 
 		gameInfo.cue = new Phaser.Sprite(game, 0, 0, "cue");
 		gameInfo.cueCanvas.addChild(gameInfo.cue);

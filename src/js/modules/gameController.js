@@ -2,6 +2,7 @@ playState.update = function () {
 	var gameInfo = this.gameInfo;
 	var turn = gameInfo.turn;
 	var preventQuit;
+	var gameRunning;
 
 	if (gameInfo.gameRunning == true) {
 		//console.log("shot reset: " + gameInfo.shotReset);
@@ -253,7 +254,7 @@ playState.update = function () {
 							ang = -5;
 						}
 
-						gameInfo.cueShadow.angle = 3 + ang;
+						// gameInfo.cueShadow.angle = 3 + ang;
 
 						var compX = Math.cos((gameInfo.cueCanvas.angle * Math.PI) / 180);
 						var compY = Math.sin((gameInfo.cueCanvas.angle * Math.PI) / 180);
@@ -367,10 +368,8 @@ playState.update = function () {
 
 						gameInfo.powerBarCue.x = 250 - gameInfo.pointerProgress * 0.9;
 
-						gameInfo.cue.x =
-							-0.7 * gameInfo.pointerProgress -
-							gameInfo.ballRadius * 1.5 * gameInfo.physScale;
-						gameInfo.cueShadow.x = gameInfo.cue.x;
+						gameInfo.cue.x = -0.7 * gameInfo.pointerProgress - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
+						// gameInfo.cueShadow.x = gameInfo.cue.x;
 					} else {
 						exitTutorial();
 					}
@@ -587,7 +586,7 @@ playState.update = function () {
 
 				case 101:
 					//waiting for tween - update cue shadow
-					gameInfo.cueShadow.x = gameInfo.cue.x;
+					// gameInfo.cueShadow.x = gameInfo.cue.x;
 
 					break;
 
@@ -676,7 +675,7 @@ playState.update = function () {
 			gameInfo.cueCanvas.x = gameInfo.ballArray[0].position.x * gameInfo.physScale;
 			gameInfo.cueCanvas.y = gameInfo.ballArray[0].position.y * gameInfo.physScale;
 			gameInfo.cue.x = -gameInfo.ballRadius * gameInfo.physScale * 1.5;
-			gameInfo.cueShadow.x = gameInfo.cue.x;
+			// gameInfo.cueShadow.x = gameInfo.cue.x;
 		} else {
 			//console.log("cue set: " + gameInfo.cueSet + ", preventUpdateCue: " + gameInfo.preventUpdateCue);
 			//console.log("cue not updated");
@@ -1389,7 +1388,7 @@ playState.update = function () {
 						ang = -5;
 					}
 
-					gameInfo.cueShadow.angle = 3 + ang;
+					// gameInfo.cueShadow.angle = 3 + ang;
 
 					var compX = Math.cos((gameInfo.cueCanvas.angle * Math.PI) / 180);
 					var compY = Math.sin((gameInfo.cueCanvas.angle * Math.PI) / 180);
@@ -1501,7 +1500,7 @@ playState.update = function () {
 		if (gameInfo.drawGuide == true) {
 			gameInfo.guideCanvas.visible = true;
 			gameInfo.guide.visible = true;
-			gameInfo.guide.lineStyle(1, 0xffffff, 0.7);
+			gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 			var startVec = gameInfo.ballArray[0].position;
 			var projectionVec = startVec.plus(
@@ -1564,7 +1563,7 @@ playState.update = function () {
 
 				//now draw lines - we now have the positions of the cueball, the object ball, and the intersect point
 				gameInfo.guide.clear();
-				gameInfo.guide.lineStyle(1, 0xffffff, 0.7);
+				gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 				var bearingAim = Maths.findBearing(
 					intersectPoint.x - cueBall.position.x,
@@ -1696,7 +1695,7 @@ playState.update = function () {
 
 				if (intersectPoint != null) {
 					gameInfo.guide.clear();
-					gameInfo.guide.lineStyle(1, 0xffffff, 0.7);
+					gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 					if (projectInfo.guideOn == true) {
 						gameInfo.guide.moveTo(
@@ -1778,7 +1777,7 @@ playState.update = function () {
 
 					gameInfo.cue.x =
 						-0.5 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
-					gameInfo.cueShadow.x = gameInfo.cue.x;
+					// gameInfo.cueShadow.x = gameInfo.cue.x;
 				}
 			}
 
@@ -1860,9 +1859,8 @@ playState.update = function () {
 
 					updateAimingGuide();
 
-					gameInfo.cue.x =
-						-0.3 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
-					gameInfo.cueShadow.x = gameInfo.cue.x;
+					gameInfo.cue.x = -0.3 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
+					// gameInfo.cueShadow.x = gameInfo.cue.x;
 				}
 			}
 
@@ -1907,12 +1905,12 @@ playState.update = function () {
 				Phaser.Easing.Linear.Out
 			);
 
-			var cueShadowTween = game.add.tween(gameInfo.cueShadow);
-			cueShadowTween.to(
-				{ x: gameInfo.power / 400 },
-				tweenTime * 1000,
-				Phaser.Easing.Linear.Out
-			);
+			// var cueShadowTween = game.add.tween(gameInfo.cueShadow);
+			// cueShadowTween.to(
+			// 	{ x: gameInfo.power / 400 },
+			// 	tweenTime * 1000,
+			// 	Phaser.Easing.Linear.Out
+			// );
 
 			var cueFadeTween = game.add.tween(gameInfo.cueCanvas);
 			cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 1500);
@@ -1929,7 +1927,7 @@ playState.update = function () {
 			}
 
 			cueTween.start();
-			cueShadowTween.start();
+			// cueShadowTween.start();
 			cueFadeTween.start();
 
 			function hideCueCanvas() {
@@ -2307,6 +2305,7 @@ playState.update = function () {
 	}
 
 	function showFoulMessage() {
+		console.log(gameInfo.foulMessage);
 		if (
 			gameInfo.foulMessage != "potted the cue ball" ||
 			gameInfo.scratchFoulShown == false
@@ -2542,8 +2541,7 @@ playState.update = function () {
 
 				if (counter < 2) {
 					gameInfo.fouled = true;
-					gameInfo.foulMessage =
-						" failed to make 2 balls hit the cushions on the break";
+					gameInfo.foulMessage = " failed to make 2 balls hit the cushions on the break";
 					gameInfo.foulDisplay4 = "CUSHIONONBREAK";
 				}
 			} else {
@@ -2584,8 +2582,7 @@ playState.update = function () {
 				if (cushionContact2 == false) {
 					gameInfo.fouled = true;
 					//trace("no cushion contact");
-					gameInfo.foulMessage =
-						" failed to make a ball hit a cushion after the first contact with the cue ball";
+					gameInfo.foulMessage = " failed to make a ball hit a cushion after the first contact with the cue ball";
 
 					gameInfo.foulDisplay3 = "CUSHION";
 				}
@@ -3849,14 +3846,14 @@ playState.update = function () {
 
 				//TweenLite.to(cue.shadow, 0.5, { x: (power / 600), ease:Quad.easeOut } );
 
-				game.add
-					.tween(gameInfo.cueShadow)
-					.to(
-						{ x: gameInfo.power / 600 },
-						500,
-						Phaser.Easing.Linear.easeOut,
-						true
-					);
+				// game.add
+				// 	.tween(gameInfo.cueShadow)
+				// 	.to(
+				// 		{ x: gameInfo.power / 600 },
+				// 		500,
+				// 		Phaser.Easing.Linear.easeOut,
+				// 		true
+				// 	);
 
 				//TweenLite.to(cueCanvas, 1, { delay: 1.5, alpha: 0, onComplete:hideCueCanvas } );
 
