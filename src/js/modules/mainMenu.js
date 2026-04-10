@@ -90,48 +90,7 @@ var menuState = {
 	        var clientWidth = Math.min(fenster.innerWidth, document.documentElement.clientWidth);
 			var clientHeight = Math.min(fenster.innerHeight, document.documentElement.clientHeight);
 			//if(clientWidth < clientHeight){
-			if(window.famobi.getOrientation() == "portrait"){
-
-				//set to portrait mode
-				//game.scale.setGameSize(690, 1024);
-				game.scale.setGameSize(1080, 1920);
-				//game.scale.maxHeight = clientHeight;
-				//game.scale.maxWidth = clientHeight * 690 / 1024;
-				//menuInfo.bgL.visible = false;
-				//menuInfo.bgP.visible = true;
-				menuInfo.playButton.x = 0;
-				menuInfo.playButton.y = (game.height / 2) * 0.4;
-				menuInfo.playButton.anchor = new Phaser.Point(0.5, 0);
-				menuInfo.playButton.scale = new Point(.75, .75);
-				menuInfo.statsButton.x = -150;
-				menuInfo.statsButton.y = (game.height / 2) * 0.4;
-				menuInfo.statsButton.anchor = new Point(1, 0);
-				menuInfo.statsButton.scale = new Point(.5, .5);
-				menuInfo.helpButton.x = 150;
-				menuInfo.helpButton.y = (game.height / 2) * 0.4;
-				menuInfo.helpButton.anchor = new Point(0, 0);
-				menuInfo.helpButton.scale = new Point(.5, .5);
-				menuInfo.settingsButton.x = (game.width / 2) -100;
-				menuInfo.settingsButton.y = -game.height / 2 + 100;
-				menuInfo.settingsButton.anchor = new Point(1, 0);
-				menuInfo.settingsButton.scale = new Point(.5, .5);
-
-
-				menuInfo.settingsWindow.y = 0;
-				menuInfo.statsWindow.x = game.width / 2 + 0;
-				menuInfo.statsWindow.y = game.height / 2;
-				menuInfo.pVpButton.x = 0;
-				menuInfo.pVpButton.y = game.height * .07;
-				menuInfo.pVAIButton.x = 0;
-				menuInfo.pVAIButton.y = -game.height * .07;
-				menuInfo.famobiMoreGames.x = 0;
-				menuInfo.famobiMoreGames.y = game.height / 2 * 0.9;
-				menuInfo.famobiMoreGames.anchor = new Point(0.5, 1);
-				menuInfo.title.y = -(game.height / 2) * 0.5;
-
-
-
-			}else{
+			
 				//set to landscape mode
 				//game.scale.setGameSize(1024, 690);
 				game.scale.setGameSize(1920, 1080);
@@ -169,7 +128,6 @@ var menuState = {
 				menuInfo.title.y = -(game.height / 2) * 0.6;
 
 
-			}
 			//objects which need moving but take the same values regardless of orientation (eg. relative to other items which have changed)
 			var margin = String(Math.abs(clientHeight - document.getElementById("mygame").clientHeight) / 2) + "px";
         	//document.getElementById("game").style.marginTop = margin;

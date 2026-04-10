@@ -541,7 +541,7 @@ playState.create = function () {
 
 			gameInfo.rackSolids.addChild(gameInfo.rackSolidsArray[n]);
 			gameInfo.rackSolidsArray[n].x = -200 + diffY + n * 50;
-			gameInfo.rackSolidsArray[n].y = 7;
+			gameInfo.rackSolidsArray[n].y = 100;
 			gameInfo.rackSolidsArray[n].anchor = new Point(0, 1);
 			gameInfo.rackSolidsArray[n].visible = false;
 
@@ -582,7 +582,7 @@ playState.create = function () {
 			);
 			gameInfo.rackStripes.addChild(gameInfo.rackStripesArray[n]);
 			gameInfo.rackStripesArray[n].x = -200 + n * 50;
-			gameInfo.rackStripesArray[n].y = 7;
+			gameInfo.rackStripesArray[n].y = 100;
 			gameInfo.rackStripesArray[n].anchor = new Point(0, 1);
 			gameInfo.rackStripesArray[n].visible = false;
 

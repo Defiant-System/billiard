@@ -45,7 +45,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 		if(collisionArray){
 			if(collisionArray.length > 0){
-				////////window.famobi.log("iterating again");
+				////////console.log("iterating again");
 			}
 		}
 
@@ -114,7 +114,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 							//if(target != ball.lastCollisionObject || ball != target.lastCollisionObject){
 								//treat target ball as stationary object, and subtract it's velocity vector from object ball to get object's velocity vector in the target's frame of reference
-								////////window.famobi.log("checking " + ball.id + " on " + target.id);
+								////////console.log("checking " + ball.id + " on " + target.id);
 								var ballReferenceVector = ball.velocity.minus(target.velocity); //ball's velocity vector in targets f.o.r.
 								var nextBallReferencePoint = ball.position.plus(ballReferenceVector.times(omegaTime));
 								var A = new Point(ball.position.x, ball.position.y); //starting point of object ball
@@ -123,16 +123,16 @@ billiardPhysics.prototype.predictCollisions = function() {
 								var r = 2 * this.ballRadius;
 								var intersection = Maths.lineIntersectCircle(A, B, C, r);
 								/*
-										//////window.famobi.log("_____________________");
-										//////window.famobi.log("testing " + ball.id + " on " + target.id);
-										//////window.famobi.log("inside: " + intersection.inside);
-										//////window.famobi.log("tangent: " + intersection.tangent);
-										//////window.famobi.log("intersects: " + intersection.intersects);
-										//////window.famobi.log("enter: " + intersection.enter);
-										//////window.famobi.log("exit: " + intersection.exit);
-										//////window.famobi.log("_____________________");
+										//////console.log("_____________________");
+										//////console.log("testing " + ball.id + " on " + target.id);
+										//////console.log("inside: " + intersection.inside);
+										//////console.log("tangent: " + intersection.tangent);
+										//////console.log("intersects: " + intersection.intersects);
+										//////console.log("enter: " + intersection.enter);
+										//////console.log("exit: " + intersection.exit);
+										//////console.log("_____________________");
 								if (intersection.inside == true){
-									//////window.famobi.log("WTF??");
+									//////console.log("WTF??");
 								}
 								*/
 
@@ -157,11 +157,11 @@ billiardPhysics.prototype.predictCollisions = function() {
 									var intersectPoint2; //the centre of the object ball, as a Point, at the moment it will make contact with the target.
 
 									if(intersection.exit != null){
-										//window.famobi.log("exit");
+										//console.log("exit");
 										intersectPoint2	= intersection.exit;
 									}
 									if(intersection.enter != null){
-										//window.famobi.log("enter");
+										//console.log("enter");
 										intersectPoint2	= intersection.enter;
 									}
 
@@ -181,7 +181,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 										//the balls must be overlapping (probably only slightly due to rounding errors) at the point the balls are currently positioned (not projected forward to some point over the next frame as the intersection.enter result would show), and we will treat it as a contact right now, with the contact point being where the balls would touch if we moved the ball directly away from the target it is overlapping. The intersection point is the centre of the object ball
 
-										//window.famobi.log("overlap");
+										//console.log("overlap");
 										var targetToBall = ball.position.minus(target.position).normalize();
 										intersectPointAsVector2 = target.position.plus(targetToBall.times(r));
 										intersectTime2 = time;
@@ -189,11 +189,11 @@ billiardPhysics.prototype.predictCollisions = function() {
 									}
 
 									/*
-										//////window.famobi.log("_____________________");
+										//////console.log("_____________________");
 										//////console.log(ball.id + " hit " + target.id);
-										//////window.famobi.log("intersect time = " + intersectTime2);
-										//////window.famobi.log("collision time = " + collisionTime);
-										//////window.famobi.log("_____________________");
+										//////console.log("intersect time = " + intersectTime2);
+										//////console.log("collision time = " + collisionTime);
+										//////console.log("_____________________");
 										*/
 
 									 if (intersectTime2 < collisionTime) {
@@ -253,7 +253,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 											//don't clear array - this is another collision at the same time
 											collisionArray.push(collision);
 
-											//window.famobi.log("double collision (ball)");
+											//console.log("double collision (ball)");
 										}
 
 									}
@@ -298,7 +298,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 							 if (intersectPoint == null) {
 								intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p5.x, line.p5.y), new Point(line.p6.x, line.p6.y));
 								if (intersectPoint != null) {
-									window.famobi.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
+									console.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
 									//adjust the intersect point so it is on the first line instead of the second
 
 
@@ -363,7 +363,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 										collisionArray.push(collision);
 
-										window.famobi.log("double collision (line): frame " + this.frame);
+										console.log("double collision (line): frame " + this.frame);
 									}
 
 								}
@@ -408,23 +408,23 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 								if(intersection3.enter != null){
 									intersectPoint3	= intersection3.enter;
-									//window.famobi.log("!!!!!!   ENTER !!!!!!!!!!!!!!!: frame " + this.frame);
+									//console.log("!!!!!!   ENTER !!!!!!!!!!!!!!!: frame " + this.frame);
 									if(ball.id == 8 && vertex.name == "K"){
-										//window.famobi.log("intersect point: " + intersectPoint3.x + ", " + intersectPoint3.y);
+										//console.log("intersect point: " + intersectPoint3.x + ", " + intersectPoint3.y);
 									}
 								}
 								if(intersection3.exit != null){
 									intersectPoint3	= intersection3.exit;
-									window.famobi.log("!!!!!!   EXIT !!!!!!!!!!!!!!!: frame " + this.frame);
+									console.log("!!!!!!   EXIT !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
 								if(intersection3.enter != null && intersection3.exit != null){
-									window.famobi.log("!!!!!! STRAIGHT THROUGH !!!!!!!!!!!!!!!: frame " + this.frame);
+									console.log("!!!!!! STRAIGHT THROUGH !!!!!!!!!!!!!!!: frame " + this.frame);
 									intersectPoint3	= intersection3.enter;
 								}
 
 								if(intersection3.enter == null && intersection3.exit != null){
-									window.famobi.log("!!!!!! EXIT ONLY !!!!!!!!!!!!!!!: frame " + this.frame);
+									console.log("!!!!!! EXIT ONLY !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
 								var intersectPointAsVector3;
@@ -450,7 +450,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 									intersectPointAsVector3 = new Vector2D(intersectPoint3.x, intersectPoint3.y);
 									intersectTime3 = time;
 
-									window.famobi.log("overlapping vertex: frame " + this.frame);
+									console.log("overlapping vertex: frame " + this.frame);
 
 								}
 
@@ -497,7 +497,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
 
-										window.famobi.log("double collision (vertex): frame " + this.frame);
+										console.log("double collision (vertex): frame " + this.frame);
 									}
 
 								}
@@ -540,15 +540,15 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 							//compare sizes - same if in same direction, opposite sign if not
 							if(dotP > 0){
-								//window.famobi.log("towards");
+								//console.log("towards");
 								towardsPocket = true;
 							}//else{
-								//window.famobi.log("away");
+								//console.log("away");
 							//}else if(vector.magnitude =- component.magnitude){
 								//false by default
-								//window.famobi.log("same direction");
+								//console.log("same direction");
 							//}else{
-								//window.famobi.log("BOLLOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+								//console.log("BOLLOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 							//}
 
 
@@ -604,7 +604,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 									intersectPointAsVector4 = new Vector2D(C4.x, C4.y).plus(vertexToBall.times(r4));
 									intersectTime4 = time;
 
-									//////window.famobi.log("overlapping pocket");
+									//////console.log("overlapping pocket");
 
 								}
 
@@ -645,7 +645,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 										collision.target = pocket;
 
-										//////window.famobi.log("double collision (pocket)");
+										//////console.log("double collision (pocket)");
 										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
 									}
@@ -677,7 +677,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 		sanityCheck ++;
 
 		if(sanityCheck >= 20){
-			//window.famobi.log("max iterations");
+			//console.log("max iterations");
 		}
 
 	}while (collisionArray.length > 0 && sanityCheck < 20);
@@ -700,7 +700,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 						//trace("frame: " + frameCounter);
 						//ballTest.mc.alpha = 0.5;
 						//targetTest.mc.alpha = 0.5;
-						//////window.famobi.log("OVERLAP!");
+						//////console.log("OVERLAP!");
 						break;
 
 					}
@@ -749,7 +749,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 		var collision = collisionArray[c];
 
-		////////window.famobi.log("collision type: " + collision.type);
+		////////console.log("collision type: " + collision.type);
 
 
 		//apply new velocities and update position to the contact position
@@ -763,7 +763,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			var overlap = false;
 
 /*
-		//////window.famobi.log("=========================");
+		//////console.log("=========================");
 
 				for (var ba = 0; ba < this.ballArray.length; ba ++) {
 					var ballTest = this.ballArray[ba];
@@ -776,7 +776,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 								//trace("frame: " + frameCounter);
 								//ballTest.mc.alpha = 0.5;
 								//targetTest.mc.alpha = 0.5;
-								//////window.famobi.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
+								//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
 
 
 							}
@@ -814,7 +814,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 						//trace("frame: " + frameCounter);
 						//ballTest.mc.alpha = 0.5;
 						//targetTest.mc.alpha = 0.5;
-						//////window.famobi.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
+						//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
 						overlap = true;
 
 
@@ -823,7 +823,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			}
 		}
 
-		//////window.famobi.log("=========================");
+		//////console.log("=========================");
 
 		if(overlap == true){
 			gameInfo.overlap = true;
@@ -920,7 +920,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 
 			//if(collision.time == ctl){
-				//window.famobi.log("double line: frame " + this.frame);
+				//console.log("double line: frame " + this.frame);
 			//}
 			ctl = collision.time;
 
@@ -934,12 +934,12 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			ball.position = collision.objectIntersectPoint;
 			var line = collision.target;
 
-			//window.famobi.log("ball " + ball.id + " on line: " + line.name + ", frame: " + this.frame);
+			//console.log("ball " + ball.id + " on line: " + line.name + ", frame: " + this.frame);
 
 			this.omissionArray.push(ball);
 
 
-			//////window.famobi.log("line: " + line);
+			//////console.log("line: " + line);
 
 			//if(this.simType == 0){
 				ball.ySpin += -ball.velocity.dot(line.direction) / 100; //300
@@ -1002,7 +1002,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 		if (collision.type == "vertex") {
 
 			//if(collision.time == ctv){
-				//window.famobi.log("double line: frame " + this.frame);
+				//console.log("double line: frame " + this.frame);
 			//}
 			//ctv = collision.time;
 
@@ -1012,7 +1012,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			ball.position = collision.objectIntersectPoint;
 			var vertex = collision.target;
 
-			//window.famobi.log("ball " + ball.id + " on vertex: " + vertex.name + ", frame: " + this.frame);
+			//console.log("ball " + ball.id + " on vertex: " + vertex.name + ", frame: " + this.frame);
 
 			this.omissionArray.push(ball);
 
@@ -1030,17 +1030,17 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			//if(ball.lastVertex != vertex.name){
 
 				//if(ball.id == 8){
-					//////window.famobi.log("ball " + ball.id + " bouncing off vertex " + vertex.name);
-					//window.famobi.log("vector before collision: " + ball.velocity.x + ", " + ball.velocity.y);
-					//window.famobi.log("normal: " + contactNormal.x + ", " + contactNormal.y);
-					//window.famobi.log("ball position: " + ball.position.x + ", " + ball.position.y);
-					//window.famobi.log("vertex position: " + vertex.position.x + ", " + vertex.position.y);
+					//////console.log("ball " + ball.id + " bouncing off vertex " + vertex.name);
+					//console.log("vector before collision: " + ball.velocity.x + ", " + ball.velocity.y);
+					//console.log("normal: " + contactNormal.x + ", " + contactNormal.y);
+					//console.log("ball position: " + ball.position.x + ", " + ball.position.y);
+					//console.log("vertex position: " + vertex.position.x + ", " + vertex.position.y);
 					//var dist = Math.sqrt(((vertex.position.x - ball.position.x) * (vertex.position.x - ball.position.x)) + ((vertex.position.y - ball.position.y) * (vertex.position.y - ball.position.y)));
-					//window.famobi.log("dist ball to vertex: " + dist);
-					//window.famobi.log("ball radius: " + gameInfo.ballRadius);
+					//console.log("dist ball to vertex: " + dist);
+					//console.log("ball radius: " + gameInfo.ballRadius);
 				//}
 
-				//window.famobi.log("ball " + ball.id + " changing direction");
+				//console.log("ball " + ball.id + " changing direction");
 				ball.velocity = (ballVelocityNormal.times( -this.cushionRestitution)).plus(ballVelocityTangent);
 				//move ball away from vertex by the smallest amount to prevent intersection being detected on next iteration
 				//ball.position = ball.position.plus(ball.velocity.normalize());
@@ -1050,7 +1050,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 				if(ball.id == 8){
 
-					//window.famobi.log("vector after collision: " + ball.velocity.x + ", " + ball.velocity.y);
+					//console.log("vector after collision: " + ball.velocity.x + ", " + ball.velocity.y);
 				}
 			//}
 
@@ -1079,7 +1079,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			//var vec = (pocket.position.minus(ball.position)).normalize()
 			//var contactNormal = new Vector2D(vec.x, vec.y);
 
-			//////window.famobi.log("ball " + ball.id + " in pocket");
+			//////console.log("ball " + ball.id + " in pocket");
 
 			this.omissionArray.push(ball);
 
@@ -1173,7 +1173,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 	if(collisionArray.length > 1){
 
 		if(ctl == ctv ||  ctl == ctp || ctl == ctb || ctv == ctp || ctv == ctb || ctp == ctb){
-			//window.famobi.log("dual impact: frame " + this.frame);
+			//console.log("dual impact: frame " + this.frame);
 		}
 
 	}
