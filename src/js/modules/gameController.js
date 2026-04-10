@@ -1,7 +1,7 @@
 playState.update = function () {
 	var gameInfo = this.gameInfo;
-
 	var turn = gameInfo.turn;
+	var preventQuit;
 
 	if (gameInfo.gameRunning == true) {
 		//console.log("shot reset: " + gameInfo.shotReset);

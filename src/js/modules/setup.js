@@ -1329,7 +1329,7 @@ playState.create = function () {
 		//create table sprites
 
 		gameInfo.pockets = new Phaser.Sprite(game, 0, 0, "pockets");
-		gameInfo.pockets.alpha = .5;
+		// gameInfo.pockets.alpha = .5;
 		gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.pockets);
 
@@ -1340,7 +1340,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.cloth = new Phaser.Sprite(game, 0, 0, "cloth");
-		gameInfo.cloth.alpha = .5;
+		// gameInfo.cloth.alpha = .5;
 		gameInfo.cloth.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.cloth);
 
@@ -1351,7 +1351,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.tableTop = new Phaser.Sprite(game, 0, 0, "tableTop");
-		gameInfo.tableTop.alpha = .5;
+		// gameInfo.tableTop.alpha = .5;
 		gameInfo.tableTop.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
 
@@ -1716,7 +1716,6 @@ playState.create = function () {
 
 			//debug drawings
 			/*
-			*/
 			graphics.lineStyle(1, 0xffffff, 1);
 			graphics.moveTo(line.p1.x * gameInfo.physScale, (line.p1.y-dY) * gameInfo.physScale);
 			graphics.lineTo(line.p2.x * gameInfo.physScale, (line.p2.y-dY) * gameInfo.physScale);
@@ -1724,14 +1723,15 @@ playState.create = function () {
 			graphics.lineStyle(1, 0x000000, 1);
 			graphics.moveTo(line.p3.x * gameInfo.physScale, (line.p3.y-dY) * gameInfo.physScale);
 			graphics.lineTo(line.p4.x * gameInfo.physScale, (line.p4.y-dY) * gameInfo.physScale);
+			*/
 		}
 
-		/**/
+		/*
 		for(var n = 0; n < gameInfo.vertexArray.length; n ++){
 			var vertex = gameInfo.vertexArray[n];
 			graphics.drawCircle(vertex.position.x * gameInfo.physScale, (vertex.position.y-dY) * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
 		}
-		
+		*/
 	}
 
 	function initBalls() {

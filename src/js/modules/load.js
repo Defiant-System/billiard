@@ -206,16 +206,16 @@ loadState.preload = function() {
     // this.load.image('tick', '~/img/tick.png');
     // this.load.image('gameController', '~/img/gameController.png');
     // this.load.image('famobi', '~/img/famobi.png');
-
-    this.load.audio('ballHit', ['assets/audio/ballHit2.wav', 'assets/audio/ballHit2.mp3']);
-    this.load.audio('cushionHit', ['assets/audio/cushionHit.wav', 'assets/audio/cushionHit.mp3']);
-    this.load.audio('pocketHit', ['assets/audio/pocketHit.wav', 'assets/audio/pocketHit.mp3']);
-    this.load.audio('cueHit', ['assets/audio/cueHit.wav', 'assets/audio/cueHit.mp3']);
-    this.load.audio('shimmer', ['assets/audio/shimmer.wav', 'assets/audio/shimmer.mp3']);
-    this.load.audio('ding', ['assets/audio/ding.wav', 'assets/audio/ding.mp3']);
-    this.load.audio('cheer', ['assets/audio/cheer.wav', 'assets/audio/cheer.mp3']);
-	
     */
+
+    this.load.audio('ballHit', ['~/audio/ballHit2.mp3']);
+    this.load.audio('cushionHit', ['~/audio/cushionHit.mp3']);
+    this.load.audio('pocketHit', ['~/audio/pocketHit.mp3']);
+    this.load.audio('cueHit', ['~/audio/cueHit.mp3']);
+    this.load.audio('shimmer', ['~/audio/shimmer.mp3']);
+    this.load.audio('ding', ['~/audio/ding.mp3']);
+    this.load.audio('cheer', ['~/audio/cheer.mp3']);
+	
     game.load.onFileComplete.add(this.updateProgressBar, this);
 }
 
