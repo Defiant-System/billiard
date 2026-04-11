@@ -2,8 +2,8 @@
 var setBallPositions = function(gameInfo) {
 
 	//console.log("setBallPositions");
-	//console.log("projectInfo: " + projectInfo);
-	//console.log("level: " + projectInfo.level);
+	//console.log("project: " + project);
+	//console.log("level: " + Project.level);
 	
 	var ballPositionArray = new Array();
 	var px = 15000 * gameInfo.adjustmentScale; 
@@ -11,13 +11,13 @@ var setBallPositions = function(gameInfo) {
 	var spacingY = 0.05 + Math.random() * 0.05; //0.05
 	var j = 1 + spacingY;
 	var k = 1.732 + spacingX; //1.732 spacing
-	var level = projectInfo.level;
+	var level = Project.level;
 	
 	if(level > gameInfo.numLevels) {
 		level = gameInfo.numLevels;
 	}
 
-	if(projectInfo.tutorial == true) {
+	if(Project.tutorial == true) {
 		level = 100;
 	}
 

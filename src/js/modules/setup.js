@@ -1,6 +1,6 @@
 
 
-var diffY = 100;
+var diffY = 80;
 var diffX = 0;
 var playState = new Object();
 
@@ -13,32 +13,32 @@ playState.create = function () {
 	function resizeGame(scale, bounds) {
 		//console.log("resized game");
 		//this.resizeGame();
-		//game.state.resize(R.gameWidth, R.gameHeight);
-		var clientWidth = Math.min(
-			window.innerWidth,
-			document.documentElement.clientWidth
-		);
-		var clientHeight = Math.min(
-			window.innerHeight,
-			document.documentElement.clientHeight
-		);
+		//Project.game.state.resize(R.gameWidth, R.gameHeight);
+		// var clientWidth = Math.min(
+		// 	window.innerWidth,
+		// 	document.documentElement.clientWidth
+		// );
+		// var clientHeight = Math.min(
+		// 	window.innerHeight,
+		// 	document.documentElement.clientHeight
+		// );
 
 		//set to landscape mode
 		gameInfo.landscape = true;
-		//game.scale.setGameSize(1024, 690);
-		game.scale.setGameSize(1920, 1080);
+		//Project.game.scale.setGameSize(1024, 690);
+		Project.game.scale.setGameSize(Project.width, Project.height);
 
-		gameInfo.gameCanvas.x = game.width / 2;
-		gameInfo.gameCanvas.y = game.height / 2 - 75;
+		gameInfo.gameCanvas.x = Project.game.width / 2;
+		gameInfo.gameCanvas.y = Project.game.height / 2 - 75;
 
 		//tutorial
-		if (projectInfo.tutorial) {
-			gameInfo.skipText.x = game.world.centerX;
-			gameInfo.skipText.y = game.world.centerY + 230;
+		if (Project.tutorial) {
+			gameInfo.skipText.x = Project.game.world.centerX;
+			gameInfo.skipText.y = Project.game.world.centerY + 230;
 
-			gameInfo.tutorialText.x = game.world.centerX;
-			gameInfo.tutorialText.y = game.world.centerY - 320;
-			if (game.device.touch) {
+			gameInfo.tutorialText.x = Project.game.world.centerX;
+			gameInfo.tutorialText.y = Project.game.world.centerY - 320;
+			if (Project.game.device.touch) {
 				gameInfo.hand.scale.x = 1;
 				gameInfo.hand.scale.y = 1;
 
@@ -66,128 +66,36 @@ playState.create = function () {
 		}
 
 		//racks
-		gameInfo.rackSolids.x = game.width / 4;
-		gameInfo.rackSolids.y = game.height - 40;
+		gameInfo.rackSolids.x = Project.game.width / 4;
+		gameInfo.rackSolids.y = Project.game.height - 40;
 
-		gameInfo.rackStripes.x = (3 * game.width) / 4;
-		gameInfo.rackStripes.y = game.height - 40;
+		gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
+		gameInfo.rackStripes.y = Project.game.height - 40;
 
 		//if target types have already been set, may need to swap racks accordingly
 		if (gameInfo.p1TargetType == "SOLIDS") {
-			gameInfo.rackSolids.x = game.width / 4;
-			gameInfo.rackStripes.x = (3 * game.width) / 4;
+			gameInfo.rackSolids.x = Project.game.width / 4;
+			gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
 		}
 
 		if (gameInfo.p1TargetType == "STRIPES") {
-			gameInfo.rackSolids.x = (3 * game.width) / 4;
-			gameInfo.rackStripes.x = game.width / 4;
+			gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
+			gameInfo.rackStripes.x = Project.game.width / 4;
 		}
-
-		//top panels
-		/*
-		gameInfo.guiPanel1.x = game.width / 2 - gameInfo.guiPanel2.width / 2 - 20;
-		gameInfo.guiPanel1.y = game.height - 40;
-
-		gameInfo.guiPanel2.x = game.width / 2;
-		gameInfo.guiPanel2.y = game.height - 40;
-
-		gameInfo.guiPanel3.x = game.width / 2 + gameInfo.guiPanel2.width / 2 + 20;
-		gameInfo.guiPanel3.y = game.height - 40;
-
-		gameInfo.timerText.x = gameInfo.guiPanel3.x + gameInfo.guiPanel3.width / 2;
-		gameInfo.timerText.y = game.height - 40;
-
-		(gameInfo.scoreText.x = game.width / 2), (gameInfo.scoreText.y = game.height - 40);
-
-		gameInfo.multiplierText.x = gameInfo.guiPanel1.x - gameInfo.guiPanel1.width / 2;
-		gameInfo.multiplierText.y = game.height - 40;
-		*/
 
 		//rotate table
 		gameInfo.gameCanvas.y += diffY;
 		gameInfo.gameCanvas.x += diffX;
 		gameInfo.gameCanvas.angle = 0;
 
-		gameInfo.spinSetter.x = game.width - 90;
-		gameInfo.spinSetter.y = game.height / 2;
+		gameInfo.spinSetter.x = Project.game.width - 90;
+		gameInfo.spinSetter.y = Project.game.height / 2;
 
-		gameInfo.spinSetterZoom.x = game.width / 2;
-		gameInfo.spinSetterZoom.y = game.height / 2 - 75;
+		gameInfo.spinSetterZoom.x = Project.game.width / 2;
+		gameInfo.spinSetterZoom.y = Project.game.height / 2 - 75;
 
-		/*
-		//icons
-		gameInfo.humanIcon.x = 120;
-		gameInfo.humanIcon.y = game.height - 20;
-		gameInfo.humanIcon.anchor = new Point(0, 1);
-		gameInfo.humanIcon.scale = new Point(0.4, 0.4);
-		gameInfo.aiIcon.x = game.width - 120 - gameInfo.aiIcon.width;
-		gameInfo.aiIcon.y = game.height - 20;
-		gameInfo.aiIcon.anchor = new Point(0, 1);
-		gameInfo.aiIcon.scale = new Point(0.4, 0.4);
-		gameInfo.turnArrow1.x = 75;
-		gameInfo.turnArrow1.y = game.height - 40;
-		gameInfo.turnArrow2.scale = new Point(0.5, 0.5);
-		gameInfo.turnArrow2.x = game.width - 75;
-		gameInfo.turnArrow2.y = game.height - 40;
-		gameInfo.turnArrow2.scale = new Point(-0.5, 0.5);
-
-		//buttons
-		gameInfo.menuButton.x = game.width - 80;
-		gameInfo.menuButton.y = 20;
-		gameInfo.menuButton.scale = new Point(0.5, 0.5);
-		gameInfo.spinSetter.x = game.width - 90;
-		gameInfo.spinSetter.y = game.height / 2;
-		gameInfo.spinSetterZoom.x = game.width / 2;
-		gameInfo.spinSetterZoom.y = game.height / 2 - 75;
-
-		gameInfo.successIcon.angle = 0;
-		gameInfo.gameOverPanel.x = game.width / 2;
-		gameInfo.gameOverPanel.y = game.height / 2 - 10 - 75;
-		gameInfo.gameOverPanelBG.angle = 0;
-		gameInfo.GOhighScoreIcon.x = 220;
-		gameInfo.GOhighScoreIcon.y = -246;
-		gameInfo.gameOverPanel.text2.x = 285;
-		gameInfo.gameOverPanel.text2.y = -249;
-		gameInfo.playerWin.x = -400;
-		gameInfo.playerWin.y = -265;
-		gameInfo.popUpPanel.x = game.width / 2;
-		gameInfo.popUpPanel.y = game.height / 2 - 75;
-		gameInfo.popUpPanelBG.angle = 0;
-
-		let externalMute = false;
-
-		gameInfo.playButtonPU.x = 0;
-		gameInfo.playButtonPU.y = -90;
-		gameInfo.muteButtonPU.x = -170;
-		gameInfo.muteButtonPU.y = 130;
-		gameInfo.replayButtonPU.x = externalMute ? -85 : 0;
-		gameInfo.replayButtonPU.y = 130;
-		gameInfo.quitButtonPU.x = externalMute ? 85 : 170;
-		gameInfo.quitButtonPU.y = 130;
-		gameInfo.foulWindow.x = game.width / 2;
-		gameInfo.foulWindow.y = game.height / 2 - 75;
-		gameInfo.quitButton2.y = 170;
-		gameInfo.replayButton.y = 170;
-		*/
-
-		//objects which need moving but take the same values regardless of orientation (eg. relative to other items which have changed)
-
-		//console.log("window height: " + window.innerHeight);
-		//console.log("game height: " + document.getElementById("game").clientHeight);
-
-		var margin =
-			String(
-				Math.abs(
-					window.innerHeight - document.getElementById("mygame").clientHeight
-				) / 2
-			) + "px";
-		//document.getElementById("game").style.marginTop = margin;
-
-		gameInfo.debugText.x = game.width - 25;
+		gameInfo.debugText.x = Project.game.width - 25;
 		gameInfo.debugText.y = 30;
-
-		// gameInfo.successIcon.x = 0;
-		// gameInfo.successIcon.y = 0;
 	};
 
 	this.gameInfo = new Object(); //gameInfo is a property of playState
@@ -199,7 +107,6 @@ playState.create = function () {
 	initCanvases();
 	initBG();
 	initTable();
-	// initBonusStar();
 	initBalls();
 	initGuide();
 	initGUI();
@@ -209,10 +116,7 @@ playState.create = function () {
 	renderScreen();
 	initTimer();
 	initLevelText();
-	// initTutorial();
 	setTurn();
-	// initSkipText();
-	// initTutorialText();
 
 	resizeGame();
 
@@ -222,7 +126,7 @@ playState.create = function () {
 		gameInfo.turn = "p1";
 		// gameInfo.turnArrow1.frame = 1;
 		// gameInfo.turnArrow2.frame = 0;
-		// if (projectInfo.lastBreaker == "none") {
+		// if (Project.lastBreaker == "none") {
 		// 	if (Math.random() < 0.5) {
 		// 		gameInfo.turn = "p1";
 		// 		gameInfo.turnArrow1.frame = 1;
@@ -234,7 +138,7 @@ playState.create = function () {
 		// 	}
 		// } else {
 		// 	//this is a re-rack due to a foul, so switch turns
-		// 	if (projectInfo.lastBreaker == "p2") {
+		// 	if (Project.lastBreaker == "p2") {
 		// 		gameInfo.turn = "p1";
 		// 		gameInfo.turnArrow1.frame = 1;
 		// 		gameInfo.turnArrow2.frame = 0;
@@ -246,66 +150,47 @@ playState.create = function () {
 		// }
 	}
 
-	function initTutorial() {
-		//tutorial
-		if (projectInfo.tutorial == true) {
-			if (game.device.touch) {
-				gameInfo.hand = new Phaser.Sprite(game, 0, 0, "hand");
-				gameInfo.tutCanvas.addChild(gameInfo.hand);
-				gameInfo.hand.alpha = 0;
-				//gameInfo.hand.anchor = new Point(.5, .5);
-				//gameInfo.hand.angle = -45;
-			} else {
-				gameInfo.mouseSprite = new Phaser.Sprite(game, 0, 0, "mouseSprite");
-				gameInfo.tutCanvas.addChild(gameInfo.mouseSprite);
-				gameInfo.mouseSprite.alpha = 0;
-				gameInfo.mouseSprite.anchor = new Point(1, -0.5);
-				//gameInfo.mouseSprite.angle = -45;
-			}
-		}
-	}
-
 	function initLevel() {
-		if (projectInfo.levelComplete == false) {
-			projectInfo.level = 1;
+		if (Project.levelComplete == false) {
+			Project.level = 1;
 		} else {
-			//if(projectInfo.level < gameInfo.numLevels){
-			projectInfo.level++;
+			//if(Project.level < gameInfo.numLevels){
+			Project.level++;
 			//}
 		}
 
-		if (projectInfo.tutorial == false) {
+		if (Project.tutorial == false) {
 			// window.famobi_analytics.trackScreen("SCREEN_LEVEL");
 		}
 	}
 
 	function initScoreAndTime() {
-		if (projectInfo.levelComplete == false) {
-			projectInfo.score = 0;
+		if (Project.levelComplete == false) {
+			Project.score = 0;
 		} else {
-			projectInfo.levelComplete = false;
+			Project.levelComplete = false;
 		}
 
-		switch (projectInfo.level) {
+		switch (Project.level) {
 			case 1:
-				projectInfo.startTime = 50;
+				Project.startTime = 50;
 				break;
 			case 2:
-				projectInfo.startTime = 60;
+				Project.startTime = 60;
 				break;
 			case 3:
-				projectInfo.startTime = 80;
+				Project.startTime = 80;
 				break;
 			case 4:
-				projectInfo.startTime = 90;
+				Project.startTime = 90;
 				break;
 			case 5:
-				projectInfo.startTime = 100;
+				Project.startTime = 100;
 				break;
 		}
 
-		if (projectInfo.level >= gameInfo.numLevels) {
-			projectInfo.startTime -= 10;
+		if (Project.level >= gameInfo.numLevels) {
+			Project.startTime -= 10;
 		}
 	}
 
@@ -390,11 +275,11 @@ playState.create = function () {
 
 	function initLevelText() {
 		gameInfo.levelText = new Phaser.BitmapText(
-			game,
+			Project.game,
 			0,
 			-100,
 			"font1",
-			projectInfo.level,
+			Project.level,
 			48
 		);
 		gameInfo.timerCanvas.addChild(gameInfo.levelText);
@@ -402,13 +287,13 @@ playState.create = function () {
 		gameInfo.levelText.anchor.y = 0.5;
 		gameInfo.levelText.alpha = 0.2;
 
-		// gameInfo.successIcon = new Phaser.Sprite(game, 0, 0, "success");
+		// gameInfo.successIcon = new Phaser.Sprite(Project.game, 0, 0, "success");
 		// gameInfo.timerCanvas.addChild(gameInfo.successIcon);
 		// gameInfo.successIcon.visible = false;
 		// gameInfo.successIcon.anchor = new Point(0.5, 0.5);
 		// gameInfo.successIcon.alpha = 0.25;
 
-		if (projectInfo.tutorial == true) {
+		if (Project.tutorial == true) {
 			gameInfo.levelText.visible = false;
 		}
 		gameInfo.levelText.visible = false;
@@ -416,9 +301,9 @@ playState.create = function () {
 
 	function initSkipText() {
 		gameInfo.skipText = new Phaser.BitmapText(
-			game,
-			game.world.centerX,
-			game.world.centerY + 230,
+			Project.game,
+			Project.game.world.centerX,
+			Project.game.world.centerY + 230,
 			"font3",
 			"Click to skip",
 			64
@@ -427,53 +312,14 @@ playState.create = function () {
 		gameInfo.skipText.anchor.x = 0.5;
 		gameInfo.skipText.anchor.y = 0.5;
 		gameInfo.skipText.alpha = 0.8;
-		if (projectInfo.tutorial) {
+		if (Project.tutorial) {
 			gameInfo.skipText.visible = true;
 		}
 		gameInfo.skipText.visible = false;
 	}
 
-	function initTutorialText() {
-		gameInfo.tutorialText = new Phaser.BitmapText(
-			game,
-			0,
-			0,
-			"font3",
-			"Tutorial",
-			78
-		);
-		gameInfo.guiCanvas.addChild(gameInfo.tutorialText);
-		gameInfo.tutorialText.anchor.x = 0.5;
-		gameInfo.tutorialText.anchor.y = 0.5;
-		gameInfo.tutorialText.alpha = 0.8;
-		if (projectInfo.tutorial) {
-			gameInfo.tutorialText.visible = true;
-		}
-		gameInfo.tutorialText.visible = false;
-	}
-
 	function initTimer() {
 		//moved to initGUI and timer text now placed on gui canvas
-	}
-
-	function initBonusStar() {
-		//bonus star which appears in various pockets
-		/*
-
-		gameInfo.bonusStars = new Array();
-
-		for(var n = 0; n < 6; n ++){
-			gameInfo.bonusStars[n] = new Phaser.Sprite(game, 0, 0, 'bonusDisc', 1);
-			gameInfo.tableCanvas.addChild(gameInfo.bonusStars[n]);
-			gameInfo.bonusStars[n].x = gameInfo.pocketArray[n].starPosition.x * gameInfo.physScale;
-			gameInfo.bonusStars[n].y = gameInfo.pocketArray[n].starPosition.y * gameInfo.physScale;
-			gameInfo.bonusStars[n].anchor = new Point(.5, .5);
-			gameInfo.bonusStars[n].scale.x = .8;
-			gameInfo.bonusStars[n].scale.y = .8;
-			gameInfo.bonusStars[n].visible = false;
-
-		}
-		*/
 	}
 
 	function initBG() {}
@@ -481,8 +327,8 @@ playState.create = function () {
 	function initGUI() {
 		//debug
 		gameInfo.debugText = new Phaser.BitmapText(
-			game,
-			game.width - 1,
+			Project.game,
+			Project.game.width - 1,
 			20,
 			"font7",
 			"",
@@ -493,31 +339,31 @@ playState.create = function () {
 
 		gameInfo.debugText.visible = false;
 
-		gameInfo.spinSetter = new Phaser.Sprite(game, 0, 0, "spinSetterSmall");
+		gameInfo.spinSetter = new Phaser.Sprite(Project.game, 0, 0, "spinSetterSmall");
 		gameInfo.guiCanvas.addChild(gameInfo.spinSetter);
 		gameInfo.spinSetter.anchor = new Point(0.5, 0.5);
 		gameInfo.spinSetter.inputEnabled = true;
 		gameInfo.spinSetter.ignoreChildInput = true;
-		gameInfo.cueBallSpot = new Phaser.Sprite(game, 0, 0, "cueBallSpot");
+		gameInfo.cueBallSpot = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpot");
 		gameInfo.spinSetter.addChild(gameInfo.cueBallSpot);
 		gameInfo.cueBallSpot.anchor = new Point(0.5, 0.5);
 
-		gameInfo.spinSetterZoom = new Phaser.Sprite(game, 0, 0, "spinSetterZoom");
+		gameInfo.spinSetterZoom = new Phaser.Sprite(Project.game, 0, 0, "spinSetterZoom");
 		gameInfo.guiCanvas.addChild(gameInfo.spinSetterZoom);
 		gameInfo.spinSetterZoom.anchor = new Point(0.5, 0.5);
 		gameInfo.spinSetterZoom.inputEnabled = true;
 		gameInfo.spinSetterZoom.ignoreChildInput = true;
-		gameInfo.cueBallSpotZoom = new Phaser.Sprite(game, 0, 0, "cueBallSpotZoom");
+		gameInfo.cueBallSpotZoom = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpotZoom");
 		gameInfo.spinSetterZoom.addChild(gameInfo.cueBallSpotZoom);
 		gameInfo.cueBallSpotZoom.anchor = new Point(0.5, 0.5);
 		gameInfo.spinSetterZoom.visible = false;
 
 		gameInfo.rackSolids = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.guiCanvas,
 			"rackSolids"
 		);
-		// gameInfo.rackBGSolids = new Phaser.Sprite(game, 0, 0, "rackBG");
+		// gameInfo.rackBGSolids = new Phaser.Sprite(Project.game, 0, 0, "rackBG");
 		// gameInfo.rackSolids.addChild(gameInfo.rackBGSolids);
 		// gameInfo.rackBGSolids.x = 1;
 		// gameInfo.rackBGSolids.y = 0;
@@ -529,10 +375,10 @@ playState.create = function () {
 
 		for (var n = 0; n < 7; n++) {
 			//var ballString = "guiSolid" + n;
-			//gameInfo[ballString] = new Phaser.Sprite(game, 0, 0, 'guiSolids', n);
+			//gameInfo[ballString] = new Phaser.Sprite(Project.game, 0, 0, 'guiSolids', n);
 
 			gameInfo.rackSolidsArray[n] = new Phaser.Sprite(
-				game,
+				Project.game,
 				0,
 				0,
 				"guiSolids",
@@ -548,7 +394,7 @@ playState.create = function () {
 			gameInfo.rackSpotNumberArray[n + 1] = gameInfo.rackSolidsArray[n];
 		}
 
-		gameInfo.rackSolids8ball = new Phaser.Sprite(game, 0, 0, "8ball");
+		gameInfo.rackSolids8ball = new Phaser.Sprite(Project.game, 0, 0, "8ball");
 		gameInfo.rackSolids.addChild(gameInfo.rackSolids8ball);
 		gameInfo.rackSolids8ball.x = -185;
 		gameInfo.rackSolids8ball.y = -11;
@@ -559,11 +405,11 @@ playState.create = function () {
 		//gameInfo.guiSolid2.visible = false;
 
 		gameInfo.rackStripes = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.guiCanvas,
 			"rackStripes"
 		);
-		// gameInfo.rackBGStripes = new Phaser.Sprite(game, 0, 0, "rackBG");
+		// gameInfo.rackBGStripes = new Phaser.Sprite(Project.game, 0, 0, "rackBG");
 		// gameInfo.rackStripes.addChild(gameInfo.rackBGStripes);
 		// gameInfo.rackBGStripes.x = 1;
 		// gameInfo.rackBGStripes.y = 0;
@@ -574,7 +420,7 @@ playState.create = function () {
 		for (var n = 0; n < 7; n++) {
 			var ballString = "guiStripe" + n;
 			gameInfo.rackStripesArray[n] = new Phaser.Sprite(
-				game,
+				Project.game,
 				0,
 				0,
 				"guiStripes",
@@ -589,7 +435,7 @@ playState.create = function () {
 			gameInfo.rackSpotNumberArray[n + 9] = gameInfo.rackStripesArray[n];
 		}
 
-		gameInfo.rackStripes8ball = new Phaser.Sprite(game, 0, 0, "8ball");
+		gameInfo.rackStripes8ball = new Phaser.Sprite(Project.game, 0, 0, "8ball");
 		gameInfo.rackStripes.addChild(gameInfo.rackStripes8ball);
 		gameInfo.rackStripes8ball.x = -185;
 		gameInfo.rackStripes8ball.y = -11;
@@ -600,20 +446,20 @@ playState.create = function () {
 		//gameInfo.guiStripe6.visible = false;
 
 		/*
-		gameInfo.turnArrow1 = new Phaser.Sprite(game, 0, 0, "turnArrow");
+		gameInfo.turnArrow1 = new Phaser.Sprite(Project.game, 0, 0, "turnArrow");
 		gameInfo.guiCanvas.addChild(gameInfo.turnArrow1);
 		gameInfo.turnArrow1.anchor = new Point(0.5, 1);
 		gameInfo.turnArrow1.scale = new Point(0.5, 0.5);
 
-		gameInfo.turnArrow2 = new Phaser.Sprite(game, 0, 0, "turnArrow");
+		gameInfo.turnArrow2 = new Phaser.Sprite(Project.game, 0, 0, "turnArrow");
 		gameInfo.guiCanvas.addChild(gameInfo.turnArrow2);
 		gameInfo.turnArrow2.anchor = new Point(0.5, 1);
 		gameInfo.turnArrow2.scale = new Point(-0.5, 0.5);
 
-		gameInfo.humanIcon = new Phaser.Sprite(game, 0, 0, "humanIcon");
-		if (projectInfo.mode == 2) {
+		gameInfo.humanIcon = new Phaser.Sprite(Project.game, 0, 0, "humanIcon");
+		if (Project.mode == 2) {
 			var p1Text = new Phaser.BitmapText(
-				game,
+				Project.game,
 				124,
 				-(gameInfo.humanIcon.height - 204),
 				"font7",
@@ -628,12 +474,12 @@ playState.create = function () {
 		gameInfo.humanIcon.anchor = new Point(0, 1);
 		gameInfo.humanIcon.scale = new Point(0.5, 0.5);
 
-		if (projectInfo.mode == 1) {
-			gameInfo.aiIcon = new Phaser.Sprite(game, 0, 0, "aiIcon");
+		if (Project.mode == 1) {
+			gameInfo.aiIcon = new Phaser.Sprite(Project.game, 0, 0, "aiIcon");
 		} else {
-			gameInfo.aiIcon = new Phaser.Sprite(game, 0, 0, "humanIcon");
+			gameInfo.aiIcon = new Phaser.Sprite(Project.game, 0, 0, "humanIcon");
 			var p2Text = new Phaser.BitmapText(
-				game,
+				Project.game,
 				124,
 				-(gameInfo.humanIcon.height - 81),
 				"font7",
@@ -648,22 +494,22 @@ playState.create = function () {
 		gameInfo.aiIcon.anchor = new Point(1, 1);
 		gameInfo.aiIcon.scale = new Point(0.5, 0.5);
 
-		gameInfo.guiPanel1 = new Phaser.Sprite(game, 0, 0, "guiPanel1");
+		gameInfo.guiPanel1 = new Phaser.Sprite(Project.game, 0, 0, "guiPanel1");
 		gameInfo.guiBaseCanvas.addChild(gameInfo.guiPanel1);
 		gameInfo.guiPanel1.anchor.x = 1;
 		gameInfo.guiPanel1.anchor.y = 1;
 
-		gameInfo.guiPanel2 = new Phaser.Sprite(game, 0, 0, "guiPanel1");
+		gameInfo.guiPanel2 = new Phaser.Sprite(Project.game, 0, 0, "guiPanel1");
 		gameInfo.guiBaseCanvas.addChild(gameInfo.guiPanel2);
 		gameInfo.guiPanel2.anchor.x = 0.5;
 		gameInfo.guiPanel2.anchor.y = 1;
 
-		gameInfo.guiPanel3 = new Phaser.Sprite(game, 0, 0, "guiPanel1");
+		gameInfo.guiPanel3 = new Phaser.Sprite(Project.game, 0, 0, "guiPanel1");
 		gameInfo.guiBaseCanvas.addChild(gameInfo.guiPanel3);
 		gameInfo.guiPanel3.anchor.x = 0;
 		gameInfo.guiPanel3.anchor.y = 1;
 
-		gameInfo.timerText = new Phaser.BitmapText(game, 0, 0, "font7", "0:00", 56);
+		gameInfo.timerText = new Phaser.BitmapText(Project.game, 0, 0, "font7", "0:00", 56);
 		gameInfo.guiCanvas.addChild(gameInfo.timerText);
 		gameInfo.timerText.anchor.x = 0.5;
 		gameInfo.timerText.anchor.y = 1;
@@ -675,7 +521,7 @@ playState.create = function () {
 		//gameInfo.timerText.visible = false;
 
 		//score
-		//gameInfo.scoreIcon = new Phaser.Sprite(game, 0, 0, 'score');
+		//gameInfo.scoreIcon = new Phaser.Sprite(Project.game, 0, 0, 'score');
 		//gameInfo.guiCanvas.addChild(gameInfo.scoreIcon);
 		//gameInfo.scoreIcon.anchor.x = 0;
 		//gameInfo.scoreIcon.anchor.y = 0;
@@ -683,11 +529,11 @@ playState.create = function () {
 		//gameInfo.scoreIcon.scale = new Point(.35, .35);
 
 		// gameInfo.scoreText = new Phaser.BitmapText(
-		// 	game,
+		// 	Project.game,
 		// 	0,
 		// 	0,
 		// 	"font7",
-		// 	projectInfo.score,
+		// 	Project.score,
 		// 	56
 		// );
 		// gameInfo.guiCanvas.addChild(gameInfo.scoreText);
@@ -696,27 +542,27 @@ playState.create = function () {
 
 		//gameInfo.scoreText.alpha = 0.8;
 
-		//gameInfo.highScoreIcon = new Phaser.Sprite(game, 0, 0, 'highScore');
+		//gameInfo.highScoreIcon = new Phaser.Sprite(Project.game, 0, 0, 'highScore');
 		//gameInfo.guiCanvas.addChild(gameInfo.highScoreIcon);
 		//gameInfo.highScoreIcon.anchor.x = 1;
 		//gameInfo.highScoreIcon.anchor.y = 0;
 		//gameInfo.highScoreIcon.alpha = 0.9;
 		//gameInfo.highScoreIcon.scale = new Point(.35, .35);
 
-		//projectInfo.bestScoreText = new Phaser.BitmapText(game, 0, 0, 'font3', projectInfo.bestScore, 28);
-		//gameInfo.guiCanvas.addChild(projectInfo.bestScoreText);
-		//projectInfo.bestScoreText.anchor.x = 0;
-		//projectInfo.bestScoreText.anchor.y = 0;
-		//projectInfo.bestScoreText.alpha = 0.8;
+		//Project.bestScoreText = new Phaser.BitmapText(Project.game, 0, 0, 'font3', Project.bestScore, 28);
+		//gameInfo.guiCanvas.addChild(Project.bestScoreText);
+		//Project.bestScoreText.anchor.x = 0;
+		//Project.bestScoreText.anchor.y = 0;
+		//Project.bestScoreText.alpha = 0.8;
 
 		//multiplier
 
-		//gameInfo.box = new Phaser.Sprite(game, 0, 0, "box");
+		//gameInfo.box = new Phaser.Sprite(Project.game, 0, 0, "box");
 		//gameInfo.guiCanvas.addChild(gameInfo.box);
 		//gameInfo.box.anchor = new Point(1, 1);
 		//gameInfo.box.alpha = 0;
 
-		//gameInfo.bonusText = new Phaser.BitmapText(game, 0, 0, 'font3', "STREAK", 22);
+		//gameInfo.bonusText = new Phaser.BitmapText(Project.game, 0, 0, 'font3', "STREAK", 22);
 		//gameInfo.bonusText.blendMode = 14;
 		//gameInfo.guiCanvas.addChild(gameInfo.bonusText);
 		//gameInfo.bonusText.anchor.x = 1;
@@ -725,7 +571,7 @@ playState.create = function () {
 
 		/*
 		gameInfo.multiplierText = new Phaser.BitmapText(
-			game,
+			Project.game,
 			0,
 			0,
 			"font7",
@@ -739,14 +585,14 @@ playState.create = function () {
 
 		//restart game
 
-		if (projectInfo.mode == 2) {
+		if (Project.mode == 2) {
 			gameInfo.timerText.visible = false;
 			gameInfo.scoreText.visible = false;
 			gameInfo.multiplierText.visible = false;
 		}
 
 		gameInfo.menuButton = new Phaser.Button(
-			game,
+			Project.game,
 			0,
 			0,
 			"menuButton",
@@ -762,40 +608,40 @@ playState.create = function () {
 		//gameInfo.menuButton.scale = new Point(.6, .6);
 		
 		//power bar on touch devices
-		if (game.device.touch) {
+		if (Project.game.device.touch) {
 			//gameInfo.gameCanvas.x -= 30;
 
 			gameInfo.powerBar = new Phaser.Group(
-				game,
+				Project.game,
 				gameInfo.guiCanvas,
 				"powerBar"
 			);
 
-			gameInfo.powerBarBG = new Phaser.Sprite(game, 0, 0, "powerBarBG");
+			gameInfo.powerBarBG = new Phaser.Sprite(Project.game, 0, 0, "powerBarBG");
 			//gameInfo.powerBarBG.x = 0;
 			//gameInfo.powerBarBG.y = 0;
 			gameInfo.powerBarBG.anchor = new Point(0.5, 0.5);
 			gameInfo.powerBar.addChild(gameInfo.powerBarBG);
 
-			gameInfo.powerBarBase = new Phaser.Sprite(game, 0, -13, "powerBarBase");
+			gameInfo.powerBarBase = new Phaser.Sprite(Project.game, 0, -13, "powerBarBase");
 			gameInfo.powerBarBase.anchor = new Point(0.5, 0.5);
 			gameInfo.powerBar.addChild(gameInfo.powerBarBase);
 
-			gameInfo.powerBarMask = game.add.graphics(
+			gameInfo.powerBarMask = Project.game.add.graphics(
 				gameInfo.powerBar.x,
 				gameInfo.powerBar.y
 			);
 			gameInfo.powerBarBase.mask = gameInfo.powerBarMask;
 
-			gameInfo.powerBarTop = new Phaser.Sprite(game, 0, -13, "powerBarTop");
+			gameInfo.powerBarTop = new Phaser.Sprite(Project.game, 0, -13, "powerBarTop");
 			gameInfo.powerBarTop.anchor = new Point(0.5, 0.5);
 			gameInfo.powerBar.addChild(gameInfo.powerBarTop);
 
-			gameInfo.powerBarCue = new Phaser.Sprite(game, 250, 13, "cue");
+			gameInfo.powerBarCue = new Phaser.Sprite(Project.game, 250, 13, "cue");
 			gameInfo.powerBar.addChild(gameInfo.powerBarCue);
 			gameInfo.powerBarCue.anchor = new Point(1, 0.5);
 
-			gameInfo.powerBarCueMask = game.add.graphics(
+			gameInfo.powerBarCueMask = Project.game.add.graphics(
 				gameInfo.powerBar.x,
 				gameInfo.powerBar.y
 			);
@@ -805,7 +651,7 @@ playState.create = function () {
 		//game over panel
 
 		gameInfo.gameOverPanel = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.guiCanvas,
 			"gameOverPanel"
 		);
@@ -813,43 +659,43 @@ playState.create = function () {
 
 		gameInfo.gameOverPanel.visible = false;
 
-		gameInfo.gameOverPanelBG = new Phaser.Sprite(game, 0, 0, "panel3");
+		gameInfo.gameOverPanelBG = new Phaser.Sprite(Project.game, 0, 0, "panel3");
 		gameInfo.gameOverPanelBG.anchor = new Point(0.5, 0.5);
 		gameInfo.gameOverPanel.addChild(gameInfo.gameOverPanelBG);
 
-		gameInfo.gameOverWindow = new Phaser.Sprite(game, -180, -201, "guiPanel2");
+		gameInfo.gameOverWindow = new Phaser.Sprite(Project.game, -180, -201, "guiPanel2");
 		gameInfo.gameOverPanel.addChild(gameInfo.gameOverWindow);
 
 		// SINGLEPLAYER
 
-		gameInfo.aiWin = new Phaser.Sprite(game, 0, 0, "aiWin");
+		gameInfo.aiWin = new Phaser.Sprite(Project.game, 0, 0, "aiWin");
 		gameInfo.aiWin.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.aiWin.anchor = new Phaser.Point(0.6, 0.6);
 		gameInfo.gameOverPanel.addChild(gameInfo.aiWin);
 		gameInfo.aiWin.visible = false;
 
-		gameInfo.playerWin = new Phaser.Sprite(game, 0, 0, "playerWin");
+		gameInfo.playerWin = new Phaser.Sprite(Project.game, 0, 0, "playerWin");
 		gameInfo.playerWin.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.playerWin.anchor = new Phaser.Point(0, 0);
 		gameInfo.gameOverPanel.addChild(gameInfo.playerWin);
 		gameInfo.playerWin.visible = false;
 
-		gameInfo.GOscoreIcon = new Phaser.Sprite(game, -78, -180, "score");
+		gameInfo.GOscoreIcon = new Phaser.Sprite(Project.game, -78, -180, "score");
 		gameInfo.GOscoreIcon.anchor = new Phaser.Point(0.5, 0.1);
 		gameInfo.GOscoreIcon.scale = new Phaser.Point(0.45, 0.45);
 		gameInfo.gameOverPanel.addChild(gameInfo.GOscoreIcon);
 
-		gameInfo.GOhighScoreIcon = new Phaser.Sprite(game, 270, -256, "highScore");
+		gameInfo.GOhighScoreIcon = new Phaser.Sprite(Project.game, 270, -256, "highScore");
 		gameInfo.GOhighScoreIcon.anchor = new Phaser.Point(0.5, 0.25);
 		gameInfo.GOhighScoreIcon.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.gameOverPanel.addChild(gameInfo.GOhighScoreIcon);
 
-		gameInfo.GOaiLevel = new Phaser.Sprite(game, 70, -5, "aiLevel");
+		gameInfo.GOaiLevel = new Phaser.Sprite(Project.game, 70, -5, "aiLevel");
 		gameInfo.GOaiLevel.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.GOaiLevel.scale = new Phaser.Point(0.8, 0.8);
 		gameInfo.gameOverPanel.addChild(gameInfo.GOaiLevel);
 
-		gameInfo.GOclockIcon = new Phaser.Sprite(game, -180, -5, "clockIcon");
+		gameInfo.GOclockIcon = new Phaser.Sprite(Project.game, -180, -5, "clockIcon");
 		gameInfo.GOclockIcon.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.GOclockIcon.scale = new Phaser.Point(0.55, 0.55);
 		gameInfo.gameOverPanel.addChild(gameInfo.GOclockIcon);
@@ -862,7 +708,7 @@ playState.create = function () {
 
 		/*
 		gameInfo.p1Icon = new Phaser.Sprite(
-			game,
+			Project.game,
 			p1Position.x,
 			p1Position.y,
 			"humanIcon"
@@ -871,12 +717,12 @@ playState.create = function () {
 		gameInfo.p1Icon.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.gameOverPanel.addChild(gameInfo.p1Icon);
 
-		var p1Text = new Phaser.BitmapText(game, -4, 81, "font7", "1", 80);
+		var p1Text = new Phaser.BitmapText(Project.game, -4, 81, "font7", "1", 80);
 		p1Text.anchor = new Phaser.Point(0.5, 0.5);
 		p1Text.tint = 0;
 		gameInfo.p1Icon.addChild(p1Text);
 
-		var rosette = new Phaser.Sprite(game, -128, -128, "rosette");
+		var rosette = new Phaser.Sprite(Project.game, -128, -128, "rosette");
 		rosette.anchor = new Phaser.Point(0.5, 0.5);
 		rosette.scale = new Phaser.Point(1, 1);
 		gameInfo.p1Icon.addChild(rosette);
@@ -889,7 +735,7 @@ playState.create = function () {
 		let p2Position = { x: 140, y: -120 };
 
 		gameInfo.p2Icon = new Phaser.Sprite(
-			game,
+			Project.game,
 			p2Position.x,
 			p2Position.y,
 			"humanIcon"
@@ -898,12 +744,12 @@ playState.create = function () {
 		gameInfo.p2Icon.scale = new Phaser.Point(0.5, 0.5);
 		gameInfo.gameOverPanel.addChild(gameInfo.p2Icon);
 
-		var p2Text = new Phaser.BitmapText(game, -4, 81, "font7", "2", 80);
+		var p2Text = new Phaser.BitmapText(Project.game, -4, 81, "font7", "2", 80);
 		p2Text.anchor = new Phaser.Point(0.5, 0.5);
 		p2Text.tint = 0;
 		gameInfo.p2Icon.addChild(p2Text);
 
-		var rosette = new Phaser.Sprite(game, -128, -128, "rosette");
+		var rosette = new Phaser.Sprite(Project.game, -128, -128, "rosette");
 		rosette.anchor = new Phaser.Point(0.5, 0.5);
 		rosette.scale = new Phaser.Point(1, 1);
 		gameInfo.p2Icon.addChild(rosette);
@@ -911,11 +757,11 @@ playState.create = function () {
 		//gameInfo.p2Icon.rosette.visible = false;
 		gameInfo.p2Icon.visible = false;
 
-		//gameInfo.GOrosette = new Phaser.Sprite(game, -313, -42, 'rosette');
+		//gameInfo.GOrosette = new Phaser.Sprite(Project.game, -313, -42, 'rosette');
 		//gameInfo.gameOverPanel.addChild(gameInfo.GOrosette);
 
 		gameInfo.gameOverPanel.text1 = new Phaser.BitmapText(
-			game,
+			Project.game,
 			0,
 			-180,
 			"font7",
@@ -923,7 +769,7 @@ playState.create = function () {
 			56
 		);
 		gameInfo.gameOverPanel.text2 = new Phaser.BitmapText(
-			game,
+			Project.game,
 			0,
 			-209,
 			"font7",
@@ -931,7 +777,7 @@ playState.create = function () {
 			56
 		);
 		gameInfo.gameOverPanel.text3 = new Phaser.BitmapText(
-			game,
+			Project.game,
 			-110,
 			-28,
 			"font7",
@@ -939,14 +785,14 @@ playState.create = function () {
 			56
 		);
 		gameInfo.gameOverPanel.text4 = new Phaser.BitmapText(
-			game,
+			Project.game,
 			135,
 			-28,
 			"font7",
 			"xxx",
 			56
 		);
-		//gameInfo.gameOverPanel.text5 = new Phaser.BitmapText(game, 256, -28, 'font7', 'xxx', 56);
+		//gameInfo.gameOverPanel.text5 = new Phaser.BitmapText(Project.game, 256, -28, 'font7', 'xxx', 56);
 
 		gameInfo.gameOverPanel.addChild(gameInfo.gameOverPanel.text1);
 		gameInfo.gameOverPanel.addChild(gameInfo.gameOverPanel.text2);
@@ -958,7 +804,7 @@ playState.create = function () {
 
 		//return to main menu
 		gameInfo.quitButton2 = new Phaser.Button(
-			game,
+			Project.game,
 			90,
 			btnPositionY,
 			"quitButton",
@@ -975,7 +821,7 @@ playState.create = function () {
 		
 		//restart game
 		gameInfo.replayButton = new Phaser.Button(
-			game,
+			Project.game,
 			-90,
 			btnPositionY,
 			"replayButton",
@@ -995,7 +841,7 @@ playState.create = function () {
 		//========================================= pop up menu ===========================================
 
 		gameInfo.popUpPanel = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.guiCanvas,
 			"popUpPanel"
 		);
@@ -1003,14 +849,14 @@ playState.create = function () {
 
 		gameInfo.popUpPanel.visible = false;
 
-		gameInfo.popUpPanelBG = new Phaser.Sprite(game, 0, 0, "panel2");
+		gameInfo.popUpPanelBG = new Phaser.Sprite(Project.game, 0, 0, "panel2");
 		gameInfo.popUpPanelBG.scale = new Point(0.75, 1);
 		gameInfo.popUpPanelBG.anchor = new Point(0.5, 0.5);
 		gameInfo.popUpPanel.addChild(gameInfo.popUpPanelBG);
 
 		//resume game
 		gameInfo.playButtonPU = new Phaser.Button(
-			game,
+			Project.game,
 			0,
 			0,
 			"playButton",
@@ -1027,7 +873,7 @@ playState.create = function () {
 
 		//return to main menu
 		gameInfo.quitButtonPU = new Phaser.Button(
-			game,
+			Project.game,
 			-57,
 			0,
 			"quitButton",
@@ -1044,7 +890,7 @@ playState.create = function () {
 
 		//restart game
 		gameInfo.replayButtonPU = new Phaser.Button(
-			game,
+			Project.game,
 			-170,
 			0,
 			"replayButton",
@@ -1061,7 +907,7 @@ playState.create = function () {
 
 		//mute button
 		gameInfo.muteButtonPU = new Phaser.Button(
-			game,
+			Project.game,
 			57,
 			0,
 			"muteButton",
@@ -1094,14 +940,14 @@ playState.create = function () {
 		//===================   FOULD WINDOW   =======================================
 
 		gameInfo.foulWindow = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.guiCanvas,
 			"foulWindow"
 		);
 		gameInfo.foulWindow.visible = false;
 
 		gameInfo.foulWindow.background = new Phaser.Sprite(
-			game,
+			Project.game,
 			0,
 			0,
 			"foulDisplay"
@@ -1110,14 +956,14 @@ playState.create = function () {
 		gameInfo.foulWindow.background.anchor = new Point(0.5, 0.5);
 
 		gameInfo.foulWindow.display1 = new Phaser.Sprite(
-			game,
+			Project.game,
 			-172,
 			-126,
 			"illegalContacts"
 		);
 		gameInfo.foulWindow.addChild(gameInfo.foulWindow.display1);
 		var cross = new Phaser.Sprite(
-			game,
+			Project.game,
 			gameInfo.foulWindow.display1.width / 2,
 			gameInfo.foulWindow.display1.height / 2 + 20,
 			"cross"
@@ -1126,14 +972,14 @@ playState.create = function () {
 		gameInfo.foulWindow.display1.addChild(cross);
 
 		gameInfo.foulWindow.display2 = new Phaser.Sprite(
-			game,
+			Project.game,
 			-172,
 			30,
 			"illegalContacts"
 		);
 		gameInfo.foulWindow.addChild(gameInfo.foulWindow.display2);
 		var tick = new Phaser.Sprite(
-			game,
+			Project.game,
 			gameInfo.foulWindow.display2.width / 2,
 			gameInfo.foulWindow.display2.height / 2 + 20,
 			"tick"
@@ -1142,7 +988,7 @@ playState.create = function () {
 		gameInfo.foulWindow.display2.addChild(tick);
 
 		gameInfo.foulWindow.display3 = new Phaser.Sprite(
-			game,
+			Project.game,
 			0,
 			0,
 			"illegalShots"
@@ -1151,7 +997,7 @@ playState.create = function () {
 		gameInfo.foulWindow.display3.anchor = new Point(0.5, 0.5);
 
 		gameInfo.foulWindow.display4 = new Phaser.Sprite(
-			game,
+			Project.game,
 			0,
 			0,
 			"illegalBreak"
@@ -1160,7 +1006,7 @@ playState.create = function () {
 		gameInfo.foulWindow.display4.anchor = new Point(0.5, 0.5);
 
 		gameInfo.foulWindow.highlight = new Phaser.Sprite(
-			game,
+			Project.game,
 			-262,
 			-237,
 			"foulHighlight"
@@ -1170,8 +1016,8 @@ playState.create = function () {
 
 		//============================================================================
 
-		if (projectInfo.tutorial == true) {
-			if (!game.device.touch) {
+		if (Project.tutorial == true) {
+			if (!Project.game.device.touch) {
 				//gameInfo.guiPanel1.visible = false;
 			}
 
@@ -1221,69 +1067,69 @@ playState.create = function () {
 	function gameToMenu() {
 		//console.log("game to menu");
 
-		var tween1 = game.add
+		var tween1 = Project.game.add
 			.tween(gameInfo.guiCanvas)
 			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-		var tween3 = game.add
+		var tween3 = Project.game.add
 			.tween(gameInfo.guiBaseCanvas)
 			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-		var tween2 = game.add
+		var tween2 = Project.game.add
 			.tween(gameInfo.gameCanvas)
 			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
 		tween2.onComplete.add(initMenu, this);
 
 		function initMenu() {
 			if (gameInfo.gameOver) {
-				game.state.start("mainMenu");
+				Project.game.state.start("mainMenu");
 				return;
 			}
 
-			game.state.start("mainMenu");
+			Project.game.state.start("mainMenu");
 		}
 	}
 
 	function replayGame() {
-		projectInfo.lastBreaker = "none";
+		Project.lastBreaker = "none";
 
 		if (gameInfo.gameOver) {
-			game.state.start("play");
+			Project.game.state.start("play");
 			return;
 		}
 
-		game.state.start("play");
+		Project.game.state.start("play");
 	}
 
 	function initCanvases() {
-		gameInfo.bgCanvas = new Phaser.Group(game, game.stage, "bgCanvas");
+		gameInfo.bgCanvas = new Phaser.Group(Project.game, Project.game.stage, "bgCanvas");
 		gameInfo.guiBaseCanvas = new Phaser.Group(
-			game,
-			game.stage,
+			Project.game,
+			Project.game.stage,
 			"guiBaseCanvas"
 		);
-		gameInfo.gameCanvas = new Phaser.Group(game, game.stage, "gameCanvas"); //creates game canvas and adds it to the stage
+		gameInfo.gameCanvas = new Phaser.Group(Project.game, Project.game.stage, "gameCanvas"); //creates game canvas and adds it to the stage
 
-		gameInfo.gameCanvas.x = game.width / 2;
-		gameInfo.gameCanvas.y = game.height / 2 - 15;
+		gameInfo.gameCanvas.x = Project.game.width / 2;
+		gameInfo.gameCanvas.y = Project.game.height / 2 - 15;
 		//gameInfo.gameCanvas.scale = new Point(1.4, 1.4);
 		gameInfo.tableCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"tableCanvas"
 		);
 		gameInfo.tableCanvas.y += 2;
 		gameInfo.timerCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"timerCanvas"
 		);
 		gameInfo.ballCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"ballCanvas"
 		);
-		gameInfo.guiCanvas = new Phaser.Group(game, game.stage, "guiCanvas");
+		gameInfo.guiCanvas = new Phaser.Group(Project.game, Project.game.stage, "guiCanvas");
 		gameInfo.cueBaseCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"cueCanvas"
 		);
@@ -1291,33 +1137,33 @@ playState.create = function () {
 		//gameInfo.cueBaseCanvas.y = gameInfo.gameCanvas.y
 		//gameInfo.cueBaseCanvas.scale = gameInfo.gameCanvas.scale;
 		gameInfo.cueCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.cueBaseCanvas,
 			"cueCanvas"
 		);
 
 		gameInfo.guideCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"guideCanvas"
 		);
 
 		gameInfo.tutCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.gameCanvas,
 			"tutCanvas"
 		);
 
-		var tween = game.add
+		var tween = Project.game.add
 			.tween(gameInfo.cueBaseCanvas)
 			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = game.add
+		var tween = Project.game.add
 			.tween(gameInfo.guiCanvas)
 			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = game.add
+		var tween = Project.game.add
 			.tween(gameInfo.guiBaseCanvas)
 			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = game.add
+		var tween = Project.game.add
 			.tween(gameInfo.gameCanvas)
 			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 
@@ -1326,7 +1172,7 @@ playState.create = function () {
 
 	function initGuide() {
 		//gameInfo.guide = gameInfo.guideCanvas.add.graphics();
-		gameInfo.guide = new Phaser.Graphics(game);
+		gameInfo.guide = new Phaser.Graphics(Project.game);
 		gameInfo.guideCanvas.addChild(gameInfo.guide);
 		//graphics.beginFill(0xFF3300);
 	}
@@ -1334,29 +1180,29 @@ playState.create = function () {
 	function initTable() {
 		//create table sprites
 
-		gameInfo.pockets = new Phaser.Sprite(game, 0, 0, "pockets");
+		gameInfo.pockets = new Phaser.Sprite(Project.game, 0, 0, "pockets");
 		// gameInfo.pockets.alpha = .5;
 		gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.pockets);
 
 		gameInfo.tunnelCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.tableCanvas,
 			"tunnels"
 		); //balls are switched to this canvas after being potted
 
-		gameInfo.cloth = new Phaser.Sprite(game, 0, 0, "cloth");
+		gameInfo.cloth = new Phaser.Sprite(Project.game, 0, 0, "cloth");
 		// gameInfo.cloth.alpha = .5;
 		gameInfo.cloth.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.cloth);
 
 		gameInfo.shadowCanvas = new Phaser.Group(
-			game,
+			Project.game,
 			gameInfo.tableCanvas,
 			"shadows"
 		); //balls are switched to this canvas after being potted
 
-		gameInfo.tableTop = new Phaser.Sprite(game, 0, 0, "tableTop");
+		gameInfo.tableTop = new Phaser.Sprite(Project.game, 0, 0, "tableTop");
 		// gameInfo.tableTop.alpha = .5;
 		gameInfo.tableTop.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
@@ -1693,7 +1539,7 @@ playState.create = function () {
 		line.p2 = new Vector2D(-(50 + mouth) * tableScale, -25 * tableScale);
 		gameInfo.lineArray.push(line);
 
-		var graphics = game.add.graphics(
+		var graphics = Project.game.add.graphics(
 			gameInfo.gameCanvas.x,
 			gameInfo.gameCanvas.y
 		);
@@ -1755,7 +1601,7 @@ playState.create = function () {
 			var ball = new Object();
 
 			//shadow
-			ball.shadow = new Phaser.Sprite(game, 0, 0, "shadow");
+			ball.shadow = new Phaser.Sprite(Project.game, 0, 0, "shadow");
 			gameInfo.shadowCanvas.add(ball.shadow);
 			ball.shadow.anchor = new Point(0.5, 0.5);
 			ball.shadow.width = gameInfo.ballRadius * gameInfo.physScale * 4;
@@ -1763,7 +1609,7 @@ playState.create = function () {
 			ball.shadow.alpha = 0.7;
 
 			//marker
-			ball.marker = new Phaser.Sprite(game, 0, 0, "marker");
+			ball.marker = new Phaser.Sprite(Project.game, 0, 0, "marker");
 			gameInfo.ballCanvas.addChild(ball.marker);
 			ball.marker.anchor = new Point(0.5, 0.5);
 
@@ -1799,7 +1645,7 @@ playState.create = function () {
 			gameInfo.ballCanvas.add(ball.mc);
 
 			if (n == 0) {
-				ball.mover = new Phaser.Sprite(game, 0, 0, "mover");
+				ball.mover = new Phaser.Sprite(Project.game, 0, 0, "mover");
 				gameInfo.ballCanvas.add(ball.mover);
 				ball.mover.anchor = new Point(0.5, 0.5);
 				ball.mover.inputEnabled = true;
@@ -1808,7 +1654,7 @@ playState.create = function () {
 
 			//highlight/shading
 			/*
-			ball.shade = new Phaser.Sprite(game, 0, 0, "shade");
+			ball.shade = new Phaser.Sprite(Project.game, 0, 0, "shade");
 			gameInfo.ballCanvas.add(ball.shade);
 			ball.shade.anchor = new Point(0.5, 0.5);
 			ball.shade.width = gameInfo.ballRadius * gameInfo.physScale * 2.2;
@@ -1854,11 +1700,11 @@ playState.create = function () {
 	}
 
 	function initCue() {
-		// gameInfo.cueShadow = new Phaser.Sprite(game, 0, 0, "cueShadow");
+		// gameInfo.cueShadow = new Phaser.Sprite(Project.game, 0, 0, "cueShadow");
 		// gameInfo.cueCanvas.addChild(gameInfo.cueShadow);
 		// gameInfo.cueShadow.anchor = new Point(1.0, 8 / 53);
 
-		gameInfo.cue = new Phaser.Sprite(game, 0, 0, "cue");
+		gameInfo.cue = new Phaser.Sprite(Project.game, 0, 0, "cue");
 		gameInfo.cueCanvas.addChild(gameInfo.cue);
 		gameInfo.cue.anchor = new Point(1, 0.5);
 	}

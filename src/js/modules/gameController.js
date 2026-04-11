@@ -15,11 +15,11 @@ playState.update = function () {
 				gameInfo.initVars = true;
 			}
 
-			if (gameInfo.turn == "p1" || projectInfo.mode == 2) {
+			if (gameInfo.turn == "p1" || Project.mode == 2) {
 				// real players only
 
 				updateCursor();
-				if (projectInfo.tutorial == false) {
+				if (Project.tutorial == false) {
 					placeCueBall();
 					setSpin();
 					aim();
@@ -28,7 +28,7 @@ playState.update = function () {
 				}
 			}
 
-			if (gameInfo.turn == "p2" && projectInfo.mode == 1) {
+			if (gameInfo.turn == "p2" && Project.mode == 1) {
 				//ai only
 
 				aiPlaceCueBall();
@@ -45,7 +45,7 @@ playState.update = function () {
 		if (gameInfo.shotRunning == true) {
 			checkShotOver();
 
-			if (projectInfo.tutorial == false) {
+			if (Project.tutorial == false) {
 				applyRulings(); // leads onto setNextTargetType, checkWhosTurn and resetVars
 			}
 
@@ -53,10 +53,10 @@ playState.update = function () {
 			renderScreen();
 		}
 
-		if (projectInfo.levelComplete == false) {
+		if (Project.levelComplete == false) {
 			updateScore();
-			if (projectInfo.mode == 1 && gameInfo.turn == "p1") {
-				updateTimer();
+			if (Project.mode == 1 && gameInfo.turn == "p1") {
+				// updateTimer();
 			}
 		}
 
@@ -72,33 +72,33 @@ playState.update = function () {
 	//close popup menu
 
 	// if (gameInfo.popUpPanel.visible == true) {
-	// 	if (game.input.activePointer.isDown) {
-	// 		//console.log("down, x: " + game.input.activePointer.x + " y: " + game.input.activePointer.y);
+	// 	if (Project.game.input.activePointer.isDown) {
+	// 		//console.log("down, x: " + Project.game.input.activePointer.x + " y: " + Project.game.input.activePointer.y);
 	// 		//console.log("x: " + gameInfo.popUpPanel.x);
 	// 		//console.log("w/2: " + gameInfo.popUpPanelBG.width / 2);
 
 	// 		if (gameInfo.landscape == true) {
 	// 			if (
-	// 				game.input.activePointer.x >
+	// 				Project.game.input.activePointer.x >
 	// 					gameInfo.popUpPanel.x + gameInfo.popUpPanelBG.width / 2 ||
-	// 				game.input.activePointer.x <
+	// 				Project.game.input.activePointer.x <
 	// 					gameInfo.popUpPanel.x - gameInfo.popUpPanelBG.width / 2 ||
-	// 				game.input.activePointer.y >
+	// 				Project.game.input.activePointer.y >
 	// 					gameInfo.popUpPanel.y + gameInfo.popUpPanelBG.height / 2 ||
-	// 				game.input.activePointer.y <
+	// 				Project.game.input.activePointer.y <
 	// 					gameInfo.popUpPanel.y - gameInfo.popUpPanelBG.height / 2
 	// 			) {
 	// 				this.resumeGame();
 	// 			}
 	// 		} else {
 	// 			if (
-	// 				game.input.activePointer.x >
+	// 				Project.game.input.activePointer.x >
 	// 					gameInfo.popUpPanel.x + gameInfo.popUpPanelBG.height / 2 ||
-	// 				game.input.activePointer.x <
+	// 				Project.game.input.activePointer.x <
 	// 					gameInfo.popUpPanel.x - gameInfo.popUpPanelBG.height / 2 ||
-	// 				game.input.activePointer.y >
+	// 				Project.game.input.activePointer.y >
 	// 					gameInfo.popUpPanel.y + gameInfo.popUpPanelBG.width / 2 ||
-	// 				game.input.activePointer.y <
+	// 				Project.game.input.activePointer.y <
 	// 					gameInfo.popUpPanel.y - gameInfo.popUpPanelBG.width / 2
 	// 			) {
 	// 				this.resumeGame();
@@ -109,7 +109,7 @@ playState.update = function () {
 
 	//close foul window
 
-	// if (game.input.activePointer.isDown && gameInfo.foulWindow.visible == true) {
+	// if (Project.game.input.activePointer.isDown && gameInfo.foulWindow.visible == true) {
 	// 	gameInfo.foulWindow.visible = false;
 	// 	gameInfo.foulDisplayComplete = true;
 	// 	if (gameInfo.rerack == false) {
@@ -119,28 +119,23 @@ playState.update = function () {
 	// }
 
 	function exitTutorial() {
-		projectInfo.tutorial = false;
+		Project.tutorial = false;
 		// window.famobi.localStorage.setItem('showTutorial', false);
 
 		cleanTutorial();
 
-		if (projectInfo.clickedHelpButton) {
+		if (Project.clickedHelpButton) {
 			// window.famobi_analytics.trackEvent("EVENT_TUTORIALSKIPPED");
-			game.state.start("mainMenu");
+			Project.game.state.start("mainMenu");
 		} else {
 			// window.famobi_analytics.trackEvent("EVENT_TUTORIALCOMPLETED");
-			game.state.start("play");
+			Project.game.state.start("play");
 		}
 	}
 
 	function cleanTutorial() {
 		gameInfo.gameCanvas.destroy();
 		//gameInfo.guiCanvas.visible = false;
-
-		if (game.device.touch) {
-			gameInfo.powerBarMask.visible = false;
-			gameInfo.powerBarCueMask.visible = false;
-		}
 
 		gameInfo.guiCanvas.destroy();
 		gameInfo.guiBaseCanvas.destroy();
@@ -150,17 +145,17 @@ playState.update = function () {
 	}
 
 	function runTutorial() {
-		if (game.input.activePointer.isDown && projectInfo.tutorial == true) {
+		if (Project.game.input.activePointer.isDown && Project.tutorial == true) {
 			gameInfo.cancelTutorial = true;
 			exitTutorial();
 		}
 
-		if (projectInfo.tutorial == true) {
+		if (Project.tutorial == true) {
 			gameInfo.turn = "p1";
-			projectInfo.tutorialPlayed = true;
+			Project.tutorialPlayed = true;
 
 			var pointer;
-			if (game.device.touch) {
+			if (Project.game.device.touch) {
 				pointer = gameInfo.hand;
 			} else {
 				pointer = gameInfo.mouseSprite;
@@ -187,7 +182,7 @@ playState.update = function () {
 
 					gameInfo.cueCanvas.angle = (180 / Math.PI) * Math.atan2(dy, dx);
 
-					var tween1 = game.add.tween(pointer);
+					var tween1 = Project.game.add.tween(pointer);
 					tween1.to({ alpha: 1 }, 700, Phaser.Easing.Linear.None, true, 700);
 					tween1.onComplete.add(tween1Complete, this);
 					gameInfo.tutStage = 1;
@@ -201,7 +196,7 @@ playState.update = function () {
 				case 2:
 					if (gameInfo.cancelTutorial == false) {
 						//move pointer to near the 1 ball
-						var tween2 = game.add.tween(pointer);
+						var tween2 = Project.game.add.tween(pointer);
 						tween2.to(
 							{
 								x: gameInfo.ballArray[1].position.x * gameInfo.physScale,
@@ -272,8 +267,8 @@ playState.update = function () {
 
 				case 4:
 					if (gameInfo.cancelTutorial == false) {
-						if (game.device.touch) {
-							var tween3 = game.add.tween(pointer);
+						if (Project.game.device.touch) {
+							var tween3 = Project.game.add.tween(pointer);
 							tween3.to(
 								{ alpha: 0 },
 								700,
@@ -318,7 +313,7 @@ playState.update = function () {
 						pointer.x = gameInfo.pointerStart.x;
 						pointer.y = gameInfo.pointerStart.y;
 
-						var tween4 = game.add.tween(pointer);
+						var tween4 = Project.game.add.tween(pointer);
 						tween4.to({ alpha: 1 }, 700, Phaser.Easing.Linear.none, true, 700);
 						tween4.onComplete.add(tween4Complete, this);
 						gameInfo.tutStage = 7;
@@ -378,7 +373,7 @@ playState.update = function () {
 
 				case 9:
 					if (gameInfo.cancelTutorial == false) {
-						var tween5 = game.add.tween(pointer);
+						var tween5 = Project.game.add.tween(pointer);
 						tween5.to({ alpha: 0 }, 200, Phaser.Easing.Linear.none, true, 700);
 						tween5.onComplete.add(tween5Complete, this);
 						gameInfo.tutStage = 10;
@@ -403,7 +398,7 @@ playState.update = function () {
 
 						var maxDrag = 100;
 
-						if (game.device.touch) {
+						if (Project.game.device.touch) {
 							gameInfo.power =
 								(gameInfo.maxPower *
 									((gameInfo.pointerProgress * gameInfo.pointerProgress) /
@@ -422,19 +417,19 @@ playState.update = function () {
 							tweenTime = 0.1;
 						}
 
-						var cueTween = game.add.tween(gameInfo.cue);
+						var cueTween = Project.game.add.tween(gameInfo.cue);
 						cueTween.to(
 							{ x: gameInfo.power / 400 },
 							tweenTime * 1000,
 							Phaser.Easing.Linear.Out
 						);
 
-						var cueFadeTween = game.add.tween(gameInfo.cueCanvas);
+						var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
 						cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 700);
 						cueFadeTween.onComplete.add(hideCueCanvas, this);
 
-						if (game.device.touch) {
-							var powerBarCueTween = game.add.tween(gameInfo.powerBarCue);
+						if (Project.game.device.touch) {
+							var powerBarCueTween = Project.game.add.tween(gameInfo.powerBarCue);
 							powerBarCueTween.to(
 								{ x: 250 },
 								tweenTime * 1000,
@@ -474,13 +469,13 @@ playState.update = function () {
 					break;
 
 				case 13:
-					var tween6 = game.add
+					var tween6 = Project.game.add
 						.tween(gameInfo.guiCanvas)
 						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
-					var tween7 = game.add
+					var tween7 = Project.game.add
 						.tween(gameInfo.guiBaseCanvas)
 						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
-					var tween8 = game.add
+					var tween8 = Project.game.add
 						.tween(gameInfo.gameCanvas)
 						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
 					tween6.onComplete.add(exitTutorial, this);
@@ -498,7 +493,7 @@ playState.update = function () {
 
 				case 96:
 					if (gameInfo.cancelTutorial == false) {
-						game.time.events.add(Phaser.Timer.SECOND * 1.5, waitComplete, this);
+						Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, waitComplete, this);
 
 						gameInfo.tutStage = 97;
 
@@ -521,7 +516,7 @@ playState.update = function () {
 					if (gameInfo.cancelTutorial == false) {
 						//pause, then show greeen arrow
 
-						game.time.events.add(
+						Project.game.time.events.add(
 							Phaser.Timer.SECOND * 1.5,
 							waitComplete2,
 							this
@@ -548,7 +543,7 @@ playState.update = function () {
 					if (gameInfo.cancelTutorial == false) {
 						//move mouse backwards in line with cue direction
 
-						var tween9 = game.add.tween(pointer).to(
+						var tween9 = Project.game.add.tween(pointer).to(
 							{
 								x: 210,
 								y:
@@ -569,7 +564,7 @@ playState.update = function () {
 						}
 
 						//tween cue too
-						var tween10 = game.add
+						var tween10 = Project.game.add
 							.tween(gameInfo.cue)
 							.to({ x: -120 }, 1500, Phaser.Easing.Linear.Out, true, 0);
 
@@ -593,7 +588,7 @@ playState.update = function () {
 				case 102:
 					if (gameInfo.cancelTutorial == false) {
 						//begin pause
-						game.time.events.add(Phaser.Timer.SECOND * 2, waitComplete3, this);
+						Project.game.time.events.add(Phaser.Timer.SECOND * 2, waitComplete3, this);
 
 						gameInfo.tutStage = 103;
 
@@ -642,13 +637,13 @@ playState.update = function () {
 */
 
 	function updateScore() {
-		// gameInfo.scoreText.text = projectInfo.score;
-		//projectInfo.bestScoreText.text = projectInfo.bestScore;
+		// gameInfo.scoreText.text = Project.score;
+		//Project.bestScoreText.text = Project.bestScore;
 	}
 
 	function updateCursor() {
 		//utility function for finding the cursor position relative to the gameInfo.gameCanvas
-		var cursorGlobal = game.input.activePointer;
+		var cursorGlobal = Project.game.input.activePointer;
 		gameInfo.cursorLocal = new Point(
 			cursorGlobal.x - gameInfo.gameCanvas.x,
 			cursorGlobal.y - gameInfo.gameCanvas.y
@@ -761,7 +756,7 @@ playState.update = function () {
 
 			if (gameInfo.moverMouseDown == true) {
 				gameInfo.placeFirstTimeMouseUp = true;
-				game.add.tween(cueBall.mover).to({ alpha: 1 }, 500, "Linear", true);
+				Project.game.add.tween(cueBall.mover).to({ alpha: 1 }, 500, "Linear", true);
 				gameInfo.cueCanvas.visible = false;
 				gameInfo.guideCanvas.visible = false;
 				//console.log("hiding guide");
@@ -785,7 +780,7 @@ playState.update = function () {
 				renderScreen();
 			}
 
-			if (game.device.touch && gameInfo.moverMouseDown == false) {
+			if (Project.game.device.touch && gameInfo.moverMouseDown == false) {
 				gameInfo.moverMouseOver = false;
 			}
 
@@ -819,7 +814,7 @@ playState.update = function () {
 					gameInfo.drawGuide = true;
 					updateAimingGuide();
 
-					game.add.tween(cueBall.mover).to({ alpha: 0.2 }, 500, "Linear", true);
+					Project.game.add.tween(cueBall.mover).to({ alpha: 0.2 }, 500, "Linear", true);
 				}
 			}
 
@@ -1249,12 +1244,12 @@ playState.update = function () {
 		/*
 		if (gameInfo.settingPower == false && gameInfo.shotRunning == false) {
 
-			if(gameInfo.spinSetter.input.checkPointerDown(game.input.activePointer)){
+			if(gameInfo.spinSetter.input.checkPointerDown(Project.game.input.activePointer)){
 
 				gameInfo.preventAim = true;
 
-				gameInfo.cueBallSpot.x = game.input.x - gameInfo.spinSetter.x;
-				gameInfo.cueBallSpot.y = game.input.y - gameInfo.spinSetter.y;
+				gameInfo.cueBallSpot.x = Project.game.input.x - gameInfo.spinSetter.x;
+				gameInfo.cueBallSpot.y = Project.game.input.y - gameInfo.spinSetter.y;
 
 				var distSq = gameInfo.cueBallSpot.x * gameInfo.cueBallSpot.x + gameInfo.cueBallSpot.y * gameInfo.cueBallSpot.y;
 				if (distSq > 50 * 50){
@@ -1273,20 +1268,20 @@ playState.update = function () {
 		}
 		*/
 
-		if (gameInfo.startAim == false || !game.device.touch) {
+		if (gameInfo.startAim == false || !Project.game.device.touch) {
 			if (
 				gameInfo.spinSetterZoom.visible == true &&
 				gameInfo.settingSpin == false
 			) {
-				if (game.input.activePointer.isDown) {
+				if (Project.game.input.activePointer.isDown) {
 					if (
-						game.input.activePointer.x >
+						Project.game.input.activePointer.x >
 							gameInfo.spinSetterZoom.x + gameInfo.spinSetterZoom.width / 2 ||
-						game.input.activePointer.x <
+						Project.game.input.activePointer.x <
 							gameInfo.spinSetterZoom.x - gameInfo.spinSetterZoom.width / 2 ||
-						game.input.activePointer.y >
+						Project.game.input.activePointer.y >
 							gameInfo.spinSetterZoom.y + gameInfo.spinSetterZoom.height / 2 ||
-						game.input.activePointer.y <
+						Project.game.input.activePointer.y <
 							gameInfo.spinSetterZoom.y - gameInfo.spinSetterZoom.height / 2
 					) {
 						gameInfo.spinSetterZoom.visible = false;
@@ -1298,7 +1293,7 @@ playState.update = function () {
 
 			if (
 				gameInfo.settingSpin == true &&
-				game.input.activePointer.isDown == false
+				Project.game.input.activePointer.isDown == false
 			) {
 				gameInfo.settingSpin = false; //ensures mouse comes up once after setting spin before clicking away the spin setter above
 			}
@@ -1306,7 +1301,7 @@ playState.update = function () {
 			if (gameInfo.settingPower == false && gameInfo.shotRunning == false) {
 				if (
 					gameInfo.spinSetter.input.checkPointerDown(
-						game.input.activePointer
+						Project.game.input.activePointer
 					) &&
 					gameInfo.spinSetterZoom.visible == false
 				) {
@@ -1318,14 +1313,14 @@ playState.update = function () {
 
 			if (
 				gameInfo.spinSetterZoom.input.checkPointerDown(
-					game.input.activePointer
+					Project.game.input.activePointer
 				) &&
 				gameInfo.spinSetterZoom.visible == true
 			) {
 				gameInfo.settingSpin = true;
 
-				gameInfo.cueBallSpotZoom.x = game.input.x - gameInfo.spinSetterZoom.x;
-				gameInfo.cueBallSpotZoom.y = game.input.y - gameInfo.spinSetterZoom.y;
+				gameInfo.cueBallSpotZoom.x = Project.game.input.x - gameInfo.spinSetterZoom.x;
+				gameInfo.cueBallSpotZoom.y = Project.game.input.y - gameInfo.spinSetterZoom.y;
 
 				var distSq =
 					gameInfo.cueBallSpotZoom.x * gameInfo.cueBallSpotZoom.x +
@@ -1358,11 +1353,11 @@ playState.update = function () {
 	}
 
 	function aim() {
-		if (projectInfo.tutorial == false && gameInfo.preventAim == false) {
+		if (Project.tutorial == false && gameInfo.preventAim == false) {
 			//console.log("aiming. cue visible: " + gameInfo.cueCanvas.visible);
 
 			if (gameInfo.settingPower == false) {
-				if (!game.device.touch) {
+				if (!Project.game.device.touch) {
 					var dx =
 						gameInfo.cursorLocal.x -
 						gameInfo.ballArray[0].position.x * gameInfo.physScale;
@@ -1396,10 +1391,10 @@ playState.update = function () {
 					updateAimingGuide();
 				}
 
-				if (game.device.touch) {
-					if (game.input.activePointer.isDown == true) {
+				if (Project.game.device.touch) {
+					if (Project.game.input.activePointer.isDown == true) {
 						if (gameInfo.startAim) {
-							var newCursorGlobal = game.input;
+							var newCursorGlobal = Project.game.input;
 							var newCursorLocal = new Point(
 								newCursorGlobal.x - gameInfo.gameCanvas.x,
 								newCursorGlobal.y - gameInfo.gameCanvas.y
@@ -1581,7 +1576,7 @@ playState.update = function () {
 					ball.position.y + Math.sin((bearingBall * Math.PI) / 180) * mag
 				);
 
-				if (projectInfo.guideOn == true) {
+				if (Project.guideOn == true) {
 					gameInfo.guide.moveTo(
 						cueBall.position.x * gameInfo.physScale,
 						cueBall.position.y * gameInfo.physScale
@@ -1599,7 +1594,7 @@ playState.update = function () {
 					gameInfo.ballRadius * 2 * gameInfo.physScale
 				);
 
-				if (projectInfo.guideOn == true) {
+				if (Project.guideOn == true) {
 					gameInfo.guide.moveTo(
 						ball.position.x * gameInfo.physScale,
 						ball.position.y * gameInfo.physScale
@@ -1627,7 +1622,7 @@ playState.update = function () {
 						intersectPoint.x + mag * Math.cos((bearingRebound * Math.PI) / 180),
 						intersectPoint.y + mag * Math.sin((bearingRebound * Math.PI) / 180)
 					);
-					if (projectInfo.guideOn == true) {
+					if (Project.guideOn == true) {
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
@@ -1697,7 +1692,7 @@ playState.update = function () {
 					gameInfo.guide.clear();
 					gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
-					if (projectInfo.guideOn == true) {
+					if (Project.guideOn == true) {
 						gameInfo.guide.moveTo(
 							cueBall.position.x * gameInfo.physScale,
 							cueBall.position.y * gameInfo.physScale
@@ -1718,12 +1713,12 @@ playState.update = function () {
 	}
 
 	function setPower() {
-		if (projectInfo.tutorial == false && gameInfo.preventSetPower == false) {
+		if (Project.tutorial == false && gameInfo.preventSetPower == false) {
 			//mouse
-			if (!game.device.touch) {
+			if (!Project.game.device.touch) {
 				//start drag
 				if (
-					game.input.activePointer.isDown == true &&
+					Project.game.input.activePointer.isDown == true &&
 					gameInfo.settingPower == false &&
 					gameInfo.beginStrike == false
 				) {
@@ -1735,8 +1730,8 @@ playState.update = function () {
 					) {
 						gameInfo.settingPower = true;
 						//store mouse position
-						gameInfo.mouseX = game.input.x;
-						gameInfo.mouseY = game.input.y;
+						gameInfo.mouseX = Project.game.input.x;
+						gameInfo.mouseY = Project.game.input.y;
 
 						//gui.powerMeter._mask.height = 0;
 						//gui.powerMeter.cue.y = 5;
@@ -1745,14 +1740,14 @@ playState.update = function () {
 
 				//continue drag
 				if (
-					game.input.activePointer.isDown == true &&
+					Project.game.input.activePointer.isDown == true &&
 					gameInfo.settingPower == true &&
 					gameInfo.beginStrike == false
 				) {
 					//measure mouse drag from original position, in direction of aim
 
-					var dragX = game.input.x - gameInfo.mouseX;
-					var dragY = game.input.y - gameInfo.mouseY;
+					var dragX = Project.game.input.x - gameInfo.mouseX;
+					var dragY = Project.game.input.y - gameInfo.mouseY;
 
 					var maxDrag = 180;
 
@@ -1782,12 +1777,12 @@ playState.update = function () {
 			}
 
 			//touch
-			if (game.device.touch) {
+			if (Project.game.device.touch) {
 				//check if finger is on the power bar graphic
 
 				//start drag
 				if (
-					game.input.activePointer.isDown == true &&
+					Project.game.input.activePointer.isDown == true &&
 					gameInfo.settingPower == false &&
 					gameInfo.beginStrike == false
 				) {
@@ -1795,18 +1790,18 @@ playState.update = function () {
 
 					//check if finger is over powerbar area
 
-					//if(gameInfo.landscape && game.input.y > game.height - 120 || !gameInfo.landscape && game.input.x < 120){
+					//if(gameInfo.landscape && Project.game.input.y > Project.game.height - 120 || !gameInfo.landscape && Project.game.input.x < 120){
 					if (
-						(gameInfo.landscape && game.input.x < 140) ||
-						(!gameInfo.landscape && game.input.x < 120)
+						(gameInfo.landscape && Project.game.input.x < 140) ||
+						(!gameInfo.landscape && Project.game.input.x < 120)
 					) {
 						//console.log("started drag");
 
 						gameInfo.settingPower = true;
 						//store pointer y position
 
-						gameInfo.mouseX = game.input.x;
-						gameInfo.mouseY = game.input.y;
+						gameInfo.mouseX = Project.game.input.x;
+						gameInfo.mouseY = Project.game.input.y;
 						//gui.powerMeter._mask.height = 0;
 						//gui.powerMeter.cue.y = 5;
 					}
@@ -1814,7 +1809,7 @@ playState.update = function () {
 
 				//continue drag
 				if (
-					game.input.activePointer.isDown == true &&
+					Project.game.input.activePointer.isDown == true &&
 					gameInfo.settingPower == true &&
 					gameInfo.beginStrike == false
 				) {
@@ -1822,10 +1817,10 @@ playState.update = function () {
 
 					var drag;
 					if (gameInfo.landscape) {
-						//drag = gameInfo.mouseX - game.input.x;
-						drag = game.input.y - gameInfo.mouseY;
+						//drag = gameInfo.mouseX - Project.game.input.x;
+						drag = Project.game.input.y - gameInfo.mouseY;
 					} else {
-						drag = game.input.y - gameInfo.mouseY;
+						drag = Project.game.input.y - gameInfo.mouseY;
 					}
 					var maxDrag = 500;
 
@@ -1869,7 +1864,7 @@ playState.update = function () {
 			//cancel shot and allow aiming
 			if (
 				gameInfo.power < 40 &&
-				game.input.activePointer.isDown == false &&
+				Project.game.input.activePointer.isDown == false &&
 				gameInfo.settingPower == true
 			) {
 				gameInfo.settingPower = false;
@@ -1881,7 +1876,7 @@ playState.update = function () {
 		//trigger the shot
 		if (
 			gameInfo.power > 40 &&
-			game.input.activePointer.isDown == false &&
+			Project.game.input.activePointer.isDown == false &&
 			gameInfo.settingPower == true &&
 			gameInfo.beginStrike == false
 		) {
@@ -1898,26 +1893,26 @@ playState.update = function () {
 				tweenTime = 0.1;
 			}
 
-			var cueTween = game.add.tween(gameInfo.cue);
+			var cueTween = Project.game.add.tween(gameInfo.cue);
 			cueTween.to(
 				{ x: gameInfo.power / 400 },
 				tweenTime * 1000,
 				Phaser.Easing.Linear.Out
 			);
 
-			// var cueShadowTween = game.add.tween(gameInfo.cueShadow);
+			// var cueShadowTween = Project.game.add.tween(gameInfo.cueShadow);
 			// cueShadowTween.to(
 			// 	{ x: gameInfo.power / 400 },
 			// 	tweenTime * 1000,
 			// 	Phaser.Easing.Linear.Out
 			// );
 
-			var cueFadeTween = game.add.tween(gameInfo.cueCanvas);
+			var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
 			cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 1500);
 			cueFadeTween.onComplete.add(hideCueCanvas, this);
 
-			if (game.device.touch) {
-				var powerBarCueTween = game.add.tween(gameInfo.powerBarCue);
+			if (Project.game.device.touch) {
+				var powerBarCueTween = Project.game.add.tween(gameInfo.powerBarCue);
 				powerBarCueTween.to(
 					{ x: 250 },
 					tweenTime * 1000,
@@ -1967,7 +1962,7 @@ playState.update = function () {
 			gameInfo.timerStarted = true;
 			startTimer();
 
-			var tween = game.add.tween(gameInfo.levelText);
+			var tween = Project.game.add.tween(gameInfo.levelText);
 			tween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 2000);
 			tween.onComplete.add(hideText, this);
 
@@ -2033,7 +2028,7 @@ playState.update = function () {
 					//trace("foul committed:");
 
 					if (gameInfo.trial == false) {
-						//game.time.events.add(Phaser.Timer.SECOND * 5, applyRulings2, this);
+						//Project.game.time.events.add(Phaser.Timer.SECOND * 5, applyRulings2, this);
 
 						gameInfo.cueBallInHand = true;
 
@@ -2052,7 +2047,7 @@ playState.update = function () {
 					//no foul occured, so theoretically there is no chance of a rerack - we can reset rerack and lastBreaker here.
 					if (gameInfo.trial == false) {
 						gameInfo.cueBallInHand = false;
-						projectInfo.lastBreaker = "none";
+						Project.lastBreaker = "none";
 						gameInfo.rerack = false;
 						//console.log("rerack = false");
 					}
@@ -2060,7 +2055,7 @@ playState.update = function () {
 					if (!gameInfo.fouled) {
 						if (gameInfo.turn == "p1") {
 							// famobi_analytics.trackEvent("EVENT_LIVESCORE", {
-							// 	liveScore: projectInfo.score,
+							// 	liveScore: Project.score,
 							// });
 						}
 					}
@@ -2111,12 +2106,12 @@ playState.update = function () {
 		if (gameInfo.rerack == true) {
 			preventQuit = true;
 			//setTimeout(rerackBalls, 3000);
-			game.time.events.add(500, rerackBalls, this);
+			Project.game.time.events.add(500, rerackBalls, this);
 		}
 	}
 
 	function initNextLevel() {
-		if (projectInfo.levelComplete == true) {
+		if (Project.levelComplete == true) {
 			//gameInfo.allowTransferPoints = true;
 		}
 	}
@@ -2125,13 +2120,13 @@ playState.update = function () {
 		if (gameInfo.allowTransferPoints == true) {
 			//here every loop if stage complete
 
-			if (parseInt(gameInfo.gameOverPanel.text1.text) < projectInfo.score) {
+			if (parseInt(gameInfo.gameOverPanel.text1.text) < Project.score) {
 				gameInfo.gameOverPanel.text1.text = String(
 					parseInt(gameInfo.gameOverPanel.text1.text) + 5
 				);
 
-				if (parseInt(gameInfo.gameOverPanel.text1.text) > projectInfo.score) {
-					gameInfo.gameOverPanel.text1.text = String(projectInfo.score);
+				if (parseInt(gameInfo.gameOverPanel.text1.text) > Project.score) {
+					gameInfo.gameOverPanel.text1.text = String(Project.score);
 				}
 
 				//update highscore display
@@ -2147,7 +2142,7 @@ playState.update = function () {
 				gameInfo.allowTransferPoints = false;
 				if (gameInfo.transfer1Complete == false) {
 					gameInfo.transfer1Complete = true;
-					game.time.events.add(1000, showBonus2, this);
+					Project.game.time.events.add(1000, showBonus2, this);
 				}
 				if (gameInfo.transfer2Complete == false) {
 					gameInfo.transfer2Complete = true;
@@ -2179,15 +2174,15 @@ playState.update = function () {
 
 		gameInfo.gameOverPanel.visible = true;
 
-		if (gameInfo.winner == "p1" && projectInfo.mode == 1) {
+		if (gameInfo.winner == "p1" && Project.mode == 1) {
 			gameInfo.playerWin.visible = true;
 		}
-		if (gameInfo.winner == "p2" && projectInfo.mode == 1) {
+		if (gameInfo.winner == "p2" && Project.mode == 1) {
 			gameInfo.aiWin.visible = true;
-			projectInfo.score = 0;
+			Project.score = 0;
 		}
 
-		if (projectInfo.mode == 2) {
+		if (Project.mode == 2) {
 			gameInfo.p1Icon.visible = true;
 			gameInfo.p2Icon.visible = true;
 
@@ -2214,8 +2209,8 @@ playState.update = function () {
 			gameInfo.gameOverPanel.text2.visible = false;
 		}
 
-		gameInfo.gameOverPanel.text1.text = String(projectInfo.score);
-		gameInfo.gameOverPanel.text2.text = String(projectInfo.bestScore);
+		gameInfo.gameOverPanel.text1.text = String(Project.score);
+		gameInfo.gameOverPanel.text2.text = String(Project.bestScore);
 
 		gameInfo.GOaiLevel.visible = false;
 		gameInfo.GOclockIcon.visible = false;
@@ -2223,7 +2218,7 @@ playState.update = function () {
 		gameInfo.gameOverPanel.text3.visible = false;
 		gameInfo.gameOverPanel.text4.visible = false;
 
-		if (gameInfo.winner == "p1" && projectInfo.mode == 1) {
+		if (gameInfo.winner == "p1" && Project.mode == 1) {
 			gameInfo.quitButton2.visible = false;
 			gameInfo.replayButton.visible = false;
 			showBonuses();
@@ -2239,7 +2234,7 @@ playState.update = function () {
 				gameInfo.replayButton.input.enabled = true;
 			};
 
-			game.time.events.add(
+			Project.game.time.events.add(
 				2000,
 				function () {
 					sendGameOverToAPI().then(showButtons, showButtons);
@@ -2255,7 +2250,7 @@ playState.update = function () {
 
 	function showBonuses() {
 		Sound.Play("cheer", 1);
-		game.time.events.add(2000, showBonus1, this);
+		Project.game.time.events.add(2000, showBonus1, this);
 	}
 
 	function showBonus1() {
@@ -2268,24 +2263,24 @@ playState.update = function () {
 
 		gameInfo.gameOverPanel.text3.visible = true;
 
-		projectInfo.score += timeBonus;
+		Project.score += timeBonus;
 
 		if (timeBonus > 0) {
 			gameInfo.allowTransferPoints = true;
 			gameInfo.transfer1Complete = false;
 		} else {
-			game.time.events.add(2000, showBonus2, this);
+			Project.game.time.events.add(2000, showBonus2, this);
 		}
 	}
 
 	function showBonus2() {
 		gameInfo.GOaiLevel.visible = true;
-		gameInfo.GOaiLevel.frame = projectInfo.aiRating - 1;
+		gameInfo.GOaiLevel.frame = Project.aiRating - 1;
 		gameInfo.gameOverPanel.text4.visible = true;
-		var levelBonus = projectInfo.aiRating * 100;
+		var levelBonus = Project.aiRating * 100;
 		gameInfo.gameOverPanel.text4.text = String(levelBonus);
 
-		projectInfo.score += levelBonus;
+		Project.score += levelBonus;
 
 		gameInfo.allowTransferPoints = true;
 		gameInfo.transfer2Complete = false;
@@ -2299,9 +2294,9 @@ playState.update = function () {
 	}
 
 	function rerackBalls() {
-		projectInfo.lastBreaker = gameInfo.turn;
+		Project.lastBreaker = gameInfo.turn;
 
-		game.state.start("play");
+		Project.game.state.start("play");
 	}
 
 	function showFoulMessage() {
@@ -2326,14 +2321,14 @@ playState.update = function () {
 
 			// gameInfo.foulWindow.visible = true;
 			// gameInfo.foulWindow.alpha = 0;
-			// game.add
+			// Project.game.add
 			// 	.tween(gameInfo.foulWindow)
 			// 	.to({ alpha: 1 }, 1000, "Linear", true);
-			// game.time.events.add(Phaser.Timer.SECOND * 4, fadeFoulWindow, this);
+			// Project.game.time.events.add(Phaser.Timer.SECOND * 4, fadeFoulWindow, this);
 
 			function fadeFoulWindow() {
 				if (gameInfo.foulWindow.visible == true) {
-					var foulTween = game.add.tween(gameInfo.foulWindow);
+					var foulTween = Project.game.add.tween(gameInfo.foulWindow);
 					foulTween.to({ alpha: 0 }, 1000, "Linear", true);
 					foulTween.onComplete.add(hideFoulWindow, this);
 				}
@@ -2784,8 +2779,8 @@ playState.update = function () {
 				if (gameInfo.p2TargetType == "STRIPES") {
 					gameInfo.p1TargetType = "SOLIDS";
 
-					//gameInfo.rackSolids.x = game.width / 4;
-					//gameInfo.rackStripes.x = 3 * game.width / 4;
+					//gameInfo.rackSolids.x = Project.game.width / 4;
+					//gameInfo.rackStripes.x = 3 * Project.game.width / 4;
 				} else {
 					gameInfo.p1TargetType = "STRIPES";
 				}
@@ -2802,11 +2797,11 @@ playState.update = function () {
 
 			if (gameInfo.p1TargetType == "SOLIDS") {
 				if (gameInfo.landscape == true) {
-					gameInfo.rackSolids.x = game.width / 4;
-					gameInfo.rackStripes.x = (3 * game.width) / 4;
+					gameInfo.rackSolids.x = Project.game.width / 4;
+					gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
 				} else {
-					gameInfo.rackStripes.y = game.height - 10;
-					gameInfo.rackSolids.y = game.height - 95;
+					gameInfo.rackStripes.y = Project.game.height - 10;
+					gameInfo.rackSolids.y = Project.game.height - 95;
 				}
 
 				gameInfo.p1Rack = "solids";
@@ -2815,11 +2810,11 @@ playState.update = function () {
 
 			if (gameInfo.p1TargetType == "STRIPES") {
 				if (gameInfo.landscape == true) {
-					gameInfo.rackSolids.x = (3 * game.width) / 4;
-					gameInfo.rackStripes.x = game.width / 4;
+					gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
+					gameInfo.rackStripes.x = Project.game.width / 4;
 				} else {
-					gameInfo.rackSolids.y = game.height - 10;
-					gameInfo.rackStripes.y = game.height - 100;
+					gameInfo.rackSolids.y = Project.game.height - 10;
+					gameInfo.rackStripes.y = Project.game.height - 100;
 				}
 
 				gameInfo.p2Rack = "solids";
@@ -2947,7 +2942,7 @@ playState.update = function () {
 	}
 
 	function resetVars() {
-		if (game.device.touch) {
+		if (Project.game.device.touch) {
 			gameInfo.powerBarMask.x = 0;
 			gameInfo.powerBarMask.y = 0;
 		}
@@ -2994,7 +2989,7 @@ playState.update = function () {
 		//mouseOverStrike = false;
 		//preventAim = false;
 
-		if (gameInfo.turn == "p1" || projectInfo.mode == 2) {
+		if (gameInfo.turn == "p1" || Project.mode == 2) {
 			//player's turn is next (we always come through here after who's turn has been decided).
 
 			gameInfo.ballArray[0].mc.visible = true;
@@ -3053,7 +3048,7 @@ playState.update = function () {
 			}
 		}
 
-		if (gameInfo.turn == "p2" && projectInfo.mode == 1) {
+		if (gameInfo.turn == "p2" && Project.mode == 1) {
 			//make sure all markers are hidden if it's not the player's turn next
 			for (var n = 1; n < gameInfo.ballArray.length; n++) {
 				var ball = gameInfo.ballArray[n];
@@ -3065,15 +3060,15 @@ playState.update = function () {
 		}
 
 		//ai's turn next
-		if (gameInfo.turn == "p2" && projectInfo.mode == 1) {
+		if (gameInfo.turn == "p2" && Project.mode == 1) {
 			gameInfo.power = 4000;
 
 			if (gameInfo.cueBallInHand == false) {
 				//gameInfo.cueCanvas.visible = true;
 			}
 		}
-		if (gameInfo.turn == "p1" || projectInfo.mode == 2) {
-			if (game.device.touch && gameInfo.cueBallInHand == false) {
+		if (gameInfo.turn == "p1" || Project.mode == 2) {
+			if (Project.game.device.touch && gameInfo.cueBallInHand == false) {
 				updateCue();
 				var ang = Maths.findBearing(
 					-gameInfo.cueCanvas.x,
@@ -3135,9 +3130,9 @@ playState.update = function () {
 
 	function playMarkerAnims() {
 		if (gameInfo.markerRepeat) {
-			game.time.events.remove(gameInfo.markerRepeat);
+			Project.game.time.events.remove(gameInfo.markerRepeat);
 		}
-		game.time.events.add(Phaser.Timer.SECOND * 1.5, startAnim, this);
+		Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, startAnim, this);
 
 		function startAnim() {
 			for (var n = 1; n < gameInfo.ballArray.length; n++) {
@@ -3148,7 +3143,7 @@ playState.update = function () {
 			}
 
 			//repeat the anim a little later
-			gameInfo.markerRepeat = game.time.events.add(
+			gameInfo.markerRepeat = Project.game.time.events.add(
 				Phaser.Timer.SECOND * 5,
 				startAnim,
 				this
@@ -3157,7 +3152,7 @@ playState.update = function () {
 	}
 
 	function updateDebug() {
-		gameInfo.debugText.text = game.time.fps;
+		gameInfo.debugText.text = Project.game.time.fps;
 	}
 
 	function aiPlaceCueBall() {
@@ -3594,7 +3589,7 @@ playState.update = function () {
 			gameInfo.shotTrialArray = new Array(); //we're clearing any calculated contents, because they were no good.
 			gameInfo.bestShot = -2; //set this to -2 again so that if the best we can find is a -1 or a 0, it will still find something
 
-			var iterations = Math.round(projectInfo.aiRating * 10); //this will test between 8 and 48 shots depending on rating
+			var iterations = Math.round(Project.aiRating * 10); //this will test between 8 and 48 shots depending on rating
 
 			for (var i = 0; i < iterations; i++) {
 				var rotation = Math.random() * 360;
@@ -3707,7 +3702,7 @@ playState.update = function () {
 			gameInfo.shotInfo.aimVector = aimVectorUnit.times(trialPower);
 
 			//TweenLite.to(cueCanvas, 1, {rotation: (180 / Math.PI) * Math.atan2(gameInfo.shotInfo.aimVector.y, gameInfo.shotInfo.aimVector.x), ease:Quart.easeInOut } );
-			game.add.tween(gameInfo.cueCanvas).to(
+			Project.game.add.tween(gameInfo.cueCanvas).to(
 				{
 					angle:
 						(180 / Math.PI) *
@@ -3722,7 +3717,7 @@ playState.update = function () {
 			);
 
 			//setTimeout(strikeBallAI, 2000, gameInfo.shotInfo.aimVector.x, gameInfo.shotInfo.aimVector.y, 0, 0);
-			game.time.events.add(
+			Project.game.time.events.add(
 				2000,
 				strikeBallAI,
 				this,
@@ -3759,9 +3754,9 @@ playState.update = function () {
 		var inaccuracy = 0; // let the variable take values between 0 and 50
 
 		//likelihood of having any inaccuracy greater with lower ratings
-		if (Math.random() * 5 > projectInfo.aiRating) {
+		if (Math.random() * 5 > Project.aiRating) {
 			//if player has low rating, eg 1, the random number (0-5) is quite likely to be above this, so there will be innacuracy.  For high rankings, eg 4.8, this is less likely
-			inaccuracy = Math.random() * 20 * (5 - projectInfo.aiRating); //rating of 4.8, innacuracy will be between 0 and 20.  rating of 0.8, it will be between 0 and 42
+			inaccuracy = Math.random() * 20 * (5 - Project.aiRating); //rating of 4.8, innacuracy will be between 0 and 20.  rating of 0.8, it will be between 0 and 42
 			//trace("added inaccuracy: " + inaccuracy);
 		} else {
 			inaccuracy = 0;
@@ -3775,7 +3770,7 @@ playState.update = function () {
 		);
 
 		//TweenLite.to(cueCanvas, 1, {rotation: (180 / Math.PI) * Math.atan2(gameInfo.shotInfo.aimVector.y, gameInfo.shotInfo.aimVector.x), onComplete:strike, ease:Quart.easeInOut } );
-		var cueCanvasTween = game.add.tween(gameInfo.cueCanvas);
+		var cueCanvasTween = Project.game.add.tween(gameInfo.cueCanvas);
 		cueCanvasTween.to(
 			{
 				angle:
@@ -3835,7 +3830,7 @@ playState.update = function () {
 				//gameInfo.cueCanvas.rotation = (180 / Math.PI) * Math.atan2(vy, vx);
 
 				//TweenLite.to(cue, 0.5, { x: (power / 600), ease:Quad.easeOut } );
-				game.add
+				Project.game.add
 					.tween(gameInfo.cue)
 					.to(
 						{ x: gameInfo.power / 600 },
@@ -3846,7 +3841,7 @@ playState.update = function () {
 
 				//TweenLite.to(cue.shadow, 0.5, { x: (power / 600), ease:Quad.easeOut } );
 
-				// game.add
+				// Project.game.add
 				// 	.tween(gameInfo.cueShadow)
 				// 	.to(
 				// 		{ x: gameInfo.power / 600 },
@@ -3857,7 +3852,7 @@ playState.update = function () {
 
 				//TweenLite.to(cueCanvas, 1, { delay: 1.5, alpha: 0, onComplete:hideCueCanvas } );
 
-				var hideCueTween = game.add.tween(gameInfo.cueCanvas);
+				var hideCueTween = Project.game.add.tween(gameInfo.cueCanvas);
 				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 1500);
 				hideCueTween.onComplete.add(hideCueCanvas, this);
 				gameInfo.cueTweenComplete = false;

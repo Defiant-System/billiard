@@ -11,7 +11,7 @@ content {
 	bottom: 0;
 	border-radius: inherit;
 
-	.floor {
+	.game-view {
 		background: #121034 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
 		position: absolute;
 		top: 0;
@@ -30,12 +30,16 @@ content {
 			bottom: 0;
 			opacity: .035;
 		}
-	}
 
-	#mygame {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 2;
+		.game-cvs {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+
+			canvas {
+				// background: #f00;
+			}
+		}
 	}
 }

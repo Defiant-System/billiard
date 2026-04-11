@@ -100,7 +100,7 @@ function onContact(data) {
 				
 				
 				//if(gameInfo.turn == "player"){
-				if(!projectInfo.tutorial){
+				if(!Project.tutorial){
 					awardBonuses(collisionData);
 				
 				}
@@ -172,10 +172,10 @@ function awardBonuses(collisionData) {
         checkLevelComplete();
         gameInfo.ballPotted = true;
 
-		if(projectInfo.mode == 1 && gameInfo.turn == "p1"){
+		if(Project.mode == 1 && gameInfo.turn == "p1"){
 
 			createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
-			game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
+			Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
 		}
         
        
@@ -184,9 +184,9 @@ function awardBonuses(collisionData) {
 	        
 	        //also update score and best score at the same time
 
-	        projectInfo.score += gameInfo.multiplier * 10;
-	        if(projectInfo.score > gameInfo.bestScore){
-				gameInfo.bestScore = projectInfo.score;
+	        Project.score += gameInfo.multiplier * 10;
+	        if(Project.score > gameInfo.bestScore){
+				gameInfo.bestScore = Project.score;
 				try{
 					window.famobi.localStorage.setItem('bestScore', gameInfo.bestScore);
 					//console.log("new highscore saved");
@@ -197,17 +197,17 @@ function awardBonuses(collisionData) {
 			}
 
 	        gameInfo.multiplier ++;
-	        gameInfo.multiplierText.text = "x" + gameInfo.multiplier;
+	        // gameInfo.multiplierText.text = "x" + gameInfo.multiplier;
 
 	        //gameInfo.bonusText.alpha = 1;
 
-	        //var streakTween = game.add.tween(gameInfo.bonusText);
+	        //var streakTween = Project.game.add.tween(gameInfo.bonusText);
 			//streakTween.to({alpha: 0}, 2000);
 			//streakTween.start();
 
-			var streakTween = game.add.tween(gameInfo.multiplierText);
-			streakTween.from({size: 42}, 2000);
-			streakTween.start();
+			// var streakTween = Project.game.add.tween(gameInfo.multiplierText);
+			// streakTween.from({size: 42}, 2000);
+			// streakTween.start();
 	    }
 
 
@@ -238,17 +238,17 @@ function awardBonuses(collisionData) {
 
 			//var starNumber = Math.floor(Math.random() * 6);
 			gameInfo.bonusStarOn = true;
-			game.time.events.add(Phaser.Timer.SECOND * 1, addStar, this);
+			Project.game.time.events.add(Phaser.Timer.SECOND * 1, addStar, this);
 
 			function addStar(){
 				gameInfo.bonusStars[gameInfo.starNumber].visible = true;
 				
 
-				var starAlphaTween = game.add.tween(gameInfo.bonusStars[gameInfo.starNumber]);
+				var starAlphaTween = Project.game.add.tween(gameInfo.bonusStars[gameInfo.starNumber]);
 				starAlphaTween.from({alpha: 0}, 2000);
 				starAlphaTween.start();
 
-				var starScaleTween = game.add.tween(gameInfo.bonusStars[gameInfo.starNumber].scale);
+				var starScaleTween = Project.game.add.tween(gameInfo.bonusStars[gameInfo.starNumber].scale);
 				starScaleTween.from({x: 5, y: 5}, 2000);
 				starScaleTween.start();
 
@@ -294,7 +294,7 @@ function checkLevelComplete(){
 			
 			//gameInfo.timer.running = false;
 			//gameInfo.timer.stop();			
-			projectInfo.levelComplete = true;
+			Project.levelComplete = true;
 
 			
 		}
@@ -348,13 +348,13 @@ function playPocketAnimation(collisionData) {
 		//ball.mc.scaleY = 0.9;
 		
 		
-		var pocketTween = game.add.tween(ball.mc);
+		var pocketTween = Project.game.add.tween(ball.mc);
 		pocketTween.to({x: pocket.dropPosition.x * gameInfo.physScale, y: pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed);
 		pocketTween.onComplete.add(swapCanvas, this);
 		pocketTween.start();
 		
 		
-		var pocketTween2 = game.add.tween(ball.mc);
+		var pocketTween2 = Project.game.add.tween(ball.mc);
 		pocketTween2.to({x: 0.7 * pocket.dropPosition.x * gameInfo.physScale, y: 0.7 * pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed * 1.2, Phaser.Easing.Linear.In);
 		
 		if(ball.id != 0){
@@ -392,7 +392,7 @@ function playPocketAnimation(collisionData) {
 			pocket = gameInfo.pocketArray[5 - pocket.id]
 
 			
-			var pocketTween = game.add.tween(ball.mc);
+			var pocketTween = Project.game.add.tween(ball.mc);
 			pocketTween.to({x: pocket.position.x * gameInfo.physScale, y: pocket.position.y * gameInfo.physScale}, tweenSpeed);
 			pocketTween.onComplete.add(swapCanvasBack, this);
 			pocketTween.start();
@@ -444,7 +444,7 @@ function playPocketAnimation(collisionData) {
 			ball.active = true;
 			//ball.propelling = true;
 
-			//var timer = game.time.events.add(Phaser.Timer.SECOND * .5, resetFlag, this);
+			//var timer = Project.game.time.events.add(Phaser.Timer.SECOND * .5, resetFlag, this);
 
 			//function resetFlag(){
 				
@@ -505,7 +505,7 @@ function playPocketAnimation(collisionData) {
 	
 
 /*
-    emitter = game.add.emitter(pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 100);
+    emitter = Project.game.add.emitter(pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 100);
 	  
 	emitter.makeParticles('bonusStar');
 	 
@@ -518,7 +518,7 @@ function playPocketAnimation(collisionData) {
 	gameInfo.gameCanvas.addChild(emitter);
     emitter.start(true, 1000, null, 10);
 
-    var starTween = game.add.tween(emitter);
+    var starTween = Project.game.add.tween(emitter);
     starTween.to({alpha: 0, }, 2000);
 	starTween.onComplete.add(destroyStars, this);
 	starTween.start();

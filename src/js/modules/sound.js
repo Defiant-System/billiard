@@ -1,8 +1,6 @@
 
 var Sound = new function(){
-
 	this.on = true;
-
 	this.master = this.on;
 	this.slave = this.on;
 
@@ -28,7 +26,7 @@ Sound.Play = function(type, volume){
 	}
 
 	if (Sound.on) {			
-		var sound = new Phaser.Sound(game, type, volume);
+		var sound = new Phaser.Sound(Project.game, type, volume);
 		sound.play();
 		//console.log("playing sound: " + type);				
 	}
@@ -36,11 +34,11 @@ Sound.Play = function(type, volume){
 
 Sound.createNewAudioContext = function() {
 	//console.log('create new audio context');
-	game.sound.context = new AudioContext();
-	game.sound.masterGain.disconnect();
+	Project.game.sound.context = new AudioContext();
+	Project.game.sound.masterGain.disconnect();
 
-	game.sound.masterGain = game.sound.context.createGain();
-	game.sound.masterGain.connect(game.sound.context.destination);
+	Project.game.sound.masterGain = Project.game.sound.context.createGain();
+	Project.game.sound.masterGain.connect(Project.game.sound.context.destination);
 }
 
 Sound.checkAudioContext = function() {
@@ -49,10 +47,10 @@ Sound.checkAudioContext = function() {
 		this.startCheckingSuspended();
 	}
 
-	const oldCurrentTime = game.sound.context.currentTime;
+	const oldCurrentTime = Project.game.sound.context.currentTime;
 
 	setTimeout(() => {
-		const newCurrentTime = game.sound.context.currentTime;
+		const newCurrentTime = Project.game.sound.context.currentTime;
 
 		if (oldCurrentTime === newCurrentTime) {
 			this.createNewAudioContext();
@@ -65,7 +63,7 @@ Sound.startCheckingSuspended = function() {
 
 	this.intervalId = setInterval(() => {
 		if (this.isSuspended()) {
-			game.sound.context.resume();
+			Project.game.sound.context.resume();
 		} else {
 			clearInterval(this.intervalId);
 		}
@@ -73,7 +71,7 @@ Sound.startCheckingSuspended = function() {
 }
 
 Sound.isSuspended = function() {
-	return game.sound.usingWebAudio && game.sound.context.state === 'suspended';
+	return Project.game.sound.usingWebAudio && Project.game.sound.context.state === 'suspended';
 }
 
 // setInterval(Sound.checkAudioContext.bind(Sound), 1000);

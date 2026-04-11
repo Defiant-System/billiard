@@ -2,8 +2,8 @@
 
 //new timer functions based on frames rather than seconds.
 
-		function updateTimer(){
-
+	function updateTimer(){
+		
 		var gameInfo = playState.gameInfo;
 
 
@@ -12,7 +12,7 @@
 			if(gameInfo.timerStarted){
 				
 
-					if(projectInfo.tutorial == false){
+					if(Project.tutorial == false){
 						gameInfo.time ++;
 
 						
@@ -40,13 +40,13 @@
 			var gameInfo = playState.gameInfo;
 
 			
-			//gameInfo.timer = game.time.create();
-	        //gameInfo.timerEvent = gameInfo.timer.add(projectInfo.startTime * 1000, endTimer, this);
-	        //gameInfo.addedTime = projectInfo.startTime;
+			//gameInfo.timer = Project.game.time.create();
+	        //gameInfo.timerEvent = gameInfo.timer.add(Project.startTime * 1000, endTimer, this);
+	        //gameInfo.addedTime = Project.startTime;
 	        
 	        //gameInfo.timer.start();
 
-	        gameInfo.time = 0; //at 60 fps, time remaining will decrease by 60 each second, so projectInfo.startTime is in seconds
+	        gameInfo.time = 0; //at 60 fps, time remaining will decrease by 60 each second, so Project.startTime is in seconds
 	        
 	       
 	    }
@@ -74,7 +74,7 @@
 			//var timeRemaining = gameInfo.addedTime - gameInfo.timer.seconds;
 			//gameInfo.timer.destroy();
 
-			//gameInfo.timer = game.time.create();
+			//gameInfo.timer = Project.game.time.create();
 	        
 	        //gameInfo.addedTime = timeRemaining + 10;
 	        //gameInfo.timerEvent = gameInfo.timer.add(gameInfo.addedTime * 1000, endTimer, this);

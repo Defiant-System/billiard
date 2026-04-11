@@ -2,7 +2,7 @@ var Stars = function(x, y){
 
 	var gameInfo = playState.gameInfo;
 
-	var emitter = game.add.emitter(x, y, 100);
+	var emitter = Project.game.add.emitter(x, y, 100);
 	  
 	emitter.makeParticles('bonusStar');
 	 
@@ -15,7 +15,7 @@ var Stars = function(x, y){
 	gameInfo.gameCanvas.addChild(emitter);
     emitter.start(true, 1000, null, 10);
 
-    var starTween = game.add.tween(emitter);
+    var starTween = Project.game.add.tween(emitter);
     starTween.to({alpha: 0, }, 2000);
 	starTween.onComplete.add(destroyStars, this);
 	starTween.start();
@@ -31,7 +31,7 @@ var Stars = function(x, y){
 function createBonusText(delay, text, font, x, y, size, sound){
 
 	
-	game.time.events.add(Phaser.Timer.SECOND * delay, createBonusTextAfterDelay, this);
+	Project.game.time.events.add(Phaser.Timer.SECOND * delay, createBonusTextAfterDelay, this);
 
 	function createBonusTextAfterDelay(){
 
@@ -41,7 +41,7 @@ function createBonusText(delay, text, font, x, y, size, sound){
 			Sound.Play("ding", 1);
 		}
 
-		var bmt = new Phaser.BitmapText(game, x, y, font, text, size);
+		var bmt = new Phaser.BitmapText(Project.game, x, y, font, text, size);
 
 		gameInfo.gameCanvas.addChild(bmt);
 		if(!gameInfo.landscape){
@@ -49,7 +49,7 @@ function createBonusText(delay, text, font, x, y, size, sound){
 		}
 		bmt.anchor = new Point(.5, .5);
 
-		var tween = game.add.tween(bmt);
+		var tween = Project.game.add.tween(bmt);
 		if(!gameInfo.landscape){
 			tween.to({alpha: 0, x: x + 40}, 2000);
 		}else{
