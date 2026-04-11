@@ -41,5 +41,168 @@ content {
 				// background: #f00;
 			}
 		}
+
+		.hud {
+			// background: #0001;
+			position: absolute;
+			top: 11px;
+			left: 11px;
+			right: 11px;
+			height: 73px;
+			display: flex;
+			--outline: 0;
+			--color: #eef;
+			--thinkTime: 30s;
+
+			.pot {
+				// background: #f001;
+				position: relative;
+				width: 100px;
+			}
+
+			.player {
+				// background: #0f01;
+				position: relative;
+				flex: 1;
+
+				&.thinking {
+					svg.outline {
+						display: block;
+
+						rect {
+							--outline: 365;
+							stroke-dashoffset: var( --outline );
+							filter: drop-shadow(0 0 1px var( --color ))
+									drop-shadow(0 0 3px var( --color ))
+									drop-shadow(0 0 5px var( --color ));
+							animation: var( --thinkTime ) animOutline linear forwards;
+						}
+					}
+				}
+
+				&.left {
+					.name {
+						text-align: right;
+
+						&:before {
+							right: 83px;
+						}
+
+						&:after {
+							right: 0;
+						}
+
+						svg.outline {
+							right: 0;
+						}
+					}
+
+					.ball-slots {
+						right: 83px;
+					}
+				}
+
+				&.right {
+					.name {
+						text-align: left;
+
+						&:before {
+							left: 83px;
+						}
+
+						&:after {
+							left: 0;
+						}
+
+						svg.outline {
+							left: 0;
+						}
+					}
+
+					.ball-slots {
+						left: 83px;
+					}
+				}
+
+				.name {
+					// background: #0001;
+					position: absolute;
+					top: 0;
+					right: 0;
+					left: 0;
+
+					&:before {
+						content: attr(data-name);
+						position: absolute;
+						top: 13px;
+						color: #fff;
+						font-size: 16px;
+						text-shadow: 0 2px 3px #0003;
+					}
+
+					&:after {
+						content: "";
+						position: absolute;
+						top: 0;
+						height: 73px;
+						width: 73px;
+						border-radius: 5px;
+						background: 50% 50% no-repeat;
+						background-size: auto 100%;
+						box-shadow: inset 0 0 3px rgba(#000,.5),
+									inset 0 0 7px rgba(#000,.75),
+									inset 0 0 11px rgba(#000,.85);
+					}
+
+					&[data-name="Yasmin"]:after { background-image: url(~/gfx/yasmin.webp); }
+					&[data-name="Sean"]:after { background-image: url(~/gfx/sean.webp); }
+					&[data-name="Ann"]:after { background-image: url(~/gfx/ann.webp); }
+					&[data-name="Denise"]:after { background-image: url(~/gfx/denise.webp); }
+					&[data-name="Adam"]:after { background-image: url(~/gfx/adam.webp); }
+					&[data-name="Ali"]:after { background-image: url(~/gfx/ali.webp); }
+				}
+
+				.ball-slots {
+					position: absolute;
+					bottom: 7px;
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					font-size: 0;
+
+					li {
+						background: #0002;
+						display: inline-block;
+						width: 26px;
+						height: 26px;
+						margin: 0 1px;
+						border-radius: 50%;
+						box-shadow: inset 0 2px 3px #0007,
+									0 1px 0 #fff2;
+					}
+				}
+
+				svg.outline {
+					display: none;
+					position: absolute;
+					top: 0;
+					width: 73px;
+					height: 73px;
+					overflow: visible;
+					z-index: 3;
+
+					rect {
+						fill: none;
+						stroke: var( --color );
+						stroke-linejoin: round;
+						stroke-linecap: round;
+						stroke-width: 3;
+						stroke-dasharray: var( --outline );
+						filter: drop-shadow(0 0 3px var( --color ))
+								drop-shadow(0 0 9px var( --color ));
+					}
+				}
+			}
+		}
 	}
 }
