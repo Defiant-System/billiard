@@ -1,3 +1,4 @@
+
 playState.update = function () {
 	var gameInfo = this.gameInfo;
 	var turn = gameInfo.turn;
@@ -17,7 +18,6 @@ playState.update = function () {
 
 			if (gameInfo.turn == "p1" || Project.mode == 2) {
 				// real players only
-
 				updateCursor();
 				if (Project.tutorial == false) {
 					placeCueBall();
@@ -30,7 +30,6 @@ playState.update = function () {
 
 			if (gameInfo.turn == "p2" && Project.mode == 1) {
 				//ai only
-
 				aiPlaceCueBall();
 				aiFindCalculatedShots();
 				aiTestShot();
@@ -64,7 +63,7 @@ playState.update = function () {
 		updateDebug();
 		checkGameOver();
 
-		runTutorial();
+		// runTutorial();
 	}
 
 	transferBonusPoints();
@@ -329,7 +328,6 @@ playState.update = function () {
 
 				case 7:
 					//waiting for tween
-
 					break;
 
 				case 8:
@@ -368,7 +366,6 @@ playState.update = function () {
 					} else {
 						exitTutorial();
 					}
-
 					break;
 
 				case 9:
@@ -384,12 +381,10 @@ playState.update = function () {
 					} else {
 						exitTutorial();
 					}
-
 					break;
 
 				case 10:
 					//waiting for tween
-
 					break;
 
 				case 11:
@@ -453,9 +448,7 @@ playState.update = function () {
 					} else {
 						exitTutorial();
 					}
-
 					break;
-
 				case 12:
 					if (gameInfo.cancelTutorial == false) {
 						if (gameInfo.cue.x >= -gameInfo.ballRadius * gameInfo.physScale) {
@@ -465,7 +458,6 @@ playState.update = function () {
 					} else {
 						exitTutorial();
 					}
-
 					break;
 
 				case 13:
@@ -2295,7 +2287,6 @@ playState.update = function () {
 
 	function rerackBalls() {
 		Project.lastBreaker = gameInfo.turn;
-
 		Project.game.state.start("play");
 	}
 
@@ -2326,22 +2317,20 @@ playState.update = function () {
 			// 	.to({ alpha: 1 }, 1000, "Linear", true);
 			// Project.game.time.events.add(Phaser.Timer.SECOND * 4, fadeFoulWindow, this);
 
+			setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
+
+			function hideFoulWindow() {
+				if (gameInfo.rerack == false) {
+						gameInfo.gameRunning = true;
+					}
+					applyRulings2();
+			}
+
 			function fadeFoulWindow() {
 				if (gameInfo.foulWindow.visible == true) {
 					var foulTween = Project.game.add.tween(gameInfo.foulWindow);
 					foulTween.to({ alpha: 0 }, 1000, "Linear", true);
 					foulTween.onComplete.add(hideFoulWindow, this);
-				}
-
-				function hideFoulWindow() {
-					if (gameInfo.foulWindow.visible == true) {
-						gameInfo.foulWindow.visible = false;
-						gameInfo.foulDisplayComplete = true;
-						if (gameInfo.rerack == false) {
-							gameInfo.gameRunning = true;
-						}
-						applyRulings2();
-					}
 				}
 			}
 
@@ -2797,11 +2786,11 @@ playState.update = function () {
 
 			if (gameInfo.p1TargetType == "SOLIDS") {
 				if (gameInfo.landscape == true) {
-					gameInfo.rackSolids.x = Project.game.width / 4;
-					gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
+					// gameInfo.rackSolids.x = Project.game.width / 4;
+					// gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
 				} else {
-					gameInfo.rackStripes.y = Project.game.height - 10;
-					gameInfo.rackSolids.y = Project.game.height - 95;
+					// gameInfo.rackStripes.y = Project.game.height - 10;
+					// gameInfo.rackSolids.y = Project.game.height - 95;
 				}
 
 				gameInfo.p1Rack = "solids";
@@ -2810,11 +2799,11 @@ playState.update = function () {
 
 			if (gameInfo.p1TargetType == "STRIPES") {
 				if (gameInfo.landscape == true) {
-					gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
-					gameInfo.rackStripes.x = Project.game.width / 4;
+					// gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
+					// gameInfo.rackStripes.x = Project.game.width / 4;
 				} else {
-					gameInfo.rackSolids.y = Project.game.height - 10;
-					gameInfo.rackStripes.y = Project.game.height - 100;
+					// gameInfo.rackSolids.y = Project.game.height - 10;
+					// gameInfo.rackStripes.y = Project.game.height - 100;
 				}
 
 				gameInfo.p2Rack = "solids";
@@ -2822,10 +2811,11 @@ playState.update = function () {
 			}
 
 			//show all balls
-			for (var n = 0; n < 7; n++) {
-				gameInfo.rackSolidsArray[n].visible = true;
-				gameInfo.rackStripesArray[n].visible = true;
-			}
+			console.log("show all balls");
+			// for (var n = 0; n < 7; n++) {
+			// 	gameInfo.rackSolidsArray[n].visible = true;
+			// 	gameInfo.rackStripesArray[n].visible = true;
+			// }
 		}
 
 		//check if 8 ball is the target.  This happens if there are none of the current target balls left.  Usually this will mean there are no stripes or solids left, but it's possible for the table to remain open right up until the 8 ball is on, so the previous target could theoretically be "ANY"
@@ -2882,24 +2872,25 @@ playState.update = function () {
 
 		for (var n = 0; n < gameInfo.pottedBallArray.length; n++) {
 			var id = gameInfo.pottedBallArray[n];
-			gameInfo.rackSpotNumberArray[id].visible = false;
+			console.log("Potted ball", id);
+			// gameInfo.rackSpotNumberArray[id].visible = false;
 		}
 
-		if (gameInfo.p1TargetType == "8 BALL") {
-			if (gameInfo.p1Rack == "solids") {
-				gameInfo.rackSolids8ball.visible = true;
-			} else {
-				gameInfo.rackStripes8ball.visible = true;
-			}
-		}
+		// if (gameInfo.p1TargetType == "8 BALL") {
+		// 	if (gameInfo.p1Rack == "solids") {
+		// 		gameInfo.rackSolids8ball.visible = true;
+		// 	} else {
+		// 		gameInfo.rackStripes8ball.visible = true;
+		// 	}
+		// }
 
-		if (gameInfo.p2TargetType == "8 BALL") {
-			if (gameInfo.p2Rack == "solids") {
-				gameInfo.rackSolids8ball.visible = true;
-			} else {
-				gameInfo.rackStripes8ball.visible = true;
-			}
-		}
+		// if (gameInfo.p2TargetType == "8 BALL") {
+		// 	if (gameInfo.p2Rack == "solids") {
+		// 		gameInfo.rackSolids8ball.visible = true;
+		// 	} else {
+		// 		gameInfo.rackStripes8ball.visible = true;
+		// 	}
+		// }
 	}
 
 	function checkWhosTurn() {

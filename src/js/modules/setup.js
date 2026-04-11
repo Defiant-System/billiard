@@ -1,6 +1,6 @@
 
 
-var diffY = 80;
+var diffY = 150;
 var diffX = 0;
 var playState = new Object();
 
@@ -65,6 +65,7 @@ playState.create = function () {
 			}
 		}
 
+		/*
 		//racks
 		gameInfo.rackSolids.x = Project.game.width / 4;
 		gameInfo.rackSolids.y = Project.game.height - 40;
@@ -82,6 +83,7 @@ playState.create = function () {
 			gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
 			gameInfo.rackStripes.x = Project.game.width / 4;
 		}
+		*/
 
 		//rotate table
 		gameInfo.gameCanvas.y += diffY;
@@ -123,31 +125,30 @@ playState.create = function () {
 	gameInfo.gameRunning = true;
 
 	function setTurn() {
-		gameInfo.turn = "p1";
 		// gameInfo.turnArrow1.frame = 1;
 		// gameInfo.turnArrow2.frame = 0;
-		// if (Project.lastBreaker == "none") {
-		// 	if (Math.random() < 0.5) {
-		// 		gameInfo.turn = "p1";
-		// 		gameInfo.turnArrow1.frame = 1;
-		// 		gameInfo.turnArrow2.frame = 0;
-		// 	} else {
-		// 		gameInfo.turn = "p2";
-		// 		gameInfo.turnArrow1.frame = 0;
-		// 		gameInfo.turnArrow2.frame = 1;
-		// 	}
-		// } else {
-		// 	//this is a re-rack due to a foul, so switch turns
-		// 	if (Project.lastBreaker == "p2") {
-		// 		gameInfo.turn = "p1";
-		// 		gameInfo.turnArrow1.frame = 1;
-		// 		gameInfo.turnArrow2.frame = 0;
-		// 	} else {
-		// 		gameInfo.turn = "p2";
-		// 		gameInfo.turnArrow1.frame = 0;
-		// 		gameInfo.turnArrow2.frame = 1;
-		// 	}
-		// }
+		if (Project.lastBreaker == "none") {
+			if (Math.random() < 0.5) {
+				gameInfo.turn = "p1";
+				// gameInfo.turnArrow1.frame = 1;
+				// gameInfo.turnArrow2.frame = 0;
+			} else {
+				gameInfo.turn = "p2";
+				// gameInfo.turnArrow1.frame = 0;
+				// gameInfo.turnArrow2.frame = 1;
+			}
+		} else {
+			//this is a re-rack due to a foul, so switch turns
+			if (Project.lastBreaker == "p2") {
+				gameInfo.turn = "p1";
+				// gameInfo.turnArrow1.frame = 1;
+				// gameInfo.turnArrow2.frame = 0;
+			} else {
+				gameInfo.turn = "p2";
+				// gameInfo.turnArrow1.frame = 0;
+				// gameInfo.turnArrow2.frame = 1;
+			}
+		}
 	}
 
 	function initLevel() {
@@ -369,14 +370,13 @@ playState.create = function () {
 		// gameInfo.rackBGSolids.y = 0;
 		// gameInfo.rackBGSolids.anchor = new Point(0.5, 1);
 
-		gameInfo.rackSolidsArray = new Array();
-
+		// gameInfo.rackSolidsArray = new Array();
 		gameInfo.rackSpotNumberArray = new Array(); //allows us to store all the balls in both racks as a single array where the index is the spot number
 
+		/*
 		for (var n = 0; n < 7; n++) {
 			//var ballString = "guiSolid" + n;
 			//gameInfo[ballString] = new Phaser.Sprite(Project.game, 0, 0, 'guiSolids', n);
-
 			gameInfo.rackSolidsArray[n] = new Phaser.Sprite(
 				Project.game,
 				0,
@@ -384,13 +384,11 @@ playState.create = function () {
 				"guiSolids",
 				n
 			);
-
 			gameInfo.rackSolids.addChild(gameInfo.rackSolidsArray[n]);
 			gameInfo.rackSolidsArray[n].x = -200 + diffY + n * 50;
 			gameInfo.rackSolidsArray[n].y = 100;
 			gameInfo.rackSolidsArray[n].anchor = new Point(0, 1);
 			gameInfo.rackSolidsArray[n].visible = false;
-
 			gameInfo.rackSpotNumberArray[n + 1] = gameInfo.rackSolidsArray[n];
 		}
 
@@ -409,12 +407,14 @@ playState.create = function () {
 			gameInfo.guiCanvas,
 			"rackStripes"
 		);
+		*/
 		// gameInfo.rackBGStripes = new Phaser.Sprite(Project.game, 0, 0, "rackBG");
 		// gameInfo.rackStripes.addChild(gameInfo.rackBGStripes);
 		// gameInfo.rackBGStripes.x = 1;
 		// gameInfo.rackBGStripes.y = 0;
 		// gameInfo.rackBGStripes.anchor = new Point(0.5, 1);
 
+		/*
 		gameInfo.rackStripesArray = new Array();
 
 		for (var n = 0; n < 7; n++) {
@@ -431,7 +431,6 @@ playState.create = function () {
 			gameInfo.rackStripesArray[n].y = 100;
 			gameInfo.rackStripesArray[n].anchor = new Point(0, 1);
 			gameInfo.rackStripesArray[n].visible = false;
-
 			gameInfo.rackSpotNumberArray[n + 9] = gameInfo.rackStripesArray[n];
 		}
 
@@ -441,6 +440,7 @@ playState.create = function () {
 		gameInfo.rackStripes8ball.y = -11;
 		gameInfo.rackStripes8ball.anchor = new Point(0, 1);
 		gameInfo.rackStripes8ball.visible = false;
+		*/
 
 		//gameInfo.guiStripe4.visible = false;
 		//gameInfo.guiStripe6.visible = false;
@@ -516,7 +516,7 @@ playState.create = function () {
 		//gameInfo.timerText.alpha = 0.2;
 		*/
 		
-		window.gi = gameInfo;
+		// window.gi = gameInfo;
 
 		//gameInfo.timerText.visible = false;
 

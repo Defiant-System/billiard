@@ -18,15 +18,15 @@ function billiardPhysics(contactEvent, balls, lines, vertices, pockets, sim) {
 
 //setter for resetting ballArray (which includes positions, velocities etc.) if we move the balls between real shots for AI
 billiardPhysics.prototype = {
-	set ballData(array){
+	set ballData(array) {
 		this.ballArray = array;
 	},
-	set frameNumber(value){
+	set frameNumber(value) {
 		this.frame = value;
 	}
 }
 
-billiardPhysics.prototype.updatePhysics = function(){
+billiardPhysics.prototype.updatePhysics = function() {
 	this.predictCollisions();
 	this.updateFriction();
 }
@@ -43,8 +43,8 @@ billiardPhysics.prototype.predictCollisions = function() {
 		var collisionTime = 1; //max default value, represents an entire frame
 		var collision;
 
-		if(collisionArray){
-			if(collisionArray.length > 0){
+		if (collisionArray) {
+			if (collisionArray.length > 0) {
 				////////console.log("iterating again");
 			}
 		}
@@ -60,49 +60,42 @@ billiardPhysics.prototype.predictCollisions = function() {
 			numBalls = 1;
 		}
 		if (this.simType == 2) {
-			if(this.targetID == -1){
+			if (this.targetID == -1) {
 				numBalls = 1;
-			}else {
+			} else {
 				numBalls = this.ballArray.length;
 			}
 		}
 
 		for (var b = 0; b < numBalls; b ++) {
-
-
 			var skipBall = false;
-			if(this.simType == 2 && this.targetID != -1 && b != this.targetID && b != 0){
+			if (this.simType == 2 && this.targetID != -1 && b != this.targetID && b != 0) {
 				//in sim2 only, we only need to check for this.targetID against all other balls - will get faster results although less accurate for multiple collisions
 				skipBall = true;
 			}
 
 			var ball = this.ballArray[b];
-
-			if(ball.active == true && skipBall == false){
+			if (ball.active == true && skipBall == false) {
 				var nextBallPosition = ball.position.plus(ball.velocity.times(omegaTime)); //position of ball at start of next frame assuming no collisions
-
-
 				//=============================================================================
-				//=============================================================================
-
 				//collisions with balls
 				var s;
 				if (this.simType == 2) {
 					s = 0; //if sim2, we are ommiting most checks, so the rule below to prevent double checks doesn't apply, so we need to check against all other targets except itself
-				}else {
+				} else {
 					s = b; //sets target t = b otherwise
 				}
 				for (var t = s; t < this.ballArray.length; t ++) { //t = b prevents double checks like 1:2 and 2:1. t = 0 checks all balls
 					var target = this.ballArray[t];
 
-					if(ball.velocity.magnitudeSquared != 0 || target.velocity.magnitudeSquared != 0){ // balls can't collide if neither are moving.  However, keeping this in won't tell us if balls are touching (if that is actually possible - not sure).
+					if (ball.velocity.magnitudeSquared != 0 || target.velocity.magnitudeSquared != 0) { // balls can't collide if neither are moving.  However, keeping this in won't tell us if balls are touching (if that is actually possible - not sure).
 						//check for collisions with all other balls except the current object ball
 						//first check balls are in proximity of each other to prevent unnecessary checks.  Doesn't apply for sim1 where balls are moving much faster
 						var close = true;
 						if (this.simType != 1) {
 							//if (Math.abs(ball.position.x - target.position.x) < 8000 && Math.abs(ball.position.y - target.position.y) < 8000) {
 								//close = true;
-							//}else {
+							//} else {
 								//close = false;
 							//}
 						}
@@ -110,231 +103,195 @@ billiardPhysics.prototype.predictCollisions = function() {
 						if (target != ball && target.active == true && close == true) { //ball cannot collide with itself
 							// ball.velocity.magnitude == 0 && target.velocity.magnitude == 0 represents touching balls - still need to consider these
 							//NEW - check if balls are closing - if they aren't, they don't need to be resolved
-							if(Maths.checkObjectsConverging(ball.position, target.position, ball.velocity, target.velocity)){
+							if (Maths.checkObjectsConverging(ball.position, target.position, ball.velocity, target.velocity)) {
 
-							//if(target != ball.lastCollisionObject || ball != target.lastCollisionObject){
-								//treat target ball as stationary object, and subtract it's velocity vector from object ball to get object's velocity vector in the target's frame of reference
-								////////console.log("checking " + ball.id + " on " + target.id);
-								var ballReferenceVector = ball.velocity.minus(target.velocity); //ball's velocity vector in targets f.o.r.
-								var nextBallReferencePoint = ball.position.plus(ballReferenceVector.times(omegaTime));
-								var A = new Point(ball.position.x, ball.position.y); //starting point of object ball
-								var B = new Point(nextBallReferencePoint.x, nextBallReferencePoint.y); //point of object ball at next frame
-								var C = new Point(target.position.x, target.position.y);
-								var r = 2 * this.ballRadius;
-								var intersection = Maths.lineIntersectCircle(A, B, C, r);
-								/*
-										//////console.log("_____________________");
-										//////console.log("testing " + ball.id + " on " + target.id);
-										//////console.log("inside: " + intersection.inside);
-										//////console.log("tangent: " + intersection.tangent);
-										//////console.log("intersects: " + intersection.intersects);
-										//////console.log("enter: " + intersection.enter);
-										//////console.log("exit: " + intersection.exit);
-										//////console.log("_____________________");
-								if (intersection.inside == true){
-									//////console.log("WTF??");
+							//if (target != ball.lastCollisionObject || ball != target.lastCollisionObject) {
+							//treat target ball as stationary object, and subtract it's velocity vector from object ball to get object's velocity vector in the target's frame of reference
+							////////console.log("checking " + ball.id + " on " + target.id);
+							var ballReferenceVector = ball.velocity.minus(target.velocity); //ball's velocity vector in targets f.o.r.
+							var nextBallReferencePoint = ball.position.plus(ballReferenceVector.times(omegaTime));
+							var A = new Point(ball.position.x, ball.position.y); //starting point of object ball
+							var B = new Point(nextBallReferencePoint.x, nextBallReferencePoint.y); //point of object ball at next frame
+							var C = new Point(target.position.x, target.position.y);
+							var r = 2 * this.ballRadius;
+							var intersection = Maths.lineIntersectCircle(A, B, C, r);
+							/*
+							//////console.log("_____________________");
+							//////console.log("testing " + ball.id + " on " + target.id);
+							//////console.log("inside: " + intersection.inside);
+							//////console.log("tangent: " + intersection.tangent);
+							//////console.log("intersects: " + intersection.intersects);
+							//////console.log("enter: " + intersection.enter);
+							//////console.log("exit: " + intersection.exit);
+							//////console.log("_____________________");
+							if (intersection.inside == true) {
+								//////console.log("WTF??");
+							}
+							*/
+
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//                            NEW! CHECK intersection.inside TOO!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+							//after resolving a contact, the balls are placed at the intersection point.  Due to rounding errors, it's possible that this may cause balls which are very tightly packed to overlap very slightly, and this was causing the line-circle intersection detection to not detect collisions.  In these cases, the projected line was totally inside the circle.  Now we deal with those as collisions too, preventing the ball on ball tunnelling.
+
+							if (intersection.intersects == true || intersection.inside == true) {
+								//collisionDetected = true;
+								var intersectPoint2; //the centre of the object ball, as a Point, at the moment it will make contact with the target.
+								if (intersection.exit != null) {
+									//console.log("exit");
+									intersectPoint2	= intersection.exit;
 								}
+								if (intersection.enter != null) {
+									//console.log("enter");
+									intersectPoint2	= intersection.enter;
+								}
+
+								var intersectPointAsVector2;
+								var intersectTime2;
+								if (intersection.intersects == true) {
+									intersectPointAsVector2 = new Vector2D(intersectPoint2.x, intersectPoint2.y);
+									var vectorAB2 = Maths.createVectorFrom2Points(A, B); //current ball position to ball position at next frame in target's f.o.r.
+									var vectorAP2 = Maths.createVectorFrom2Points(A, intersectPoint2); //current ball position to intersect point
+									intersectTime2 = Maths.fixNumber(time + (vectorAP2.magnitude / vectorAB2.magnitude) * omegaTime); //time of collision since start of frame.  Value is between 0 and 1, where 0 is the time at the beginning of the frame and 1 is the end of the frame
+								}
+
+								if (intersection.inside == true) {
+									//the balls must be overlapping (probably only slightly due to rounding errors) at the point the balls are currently positioned (not projected forward to some point over the next frame as the intersection.enter result would show), and we will treat it as a contact right now, with the contact point being where the balls would touch if we moved the ball directly away from the target it is overlapping. The intersection point is the centre of the object ball
+									//console.log("overlap");
+									var targetToBall = ball.position.minus(target.position).normalize();
+									intersectPointAsVector2 = target.position.plus(targetToBall.times(r));
+									intersectTime2 = time;
+								}
+								/*
+								//////console.log("_____________________");
+								//////console.log(ball.id + " hit " + target.id);
+								//////console.log("intersect time = " + intersectTime2);
+								//////console.log("collision time = " + collisionTime);
+								//////console.log("_____________________");
 								*/
 
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+								if (intersectTime2 < collisionTime) {
+									//temporarily set the collision time and data to this collision.
+									collision = new Object();
+									collisionTime = intersectTime2;
+									collision.type = "ball";
+									collision.object = ball;
+									collision.time = collisionTime;
 
-								//                            NEW! CHECK intersection.inside TOO!
-
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-								//after resolving a contact, the balls are placed at the intersection point.  Due to rounding errors, it's possible that this may cause balls which are very tightly packed to overlap very slightly, and this was causing the line-circle intersection detection to not detect collisions.  In these cases, the projected line was totally inside the circle.  Now we deal with those as collisions too, preventing the ball on ball tunnelling.
-
-								if (intersection.intersects == true || intersection.inside == true) {
-									//collisionDetected = true;
-
-
-									var intersectPoint2; //the centre of the object ball, as a Point, at the moment it will make contact with the target.
-
-									if(intersection.exit != null){
-										//console.log("exit");
-										intersectPoint2	= intersection.exit;
+									if (intersection.intersects == true) {
+										//convert intersect point to observer's frame of reference
+										//current ball position (which is either at the start of frame or at the last collision point if it's already been resolved this frame) plus current velocity multiplied by the time between last collision and this one
+										collision.objectIntersectPoint = ball.position.plus(ball.velocity.times(collisionTime - time));
+										//use same process to calculate target's collision point
+										collision.targetIntersectPoint = target.position.plus(target.velocity.times(collisionTime - time));
+										//var ballToTargetVector = new Vector2D(target.position.x - ball.position.x, target.position.y - ball.position.y).normalize();
+										//collision.targetIntersectPoint = new Vector2D(intersectPoint2.x + (target.position.x - intersectPoint2.x) * r, intersectPoint2.y + (target.position.y - intersectPoint2.y) * r)
 									}
-									if(intersection.enter != null){
-										//console.log("enter");
-										intersectPoint2	= intersection.enter;
+									if (intersection.inside == true) {
+										collision.objectIntersectPoint = intersectPointAsVector2;
+										collision.targetIntersectPoint = target.position;
 									}
 
-
-
-									var intersectPointAsVector2;
-									var intersectTime2;
-
-									if(intersection.intersects == true){
-										intersectPointAsVector2 = new Vector2D(intersectPoint2.x, intersectPoint2.y);
-										var vectorAB2 = Maths.createVectorFrom2Points(A, B); //current ball position to ball position at next frame in target's f.o.r.
-										var vectorAP2 = Maths.createVectorFrom2Points(A, intersectPoint2); //current ball position to intersect point
-										intersectTime2 = Maths.fixNumber(time + (vectorAP2.magnitude / vectorAB2.magnitude) * omegaTime); //time of collision since start of frame.  Value is between 0 and 1, where 0 is the time at the beginning of the frame and 1 is the end of the frame
-									}
-
-									if(intersection.inside == true){
-
-										//the balls must be overlapping (probably only slightly due to rounding errors) at the point the balls are currently positioned (not projected forward to some point over the next frame as the intersection.enter result would show), and we will treat it as a contact right now, with the contact point being where the balls would touch if we moved the ball directly away from the target it is overlapping. The intersection point is the centre of the object ball
-
-										//console.log("overlap");
-										var targetToBall = ball.position.minus(target.position).normalize();
-										intersectPointAsVector2 = target.position.plus(targetToBall.times(r));
-										intersectTime2 = time;
-
-									}
-
-									/*
-										//////console.log("_____________________");
-										//////console.log(ball.id + " hit " + target.id);
-										//////console.log("intersect time = " + intersectTime2);
-										//////console.log("collision time = " + collisionTime);
-										//////console.log("_____________________");
-										*/
-
-									 if (intersectTime2 < collisionTime) {
-
-										//temporarily set the collision time and data to this collision.
+									collision.target = target;
+									collisionArray = new Array(); //clear array - this collision happens earlier than any other
+									collisionArray.push(collision);
+								} else if (intersectTime2 == collisionTime) {
+									if (intersectTime2 != 1) {
 										collision = new Object();
 										collisionTime = intersectTime2;
 										collision.type = "ball";
 										collision.object = ball;
 										collision.time = collisionTime;
 
+										//convert intersect point to observer's frame of reference
+										//original ball position plus original velocity multiplied by the time between last collision and this one
+										collision.objectIntersectPoint = ball.position.plus(ball.velocity.times(collisionTime - time));
+										collision.target = target;
+										//use same process to calculate target's collision point
+										collision.targetIntersectPoint = target.position.plus(target.velocity.times(collisionTime - time));
 
-										if(intersection.intersects == true){
-											//convert intersect point to observer's frame of reference
-											//current ball position (which is either at the start of frame or at the last collision point if it's already been resolved this frame) plus current velocity multiplied by the time between last collision and this one
-											collision.objectIntersectPoint = ball.position.plus(ball.velocity.times(collisionTime - time));
-
-											//use same process to calculate target's collision point
-											collision.targetIntersectPoint = target.position.plus(target.velocity.times(collisionTime - time));
-											//var ballToTargetVector = new Vector2D(target.position.x - ball.position.x, target.position.y - ball.position.y).normalize();
-											//collision.targetIntersectPoint = new Vector2D(intersectPoint2.x + (target.position.x - intersectPoint2.x) * r, intersectPoint2.y + (target.position.y - intersectPoint2.y) * r)
-										}
-										if(intersection.inside == true){
-
+										if (intersection.inside == true) {
 											collision.objectIntersectPoint = intersectPointAsVector2;
 											collision.targetIntersectPoint = target.position;
 										}
 
-
-
-										collision.target = target;
-										collisionArray = new Array(); //clear array - this collision happens earlier than any other
+										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
-
-
-									}else if (intersectTime2 == collisionTime) {
-										if (intersectTime2 != 1) {
-											collision = new Object();
-											collisionTime = intersectTime2;
-											collision.type = "ball";
-											collision.object = ball;
-											collision.time = collisionTime;
-
-											//convert intersect point to observer's frame of reference
-											//original ball position plus original velocity multiplied by the time between last collision and this one
-											collision.objectIntersectPoint = ball.position.plus(ball.velocity.times(collisionTime - time));
-											collision.target = target;
-											//use same process to calculate target's collision point
-											collision.targetIntersectPoint = target.position.plus(target.velocity.times(collisionTime - time));
-
-											if(intersection.inside == true){
-
-													collision.objectIntersectPoint = intersectPointAsVector2;
-													collision.targetIntersectPoint = target.position;
-												}
-
-											//don't clear array - this is another collision at the same time
-											collisionArray.push(collision);
-
-											//console.log("double collision (ball)");
-										}
-
+										//console.log("double collision (ball)");
 									}
 								}
 							}
 						}
 					}
 				}
+			}
 
+			if (ball.velocity.magnitudeSquared != 0) {
+				//============================================================================
+				//detect collisions with lines
+				//============================================================================
+				for (var l = 0; l < this.lineArray.length; l ++) {
+					var line = this.lineArray[l];
+					//if (lastObjectCollided == ball && lastTargetCollided == line) {
+					//if (line != ball.lastCollisionObject) { //not working
+					//check if ball is moving towards the line and ball and line are in same sector
+						//test intersection between line AB and EF (see diagram in notes)
+						//var intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p3.x, line.p3.y), new Point(line.p4.x, line.p4.y));
 
-				if(ball.velocity.magnitudeSquared != 0){
+						//TEST!! Hide above line and instead use Phaser's built in line on line intersection test
+						var path = new Phaser.Line(ball.position.x, ball.position.y, nextBallPosition.x, nextBallPosition.y);
+						var intersectPoint = path.intersects(new Phaser.Line(line.p3.x, line.p3.y, line.p4.x, line.p4.y));
 
-					//============================================================================
-					//detect collisions with lines
-					//============================================================================
-
-
-					for (var l = 0; l < this.lineArray.length; l ++) {
-						var line = this.lineArray[l];
-
-
-						//if (lastObjectCollided == ball && lastTargetCollided == line) {
-
-						//if(line != ball.lastCollisionObject){ //not working
-
-						//check if ball is moving towards the line and ball and line are in same sector
-
-
-
-							//test intersection between line AB and EF (see diagram in notes)
-
-							//var intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p3.x, line.p3.y), new Point(line.p4.x, line.p4.y));
-
-							//TEST!! Hide above line and instead use Phaser's built in line on line intersection test
-							var path = new Phaser.Line(ball.position.x, ball.position.y, nextBallPosition.x, nextBallPosition.y);
-							var intersectPoint = path.intersects(new Phaser.Line(line.p3.x, line.p3.y, line.p4.x, line.p4.y));
-
-
-							 //NEW!! if no intersection is found, double check against secondary line, slightly behind the first.
-
-
-							 if (intersectPoint == null) {
-								intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p5.x, line.p5.y), new Point(line.p6.x, line.p6.y));
-								if (intersectPoint != null) {
-									console.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
-									//adjust the intersect point so it is on the first line instead of the second
-
-
-									var currentPointAsVec = new Vector2D(intersectPoint.x, intersectPoint.y);
-
-									var normalProjection = line.normal.times(this.ballRadius * 0.2);
-									intersectPointAsVec = currentPointAsVec.plus(normalProjection);
-									intersectPoint = new Point(intersectPointAsVec.x, intersectPointAsVec.y);
-
-								}
-							 }
-
-
-
-
+						//NEW!! if no intersection is found, double check against secondary line, slightly behind the first.
+						if (intersectPoint == null) {
+							intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p5.x, line.p5.y), new Point(line.p6.x, line.p6.y));
 							if (intersectPoint != null) {
-								var intersectPointAsVector = new Vector2D(intersectPoint.x, intersectPoint.y);
-								//collisionDetected = true;
+								console.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
+								//adjust the intersect point so it is on the first line instead of the second
+								var currentPointAsVec = new Vector2D(intersectPoint.x, intersectPoint.y);
+								var normalProjection = line.normal.times(this.ballRadius * 0.2);
+								var intersectPointAsVec = currentPointAsVec.plus(normalProjection);
+								intersectPoint = new Point(intersectPointAsVec.x, intersectPointAsVec.y);
+							}
+						}
 
+						if (intersectPoint != null) {
+							var intersectPointAsVector = new Vector2D(intersectPoint.x, intersectPoint.y);
+							//collisionDetected = true;
+							//time if intersection is true
+							var vectorAB = Maths.createVectorFrom2Points(ball.position, nextBallPosition); //current ball position to ball position at next frame
+							var vectorAP = Maths.createVectorFrom2Points(ball.position, intersectPointAsVector); //current ball position to intersect point
+							var intersectTime = Maths.fixNumber(time + (vectorAP.magnitude / vectorAB.magnitude) * omegaTime);
+							//trace("time: " + time);
+							//trace("intersectTime: " + intersectTime);
+							//trace("collisionTime: " + collisionTime);
 
-								//time if intersection is true
-								var vectorAB = Maths.createVectorFrom2Points(ball.position, nextBallPosition); //current ball position to ball position at next frame
-								var vectorAP = Maths.createVectorFrom2Points(ball.position, intersectPointAsVector); //current ball position to intersect point
-								var intersectTime = Maths.fixNumber(time + (vectorAP.magnitude / vectorAB.magnitude) * omegaTime);
-								//trace("time: " + time);
-								//trace("intersectTime: " + intersectTime);
-								//trace("collisionTime: " + collisionTime);
+							if (intersectTime < collisionTime) {
+								//trace("line");
+								//trace("it: " + intersectTime);
+								//temporarily set the collision time and data to this collision.  This will be overriden if an earlier collision time is found on this iteration
+								collision = new Object();
+								collisionTime = intersectTime;
+								collision.type = "line";
+								collision.time = collisionTime;
+								collision.object = ball;
+								collision.objectIntersectPoint = intersectPointAsVector;
+								collision.target = line;
+								//this event happens before any others, so clear the collision array and add this one
+								collisionArray = new Array();
+								collisionArray.push(collision);
+							} else if (intersectTime == collisionTime) {
+								//two possibilities why this might happen: a) if the predicted time of intersection with a line will happen exactly at the end of the frame (intersectTime == 1 and collisionTime == 1).  This is not a problem, as we can ignore this collision and catch it at the beginning of the next frame, where intersectTime will be 0.
+								//b) if another ball/line collision has taken place at exactly the same time on the previous iteration.  This is a problem, as only the first one will be considered, and the second one will be ignored resulting in tunnelling.  Need to add to a queue of collisions to be resolved in this case
 
-
-
-								if (intersectTime < collisionTime) {
-
-									//trace("line");
-									//trace("it: " + intersectTime);
-
-									//temporarily set the collision time and data to this collision.  This will be overriden if an earlier collision time is found on this iteration
+								if (intersectTime != 1) {
 									collision = new Object();
 									collisionTime = intersectTime;
 									collision.type = "line";
@@ -342,40 +299,17 @@ billiardPhysics.prototype.predictCollisions = function() {
 									collision.object = ball;
 									collision.objectIntersectPoint = intersectPointAsVector;
 									collision.target = line;
-
-									//this event happens before any others, so clear the collision array and add this one
-									collisionArray = new Array();
+									//this collision happens (occassionally) in addition to any others, at the exact same time so add to the collision array,
 									collisionArray.push(collision);
-								}else if (intersectTime == collisionTime) {
-									//two possibilities why this might happen: a) if the predicted time of intersection with a line will happen exactly at the end of the frame (intersectTime == 1 and collisionTime == 1).  This is not a problem, as we can ignore this collision and catch it at the beginning of the next frame, where intersectTime will be 0.
-									//b) if another ball/line collision has taken place at exactly the same time on the previous iteration.  This is a problem, as only the first one will be considered, and the second one will be ignored resulting in tunnelling.  Need to add to a queue of collisions to be resolved in this case
-
-									if (intersectTime != 1) {
-										collision = new Object();
-										collisionTime = intersectTime;
-										collision.type = "line";
-										collision.time = collisionTime;
-										collision.object = ball;
-										collision.objectIntersectPoint = intersectPointAsVector;
-										collision.target = line;
-
-										//this collision happens (occassionally) in addition to any others, at the exact same time so add to the collision array,
-
-										collisionArray.push(collision);
-
-										console.log("double collision (line): frame " + this.frame);
-									}
-
+									console.log("double collision (line): frame " + this.frame);
 								}
-
 							}
-						//}
+						}
 					}
 
 					//===================================================
 					//collisions with corners
 					//===================================================
-
 					for (var v = 0; v < this.vertexArray.length; v ++) {
 						var vertex = this.vertexArray[v];
 
@@ -383,64 +317,51 @@ billiardPhysics.prototype.predictCollisions = function() {
 						if (this.simType != 1) {
 							if (Math.abs(ball.position.x - vertex.position.x) < 8000 && Math.abs(ball.position.y - vertex.position.y) < 8000) {
 								close = true;
-							}else {
+							} else {
 								close = false;
 							}
 						}
 
-						if(close == true){
-
+						if (close == true) {
 							var A3 = new Point(ball.position.x, ball.position.y); //starting point of ball
 							var B3 = new Point(nextBallPosition.x, nextBallPosition.y); //point of ball at next frame
 							var C3 = new Point(vertex.position.x, vertex.position.y);
 							var r3 = this.ballRadius * 1.0;
-
-
 							var intersection3 = Maths.lineIntersectCircle(A3, B3, C3, r3);
-
-
-
 							if (intersection3.intersects == true || intersection3.inside == true) {
-
-
-
 								var intersectPoint3; //the centre of the object ball, as a Point, at the moment it will make contact with the target.
-
-								if(intersection3.enter != null){
+								if (intersection3.enter != null) {
 									intersectPoint3	= intersection3.enter;
 									//console.log("!!!!!!   ENTER !!!!!!!!!!!!!!!: frame " + this.frame);
-									if(ball.id == 8 && vertex.name == "K"){
+									if (ball.id == 8 && vertex.name == "K") {
 										//console.log("intersect point: " + intersectPoint3.x + ", " + intersectPoint3.y);
 									}
 								}
-								if(intersection3.exit != null){
+								if (intersection3.exit != null) {
 									intersectPoint3	= intersection3.exit;
 									console.log("!!!!!!   EXIT !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
-								if(intersection3.enter != null && intersection3.exit != null){
+								if (intersection3.enter != null && intersection3.exit != null) {
 									console.log("!!!!!! STRAIGHT THROUGH !!!!!!!!!!!!!!!: frame " + this.frame);
 									intersectPoint3	= intersection3.enter;
 								}
 
-								if(intersection3.enter == null && intersection3.exit != null){
+								if (intersection3.enter == null && intersection3.exit != null) {
 									console.log("!!!!!! EXIT ONLY !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
 								var intersectPointAsVector3;
 								var intersectTime3;
-
-								if(intersection3.intersects == true){
+								if (intersection3.intersects == true) {
 									intersectPointAsVector3 = new Vector2D(intersectPoint3.x, intersectPoint3.y);
 									var vectorAB3 = Maths.createVectorFrom2Points(A3, B3); //current ball position to ball position at next frame
 									var vectorAP3 = Maths.createVectorFrom2Points(A3, intersectPoint3); //current ball position to intersect point
 									intersectTime3 = Maths.fixNumber(time + (vectorAP3.magnitude / vectorAB3.magnitude) * omegaTime);
 								}
 
-								if(intersection3.inside == true){
-
+								if (intersection3.inside == true) {
 									//the balls must be overlapping (probably only slightly due to rounding errors) at the point the balls are currently positioned (not projected forward to some point over the next frame as the intersection.enter result would show), and we will treat it as a contact right now, with the contact point being where the balls would touch if we moved the ball directly away from the target it is overlapping. The intersection point is the centre of the object ball
-
 									//var vertexToBall = Maths.createVectorFrom2Points(C3, A3).normalize();
 									//intersectPointAsVector3 = new Vector2D(C3.x, C3.y).plus(vertexToBall.times(r3 * 1.01));
 									var A3PV = ball.position.plus(ball.velocity.normalize().times(-r3*2)); //position of ball A3, projected backwards along the line of it's own velocity, as a vector, long enough to exit the vertex circle
@@ -451,31 +372,20 @@ billiardPhysics.prototype.predictCollisions = function() {
 									intersectTime3 = time;
 
 									console.log("overlapping vertex: frame " + this.frame);
-
 								}
 
-
-
 								if (intersectTime3 < collisionTime) {
-
 									//temporarily set the collision time and data to this collision.
 									collision = new Object();
 									collisionTime = intersectTime3;
 									collision.type = "vertex";
 									collision.object = ball;
 									collision.time = collisionTime;
-
 									collision.objectIntersectPoint = intersectPointAsVector3;
-
-
 									collision.target = vertex;
 									collisionArray = new Array(); //clear array - this collision happens earlier that any other
 									collisionArray.push(collision);
-
-
-
-
-								}else if (intersectTime3 == collisionTime) {
+								} else if (intersectTime3 == collisionTime) {
 									if (intersectTime3 != 1) {
 										collision = new Object();
 										collisionTime = intersectTime3;
@@ -483,50 +393,41 @@ billiardPhysics.prototype.predictCollisions = function() {
 										collision.object = ball;
 										collision.time = collisionTime;
 
-										if(intersection3.intersects == true){
+										if (intersection3.intersects == true) {
 											collision.objectIntersectPoint = new Vector2D(intersectPoint3.x, intersectPoint3.y);
 										}
-										if(intersection3.inside == true){
+										if (intersection3.inside == true) {
 											collision.objectIntersectPoint = intersectPointAsVector3;
 										}
 
-
 										collision.target = vertex;
-
 
 										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
-
 										console.log("double collision (vertex): frame " + this.frame);
 									}
-
 								}
 							}
 						}
 					}
 
-
-
 					//===================================================
 					//collisions with pockets
 					//===================================================
-
 					for (var p = 0; p < this.pocketArray.length; p ++) {
 						var pocket = this.pocketArray[p];
-
 
 						var close = true;
 						if (this.simType != 1) {
 							if (Math.abs(ball.position.x - pocket.position.x) < 8000 && Math.abs(ball.position.y - pocket.position.y) < 8000) {
 								close = true;
-							}else {
+							} else {
 								close = false;
 							}
 						}
 
 						var towardsPocket = false;
-						if(close == true){
-
+						if (close == true) {
 							//check if ball is moving towards this pocket.  This is primarily used for preventing a ball projected out of the pocket (in billiard blitz challenge) from being immediately swallowed by the same pocket again
 
 							var vector = (pocket.position.minus(ball.position)).normalize();
@@ -539,25 +440,21 @@ billiardPhysics.prototype.predictCollisions = function() {
 							//component = component.normalize();
 
 							//compare sizes - same if in same direction, opposite sign if not
-							if(dotP > 0){
+							if (dotP > 0) {
 								//console.log("towards");
 								towardsPocket = true;
 							}//else{
 								//console.log("away");
-							//}else if(vector.magnitude =- component.magnitude){
+							//} else if (vector.magnitude =- component.magnitude) {
 								//false by default
 								//console.log("same direction");
-							//}else{
+							//} else{
 								//console.log("BOLLOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 							//}
-
-
 						}
 
-						//if(ball.propelling == false && close == true){
-						if(towardsPocket == true && close == true){
-
-
+						//if (ball.propelling == false && close == true) {
+						if (towardsPocket == true && close == true) {
 							var A4 = new Point(ball.position.x, ball.position.y); //starting point of ball
 							var B4 = new Point(nextBallPosition.x, nextBallPosition.y); //point of ball at next frame
 							var C4 = new Point(pocket.position.x, pocket.position.y);
@@ -565,70 +462,56 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 							if (pocket.radius) {
 								r4 = pocket.radius;
-							}else{
+							} else{
 								r4 = this.pocketRadius;
 							}
 
-
 							var intersection4 = Maths.lineIntersectCircle(A4, B4, C4, r4);
-
 							if (intersection4.intersects == true || intersection4.inside == true) {
-
-
-
 								var intersectPoint4; //the centre of the object ball, as a Point, at the moment it will make contact with the target.
-
-								if(intersection4.enter != null){
+								if (intersection4.enter != null) {
 									intersectPoint4	= intersection4.enter;
 								}
-								if(intersection4.exit != null){
+								if (intersection4.exit != null) {
 									intersectPoint4	= intersection4.exit;
 								}
-
 
 								var intersectPointAsVector4;
 								var intersectTime4;
 
-								if(intersection4.intersects == true){
+								if (intersection4.intersects == true) {
 									intersectPointAsVector4 = new Vector2D(intersectPoint4.x, intersectPoint4.y);
 									var vectorAB4 = Maths.createVectorFrom2Points(A4, B4); //current ball position to ball position at next frame
 									var vectorAP4 = Maths.createVectorFrom2Points(A4, intersectPoint4); //current ball position to intersect point
 									intersectTime4 = Maths.fixNumber(time + (vectorAP4.magnitude / vectorAB4.magnitude) * omegaTime);
 								}
 
-								if(intersection4.inside == true){
-
+								if (intersection4.inside == true) {
 									//the balls must be overlapping (probably only slightly due to rounding errors) at the point the balls are currently positioned (not projected forward to some point over the next frame as the intersection.enter result would show), and we will treat it as a contact right now, with the contact point being where the balls would touch if we moved the ball directly away from the target it is overlapping. The intersection point is the centre of the object ball
-
 									var vertexToBall = Maths.createVectorFrom2Points(C4, A4).normalize();
 									intersectPointAsVector4 = new Vector2D(C4.x, C4.y).plus(vertexToBall.times(r4));
 									intersectTime4 = time;
-
 									//////console.log("overlapping pocket");
-
 								}
 
 								if (intersectTime4 < collisionTime) {
-
 									//temporarily set the collision time and data to this collision.
 									collision = new Object();
 									collisionTime = intersectTime4;
 									collision.type = "pocket";
 									collision.object = ball;
 									collision.time = collisionTime;
-									if(intersection4.intersects == true){
+									if (intersection4.intersects == true) {
 										collision.objectIntersectPoint = new Vector2D(intersectPoint4.x, intersectPoint4.y);
 									}
-									if(intersection4.inside == true){
+									if (intersection4.inside == true) {
 										collision.objectIntersectPoint = intersectPointAsVector4;
 									}
-
 									collision.target = pocket;
 									collisionArray = new Array(); //clear array - this collision happens earlier that any other
 									collisionArray.push(collision);
 
-
-								}else if (intersectTime4 == collisionTime) {
+								} else if (intersectTime4 == collisionTime) {
 									if (intersectTime4 != 1) {
 										collision = new Object();
 										collisionTime = intersectTime4;
@@ -636,55 +519,42 @@ billiardPhysics.prototype.predictCollisions = function() {
 										collision.object = ball;
 										collision.time = collisionTime;
 
-										if(intersection4.intersects == true){
+										if (intersection4.intersects == true) {
 											collision.objectIntersectPoint = new Vector2D(intersectPoint4.x, intersectPoint4.y);
 										}
-										if(intersection4.inside == true){
+										if (intersection4.inside == true) {
 											collision.objectIntersectPoint = intersectPointAsVector4;
 										}
-
 										collision.target = pocket;
-
 										//////console.log("double collision (pocket)");
 										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
 									}
-
 								}
 							}
 						}
 					}
 				}
 			}
-
 		}
 
-		if(collisionArray.length > 0){
+		if (collisionArray.length > 0) {
 			this.resolveCollision(collisionArray);
-
 		}
-
 		//move other balls on
 		var deltaTime = Maths.fixNumber(collisionTime - time); //delta time is the time interval from the previous collision to the current one. If no collision occured on this iteration, deltaTime equates to the time remaining for this frame, and balls are moved onto their positions at the end of the frame
 
-
-		if(this.simType != 1){
+		if (this.simType != 1) {
 			this.moveBalls(deltaTime); //this moves the balls not involved in collisions on to the time of the current collision if there is one, or the end of the frame if not.  Balls involved in collisions are already omitted by use of the ommission array in resolveCollision().
 		}
 		time = collisionTime; //update the time to that of the current collision
 
-
 		sanityCheck ++;
-
-		if(sanityCheck >= 20){
+		if (sanityCheck >= 20) {
 			//console.log("max iterations");
 		}
 
-	}while (collisionArray.length > 0 && sanityCheck < 20);
-
-
-
-
+	} while (collisionArray.length > 0 && sanityCheck < 20);
 
 	//if (stop == false) {
 		//check overlaps
@@ -709,34 +579,13 @@ billiardPhysics.prototype.predictCollisions = function() {
 		}
 		*/
 	//}
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 billiardPhysics.prototype.resolveCollision = function(collisionArray) {
-
 	var gameInfo = playState.gameInfo;
-
 	this.omissionArray = new Array(); //these are all balls whose positions have been updated in this function, and don't need to be updated in moveBalls();
 
-	if(collisionArray.length > 1){
+	if (collisionArray.length > 1) {
 		//trace("num simult colls: " + collisionArray.length + ": " + collisionArray[0].type + ", " + collisionArray[1].type);
 	}
 
@@ -746,89 +595,71 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 	var ctv = 99;
 
 	for (var c = 0; c < collisionArray.length; c ++) {
-
 		var collision = collisionArray[c];
-
 		////////console.log("collision type: " + collision.type);
-
-
 		//apply new velocities and update position to the contact position
-
 		//ball on ball
 		if (collision.type == "ball") {
 			//trace("ball");
-
 			ctb = collision.time;
-
 			var overlap = false;
 
-/*
-		//////console.log("=========================");
+			/*
+			//////console.log("=========================");
+			for (var ba = 0; ba < this.ballArray.length; ba ++) {
+				var ballTest = this.ballArray[ba];
+				for (var ta = 0; ta < this.ballArray.length; ta ++) {
+					var targetTest = this.ballArray[ta];
+					if (ballTest != targetTest) {
+						var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
+						if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
+							//trace("overlap");
+							//trace("frame: " + frameCounter);
+							//ballTest.mc.alpha = 0.5;
+							//targetTest.mc.alpha = 0.5;
+							//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
 
-				for (var ba = 0; ba < this.ballArray.length; ba ++) {
-					var ballTest = this.ballArray[ba];
-					for (var ta = 0; ta < this.ballArray.length; ta ++) {
-						var targetTest = this.ballArray[ta];
-						if (ballTest != targetTest) {
-							var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
-							if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
-								//trace("overlap");
-								//trace("frame: " + frameCounter);
-								//ballTest.mc.alpha = 0.5;
-								//targetTest.mc.alpha = 0.5;
-								//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
 
-
-							}
 						}
 					}
 				}
-				*/
-
-
-
+			}
+			*/
 
 			var ball = collision.object;
 			ball.position = collision.objectIntersectPoint;
 			var target = collision.target;
-			if(this.targetID == -1){
+			if (this.targetID == -1) {
 				this.targetID = target.id;
 			}
-
 			////////console.log(ball.id + " and " + target.id + " resolving");
-
 			target.position = collision.targetIntersectPoint;
-
-
-
 			//check overlaps
-		/*
-		for (var ba = 0; ba < this.ballArray.length; ba ++) {
-			var ballTest = this.ballArray[ba];
-			for (var ta = 0; ta < this.ballArray.length; ta ++) {
-				var targetTest = this.ballArray[ta];
-				if (ballTest != targetTest) {
-					var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
-					if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
-						//trace("overlap");
-						//trace("frame: " + frameCounter);
-						//ballTest.mc.alpha = 0.5;
-						//targetTest.mc.alpha = 0.5;
-						//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
-						overlap = true;
+			/*
+			for (var ba = 0; ba < this.ballArray.length; ba ++) {
+				var ballTest = this.ballArray[ba];
+				for (var ta = 0; ta < this.ballArray.length; ta ++) {
+					var targetTest = this.ballArray[ta];
+					if (ballTest != targetTest) {
+						var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
+						if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
+							//trace("overlap");
+							//trace("frame: " + frameCounter);
+							//ballTest.mc.alpha = 0.5;
+							//targetTest.mc.alpha = 0.5;
+							//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
+							overlap = true;
 
 
+						}
 					}
 				}
 			}
-		}
-
-		//////console.log("=========================");
-
-		if(overlap == true){
-			gameInfo.overlap = true;
-		}
-*/
+			//////console.log("=========================");
+			if (overlap == true) {
+				gameInfo.overlap = true;
+			}
+			*/
 
 			this.omissionArray.push(ball);
 			this.omissionArray.push(target);
@@ -856,14 +687,14 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			if (ball.id == 0 && ball.firstContact == false) {
 				//if cueball on first contact, add screw
 				newNormalVelocityBall = (targetVelocityNormal.times(this.ballRestitution)).plus(ballVelocityNormal.times(1 - this.ballRestitution)).plus(ballVelocityNormal.times(-ball.screw));
-			}else{
+			} else{
 				newNormalVelocityBall = (targetVelocityNormal.times(this.ballRestitution)).plus(ballVelocityNormal.times(1 - this.ballRestitution));
 			}
 			*/
 
 			//ySpin (visual effect only - has no effect on physics)
 			//if (this.simType == 0) {
-				if(Math.abs(target.ySpin) < Math.abs(ball.ySpin)){
+				if (Math.abs(target.ySpin) < Math.abs(ball.ySpin)) {
 					target.ySpin = ball.ySpin * -0.5;
 				}
 			//}
@@ -894,8 +725,8 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			ball.velocity = ballVelocityTangent.plus(newNormalVelocityBall);
 			target.velocity = targetVelocityTangent.plus(newNormalVelocityTarget);
 
-			if(this.simType == 0){
-				if(newNormalVelocityTarget.magnitude > 450){
+			if (this.simType == 0) {
+				if (newNormalVelocityTarget.magnitude > 450) {
 					target.grip = 0;
 				}
 			}
@@ -919,7 +750,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 		if (collision.type == "line") {
 
 
-			//if(collision.time == ctl){
+			//if (collision.time == ctl) {
 				//console.log("double line: frame " + this.frame);
 			//}
 			ctl = collision.time;
@@ -941,7 +772,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 			//////console.log("line: " + line);
 
-			//if(this.simType == 0){
+			//if (this.simType == 0) {
 				ball.ySpin += -ball.velocity.dot(line.direction) / 100; //300
 				//trace(ball.ySpin);
 
@@ -976,8 +807,8 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			//reverse normal component
 			ball.velocity = (ballVelocityNormal.times( -this.cushionRestitution)).plus(ballVelocityTangent);
 
-			if(this.simType == 0){
-				if(ballVelocityNormal.magnitude > 700){
+			if (this.simType == 0) {
+				if (ballVelocityNormal.magnitude > 700) {
 					ball.grip = 0;
 				}
 			}
@@ -1001,7 +832,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 		//ball on corner
 		if (collision.type == "vertex") {
 
-			//if(collision.time == ctv){
+			//if (collision.time == ctv) {
 				//console.log("double line: frame " + this.frame);
 			//}
 			//ctv = collision.time;
@@ -1026,10 +857,10 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			var ballVelocityTangent = contactTangent.times(ball.velocity.dot(contactTangent));
 
 			//reverse normal component
-			//if (ball.lastCollisionObject != vertex){
-			//if(ball.lastVertex != vertex.name){
+			//if (ball.lastCollisionObject != vertex) {
+			//if (ball.lastVertex != vertex.name) {
 
-				//if(ball.id == 8){
+				//if (ball.id == 8) {
 					//////console.log("ball " + ball.id + " bouncing off vertex " + vertex.name);
 					//console.log("vector before collision: " + ball.velocity.x + ", " + ball.velocity.y);
 					//console.log("normal: " + contactNormal.x + ", " + contactNormal.y);
@@ -1048,7 +879,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 				//balls seem to be colliding twice with each vertex regardless of this line - which is odd because it should be changing the balls velocity twice and sending it the wrong way every time.  -- actually, it is - this is how the ball is penetrating the cushion.  Double contact causing double direction change.  Why is there a double contact?  -- Double contact occuring when ball hits vertex tangentially to the ball - ie the edge of the ball skims past the vertex. In this case the normal velocity is zero, and this line of code is having no effect. Solution? Perhaps don't allow tangential contacts? Tried, doesn't work.  Probably still getting zero normal velocity when very close to tangential.  Perhaps try moving ball back to previous frame. Tried, works - doesn't penetrate now, but doesn't contact cushion so is too extreme.  Found solution - using the lastCollisionObject above to prevent two subsequent collision responses with the same vertex.
 
-				if(ball.id == 8){
+				if (ball.id == 8) {
 
 					//console.log("vector after collision: " + ball.velocity.x + ", " + ball.velocity.y);
 				}
@@ -1086,7 +917,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			//ball.active = false; //moved to contact listener
 			var sinkSpeed = ball.velocity.magnitude; // store this before setting to zero for sending to contact listener for volume info
 			//ball.velocity = new Vector2D(0, 0);  //moved to contact listener to allow ball to be returned from pocket
-			if(ball.hasOwnProperty("mc")){
+			if (ball.hasOwnProperty("mc")) {
 				//ball.mc.visible = false;
 				//ball.shadow1.visible = false;
 
@@ -1134,7 +965,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 		contactData.target = collision.target;
 		contactData.ballVelocity = ball.velocity;
 
-		if(collision.type == "ball"){
+		if (collision.type == "ball") {
 			contactData.targetVelocity = target.velocity;
 			if (ball.id == 0) {
 				contactData.deltaScrew = ball.deltaScrew;
@@ -1170,9 +1001,9 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 	}
 
-	if(collisionArray.length > 1){
+	if (collisionArray.length > 1) {
 
-		if(ctl == ctv ||  ctl == ctp || ctl == ctb || ctv == ctp || ctv == ctb || ctp == ctb){
+		if (ctl == ctv ||  ctl == ctp || ctl == ctb || ctv == ctp || ctv == ctb || ctp == ctb) {
 			//console.log("dual impact: frame " + this.frame);
 		}
 
@@ -1215,7 +1046,7 @@ billiardPhysics.prototype.updateFriction = function() {
 
 
 
-	for (var b = 0; b < this.ballArray.length; b ++){
+	for (var b = 0; b < this.ballArray.length; b ++) {
 
 		var ball = this.ballArray[b];
 
@@ -1262,13 +1093,13 @@ billiardPhysics.prototype.updateFriction = function() {
 		if (ball.ySpin <= -0.2) {
 			ball.ySpin += 0.2;
 		}
-		if(ball.ySpin >= -0.2 && ball.ySpin <= 0.2) {
+		if (ball.ySpin >= -0.2 && ball.ySpin <= 0.2) {
 			ball.ySpin = 0;
 		}
 
 		//experimental - add swerve to ball based on spin.
 
-		if(ball.ySpin != 0){
+		if (ball.ySpin != 0) {
 			var normal = ball.velocity.getLeftNormal().normalize();
 
 			var swerve = normal.times(0.3 * ball.ySpin * ball.velocity.magnitude / 800);

@@ -60,6 +60,21 @@ const billiard = {
 				Project.game.state.add("play", playState);
 				Project.game.state.start("load");
 				break;
+			case "start-game":
+				Project.levelComplete = false;
+			    Project.guideOn = 1;
+			    Project.aiRating = 2;
+			    Project.bestScore = 0;
+			    Project.numGames = 0;
+			    Project.bestTime = 0;
+				
+				Project.mode = 1;
+			    Project.levelName = "1player_" + String(Project.aiRating);
+			    Project.lastBreaker = "none";
+			    Project.tutorial = false;
+			    Project.clickedHelpButton = false;
+			    Project.game.state.start("play");
+				break;
 		}
 	}
 };
