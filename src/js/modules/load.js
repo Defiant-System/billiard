@@ -28,7 +28,7 @@ const loadState = {
 	    this.load.image('cue', '~/img/cue.webp');
 	    this.load.image('cueShadow', '~/img/cueShadow.png');
 
-	    this.load.spritesheet('solidsSpriteSheet', '~/img/solidsSpriteSheet.png', 48, 48, 9);
+	    this.load.spritesheet('solidsSpriteSheet', '~/icons/solid-sprite-sheet.png', 48, 48, 9);
 	    this.load.spritesheet('ballSpriteSheet9', '~/img/ballSpriteSheet9.png', 50, 50, 41);
 	    this.load.spritesheet('ballSpriteSheet10', '~/img/ballSpriteSheet10.png', 50, 50, 41);
 	    this.load.spritesheet('ballSpriteSheet11', '~/img/ballSpriteSheet11.png', 50, 50, 41);
@@ -44,8 +44,6 @@ const loadState = {
 	    this.load.image('cueBallSpot', '~/img/cueBallSpot.png');
 	    this.load.image('spinSetterZoom', '~/img/spinSetterZoom.png');
 	    this.load.image('cueBallSpotZoom', '~/img/cueBallSpotZoom.png');
-	    this.load.spritesheet('guiSolids', '~/img/guiSolids.png', 102,102);
-	    this.load.spritesheet('guiStripes', '~/img/guiStripes.png', 101,102);
 
 	    this.load.atlas('marker', '~/img/marker.png', '~/js/marker.json');
 

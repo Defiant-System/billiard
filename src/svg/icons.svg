@@ -1,10 +1,54 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 
-	<svg id="icon-chevron-left" viewBox="0 0 256 256">
+	<svg id="solid-sprite-sheet" viewBox="0 0 148 148" size="keep">
 		<style type="text/css">
-			.st0{fill:#333;}
+			.st0{fill:#fff;}
+			.st1{fill:#ff0;}
+			.st2{fill:#00f;}
+			.st3{fill:#f00;}
+			.st4{fill:#f08;}
+			.st5{fill:#f80;}
+			.st6{fill:#080;}
+			.st7{fill:#800;}
+			.st8{fill:#000;}
 		</style>
-		<polygon class="st0" points="9.2,1.6 8.5,0.8 3.5,5.8 3.5,5.8 2.8,6.5 3.5,7.2 8.5,12.2 9.2,11.4 4.2,6.5 "/>
+		<circle class="st0" cx="24" cy="24" r="24"/>
+		<circle class="st1" cx="72" cy="24" r="24"/>
+		<circle class="st2" cx="120" cy="24" r="24"/>
+		<circle class="st3" cx="24" cy="72" r="24"/>
+		<circle class="st4" cx="72" cy="72" r="24"/>
+		<circle class="st5" cx="120" cy="72" r="24"/>
+		<circle class="st6" cx="24" cy="120" r="24"/>
+		<circle class="st7" cx="72" cy="120" r="24"/>
+		<circle class="st8" cx="120" cy="120" r="24"/>
+	</svg>
+
+	<svg id="ball-sprite-sheet-9" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-10" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-11" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-12" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-13" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-14" viewBox="0 0 256 512" size="keep">
+
+	</svg>
+
+	<svg id="ball-sprite-sheet-15" viewBox="0 0 256 512" size="keep">
+
 	</svg>
 
 </svg>
