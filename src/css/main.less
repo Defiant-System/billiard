@@ -45,14 +45,43 @@ content {
 		.hud {
 			// background: #0001;
 			position: absolute;
-			top: 11px;
+			top: 19px;
 			left: 11px;
 			right: 11px;
 			height: 73px;
 			display: flex;
+			z-index: 3;
 			--outline: 0;
 			--color: #eef;
 			--thinkTime: 30s;
+
+			&[data-turn="p1"] {
+				.player.left {
+					filter: none;
+
+					.name:after { }
+				}
+
+				.player.right {
+					filter: grayscale(1);
+
+					.name:after { }
+				}
+			}
+
+			&[data-turn="p2"] {
+				.player.left {
+					filter: grayscale(1);
+
+					.name:after { }
+				}
+
+				.player.right {
+					filter: none;
+
+					.name:after { }
+				}
+			}
 
 			.pot {
 				// background: #f001;
@@ -85,20 +114,34 @@ content {
 						text-align: right;
 
 						&:before {
-							right: 83px;
+							right: 89px;
 						}
 
 						&:after {
 							right: 0;
 						}
 
+						.border {
+							right: -5px;
+						}
+
 						svg.outline {
-							right: 0;
+							right: -2px;
 						}
 					}
 
 					.ball-slots {
 						right: 83px;
+
+						li {
+							&:nth-child(1):before { background-position: -32px 0px; }
+							&:nth-child(2):before { background-position: -64px 0px; }
+							&:nth-child(3):before { background-position: -96px 0px; }
+							&:nth-child(4):before { background-position: 0px -32px; }
+							&:nth-child(5):before { background-position: -32px -32px; }
+							&:nth-child(6):before { background-position: -64px -32px; }
+							&:nth-child(7):before { background-position: -96px -32px; }
+						}
 					}
 				}
 
@@ -107,20 +150,34 @@ content {
 						text-align: left;
 
 						&:before {
-							left: 83px;
+							left: 89px;
 						}
 
 						&:after {
 							left: 0;
 						}
 
+						.border {
+							left: -5px;
+						}
+
 						svg.outline {
-							left: 0;
+							left: -2px;
 						}
 					}
 
 					.ball-slots {
 						left: 83px;
+
+						li {
+							&:nth-child(1):before { background-position: -32px -64px; }
+							&:nth-child(2):before { background-position: -64px -64px; }
+							&:nth-child(3):before { background-position: -96px -64px; }
+							&:nth-child(4):before { background-position: 0px -96px; }
+							&:nth-child(5):before { background-position: -32px -96px; }
+							&:nth-child(6):before { background-position: -64px -96px; }
+							&:nth-child(7):before { background-position: -96px -96px; }
+						}
 					}
 				}
 
@@ -134,10 +191,16 @@ content {
 					&:before {
 						content: attr(data-name);
 						position: absolute;
-						top: 13px;
+						top: 5px;
 						color: #fff;
 						font-size: 16px;
 						text-shadow: 0 2px 3px #0003;
+						background: #0003;
+					    width: 236px;
+					    padding: 5px 7px;
+					    border-radius: 5px;
+					    box-shadow: inset 0 1px 0 #0005,
+					    			inset 0 -1px 0 #fff2;
 					}
 
 					&:after {
@@ -149,9 +212,11 @@ content {
 						border-radius: 5px;
 						background: 50% 50% no-repeat;
 						background-size: auto 100%;
-						box-shadow: inset 0 0 3px rgba(#000,.5),
-									inset 0 0 7px rgba(#000,.75),
-									inset 0 0 11px rgba(#000,.85);
+						box-shadow: inset 0 1px 1px #fff5,
+									inset 0 -1px 1px #0007;
+						// box-shadow: inset 0 0 3px rgba(#000,.5),
+						// 			inset 0 0 7px rgba(#000,.75),
+						// 			inset 0 0 11px rgba(#000,.85);
 					}
 
 					&[data-name="Yasmin"]:after { background-image: url(~/gfx/yasmin.webp); }
@@ -160,11 +225,21 @@ content {
 					&[data-name="Denise"]:after { background-image: url(~/gfx/denise.webp); }
 					&[data-name="Adam"]:after { background-image: url(~/gfx/adam.webp); }
 					&[data-name="Ali"]:after { background-image: url(~/gfx/ali.webp); }
+
+					.border {
+						position: absolute;
+						top: -5px;
+						width: 83px;
+						height: 83px;
+						border-radius: 9px;
+						border: 5px solid #0005;
+						box-shadow: inset 0 0 3px #0009;
+					}
 				}
 
 				.ball-slots {
 					position: absolute;
-					bottom: 7px;
+					bottom: -1px;
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -172,22 +247,34 @@ content {
 
 					li {
 						background: #0002;
+						position: relative;
 						display: inline-block;
-						width: 26px;
-						height: 26px;
+						width: 36px;
+						height: 36px;
 						margin: 0 1px;
 						border-radius: 50%;
 						box-shadow: inset 0 2px 3px #0007,
-									0 1px 0 #fff2;
+									0 1px 1px #fff7;
+
+						&:before {
+							content: "";
+							position: absolute;
+							top: 2px;
+							left: 2px;
+							width: 32px;
+							height: 32px;
+							background: url(~/img/balls.webp) no-repeat;
+							background-size: 128px auto;
+						}
 					}
 				}
 
 				svg.outline {
 					display: none;
 					position: absolute;
-					top: 0;
-					width: 73px;
-					height: 73px;
+					top: -2px;
+					width: 77px;
+					height: 77px;
 					overflow: visible;
 					z-index: 3;
 
@@ -205,4 +292,10 @@ content {
 			}
 		}
 	}
+}
+
+
+@keyframes animOutline {
+	0%   { stroke-dashoffset: var( --outline ); }
+	100% { stroke-dashoffset: 0; }
 }

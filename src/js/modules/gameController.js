@@ -2897,17 +2897,17 @@ playState.update = function () {
 		//trace("should we switch turns?");
 
 		if (gameInfo.turnExtended == false || gameInfo.fouled == true) {
-			/*
+			/**/
 			if (gameInfo.turn == "p2") {
 				gameInfo.turn = "p1";
-				gameInfo.turnArrow1.frame = 1;
-				gameInfo.turnArrow2.frame = 0;
+				// gameInfo.turnArrow1.frame = 1;
+				// gameInfo.turnArrow2.frame = 0;
 			} else {
 				gameInfo.turn = "p2";
-				gameInfo.turnArrow1.frame = 0;
-				gameInfo.turnArrow2.frame = 1;
+				// gameInfo.turnArrow1.frame = 0;
+				// gameInfo.turnArrow2.frame = 1;
 			}
-			*/
+			Project.APP.els.hud.data({ turn: gameInfo.turn });
 
 			//console.log("switching turns");
 
@@ -3109,7 +3109,7 @@ playState.update = function () {
 
 		gameInfo.moverMouseDown = false;
 
-		//console.log("var reset");
+		Project.APP.els.hud.data({ turn: gameInfo.turn });
 	}
 
 	function hideMarkers() {

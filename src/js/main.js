@@ -33,6 +33,7 @@ const billiard = {
 		this.els = {
 			content: window.find("content"),
 			cvs: window.find(".game-cvs"),
+			hud: window.find(".hud"),
 		};
 
 		// start booting game
