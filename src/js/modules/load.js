@@ -48,11 +48,6 @@ const loadState = {
 	    this.load.atlas('marker', '~/img/marker.png', '~/js/marker.json');
 
 	    Project.game.load.bitmapFont('font1', '~/fonts/font1.png', '~/fonts/font1.fnt');
-	    // Project.game.load.bitmapFont('font2', '~/fonts/font2.png', '~/fonts/font2.fnt'); 
-	    // Project.game.load.bitmapFont('font3', '~/fonts/font3.png', '~/fonts/font3.fnt');
-	    // Project.game.load.bitmapFont('font5', '~/fonts/font5.png', '~/fonts/font5.fnt');
-	    // Project.game.load.bitmapFont('font6', '~/fonts/font6.png', '~/fonts/font6.fnt');
-	    Project.game.load.bitmapFont('font7', '~/fonts/Font.png', '~/fonts/Font.fnt');
 
 	    this.load.audio('ballHit', ['~/audio/ballHit2.mp3']);
 	    this.load.audio('cushionHit', ['~/audio/cushionHit.mp3']);

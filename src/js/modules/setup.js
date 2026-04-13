@@ -96,8 +96,8 @@ playState.create = function () {
 		gameInfo.spinSetterZoom.x = Project.game.width / 2;
 		gameInfo.spinSetterZoom.y = Project.game.height / 2 - 75;
 
-		gameInfo.debugText.x = Project.game.width - 25;
-		gameInfo.debugText.y = 30;
+		// gameInfo.debugText.x = Project.game.width - 25;
+		// gameInfo.debugText.y = 30;
 	};
 
 	this.gameInfo = new Object(); //gameInfo is a property of playState
@@ -327,18 +327,18 @@ playState.create = function () {
 
 	function initGUI() {
 		//debug
-		gameInfo.debugText = new Phaser.BitmapText(
-			Project.game,
-			Project.game.width - 1,
-			20,
-			"font7",
-			"",
-			34
-		);
-		gameInfo.guiCanvas.addChild(gameInfo.debugText);
-		gameInfo.debugText.anchor.x = 1;
+		// gameInfo.debugText = new Phaser.BitmapText(
+		// 	Project.game,
+		// 	Project.game.width - 1,
+		// 	20,
+		// 	"font7",
+		// 	"",
+		// 	34
+		// );
+		// gameInfo.guiCanvas.addChild(gameInfo.debugText);
+		// gameInfo.debugText.anchor.x = 1;
 
-		gameInfo.debugText.visible = false;
+		// gameInfo.debugText.visible = false;
 
 		gameInfo.spinSetter = new Phaser.Sprite(Project.game, 0, 0, "spinSetterSmall");
 		gameInfo.guiCanvas.addChild(gameInfo.spinSetter);

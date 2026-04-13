@@ -3143,7 +3143,7 @@ playState.update = function () {
 	}
 
 	function updateDebug() {
-		gameInfo.debugText.text = Project.game.time.fps;
+		// gameInfo.debugText.text = Project.game.time.fps;
 	}
 
 	function aiPlaceCueBall() {
