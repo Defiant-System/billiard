@@ -237,16 +237,11 @@ content {
 						box-shadow: inset 0 2px 3px #0007,
 									0 1px 1px #fff7;
 
-						&.empty {
-							&:before {
-								display: none;
-							}
-						}
-
 						&.potted {
 							&:before {
-								scale: .75;
-								filter: grayscale(1) brightness(0.75);
+								display: none;
+								// scale: .75;
+								// filter: grayscale(1) brightness(0.75);
 							}
 						}
 
@@ -259,6 +254,7 @@ content {
 							height: 32px;
 							background: url(~/img/balls.webp) no-repeat;
 							background-size: 128px auto;
+							background-position: 32px 32px;
 						}
 
 						&[data-id="b1"]:before { background-position: -32px 0px; }

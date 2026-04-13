@@ -60,7 +60,7 @@ playState.update = function () {
 		}
 
 		//updateBonusDisc();
-		updateDebug();
+		// updateDebug();
 		checkGameOver();
 
 		// runTutorial();
@@ -1954,13 +1954,13 @@ playState.update = function () {
 			gameInfo.timerStarted = true;
 			startTimer();
 
-			var tween = Project.game.add.tween(gameInfo.levelText);
-			tween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 2000);
-			tween.onComplete.add(hideText, this);
+			// var tween = Project.game.add.tween(gameInfo.levelText);
+			// tween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 2000);
+			// tween.onComplete.add(hideText, this);
 
-			function hideText() {
-				gameInfo.levelText.visible = false;
-			}
+			// function hideText() {
+			// 	gameInfo.levelText.visible = false;
+			// }
 		}
 	}
 
@@ -2782,33 +2782,30 @@ playState.update = function () {
 				}
 			}
 
-			//set gui ball racks into right positions and make all balls visible - need to consider resizing will change these positions!!
-
+			/*
+			set gui ball racks into right positions and make all balls visible - need to consider 
+			resizing will change these positions!!
+			*/
 			if (gameInfo.p1TargetType == "SOLIDS") {
-				if (gameInfo.landscape == true) {
-					// gameInfo.rackSolids.x = Project.game.width / 4;
-					// gameInfo.rackStripes.x = (3 * Project.game.width) / 4;
-				} else {
-					// gameInfo.rackStripes.y = Project.game.height - 10;
-					// gameInfo.rackSolids.y = Project.game.height - 95;
-				}
-
 				gameInfo.p1Rack = "solids";
 				gameInfo.p2Rack = "stripes";
+
+				Project.APP.els.hud.find(`.player.left .ball-slots li`)
+						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
+				Project.APP.els.hud.find(`.player.right .ball-slots li`)
+						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
 			}
 
 			if (gameInfo.p1TargetType == "STRIPES") {
-				if (gameInfo.landscape == true) {
-					// gameInfo.rackSolids.x = (3 * Project.game.width) / 4;
-					// gameInfo.rackStripes.x = Project.game.width / 4;
-				} else {
-					// gameInfo.rackSolids.y = Project.game.height - 10;
-					// gameInfo.rackStripes.y = Project.game.height - 100;
-				}
-
 				gameInfo.p2Rack = "solids";
 				gameInfo.p1Rack = "stripes";
+
+				Project.APP.els.hud.find(`.player.left .ball-slots li`)
+						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
+				Project.APP.els.hud.find(`.player.right .ball-slots li`)
+						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
 			}
+			// console.log(`P1 is ${gameInfo.p1Rack}`);
 
 			//show all balls
 			console.log("show all balls");
@@ -2872,7 +2869,7 @@ playState.update = function () {
 
 		for (var n = 0; n < gameInfo.pottedBallArray.length; n++) {
 			var id = gameInfo.pottedBallArray[n];
-			console.log("Potted ball", id);
+			Project.APP.els.hud.find(`.ball-slots li[data-id="b${id}"]`).addClass("potted");
 			// gameInfo.rackSpotNumberArray[id].visible = false;
 		}
 
@@ -3143,7 +3140,7 @@ playState.update = function () {
 	}
 
 	function updateDebug() {
-		// gameInfo.debugText.text = Project.game.time.fps;
+		gameInfo.debugText.text = Project.game.time.fps;
 	}
 
 	function aiPlaceCueBall() {

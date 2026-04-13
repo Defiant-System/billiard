@@ -47,8 +47,6 @@ const loadState = {
 
 	    this.load.atlas('marker', '~/img/marker.png', '~/js/marker.json');
 
-	    Project.game.load.bitmapFont('font1', '~/fonts/font1.png', '~/fonts/font1.fnt');
-
 	    this.load.audio('ballHit', ['~/audio/ballHit2.mp3']);
 	    this.load.audio('cushionHit', ['~/audio/cushionHit.mp3']);
 	    this.load.audio('pocketHit', ['~/audio/pocketHit.mp3']);

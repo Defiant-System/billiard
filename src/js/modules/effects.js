@@ -1,4 +1,5 @@
-var Stars = function(x, y){
+
+function Stars(x, y) {
 
 	var gameInfo = playState.gameInfo;
 
@@ -20,37 +21,37 @@ var Stars = function(x, y){
 	starTween.onComplete.add(destroyStars, this);
 	starTween.start();
 
-	function destroyStars(){
-		if(emitter){
+	function destroyStars() {
+		if (emitter) {
 			emitter.destroy();
 		}
 	}
 
 }
 
-function createBonusText(delay, text, font, x, y, size, sound){
+function createBonusText(delay, text, font, x, y, size, sound) {
 
 	
 	Project.game.time.events.add(Phaser.Timer.SECOND * delay, createBonusTextAfterDelay, this);
 
-	function createBonusTextAfterDelay(){
+	function createBonusTextAfterDelay() {
 
 		var gameInfo = playState.gameInfo;
 
-		if(sound == true){
+		if (sound == true) {
 			Sound.Play("ding", 1);
 		}
 
 		var bmt = new Phaser.BitmapText(Project.game, x, y, font, text, size);
 
 		gameInfo.gameCanvas.addChild(bmt);
-		if(!gameInfo.landscape){
+		if (!gameInfo.landscape) {
 			bmt.angle = 90;
 		}
 		bmt.anchor = new Point(.5, .5);
 
 		var tween = Project.game.add.tween(bmt);
-		if(!gameInfo.landscape){
+		if (!gameInfo.landscape) {
 			tween.to({alpha: 0, x: x + 40}, 2000);
 		}else{
 			tween.to({alpha: 0, y: y - 40}, 2000);
@@ -60,7 +61,7 @@ function createBonusText(delay, text, font, x, y, size, sound){
 
 		//console.log("bonus");
 
-		function destroy(){
+		function destroy() {
 
 			gameInfo.gameCanvas.removeChild(bmt);
 			bmt = null;

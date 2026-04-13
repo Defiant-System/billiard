@@ -117,7 +117,7 @@ playState.create = function () {
 	initPhysics();
 	renderScreen();
 	initTimer();
-	initLevelText();
+	// initLevelText();
 	setTurn();
 
 	resizeGame();
@@ -275,29 +275,29 @@ playState.create = function () {
 	}
 
 	function initLevelText() {
-		gameInfo.levelText = new Phaser.BitmapText(
-			Project.game,
-			0,
-			-100,
-			"font1",
-			Project.level,
-			48
-		);
-		gameInfo.timerCanvas.addChild(gameInfo.levelText);
-		gameInfo.levelText.anchor.x = 0.5;
-		gameInfo.levelText.anchor.y = 0.5;
-		gameInfo.levelText.alpha = 0.2;
+		// gameInfo.levelText = new Phaser.BitmapText(
+		// 	Project.game,
+		// 	0,
+		// 	-100,
+		// 	"font1",
+		// 	Project.level,
+		// 	48
+		// );
+		// gameInfo.timerCanvas.addChild(gameInfo.levelText);
+		// gameInfo.levelText.anchor.x = 0.5;
+		// gameInfo.levelText.anchor.y = 0.5;
+		// gameInfo.levelText.alpha = 0.2;
 
-		// gameInfo.successIcon = new Phaser.Sprite(Project.game, 0, 0, "success");
-		// gameInfo.timerCanvas.addChild(gameInfo.successIcon);
-		// gameInfo.successIcon.visible = false;
-		// gameInfo.successIcon.anchor = new Point(0.5, 0.5);
-		// gameInfo.successIcon.alpha = 0.25;
+		// // gameInfo.successIcon = new Phaser.Sprite(Project.game, 0, 0, "success");
+		// // gameInfo.timerCanvas.addChild(gameInfo.successIcon);
+		// // gameInfo.successIcon.visible = false;
+		// // gameInfo.successIcon.anchor = new Point(0.5, 0.5);
+		// // gameInfo.successIcon.alpha = 0.25;
 
-		if (Project.tutorial == true) {
-			gameInfo.levelText.visible = false;
-		}
-		gameInfo.levelText.visible = false;
+		// if (Project.tutorial == true) {
+		// 	gameInfo.levelText.visible = false;
+		// }
+		// gameInfo.levelText.visible = false;
 	}
 
 	// function initSkipText() {
@@ -359,11 +359,11 @@ playState.create = function () {
 		gameInfo.cueBallSpotZoom.anchor = new Point(0.5, 0.5);
 		gameInfo.spinSetterZoom.visible = false;
 
-		gameInfo.rackSolids = new Phaser.Group(
-			Project.game,
-			gameInfo.guiCanvas,
-			"rackSolids"
-		);
+		// gameInfo.rackSolids = new Phaser.Group(
+		// 	Project.game,
+		// 	gameInfo.guiCanvas,
+		// 	"rackSolids"
+		// );
 		// gameInfo.rackBGSolids = new Phaser.Sprite(Project.game, 0, 0, "rackBG");
 		// gameInfo.rackSolids.addChild(gameInfo.rackBGSolids);
 		// gameInfo.rackBGSolids.x = 1;
@@ -371,7 +371,7 @@ playState.create = function () {
 		// gameInfo.rackBGSolids.anchor = new Point(0.5, 1);
 
 		// gameInfo.rackSolidsArray = new Array();
-		gameInfo.rackSpotNumberArray = new Array(); //allows us to store all the balls in both racks as a single array where the index is the spot number
+		// gameInfo.rackSpotNumberArray = new Array(); //allows us to store all the balls in both racks as a single array where the index is the spot number
 
 		/*
 		for (var n = 0; n < 7; n++) {
