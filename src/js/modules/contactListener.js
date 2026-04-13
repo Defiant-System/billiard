@@ -55,7 +55,7 @@ function onContact(data) {
 		ball.contactArray.push(collisionObject);
 		//trace("contact: " + collisionObject.collisionType);
 		
-		if(gameInfo.trial == false){
+		if (gameInfo.trial == false) {
 			//play ball sound
 			var closingSpeed = (collisionObject.velocity.minus(collisionObject.targetVelocity)).magnitude;
 			var volume = closingSpeed / 6000;
@@ -70,7 +70,7 @@ function onContact(data) {
 		//store ball on cushion contact in the object ball's contact array
 		ball.contactArray.push(collisionObject);
 		
-		if(gameInfo.trial == false){
+		if (gameInfo.trial == false) {
 			//play cushion sound
 			var closingSpeed = collisionData.normalVelocity.magnitude;
 			var volume = closingSpeed / 3000;
@@ -85,7 +85,7 @@ function onContact(data) {
 	}
 	if (collisionData.collisionType == "pocket") {
 		
-		//if(ball.propelling == false){
+		//if (ball.propelling == false) {
 
 			//moved from physics
 			ball.active = false;
@@ -94,13 +94,13 @@ function onContact(data) {
 
 			ball.contactArray.push(collisionObject);
 			
-			if(gameInfo.trial == false){
+			if (gameInfo.trial == false) {
 				playPocketSound(collisionData);
 				playPocketAnimation(collisionData);
 				
 				
-				//if(gameInfo.turn == "player"){
-				if(!Project.tutorial){
+				//if (gameInfo.turn == "player") {
+				if (!Project.tutorial) {
 					awardBonuses(collisionData);
 				
 				}
@@ -162,7 +162,7 @@ function awardBonuses(collisionData) {
 
 
 
-	if(collisionData.ball.id != 0){
+	if (collisionData.ball.id != 0) {
 
 		var pocket = collisionData.target;
 
@@ -172,25 +172,25 @@ function awardBonuses(collisionData) {
         checkLevelComplete();
         gameInfo.ballPotted = true;
 
-		if(Project.mode == 1 && gameInfo.turn == "p1"){
-
-			createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
-			Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
+		if (Project.mode == 1 && gameInfo.turn == "p1") {
+			console.log( "Bonus", gameInfo.multiplier * 10 );
+			// createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
+			// Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
 		}
         
        
 
-        function updateScoreAndMultiplier(){
+        function updateScoreAndMultiplier() {
 	        
 	        //also update score and best score at the same time
 
 	        Project.score += gameInfo.multiplier * 10;
-	        if(Project.score > gameInfo.bestScore){
+	        if (Project.score > gameInfo.bestScore) {
 				gameInfo.bestScore = Project.score;
 				try{
 					window.famobi.localStorage.setItem('bestScore', gameInfo.bestScore);
 					//console.log("new highscore saved");
-				}catch(e){
+				}catch(e) {
 					//console.log("save failed");
 				}
 				
@@ -217,7 +217,7 @@ function awardBonuses(collisionData) {
 
 		
 		/*
-		if(gameInfo.bonusStars[pocket.id].visible == true){
+		if (gameInfo.bonusStars[pocket.id].visible == true) {
 
 			gameInfo.bonusStars[pocket.id].visible = false;
 			gameInfo.bonusStarOn = false;
@@ -234,13 +234,13 @@ function awardBonuses(collisionData) {
 		} 
 
 
-		if(gameInfo.bonusStarOn == false){
+		if (gameInfo.bonusStarOn == false) {
 
 			//var starNumber = Math.floor(Math.random() * 6);
 			gameInfo.bonusStarOn = true;
 			Project.game.time.events.add(Phaser.Timer.SECOND * 1, addStar, this);
 
-			function addStar(){
+			function addStar() {
 				gameInfo.bonusStars[gameInfo.starNumber].visible = true;
 				
 
@@ -256,11 +256,11 @@ function awardBonuses(collisionData) {
 
 				gameInfo.starNumber ++;
 
-				if(gameInfo.starNumber == 1 || gameInfo.starNumber == 4){
+				if (gameInfo.starNumber == 1 || gameInfo.starNumber == 4) {
 					gameInfo.starNumber ++;
 				}
 
-				if(gameInfo.starNumber > 5){
+				if (gameInfo.starNumber > 5) {
 					gameInfo.starNumber = 0;
 				}
 			}
@@ -286,11 +286,11 @@ function awardBonuses(collisionData) {
 
 
 
-function checkLevelComplete(){
+function checkLevelComplete() {
 
 	var gameInfo = playState.gameInfo;
 
-		if(gameInfo.numBalls <= 1){
+		if (gameInfo.numBalls <= 1) {
 			
 			//gameInfo.timer.running = false;
 			//gameInfo.timer.stop();			
@@ -305,7 +305,7 @@ function playPocketAnimation(collisionData) {
 
 	var gameInfo = playState.gameInfo;
 	
-	if(gameInfo.trial == false){
+	if (gameInfo.trial == false) {
 	
 		var ball = collisionData.ball;
 		var pocket = collisionData.target;
@@ -317,9 +317,9 @@ function playPocketAnimation(collisionData) {
 		
 		//swap canvases and tween mc into pocket - this should really go in a different class eventually
 		
-		if(ball.id != 0){
+		if (ball.id != 0) {
 
-		//if(1==0){
+		//if (1==0) {
 			ball.shadow.parent.removeChild(ball.shadow); //null object error thrown here
 			ball.shadow = null;
 		}else {
@@ -357,17 +357,17 @@ function playPocketAnimation(collisionData) {
 		var pocketTween2 = Project.game.add.tween(ball.mc);
 		pocketTween2.to({x: 0.7 * pocket.dropPosition.x * gameInfo.physScale, y: 0.7 * pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed * 1.2, Phaser.Easing.Linear.In);
 		
-		if(ball.id != 0){
+		if (ball.id != 0) {
 
 
-		//if(1==0){
-			pocketTween2.onComplete.add(function(){removeMC(ball)}, this);
+		//if (1==0) {
+			pocketTween2.onComplete.add(function() {removeMC(ball)}, this);
 		
 		}else{
-			pocketTween2.onComplete.add(function(){returnCueBall()}, this);
+			pocketTween2.onComplete.add(function() {returnCueBall()}, this);
 		}
 
-		function swapCanvas(){
+		function swapCanvas() {
 			
 			
 			var _x = ball.mc.x;
@@ -385,7 +385,7 @@ function playPocketAnimation(collisionData) {
 		}
 		
 		
-		function returnCueBall(){
+		function returnCueBall() {
 
 			/*
 			//switch pockets - so cue ball comes out of opposite pocket
@@ -407,7 +407,7 @@ function playPocketAnimation(collisionData) {
 			
 		}
 
-		function swapCanvasBack(){
+		function swapCanvasBack() {
 			
 			
 			var _x = ball.mc.x;
@@ -446,7 +446,7 @@ function playPocketAnimation(collisionData) {
 
 			//var timer = Project.game.time.events.add(Phaser.Timer.SECOND * .5, resetFlag, this);
 
-			//function resetFlag(){
+			//function resetFlag() {
 				
 			 //ball.propelling = false;
 
@@ -466,10 +466,10 @@ function playPocketAnimation(collisionData) {
 		
 		
 		
-		function removeMC(ball){
+		function removeMC(ball) {
 
 
-			if(ball.id != 0){
+			if (ball.id != 0) {
 				gameInfo.tunnelCanvas.removeChild(ball.mc);
 				ball.pocketTweenComplete = true;
 			}else {
@@ -523,8 +523,8 @@ function playPocketAnimation(collisionData) {
 	starTween.onComplete.add(destroyStars, this);
 	starTween.start();
 
-	function destroyStars(){
-		if(emitter){
+	function destroyStars() {
+		if (emitter) {
 			emitter.destroy();
 		}
 	}

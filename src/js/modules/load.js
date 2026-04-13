@@ -23,35 +23,35 @@ const loadState = {
 	    this.load.image('cloth', '~/img/cloth.webp');
 	    this.load.image('tableTop', '~/img/tableTop.webp');
 
-	    this.load.image('shade', '~/img/shade.png');
-	    this.load.image('shadow', '~/img/shadow.png');
+	    this.load.image('shade', '~/img/shade.webp');
+	    this.load.image('shadow', '~/img/shadow.webp');
 	    this.load.image('cue', '~/img/cue.webp');
 	    this.load.image('cueShadow', '~/img/cueShadow.png');
 
 	    this.load.spritesheet('solidsSpriteSheet', '~/icons/solid-sprite-sheet.png', 48, 48, 9);
-	    this.load.spritesheet('ballSpriteSheet9', '~/img/ballSpriteSheet9.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet10', '~/img/ballSpriteSheet10.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet11', '~/img/ballSpriteSheet11.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet12', '~/img/ballSpriteSheet12.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet13', '~/img/ballSpriteSheet13.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet14', '~/img/ballSpriteSheet14.png', 50, 50, 41);
-	    this.load.spritesheet('ballSpriteSheet15', '~/img/ballSpriteSheet15.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet9', '~/icons/ball-sprite-sheet-9.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet10', '~/icons/ball-sprite-sheet-10.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet11', '~/icons/ball-sprite-sheet-11.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet12', '~/icons/ball-sprite-sheet-12.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet13', '~/icons/ball-sprite-sheet-13.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet14', '~/icons/ball-sprite-sheet-14.png', 50, 50, 41);
+	    this.load.spritesheet('ballSpriteSheet15', '~/icons/ball-sprite-sheet-15.png', 50, 50, 41);
 	    this.load.spritesheet('spotSpriteSheet', '~/img/spotSpriteSheet.png', 38, 38, 16);
 
 	    this.load.image('mover', '~/img/mover.png');
-	    this.load.image('8ball', '~/img/8ball.png');
+	    // this.load.image('8ball', '~/img/8ball.png');
 	    this.load.image('spinSetterSmall', '~/img/spinSetterLarge.png');
 	    this.load.image('cueBallSpot', '~/img/cueBallSpot.png');
-	    this.load.image('spinSetterZoom', '~/img/spinSetterZoom.png');
+	    this.load.image('spinSetterZoom', '~/img/spinSetterZoom.webp');
 	    this.load.image('cueBallSpotZoom', '~/img/cueBallSpotZoom.png');
 
 	    this.load.atlas('marker', '~/img/marker.png', '~/js/marker.json');
 
 	    Project.game.load.bitmapFont('font1', '~/fonts/font1.png', '~/fonts/font1.fnt');
-	    Project.game.load.bitmapFont('font2', '~/fonts/font2.png', '~/fonts/font2.fnt'); 
-	    Project.game.load.bitmapFont('font3', '~/fonts/font3.png', '~/fonts/font3.fnt');
-	    Project.game.load.bitmapFont('font5', '~/fonts/font5.png', '~/fonts/font5.fnt');
-	    Project.game.load.bitmapFont('font6', '~/fonts/font6.png', '~/fonts/font6.fnt');
+	    // Project.game.load.bitmapFont('font2', '~/fonts/font2.png', '~/fonts/font2.fnt'); 
+	    // Project.game.load.bitmapFont('font3', '~/fonts/font3.png', '~/fonts/font3.fnt');
+	    // Project.game.load.bitmapFont('font5', '~/fonts/font5.png', '~/fonts/font5.fnt');
+	    // Project.game.load.bitmapFont('font6', '~/fonts/font6.png', '~/fonts/font6.fnt');
 	    Project.game.load.bitmapFont('font7', '~/fonts/Font.png', '~/fonts/Font.fnt');
 
 	    this.load.audio('ballHit', ['~/audio/ballHit2.mp3']);

@@ -300,24 +300,24 @@ playState.create = function () {
 		gameInfo.levelText.visible = false;
 	}
 
-	function initSkipText() {
-		gameInfo.skipText = new Phaser.BitmapText(
-			Project.game,
-			Project.game.world.centerX,
-			Project.game.world.centerY + 230,
-			"font3",
-			"Click to skip",
-			64
-		);
-		gameInfo.guiCanvas.addChild(gameInfo.skipText);
-		gameInfo.skipText.anchor.x = 0.5;
-		gameInfo.skipText.anchor.y = 0.5;
-		gameInfo.skipText.alpha = 0.8;
-		if (Project.tutorial) {
-			gameInfo.skipText.visible = true;
-		}
-		gameInfo.skipText.visible = false;
-	}
+	// function initSkipText() {
+	// 	gameInfo.skipText = new Phaser.BitmapText(
+	// 		Project.game,
+	// 		Project.game.world.centerX,
+	// 		Project.game.world.centerY + 230,
+	// 		"font3",
+	// 		"Click to skip",
+	// 		64
+	// 	);
+	// 	gameInfo.guiCanvas.addChild(gameInfo.skipText);
+	// 	gameInfo.skipText.anchor.x = 0.5;
+	// 	gameInfo.skipText.anchor.y = 0.5;
+	// 	gameInfo.skipText.alpha = 0.8;
+	// 	if (Project.tutorial) {
+	// 		gameInfo.skipText.visible = true;
+	// 	}
+	// 	gameInfo.skipText.visible = false;
+	// }
 
 	function initTimer() {
 		//moved to initGUI and timer text now placed on gui canvas
