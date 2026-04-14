@@ -815,6 +815,7 @@ playState.update = function () {
 
 				gameInfo.cueBallSpotZoom.x = Project.game.input.x - gameInfo.spinSetterZoom.x;
 				gameInfo.cueBallSpotZoom.y = Project.game.input.y - gameInfo.spinSetterZoom.y;
+				console.log( gameInfo.cueBallSpotZoom.x, gameInfo.cueBallSpotZoom.y );
 
 				var distSq =
 					gameInfo.cueBallSpotZoom.x * gameInfo.cueBallSpotZoom.x +
@@ -1651,8 +1652,8 @@ playState.update = function () {
 
 	function checkGameOver() {
 		//gameInfo.gameOver = true is set in timer.js when time runs out.
-		if (gameInfo.gameOver == true) console.log.log("game over");
-		if (gameInfo.gameOver == true && gameInfo.foulDisplayComplete == true) {
+		if (gameInfo.gameOver == true) {
+		// if (gameInfo.gameOver == true && gameInfo.foulDisplayComplete == true) {
 			//console.log("checked game over");
 
 			gameInfo.cueBaseCanvas.visible = false;
@@ -1666,7 +1667,9 @@ playState.update = function () {
 
 	function showGameOver(forceWinP1 = false) {
 		if (forceWinP1) gameInfo.winner = "p1";
-		console.log.log("winner: ", gameInfo.winner);
+		
+		return console.log("winner: ", gameInfo.winner);
+		
 
 		//console.log("show game over");
 
