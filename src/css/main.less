@@ -46,8 +46,8 @@ content {
 			// background: #0001;
 			position: absolute;
 			top: 19px;
-			left: 11px;
-			right: 11px;
+			left: 19px;
+			right: 19px;
 			height: 73px;
 			display: flex;
 			z-index: 3;
@@ -80,6 +80,50 @@ content {
 					filter: none;
 
 					.name:after { }
+				}
+			}
+
+			.menu {
+				// background: #f002;
+				width: 73px;
+			}
+
+			.spin-setter {
+				position: relative;
+				width: 73px;
+
+				&:before {
+					content: "";
+					background: #0002;
+					position: absolute;
+					top: -3px;
+					left: -3px;
+					width: 79px;
+					height: 79px;
+					border-radius: 50%;
+					box-shadow: inset 0 2px 3px #0007,
+								0 1px 2px #fff7;
+				}
+
+				&:after {
+					content: "";
+					background: url(~/img/spinSetterZoom.webp) 50% 50%/contain no-repeat;
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 73px;
+					height: 73px;
+				}
+
+				.dot {
+					background: #f00;
+					position: absolute;
+					top: 34px;
+					left: 34px;
+					width: 8px;
+					height: 8px;
+					z-index: 2;
+					border-radius: 50%;
 				}
 			}
 
@@ -131,7 +175,7 @@ content {
 					}
 
 					.ball-slots {
-						right: 83px;
+						right: 88px;
 					}
 				}
 
@@ -157,7 +201,7 @@ content {
 					}
 
 					.ball-slots {
-						left: 83px;
+						left: 88px;
 					}
 				}
 
@@ -176,7 +220,7 @@ content {
 						font-size: 16px;
 						text-shadow: 0 2px 3px #0003;
 						background: #0003;
-					    width: 236px;
+					    width: 239px;
 					    padding: 6px 7px 5px;
 					    border-radius: 5px;
 					    box-shadow: inset 0 1px 0 #0005,
@@ -232,7 +276,7 @@ content {
 						display: inline-block;
 						width: 36px;
 						height: 36px;
-						margin: 0 1px;
+						margin: 0 1px 0 0;
 						border-radius: 50%;
 						box-shadow: inset 0 2px 3px #0007,
 									0 1px 1px #fff7;

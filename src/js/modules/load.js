@@ -40,6 +40,7 @@ const loadState = {
 
 	    this.load.image('mover', '~/img/mover.png');
 	    // this.load.image('8ball', '~/img/8ball.png');
+	    
 	    this.load.image('spinSetterSmall', '~/img/spinSetterLarge.png');
 	    this.load.image('cueBallSpot', '~/img/cueBallSpot.png');
 	    this.load.image('spinSetterZoom', '~/img/spinSetterZoom.webp');
@@ -51,9 +52,6 @@ const loadState = {
 	    this.load.audio('cushionHit', ['~/audio/cushionHit.mp3']);
 	    this.load.audio('pocketHit', ['~/audio/pocketHit.mp3']);
 	    this.load.audio('cueHit', ['~/audio/cueHit.mp3']);
-	    this.load.audio('shimmer', ['~/audio/shimmer.mp3']);
-	    this.load.audio('ding', ['~/audio/ding.mp3']);
-	    this.load.audio('cheer', ['~/audio/cheer.mp3']);
 	},
 	create() {
 	    Project.APP.dispatch({ type: "start-game" });

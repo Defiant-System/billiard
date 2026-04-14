@@ -62,11 +62,9 @@ playState.update = function () {
 		//updateBonusDisc();
 		// updateDebug();
 		checkGameOver();
-
-		// runTutorial();
 	}
 
-	transferBonusPoints();
+	// transferBonusPoints();
 
 	//close popup menu
 
@@ -116,502 +114,6 @@ playState.update = function () {
 	// 	}
 	// 	applyRulings2();
 	// }
-
-	function exitTutorial() {
-		Project.tutorial = false;
-		// window.famobi.localStorage.setItem('showTutorial', false);
-
-		cleanTutorial();
-
-		if (Project.clickedHelpButton) {
-			// window.famobi_analytics.trackEvent("EVENT_TUTORIALSKIPPED");
-			Project.game.state.start("mainMenu");
-		} else {
-			// window.famobi_analytics.trackEvent("EVENT_TUTORIALCOMPLETED");
-			Project.game.state.start("play");
-		}
-	}
-
-	function cleanTutorial() {
-		gameInfo.gameCanvas.destroy();
-		//gameInfo.guiCanvas.visible = false;
-
-		gameInfo.guiCanvas.destroy();
-		gameInfo.guiBaseCanvas.destroy();
-		gameInfo.cueBaseCanvas.destroy();
-
-		gameInfo.turn = turn;
-	}
-
-	function runTutorial() {
-		if (Project.game.input.activePointer.isDown && Project.tutorial == true) {
-			gameInfo.cancelTutorial = true;
-			exitTutorial();
-		}
-
-		if (Project.tutorial == true) {
-			gameInfo.turn = "p1";
-			Project.tutorialPlayed = true;
-
-			var pointer;
-			if (Project.game.device.touch) {
-				pointer = gameInfo.hand;
-			} else {
-				pointer = gameInfo.mouseSprite;
-			}
-			switch (gameInfo.tutStage) {
-				case 0:
-					// window.famobi_analytics.trackScreen("SCREEN_TUTORIAL");
-
-					gameInfo.cancelTutorial = false;
-
-
-					gameInfo.skipText.visible = true;
-					gameInfo.tutorialText.visible = true;
-
-					//fade in pointer
-
-					pointer.x = 120;
-					pointer.y = -90;
-
-					var dx =
-						pointer.x - gameInfo.ballArray[0].position.x * gameInfo.physScale;
-					var dy =
-						pointer.y - gameInfo.ballArray[0].position.y * gameInfo.physScale;
-
-					gameInfo.cueCanvas.angle = (180 / Math.PI) * Math.atan2(dy, dx);
-
-					var tween1 = Project.game.add.tween(pointer);
-					tween1.to({ alpha: 1 }, 700, Phaser.Easing.Linear.None, true, 700);
-					tween1.onComplete.add(tween1Complete, this);
-					gameInfo.tutStage = 1;
-
-					function tween1Complete() {
-						gameInfo.tutStage = 2;
-					}
-
-					break;
-
-				case 2:
-					if (gameInfo.cancelTutorial == false) {
-						//move pointer to near the 1 ball
-						var tween2 = Project.game.add.tween(pointer);
-						tween2.to(
-							{
-								x: gameInfo.ballArray[1].position.x * gameInfo.physScale,
-								y:
-									(gameInfo.ballArray[1].position.y + 1000) *
-									gameInfo.physScale,
-							},
-							2500,
-							Phaser.Easing.Quadratic.InOut,
-							true,
-							0
-						);
-						tween2.onComplete.add(tween2Complete, this);
-						gameInfo.tutStage = 3;
-
-						function tween2Complete() {
-							gameInfo.tutStage = 4;
-						}
-					} else {
-						gameInfo.turn = turn;
-						exitTutorial();
-					}
-
-					break;
-
-				case 3:
-					if (gameInfo.cancelTutorial == false) {
-						//update cue and guide whilst pointer is tweening
-
-						var dx =
-							pointer.x - gameInfo.ballArray[0].position.x * gameInfo.physScale;
-						var dy =
-							pointer.y - gameInfo.ballArray[0].position.y * gameInfo.physScale;
-
-						gameInfo.cueCanvas.angle = (180 / Math.PI) * Math.atan2(dy, dx);
-
-						//shadow
-						var xOffset =
-							gameInfo.ballArray[0].position.x * gameInfo.physScale * 0.02;
-						var yOffset =
-							gameInfo.ballArray[0].position.y * gameInfo.physScale * -0.02;
-						var ang =
-							yOffset +
-							Math.sin((Math.PI / 180) * gameInfo.cueCanvas.angle) * xOffset;
-
-						if (ang > 5) {
-							ang = 5;
-						}
-						if (ang < -5) {
-							ang = -5;
-						}
-
-						// gameInfo.cueShadow.angle = 3 + ang;
-
-						var compX = Math.cos((gameInfo.cueCanvas.angle * Math.PI) / 180);
-						var compY = Math.sin((gameInfo.cueCanvas.angle * Math.PI) / 180);
-						gameInfo.aimDirectionVector = new Vector2D(
-							compX,
-							compY
-						).normalize();
-
-						updateAimingGuide();
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 4:
-					if (gameInfo.cancelTutorial == false) {
-						if (Project.game.device.touch) {
-							var tween3 = Project.game.add.tween(pointer);
-							tween3.to(
-								{ alpha: 0 },
-								700,
-								Phaser.Easing.Linear.none,
-								true,
-								700
-							);
-							tween3.onComplete.add(tween3Complete, this);
-							gameInfo.tutStage = 5;
-
-							function tween3Complete() {
-								gameInfo.tutStage = 6;
-							}
-						} else {
-							//if mouse, skip to stage
-							gameInfo.tutStage = 96;
-						}
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 5:
-					//waiting for tween to complete - do nothing
-
-					break;
-
-				case 6:
-					//touch only
-
-					if (gameInfo.cancelTutorial == false) {
-						if (gameInfo.landscape) {
-							//pointer.angle = 180;
-							gameInfo.pointerStart = gameInfo.pointerStartL;
-							gameInfo.pointerEnd = gameInfo.pointerEndL;
-						} else {
-							gameInfo.pointerStart = gameInfo.pointerStartP;
-							gameInfo.pointerEnd = gameInfo.pointerEndP;
-						}
-
-						pointer.x = gameInfo.pointerStart.x;
-						pointer.y = gameInfo.pointerStart.y;
-
-						var tween4 = Project.game.add.tween(pointer);
-						tween4.to({ alpha: 1 }, 700, Phaser.Easing.Linear.none, true, 700);
-						tween4.onComplete.add(tween4Complete, this);
-						gameInfo.tutStage = 7;
-
-						function tween4Complete() {
-							gameInfo.tutStage = 8;
-						}
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 7:
-					//waiting for tween
-					break;
-
-				case 8:
-					if (gameInfo.cancelTutorial == false) {
-						//move pointer along power bar
-						if (gameInfo.landscape) {
-							pointer.y = gameInfo.pointerStart.y + gameInfo.pointerProgress;
-						} else {
-							pointer.x = gameInfo.pointerStart.x - gameInfo.pointerProgress;
-						}
-
-						gameInfo.pointerProgress += 2;
-
-						if (gameInfo.landscape) {
-							if (pointer.y >= gameInfo.pointerEnd.y) {
-								gameInfo.tutStage = 9;
-							}
-						} else {
-							if (pointer.x <= gameInfo.pointerEnd.x) {
-								gameInfo.tutStage = 9;
-							}
-						}
-
-						//move powerbar and cue too
-
-						//if(gameInfo.landscape){
-						//gameInfo.powerBarMask.x = - gameInfo.pointerProgress;
-						//}else{
-						gameInfo.powerBarMask.y = gameInfo.pointerProgress;
-						//}
-
-						gameInfo.powerBarCue.x = 250 - gameInfo.pointerProgress * 0.9;
-
-						gameInfo.cue.x = -0.7 * gameInfo.pointerProgress - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
-						// gameInfo.cueShadow.x = gameInfo.cue.x;
-					} else {
-						exitTutorial();
-					}
-					break;
-
-				case 9:
-					if (gameInfo.cancelTutorial == false) {
-						var tween5 = Project.game.add.tween(pointer);
-						tween5.to({ alpha: 0 }, 200, Phaser.Easing.Linear.none, true, 700);
-						tween5.onComplete.add(tween5Complete, this);
-						gameInfo.tutStage = 10;
-
-						function tween5Complete() {
-							gameInfo.tutStage = 11;
-						}
-					} else {
-						exitTutorial();
-					}
-					break;
-
-				case 10:
-					//waiting for tween
-					break;
-
-				case 11:
-					if (gameInfo.cancelTutorial == false) {
-						//begin strike
-
-						var maxDrag = 100;
-
-						if (Project.game.device.touch) {
-							gameInfo.power =
-								(gameInfo.maxPower *
-									((gameInfo.pointerProgress * gameInfo.pointerProgress) /
-										(maxDrag * maxDrag))) /
-								4;
-						} else {
-							gameInfo.power = 1600;
-						}
-
-						var tweenTime = 1 / gameInfo.power;
-
-						if (tweenTime > 0.8) {
-							tweenTime = 0.8;
-						}
-						if (tweenTime < 0.1) {
-							tweenTime = 0.1;
-						}
-
-						var cueTween = Project.game.add.tween(gameInfo.cue);
-						cueTween.to(
-							{ x: gameInfo.power / 400 },
-							tweenTime * 1000,
-							Phaser.Easing.Linear.Out
-						);
-
-						var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
-						cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 700);
-						cueFadeTween.onComplete.add(hideCueCanvas, this);
-
-						if (Project.game.device.touch) {
-							var powerBarCueTween = Project.game.add.tween(gameInfo.powerBarCue);
-							powerBarCueTween.to(
-								{ x: 250 },
-								tweenTime * 1000,
-								Phaser.Easing.Linear.Out
-							);
-							powerBarCueTween.start();
-						}
-
-						cueTween.start();
-						cueFadeTween.start();
-
-						function hideCueCanvas() {
-							gameInfo.cueCanvas.visible = false;
-							gameInfo.cueCanvas.alpha = 1;
-							gameInfo.cueTweenComplete = true;
-						}
-
-						gameInfo.guideCanvas.visible = false;
-
-						gameInfo.tutStage = 12;
-					} else {
-						exitTutorial();
-					}
-					break;
-				case 12:
-					if (gameInfo.cancelTutorial == false) {
-						if (gameInfo.cue.x >= -gameInfo.ballRadius * gameInfo.physScale) {
-							strikeBall();
-							gameInfo.tutStage = 13;
-						}
-					} else {
-						exitTutorial();
-					}
-					break;
-
-				case 13:
-					var tween6 = Project.game.add
-						.tween(gameInfo.guiCanvas)
-						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
-					var tween7 = Project.game.add
-						.tween(gameInfo.guiBaseCanvas)
-						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
-					var tween8 = Project.game.add
-						.tween(gameInfo.gameCanvas)
-						.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 3000);
-					tween6.onComplete.add(exitTutorial, this);
-
-					gameInfo.tutStage = 14;
-
-					break;
-
-				case 14:
-					//waiting for tweens
-
-					break;
-
-				//  ************* mouse only ************
-
-				case 96:
-					if (gameInfo.cancelTutorial == false) {
-						Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, waitComplete, this);
-
-						gameInfo.tutStage = 97;
-
-						function waitComplete() {
-							pointer.frame = 1;
-							gameInfo.tutStage = 98;
-						}
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 97:
-					//waiting for pause
-
-					break;
-
-				case 98:
-					if (gameInfo.cancelTutorial == false) {
-						//pause, then show greeen arrow
-
-						Project.game.time.events.add(
-							Phaser.Timer.SECOND * 1.5,
-							waitComplete2,
-							this
-						);
-
-						gameInfo.tutStage = 99;
-
-						function waitComplete2() {
-							pointer.frame = 2;
-							gameInfo.tutStage = 100;
-						}
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 99:
-					//waiting for pause
-
-					break;
-
-				case 100:
-					if (gameInfo.cancelTutorial == false) {
-						//move mouse backwards in line with cue direction
-
-						var tween9 = Project.game.add.tween(pointer).to(
-							{
-								x: 210,
-								y:
-									(gameInfo.ballArray[1].position.y + 1000) *
-									gameInfo.physScale,
-							},
-							1500,
-							Phaser.Easing.Linear.Out,
-							true,
-							0
-						);
-						tween9.onComplete.add(tween9Complete, this);
-
-						gameInfo.tutStage = 101;
-
-						function tween9Complete() {
-							gameInfo.tutStage = 102;
-						}
-
-						//tween cue too
-						var tween10 = Project.game.add
-							.tween(gameInfo.cue)
-							.to({ x: -120 }, 1500, Phaser.Easing.Linear.Out, true, 0);
-
-						//add dotted line underneath cue
-						gameInfo.dottedLine = new Phaser.Sprite(game, 0, 0, "dottedLine");
-						gameInfo.dottedLine.anchor = new Point(1, 0.5);
-						gameInfo.cueCanvas.addChildAt(gameInfo.dottedLine, 1);
-						gameInfo.dottedLine.x = -20;
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 101:
-					//waiting for tween - update cue shadow
-					// gameInfo.cueShadow.x = gameInfo.cue.x;
-
-					break;
-
-				case 102:
-					if (gameInfo.cancelTutorial == false) {
-						//begin pause
-						Project.game.time.events.add(Phaser.Timer.SECOND * 2, waitComplete3, this);
-
-						gameInfo.tutStage = 103;
-
-						function waitComplete3() {
-							gameInfo.tutStage = 104;
-						}
-					} else {
-						exitTutorial();
-					}
-
-					break;
-
-				case 103:
-					//pausing
-
-					break;
-
-				case 104:
-					if (gameInfo.cancelTutorial == false) {
-						//begin strike
-						gameInfo.dottedLine.visible = false;
-						pointer.frame = 0;
-						gameInfo.tutStage = 11; //now join the same set of routines for touch as above
-					} else {
-						exitTutorial();
-					}
-
-					break;
-			}
-		}
-	}
 
 	/*
 	function updateBonusDisc(){
@@ -2102,12 +1604,15 @@ playState.update = function () {
 		}
 	}
 
+	/*
 	function initNextLevel() {
 		if (Project.levelComplete == true) {
 			//gameInfo.allowTransferPoints = true;
 		}
 	}
+	*/
 
+	/*
 	function transferBonusPoints() {
 		if (gameInfo.allowTransferPoints == true) {
 			//here every loop if stage complete
@@ -2142,9 +1647,11 @@ playState.update = function () {
 			}
 		}
 	}
+	*/
 
 	function checkGameOver() {
 		//gameInfo.gameOver = true is set in timer.js when time runs out.
+		if (gameInfo.gameOver == true) console.log.log("game over");
 		if (gameInfo.gameOver == true && gameInfo.foulDisplayComplete == true) {
 			//console.log("checked game over");
 
@@ -2159,6 +1666,7 @@ playState.update = function () {
 
 	function showGameOver(forceWinP1 = false) {
 		if (forceWinP1) gameInfo.winner = "p1";
+		console.log.log("winner: ", gameInfo.winner);
 
 		//console.log("show game over");
 
@@ -2241,7 +1749,7 @@ playState.update = function () {
 	};
 
 	function showBonuses() {
-		Sound.Play("cheer", 1);
+		// Sound.Play("cheer", 1);
 		Project.game.time.events.add(2000, showBonus1, this);
 	}
 

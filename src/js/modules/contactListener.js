@@ -428,14 +428,10 @@ function playPocketAnimation(collisionData) {
 			//var vy = 0 - ball.mc.y;
 			//var vUnit = new Vector2D(vx, vy).normalize();
 			//var v = vUnit.times(200);
-
 			//ball.velocity = v;
-
 			//ball.velocity = new Vector2D(0.8 * pocket.position.x - pocket.position.x, 0.8 * pocket.position.y - pocket.position.y).normalize().times(200);
 
 			ball.velocity = new Vector2D(0.8 * pocket.position.x - pocket.position.x, 0.8 * pocket.position.y - pocket.position.y).normalize().times(200);
-
-
 			//console.log("vx: " + v.x);
 			//console.log("vy: " + v.y);
 			//console.log("propelling: shotRunning = " + gameInfo.shotRunning);
@@ -445,36 +441,18 @@ function playPocketAnimation(collisionData) {
 			//ball.propelling = true;
 
 			//var timer = Project.game.time.events.add(Phaser.Timer.SECOND * .5, resetFlag, this);
-
 			//function resetFlag() {
-				
 			 //ball.propelling = false;
-
 				//console.log("propelling: " + ball.propelling);
 				//console.log("v: " + ball.velocity.x);
-				
 			//}
-
-			
-			
 		}
-
-		
-
-			
-
-		
-		
 		
 		function removeMC(ball) {
-
-
 			if (ball.id != 0) {
 				gameInfo.tunnelCanvas.removeChild(ball.mc);
 				ball.pocketTweenComplete = true;
 			}else {
-				
-				
 				/*
 				ball.mc.visible = false;
 				setTimeout(showCueBall, 1000);
@@ -493,9 +471,6 @@ function playPocketAnimation(collisionData) {
 					renderScreen();
 				}
 				*/
-
-				
-						
 			}
 		}
 	}

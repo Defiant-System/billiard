@@ -109,6 +109,7 @@ playState.create = function () {
 	initCanvases();
 	initBG();
 	initTable();
+	initDebug();
 	initBalls();
 	initGuide();
 	initGUI();
@@ -1106,7 +1107,8 @@ playState.create = function () {
 			Project.game.stage,
 			"guiBaseCanvas"
 		);
-		gameInfo.gameCanvas = new Phaser.Group(Project.game, Project.game.stage, "gameCanvas"); //creates game canvas and adds it to the stage
+		//creates game canvas and adds it to the stage
+		gameInfo.gameCanvas = new Phaser.Group(Project.game, Project.game.stage, "gameCanvas");
 
 		gameInfo.gameCanvas.x = Project.game.width / 2;
 		gameInfo.gameCanvas.y = Project.game.height / 2 - 15;
@@ -1117,11 +1119,11 @@ playState.create = function () {
 			"tableCanvas"
 		);
 		gameInfo.tableCanvas.y += 2;
-		gameInfo.timerCanvas = new Phaser.Group(
-			Project.game,
-			gameInfo.gameCanvas,
-			"timerCanvas"
-		);
+		// gameInfo.timerCanvas = new Phaser.Group(
+		// 	Project.game,
+		// 	gameInfo.gameCanvas,
+		// 	"timerCanvas"
+		// );
 		gameInfo.ballCanvas = new Phaser.Group(
 			Project.game,
 			gameInfo.gameCanvas,
@@ -1148,24 +1150,31 @@ playState.create = function () {
 			"guideCanvas"
 		);
 
-		gameInfo.tutCanvas = new Phaser.Group(
+		gameInfo.debugCanvas = new Phaser.Group(
 			Project.game,
 			gameInfo.gameCanvas,
-			"tutCanvas"
+			"debugCanvas"
 		);
+		// Project.game.world.bringToTop(gameInfo.debugCanvas);
 
-		var tween = Project.game.add
-			.tween(gameInfo.cueBaseCanvas)
-			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = Project.game.add
-			.tween(gameInfo.guiCanvas)
-			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = Project.game.add
-			.tween(gameInfo.guiBaseCanvas)
-			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
-		var tween = Project.game.add
-			.tween(gameInfo.gameCanvas)
-			.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
+		// gameInfo.tutCanvas = new Phaser.Group(
+		// 	Project.game,
+		// 	gameInfo.gameCanvas,
+		// 	"tutCanvas"
+		// );
+
+		// var tween = Project.game.add
+		// 	.tween(gameInfo.cueBaseCanvas)
+		// 	.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
+		// var tween = Project.game.add
+		// 	.tween(gameInfo.guiCanvas)
+		// 	.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
+		// var tween = Project.game.add
+		// 	.tween(gameInfo.guiBaseCanvas)
+		// 	.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
+		// var tween = Project.game.add
+		// 	.tween(gameInfo.gameCanvas)
+		// 	.from({ alpha: 0 }, 1, Phaser.Easing.Linear.None, true, 500);
 
 		//gameInfo.gameCanvas.add(gameInfo.ballCanvas);
 	}
@@ -1175,6 +1184,34 @@ playState.create = function () {
 		gameInfo.guide = new Phaser.Graphics(Project.game);
 		gameInfo.guideCanvas.addChild(gameInfo.guide);
 		//graphics.beginFill(0xFF3300);
+	}
+
+	function initDebug() {
+		var graphics = new Phaser.Graphics(Project.game, 0, 0);
+        gameInfo.debugCanvas.addChild(graphics);
+		// set a fill and line style
+		graphics.beginFill(0xFFFFFF);
+
+		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
+		for (var n = 0; n < gameInfo.lineArray.length; n++) {
+			//debug drawings
+			var line = gameInfo.lineArray[n];
+
+			graphics.lineStyle(1, 0xffffff, 1);
+			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
+			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
+
+			graphics.lineStyle(1, 0xff0000, 1);
+			graphics.moveTo(line.p3.x * gameInfo.physScale, line.p3.y * gameInfo.physScale);
+			graphics.lineTo(line.p4.x * gameInfo.physScale, line.p4.y * gameInfo.physScale);
+		}
+
+		/*
+		for(var n = 0; n < gameInfo.vertexArray.length; n ++){
+			var vertex = gameInfo.vertexArray[n];
+			graphics.drawCircle(vertex.position.x * gameInfo.physScale, vertex.position.y * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
+		}
+		*/
 	}
 
 	function initTable() {
@@ -1756,6 +1793,7 @@ playState.shutdown = function () {
 
 	gameInfo.gameCanvas.destroy();
 	gameInfo.guiCanvas.destroy();
+	gameInfo.debugCanvas.destroy();
 	gameInfo.guiBaseCanvas.destroy();
 	gameInfo.cueBaseCanvas.destroy();
 };
