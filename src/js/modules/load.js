@@ -19,7 +19,7 @@ const loadState = {
 	},
 	preload() {
 	    //load all game assets
-	    this.load.image('pockets', '~/img/pockets.webp');
+	    // this.load.image('pockets', '~/img/pockets.webp');
 	    this.load.image('cloth', '~/img/cloth.webp');
 	    this.load.image('tableTop', '~/img/tableTop.webp');
 

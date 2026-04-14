@@ -1217,10 +1217,10 @@ playState.create = function () {
 	function initTable() {
 		//create table sprites
 
-		gameInfo.pockets = new Phaser.Sprite(Project.game, 0, 0, "pockets");
-		// gameInfo.pockets.alpha = .5;
-		gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
-		gameInfo.tableCanvas.add(gameInfo.pockets);
+		// gameInfo.pockets = new Phaser.Sprite(Project.game, 0, 0, "pockets");
+		// // gameInfo.pockets.alpha = .5;
+		// gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
+		// gameInfo.tableCanvas.add(gameInfo.pockets);
 
 		gameInfo.tunnelCanvas = new Phaser.Group(
 			Project.game,
