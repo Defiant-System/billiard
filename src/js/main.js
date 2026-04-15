@@ -56,6 +56,7 @@ const billiard = {
 				break;
 			// proxy event
 			case "open-spin-setter":
+			case "close-spin-setter":
 				return Self.spinSetter.dispatch(event);
 			default:
 				el = event.el;
@@ -63,7 +64,7 @@ const billiard = {
 				if (el) {
 					let pEl = el.parents(`?div[data-area]`);
 					if (!pEl.length) pEl = Self.els.showcase;
-					if (pEl.length) {
+					if (pEl && pEl.length) {
 						let name = pEl.data("area");
 						return Self[name].dispatch(event);
 					}

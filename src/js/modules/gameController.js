@@ -21,7 +21,7 @@ playState.update = function () {
 				updateCursor();
 				if (Project.tutorial == false) {
 					placeCueBall();
-					setSpin();
+					// setSpin();
 					aim();
 					setPower();
 					beginStrike();
@@ -761,7 +761,7 @@ playState.update = function () {
 
 		}
 		*/
-
+		
 		if (gameInfo.startAim == false || !Project.game.device.touch) {
 			if (
 				gameInfo.spinSetterZoom.visible == true &&
@@ -815,7 +815,7 @@ playState.update = function () {
 
 				gameInfo.cueBallSpotZoom.x = Project.game.input.x - gameInfo.spinSetterZoom.x;
 				gameInfo.cueBallSpotZoom.y = Project.game.input.y - gameInfo.spinSetterZoom.y;
-				console.log( gameInfo.cueBallSpotZoom.x, gameInfo.cueBallSpotZoom.y );
+				// console.log( gameInfo.cueBallSpotZoom.x, gameInfo.cueBallSpotZoom.y );
 
 				var distSq =
 					gameInfo.cueBallSpotZoom.x * gameInfo.cueBallSpotZoom.x +
@@ -831,6 +831,7 @@ playState.update = function () {
 
 				gameInfo.cueBallSpot.x = (50 * gameInfo.cueBallSpotZoom.x) / 130;
 				gameInfo.cueBallSpot.y = (50 * gameInfo.cueBallSpotZoom.y) / 130;
+				// console.log( gameInfo.cueBallSpot.x, gameInfo.cueBallSpot.y );
 
 				gameInfo.ballArray[0].screw = Maths.fixNumber(
 					(0.5 * gameInfo.cueBallSpot.y) / 100
@@ -2590,10 +2591,10 @@ playState.update = function () {
 
 		//gameInfo.gui.spinSetter.crosshair.x = 0;
 		//gameInfo.gui.spinSetter.crosshair.y = 0;
-		gameInfo.cueBallSpot.x = 0;
-		gameInfo.cueBallSpot.y = 0;
-		gameInfo.cueBallSpotZoom.x = 0;
-		gameInfo.cueBallSpotZoom.y = 0;
+		// gameInfo.cueBallSpot.x = 0;
+		// gameInfo.cueBallSpot.y = 0;
+		// gameInfo.cueBallSpotZoom.x = 0;
+		// gameInfo.cueBallSpotZoom.y = 0;
 
 		gameInfo.ballArray[0].spin = 0;
 		gameInfo.ballArray[0].english = 0;

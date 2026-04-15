@@ -52,6 +52,9 @@ content {
 
 		.spin-setter {
 			position: relative;
+			width: 73px;
+			--sY: 0;
+			--sX: 0;
 
 			&.big {
 				display: none;
@@ -76,6 +79,15 @@ content {
 					width: inherit;
 					height: inherit;
 				}
+
+				.dot {
+					width: 16px;
+					height: 16px;
+					transform: translate(-8px, -8px);
+					top: calc( 90px + calc( var( --sY ) * 1px ) );
+					left: calc( 90px + calc( var( --sX ) * 1px ) );
+					box-shadow: 0 0 0 3px #000a;
+				}
 			}
 
 			&:before {
@@ -96,18 +108,21 @@ content {
 				position: absolute;
 				top: 0;
 				left: 0;
+				width: 73px;
+				height: 73px;
 			}
 
 			.dot {
 				background: #f00;
 				position: absolute;
-				top: 82px;
-				left: 82px;
-				width: 16px;
-				height: 16px;
+				top: calc( 37px + calc( var( --sY ) * 1px ) );
+				left: calc( 37px + calc( var( --sX ) * 1px ) );
+				width: 8px;
+				height: 8px;
+				transform: translate(-4px, -4px);
 				z-index: 2;
 				border-radius: 50%;
-				box-shadow: 0 0 0 3px #000a;
+				box-shadow: 0 0 0 2px #000a;
 			}
 		}
 
@@ -166,31 +181,6 @@ content {
 			.menu {
 				// background: #f002;
 				width: 73px;
-			}
-
-			.spin-setter {
-				width: 73px;
-
-				&:before {
-					top: -3px;
-					left: -3px;
-					width: 79px;
-					height: 79px;
-					box-shadow: inset 0 2px 3px #0007,
-								0 1px 2px #fff7;
-				}
-
-				&:after {
-					width: 73px;
-					height: 73px;
-				}
-
-				.dot {
-					top: 34px;
-					left: 34px;
-					width: 8px;
-					height: 8px;
-				}
 			}
 
 			.pot {

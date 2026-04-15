@@ -90,11 +90,11 @@ playState.create = function () {
 		gameInfo.gameCanvas.x += diffX;
 		gameInfo.gameCanvas.angle = 0;
 
-		gameInfo.spinSetter.x = Project.game.width - 90;
-		gameInfo.spinSetter.y = Project.game.height / 2;
+		// gameInfo.spinSetter.x = Project.game.width - 90;
+		// gameInfo.spinSetter.y = Project.game.height / 2;
 
-		gameInfo.spinSetterZoom.x = Project.game.width / 2;
-		gameInfo.spinSetterZoom.y = Project.game.height / 2 - 75;
+		// gameInfo.spinSetterZoom.x = Project.game.width / 2;
+		// gameInfo.spinSetterZoom.y = Project.game.height / 2 - 75;
 
 		// gameInfo.debugText.x = Project.game.width - 25;
 		// gameInfo.debugText.y = 30;
@@ -341,24 +341,24 @@ playState.create = function () {
 
 		// gameInfo.debugText.visible = false;
 
-		gameInfo.spinSetter = new Phaser.Sprite(Project.game, 0, 0, "spinSetterSmall");
-		gameInfo.guiCanvas.addChild(gameInfo.spinSetter);
-		gameInfo.spinSetter.anchor = new Point(0.5, 0.5);
-		gameInfo.spinSetter.inputEnabled = true;
-		gameInfo.spinSetter.ignoreChildInput = true;
-		gameInfo.cueBallSpot = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpot");
-		gameInfo.spinSetter.addChild(gameInfo.cueBallSpot);
-		gameInfo.cueBallSpot.anchor = new Point(0.5, 0.5);
+		// gameInfo.spinSetter = new Phaser.Sprite(Project.game, 0, 0, "spinSetterSmall");
+		// gameInfo.guiCanvas.addChild(gameInfo.spinSetter);
+		// gameInfo.spinSetter.anchor = new Point(0.5, 0.5);
+		// gameInfo.spinSetter.inputEnabled = true;
+		// gameInfo.spinSetter.ignoreChildInput = true;
+		// gameInfo.cueBallSpot = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpot");
+		// gameInfo.spinSetter.addChild(gameInfo.cueBallSpot);
+		// gameInfo.cueBallSpot.anchor = new Point(0.5, 0.5);
 
-		gameInfo.spinSetterZoom = new Phaser.Sprite(Project.game, 0, 0, "spinSetterZoom");
-		gameInfo.guiCanvas.addChild(gameInfo.spinSetterZoom);
-		gameInfo.spinSetterZoom.anchor = new Point(0.5, 0.5);
-		gameInfo.spinSetterZoom.inputEnabled = true;
-		gameInfo.spinSetterZoom.ignoreChildInput = true;
-		gameInfo.cueBallSpotZoom = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpotZoom");
-		gameInfo.spinSetterZoom.addChild(gameInfo.cueBallSpotZoom);
-		gameInfo.cueBallSpotZoom.anchor = new Point(0.5, 0.5);
-		gameInfo.spinSetterZoom.visible = false;
+		// gameInfo.spinSetterZoom = new Phaser.Sprite(Project.game, 0, 0, "spinSetterZoom");
+		// gameInfo.guiCanvas.addChild(gameInfo.spinSetterZoom);
+		// gameInfo.spinSetterZoom.anchor = new Point(0.5, 0.5);
+		// gameInfo.spinSetterZoom.inputEnabled = true;
+		// gameInfo.spinSetterZoom.ignoreChildInput = true;
+		// gameInfo.cueBallSpotZoom = new Phaser.Sprite(Project.game, 0, 0, "cueBallSpotZoom");
+		// gameInfo.spinSetterZoom.addChild(gameInfo.cueBallSpotZoom);
+		// gameInfo.cueBallSpotZoom.anchor = new Point(0.5, 0.5);
+		// gameInfo.spinSetterZoom.visible = false;
 
 		// gameInfo.rackSolids = new Phaser.Group(
 		// 	Project.game,
