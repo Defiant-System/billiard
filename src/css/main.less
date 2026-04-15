@@ -56,6 +56,16 @@ content {
 			--sY: 0;
 			--sX: 0;
 
+			&.disabled {
+				&:after {
+					filter: brightness(0.7);
+				}
+
+				.dot {
+					opacity: 0;
+				}
+			}
+
 			&.big {
 				display: none;
 				position: absolute;

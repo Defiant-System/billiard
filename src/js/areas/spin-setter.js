@@ -50,7 +50,7 @@
 					value.y = 80 * Math.sin(ang);
 				}
 
-				Self.els.dot.css({
+				Self.els.el.css({
 					"--sY": value.y,
 					"--sX": value.x,
 				});
@@ -80,7 +80,12 @@
 				Self.els.doc.off("mousemove mouseup", Self.dispatch);
 				break;
 			// custom events
+			case "reset-spin-setter":
+				Self.els.el.css({ "--sY": 0, "--sX": 0 });
+				APP.game.els.hud.find(".spin-setter .dot").css({ "--sY": 0, "--sX": 0 });
+				break;
 			case "open-spin-setter":
+				if (APP.game.els.hud.hasClass("disabled")) return;
 				APP.game.els.el.addClass("show-spin-setter");
 				break;
 			case "close-spin-setter":

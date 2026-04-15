@@ -761,7 +761,7 @@ playState.update = function () {
 
 		}
 		*/
-		
+
 		if (gameInfo.startAim == false || !Project.game.device.touch) {
 			if (
 				gameInfo.spinSetterZoom.visible == true &&
@@ -1563,8 +1563,9 @@ playState.update = function () {
 	}
 
 	function applyRulings2() {
-		//new - apply rulings split into 2 to allow time delay after showing foul messsage and before continuing with switching turns and moving onto next shot.
+		Project.APP.spinSetter.dispatch({ type: "reset-spin-setter" });
 
+		//new - apply rulings split into 2 to allow time delay after showing foul messsage and before continuing with switching turns and moving onto next shot.
 		if (gameInfo.gameRunning == true) {
 			//prevents coming here in the event of rerack, in which case gameRunning is set to false
 
@@ -2416,6 +2417,8 @@ playState.update = function () {
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}
+			
+			Project.APP.game.els.hud.find(".spin-setter").toggleClass("disabled", gameInfo.turn === "p1");
 			Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 
 			//console.log("switching turns");

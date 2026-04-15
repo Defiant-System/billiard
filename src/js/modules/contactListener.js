@@ -1,8 +1,6 @@
 //each individual collision is reported here, one at a time, in order.
 
-
 function onContact(data) {
-	
 	var gameInfo = playState.gameInfo;
 	var collisionData =  data;
 
@@ -22,12 +20,8 @@ function onContact(data) {
 		     - additional information such as contact normal can be send from the billiardPhysics.as resolveCollision method to here if needed
 	*/
 		
-	
-			
-	
 	//For the presim, info about the contact is stored in an array and extracted later.  So we create a deep copy of contact objects to prevent weak referencing - ie to prevent sending the actual ball properties which change constantly, and instead sending a frozen copy of the properties as they are right now.  For contact data being passed to other functions right away (ie. below) it is safe to use the contactData as it is now.
 	var ball = collisionData.ball;
-	
 	var collisionObject = new Object();
 	
 	collisionObject.position = ball.position;
@@ -47,10 +41,6 @@ function onContact(data) {
 	
 	
 	if (collisionData.collisionType == "ball") {
-		
-		
-
-
 		//store ball on ball contact in the object ball's contact array
 		ball.contactArray.push(collisionObject);
 		//trace("contact: " + collisionObject.collisionType);
