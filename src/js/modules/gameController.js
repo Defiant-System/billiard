@@ -2301,9 +2301,9 @@ playState.update = function () {
 				gameInfo.p1Rack = "solids";
 				gameInfo.p2Rack = "stripes";
 
-				Project.APP.els.hud.find(`.player.left .ball-slots li`)
+				Project.APP.game.els.hud.find(`.player.left .ball-slots li`)
 						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
-				Project.APP.els.hud.find(`.player.right .ball-slots li`)
+				Project.APP.game.els.hud.find(`.player.right .ball-slots li`)
 						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
 			}
 
@@ -2311,9 +2311,9 @@ playState.update = function () {
 				gameInfo.p2Rack = "solids";
 				gameInfo.p1Rack = "stripes";
 
-				Project.APP.els.hud.find(`.player.left .ball-slots li`)
+				Project.APP.game.els.hud.find(`.player.left .ball-slots li`)
 						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
-				Project.APP.els.hud.find(`.player.right .ball-slots li`)
+				Project.APP.game.els.hud.find(`.player.right .ball-slots li`)
 						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
 			}
 			// console.log(`P1 is ${gameInfo.p1Rack}`);
@@ -2380,7 +2380,7 @@ playState.update = function () {
 
 		for (var n = 0; n < gameInfo.pottedBallArray.length; n++) {
 			var id = gameInfo.pottedBallArray[n];
-			Project.APP.els.hud.find(`.ball-slots li[data-id="b${id}"]`).addClass("potted");
+			Project.APP.game.els.hud.find(`.ball-slots li[data-id="b${id}"]`).addClass("potted");
 			// gameInfo.rackSpotNumberArray[id].visible = false;
 		}
 
@@ -2415,7 +2415,7 @@ playState.update = function () {
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}
-			Project.APP.els.hud.data({ turn: gameInfo.turn });
+			Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 
 			//console.log("switching turns");
 
@@ -2617,7 +2617,7 @@ playState.update = function () {
 
 		gameInfo.moverMouseDown = false;
 
-		Project.APP.els.hud.data({ turn: gameInfo.turn });
+		Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 	}
 
 	function hideMarkers() {

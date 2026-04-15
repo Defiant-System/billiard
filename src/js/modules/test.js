@@ -1,8 +1,8 @@
 
 let Test = {
 	init(APP) {
-		// setTimeout(() => {
-		// 	console.log(Project.game.state);
-		// }, 3000);
+
+		setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
+
 	}
 };

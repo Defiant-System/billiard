@@ -31,6 +31,86 @@ content {
 			opacity: .035;
 		}
 
+		&.show-spin-setter {
+			&:after {
+				content: "";
+				background: #0005;
+				backdrop-filter: blur(2px);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: inherit;
+				z-index: 5;
+			}
+
+			.spin-setter.big {
+				display: block;
+			}
+		}
+
+		.spin-setter {
+			position: relative;
+
+			&.big {
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 180px;
+				height: 180px;
+				z-index: 6;
+				transform: translate(-50%, -50%);
+
+				&:before {
+					top: 0;
+					left: 0;
+					width: inherit;
+					height: inherit;
+					box-shadow: 0 0 0 5px #0003,
+								0 0 19px #000;
+				}
+
+				&:after {
+					width: inherit;
+					height: inherit;
+				}
+			}
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: -3px;
+				left: -3px;
+				width: 79px;
+				height: 79px;
+				border-radius: 50%;
+				box-shadow: inset 0 2px 3px #0007,
+							0 1px 2px #fff7;
+			}
+
+			&:after {
+				content: "";
+				background: url(~/img/spinSetterZoom.webp) 50% 50%/contain no-repeat;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+
+			.dot {
+				background: #f00;
+				position: absolute;
+				top: 82px;
+				left: 82px;
+				width: 16px;
+				height: 16px;
+				z-index: 2;
+				border-radius: 50%;
+				box-shadow: 0 0 0 3px #000a;
+			}
+		}
+
 		.game-cvs {
 			position: absolute;
 			top: 0;
@@ -89,41 +169,27 @@ content {
 			}
 
 			.spin-setter {
-				position: relative;
 				width: 73px;
 
 				&:before {
-					content: "";
-					background: #0002;
-					position: absolute;
 					top: -3px;
 					left: -3px;
 					width: 79px;
 					height: 79px;
-					border-radius: 50%;
 					box-shadow: inset 0 2px 3px #0007,
 								0 1px 2px #fff7;
 				}
 
 				&:after {
-					content: "";
-					background: url(~/img/spinSetterZoom.webp) 50% 50%/contain no-repeat;
-					position: absolute;
-					top: 0;
-					left: 0;
 					width: 73px;
 					height: 73px;
 				}
 
 				.dot {
-					background: #f00;
-					position: absolute;
 					top: 34px;
 					left: 34px;
 					width: 8px;
 					height: 8px;
-					z-index: 2;
-					border-radius: 50%;
 				}
 			}
 

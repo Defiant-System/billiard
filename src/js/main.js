@@ -32,12 +32,12 @@ const billiard = {
 		// fast references
 		this.els = {
 			content: window.find("content"),
-			cvs: window.find(".game-cvs"),
-			hud: window.find(".hud"),
 		};
 
-		// start booting game
-		this.dispatch({ type: "init-boot-sequence" });
+		// init all sub-objects
+		Object.keys(this)
+			.filter(i => typeof this[i].init === "function")
+			.map(i => this[i].init(this));
 
 		// DEV-ONLY-START
 		Test.init(this);
@@ -54,30 +54,24 @@ const billiard = {
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;
-			case "init-boot-sequence":
-				Project.APP = billiard;
-				Project.game = new Phaser.Game(Project.width, Project.height, Phaser.CANVAS, Self.els.cvs[0], {}, true);
-				Project.game.state.add("load", loadState);
-				Project.game.state.add("play", playState);
-				Project.game.state.start("load");
-				break;
-			case "start-game":
-				Project.levelComplete = false;
-			    Project.guideOn = 1;
-			    Project.aiRating = 2;
-			    Project.bestScore = 0;
-			    Project.numGames = 0;
-			    Project.bestTime = 0;
-				
-				Project.mode = 1;
-			    Project.levelName = "1player_" + String(Project.aiRating);
-			    Project.lastBreaker = "none";
-			    Project.tutorial = false;
-			    Project.clickedHelpButton = false;
-			    Project.game.state.start("play");
-				break;
+			// proxy event
+			case "open-spin-setter":
+				return Self.spinSetter.dispatch(event);
+			default:
+				el = event.el;
+				if (!el && event.origin) el = event.origin.el;
+				if (el) {
+					let pEl = el.parents(`?div[data-area]`);
+					if (!pEl.length) pEl = Self.els.showcase;
+					if (pEl.length) {
+						let name = pEl.data("area");
+						return Self[name].dispatch(event);
+					}
+				}
 		}
-	}
+	},
+	game: @import "./areas/game.js",
+	spinSetter: @import "./areas/spin-setter.js",
 };
 
 window.exports = billiard;

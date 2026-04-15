@@ -1,7 +1,7 @@
 
 const loadState = {
 	init() {
-		Project.APP.els.cvs.css({ maxWidth: "100%", maxHeight: "100%" });
+		Project.APP.game.els.cvs.css({ maxWidth: "100%", maxHeight: "100%" });
 	    Project.game.scale.pageAlignHorizontally = true;
 		Project.game.time.advancedTiming = true;
 	    Project.game.scale.windowConstraints.bottom = "visual";
@@ -54,7 +54,7 @@ const loadState = {
 	    this.load.audio('cueHit', ['~/audio/cueHit.mp3']);
 	},
 	create() {
-	    Project.APP.dispatch({ type: "start-game" });
+	    Project.APP.game.dispatch({ type: "start-game" });
 	},
 	update() {
 
