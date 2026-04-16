@@ -24,6 +24,7 @@
 				Project.game = new Phaser.Game(Project.width, Project.height, Phaser.CANVAS, Self.els.cvs[0], {}, true);
 				Project.game.state.add("load", loadState);
 				Project.game.state.add("play", playState);
+				Project.game.state.add("stop", stopState);
 				Project.game.state.start("load");
 				break;
 			case "start-game":
@@ -40,6 +41,18 @@
 			    Project.tutorial = false;
 			    Project.clickedHelpButton = false;
 			    Project.game.state.start("play");
+				break;
+			case "game-stop":
+			    Project.game.state.start("stop");
+				break;
+			case "game-pause":
+				if (Project.game.halt) {
+					Project.game.halt = false;
+	            	Project.game.paused = false;
+				} else {
+					Project.game.halt = true;
+	            	Project.game.paused = true;
+	            }
 				break;
 		}
 	}

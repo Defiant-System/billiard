@@ -1,10 +1,16 @@
 
+// playState.shutdown = function() {
+// 	console.log("shutdown");
+// 	Project.game.time.events.removeAll();
+//     Project.game.tweens.removeAll();
+// }
+
 playState.update = function () {
 	var gameInfo = this.gameInfo;
 	var turn = gameInfo.turn;
 	var preventQuit;
 	var gameRunning;
-
+console.log(111);
 	if (gameInfo.gameRunning == true) {
 		//console.log("shot reset: " + gameInfo.shotReset);
 

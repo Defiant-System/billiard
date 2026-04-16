@@ -50,6 +50,9 @@ const billiard = {
 			// system events
 			case "window.init":
 				break;
+			case "window.close":
+				Self.game.dispatch({ type: "game-stop" });
+				break;
 			// custom events
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

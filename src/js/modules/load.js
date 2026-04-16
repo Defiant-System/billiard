@@ -65,3 +65,18 @@ const loadState = {
 		loaderInfo = null;
 	}
 };
+
+const stopState = {
+	init() {
+
+	},
+	create() {
+	    
+	},
+	update() {
+
+	},
+	shutdown() {
+		
+	}
+};
