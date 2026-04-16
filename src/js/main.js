@@ -50,6 +50,12 @@ const billiard = {
 			// system events
 			case "window.init":
 				break;
+			case "window.blur":
+				Self.game.dispatch({ type: "game-pause" });
+				break;
+			case "window.focus":
+				Self.game.dispatch({ type: "game-resume" });
+				break;
 			case "window.close":
 				Self.game.dispatch({ type: "game-stop" });
 				break;

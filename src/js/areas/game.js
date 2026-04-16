@@ -29,30 +29,40 @@
 				break;
 			case "start-game":
 				Project.levelComplete = false;
-			    Project.guideOn = 1;
-			    Project.aiRating = 2;
-			    Project.bestScore = 0;
-			    Project.numGames = 0;
-			    Project.bestTime = 0;
+				Project.guideOn = 1;
+				Project.aiRating = 2;
+				Project.bestScore = 0;
+				Project.numGames = 0;
+				Project.bestTime = 0;
 				
 				Project.mode = 1;
-			    Project.levelName = "1player_" + String(Project.aiRating);
-			    Project.lastBreaker = "none";
-			    Project.tutorial = false;
-			    Project.clickedHelpButton = false;
-			    Project.game.state.start("play");
+				Project.levelName = "1player_" + String(Project.aiRating);
+				Project.lastBreaker = "none";
+				Project.tutorial = false;
+				Project.clickedHelpButton = false;
+				Project.game.state.start("play");
 				break;
 			case "game-stop":
-			    Project.game.state.start("stop");
+				Project.game.state.start("stop");
 				break;
 			case "game-pause":
-				if (Project.game.halt) {
-					Project.game.halt = false;
-	            	Project.game.paused = false;
-				} else {
+				if (playState.gameInfo && playState.gameInfo.gameRunning) {
 					Project.game.halt = true;
-	            	Project.game.paused = true;
-	            }
+					Project.game.paused = true;
+				}
+				break;
+			case "game-resume":
+				if (playState.gameInfo && playState.gameInfo.gameRunning) {
+					Project.game.halt = false;
+					Project.game.paused = false;
+				}
+				break;
+			case "game-toggle-pause":
+				if (Project.game.halt) {
+					Self.dispatch({ type: "game-pause" });
+				} else {
+					Self.dispatch({ type: "game-resume" });
+				}
 				break;
 		}
 	}
