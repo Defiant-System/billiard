@@ -1,7 +1,7 @@
 
-const { Phaser } = await window.fetch("~/js/bundle.js");
+const { Phaser, PIXI } = await window.fetch("~/js/bundle.js");
 
-@import "./modules/Ball.js"
+@import "./modules/ball.js"
 @import "./modules/contactListener.js"
 @import "./modules/billiardPhysics.js"
 @import "./modules/levelData.js"

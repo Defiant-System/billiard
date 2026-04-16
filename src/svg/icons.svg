@@ -23,6 +23,154 @@
 		<circle class="st8" cx="120" cy="120" r="24"/>
 	</svg>
 
+	<svg id="ball-shadow" viewBox="0 0 50 50" size="keep">
+		<style type="text/css">
+			.st0{fill:url(#SVGID_1_);}
+		</style>
+		<radialGradient id="SVGID_1_" cx="25" cy="25" r="15" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#000"/>
+			<stop  offset="1" style="stop-color:#000;stop-opacity:0"/>
+		</radialGradient>
+		<circle class="st0" cx="25" cy="25" r="25"/>
+	</svg>
+
+	<svg id="ball-shade" viewBox="0 0 52 52" size="keep">
+		<style type="text/css">
+			.st0{opacity:0.9;fill:url(#SVGID_1_);}
+		</style>
+		<radialGradient id="SVGID_1_" cx="26" cy="26" r="32.7053" fx="25.7836" fy="6.1884" gradientUnits="userSpaceOnUse">
+			<stop  offset="0.1481" style="stop-color:#F0F0F0;stop-opacity:0.5"/>
+			<stop  offset="0.208" style="stop-color:#E7E7E7;stop-opacity:0.5"/>
+			<stop  offset="0.3042" style="stop-color:#D0D0D0;stop-opacity:0.5"/>
+			<stop  offset="0.8878" style="stop-color:#000;stop-opacity:0.8"/>
+			<stop  offset="0.9121" style="stop-color:#000;stop-opacity:0.7"/>
+			<stop  offset="0.9558" style="stop-color:#000;stop-opacity:0.6"/>
+			<stop  offset="1" style="stop-color:#000;stop-opacity:0.5"/>
+		</radialGradient>
+		<circle class="st0" cx="26" cy="26" r="26"/>
+	</svg>
+
+	<svg id="ball-highlight" viewBox="0 0 52 52" size="keep">
+		<style type="text/css">
+			.st1{opacity:0.75;fill:url(#SVGID_2_);}
+			.st2{opacity:1;fill:url(#SVGID_3_);}
+			.st3{opacity:1;fill:url(#SVGID_4_);}
+		</style>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="6.0811" y1="18.2199" x2="18.7608" y2="18.0038" gradientTransform="matrix(-0.808 -0.5892 0.5892 -0.808 10.1663 36.313)">
+			<stop  offset="0" style="stop-color:#F0F0F0;stop-opacity:0"/>
+			<stop  offset="1" style="stop-color:#F0F0F0;stop-opacity:0.8"/>
+		</linearGradient>
+		<radialGradient id="SVGID_3_" cx="34.5" cy="14.5" r="7.5" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#fff;stop-opacity:0.9"/>
+			<stop  offset="0.2475" style="stop-color:#fff;stop-opacity:0.402"/>
+			<stop  offset="0.5607" style="stop-color:#fff;stop-opacity:0.1514"/>
+			<stop  offset="1" style="stop-color:#fff;stop-opacity:0"/>
+		</radialGradient>
+		<radialGradient id="SVGID_4_" cx="27" cy="20" r="5" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#fff;stop-opacity:0.9"/>
+			<stop  offset="0.2691" style="stop-color:#fff;stop-opacity:0.5848"/>
+			<stop  offset="0.5396" style="stop-color:#fff;stop-opacity:0.3683"/>
+			<stop  offset="0.8101" style="stop-color:#fff;stop-opacity:0.1519"/>
+			<stop  offset="1" style="stop-color:#fff;stop-opacity:0"/>
+		</radialGradient>
+		<path class="st1" d="M15.8,18c4.4-6,5.8-12.5,3.1-14.4S10.5,4.9,6.2,11S0.4,23.5,3,25.4S11.5,24.1,15.8,18z"/>
+		<circle class="st2" cx="34.5" cy="14.5" r="9"/>
+		<circle class="st3" cx="27" cy="20" r="5"/>
+	</svg>
+
+	<svg id="spot-sprite-sheet" viewBox="0 0 152 152" size="keep">
+		<style type="text/css">
+			.st0{fill:#fff;}
+		</style>
+		<g>
+			<circle class="st0" cx="19" cy="19" r="19"/>
+			<circle class="st0" cx="57" cy="19" r="19"/>
+			<circle class="st0" cx="95" cy="19" r="19"/>
+			<circle class="st0" cx="133" cy="19" r="19"/>
+			<circle class="st0" cx="19" cy="57" r="19"/>
+			<circle class="st0" cx="57" cy="57" r="19"/>
+			<circle class="st0" cx="95" cy="57" r="19"/>
+			<circle class="st0" cx="133" cy="57" r="19"/>
+			<circle class="st0" cx="19" cy="95" r="19"/>
+			<circle class="st0" cx="57" cy="95" r="19"/>
+			<circle class="st0" cx="95" cy="95" r="19"/>
+			<circle class="st0" cx="133" cy="95" r="19"/>
+			<circle class="st0" cx="19" cy="133" r="19"/>
+			<circle class="st0" cx="57" cy="133" r="19"/>
+			<circle class="st0" cx="95" cy="133" r="19"/>
+			<circle class="st0" cx="133" cy="133" r="19"/>
+		</g>
+		<circle cx="19" cy="19" r="7.5"/>
+		<g>
+			<path d="M118.2,125.6h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6V144h-4.4v-15.3h-5.3V125.6z"/>
+			<path d="M135.8,130.7c0.8-0.6,1.8-1.2,4-1.2c3,0,6.7,2.1,6.7,7.2c0,3-1.5,8-8.1,8c-3.5,0-7-2.1-7.2-6.6h4.4c0.2,1.8,1.2,3,3.1,3
+				c2.1,0,3.3-1.8,3.3-4.2c0-2-0.9-4-3.3-4c-0.6,0-2.1,0-2.9,1.6l-3.9-0.2l1.5-12.2h12.2v3.7h-9.1L135.8,130.7z"/>
+		</g>
+		<g>
+			<path d="M79.5,125.6h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6V144h-4.4v-15.3h-5.3V125.6z"/>
+			<path d="M108.2,139.1h-2.5v4.9h-4.4v-4.9h-8.8v-3.8l8.2-13.6h5v13.9h2.5V139.1z M101.3,135.7c0-5.4,0.1-8.9,0.1-9.6h-0.1l-5.6,9.6
+				H101.3z"/>
+		</g>
+		<g>
+			<path d="M42,125.6h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6V144h-4.4v-15.3H42V125.6z"/>
+			<path d="M60.8,131.1h0.7c1.3,0,3.7-0.1,3.7-3c0-0.8-0.4-2.9-2.8-2.9c-3,0-3,2.9-3,3.6h-4.1c0-4.2,2.4-7.2,7.4-7.2
+				c3,0,6.9,1.5,6.9,6.2c0,2.3-1.4,3.7-2.7,4.2v0.1c0.8,0.2,3.4,1.4,3.4,5.2c0,4.2-3.1,7.2-7.6,7.2c-2.1,0-7.7-0.5-7.7-7.4h4.3l0,0
+				c0,1.2,0.3,3.9,3.3,3.9c1.8,0,3.3-1.2,3.3-3.7c0-3-3-3.2-5-3.2V131.1z"/>
+		</g>
+		<g>
+			<path d="M3.9,125.7h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6v22.3H9.2v-15.3H3.9V125.7z"/>
+			<path d="M17.1,129.7c0-7.2,5.3-7.9,7.3-7.9c4.3,0,7.7,2.5,7.7,7c0,3.8-2.5,5.8-4.6,7.2c-2.9,2.1-4.5,3.1-5,4.1h9.7v3.9H16.9
+				c0.2-2.6,0.3-5.3,5.2-8.8c4-2.9,5.6-4,5.6-6.6c0-1.5-0.9-3.2-3.1-3.2c-3.1,0-3.2,2.5-3.2,4.2H17.1z"/>
+		</g>
+		<g>
+			<path d="M120.3,87.4h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6v22.3h-4.4V90.5h-5.3V87.4z"/>
+			<path d="M133,87.4h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6v22.3h-4.4V90.5H133V87.4z"/>
+		</g>
+		<g>
+			<path d="M80.7,87.7h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6v22.3H86V90.8h-5.3V87.7z"/>
+			<path d="M101.6,83.9c5.2,0,7.7,3.6,7.7,11.4s-2.5,11.5-7.7,11.5c-5.2,0-7.7-3.6-7.7-11.5S96.3,83.9,101.6,83.9z M101.6,103.2
+				c2.5,0,3.2-2.2,3.2-7.9c0-5.7-0.7-7.9-3.2-7.9c-2.5,0-3.2,2.2-3.2,7.9C98.4,101,99.1,103.2,101.6,103.2z"/>
+		</g>
+		<g>
+			<path d="M54.1,100.7L54.1,100.7c0.3,1.6,1.2,2.2,2.6,2.2c1.8,0,3.6-1.5,3.7-6.2l-0.1-0.1c-1,1.5-2.7,1.9-4.2,1.9
+				c-4.3,0-6.7-3.2-6.7-7c0-5.5,3.2-8,7.6-8c7.7,0,7.8,8.3,7.8,11.5c0,8.6-4.1,11.4-8.1,11.4c-3.8,0-6.5-2.2-6.9-5.7H54.1z M57,95
+				c1.5,0,3.2-1.1,3.2-3.7c0-2.5-1.1-4.1-3.4-4.1c-1.1,0-3.2,0.6-3.2,3.8C53.7,94.3,55.3,95,57,95z"/>
+		</g>
+		<g>
+			<path d="M19.1,106.4c-5.7,0-7.7-3.7-7.7-6.8c0-1.1,0-4.1,3.4-5.6C13,93.1,12,91.7,12,89.7c0-3.8,3-6.1,6.9-6.1
+				c4.6,0,7.1,2.7,7.1,5.8c0,1.9-0.8,3.5-2.6,4.5c2.1,1.1,3.3,2.5,3.3,5.4C26.8,102,25,106.4,19.1,106.4z M19,95.9
+				c-1.6,0-3.1,1-3.1,3.5c0,2.1,1.2,3.5,3.2,3.5c2.3,0,3.2-2,3.2-3.5C22.3,97.8,21.4,95.9,19,95.9z M21.8,89.8c0-1.7-1.2-2.8-2.6-2.8
+				c-2,0-3,1.1-3,2.8c0,1.3,1,2.8,2.9,2.8C20.8,92.6,21.8,91.4,21.8,89.8z"/>
+		</g>
+		<g>
+			<path d="M142.3,49.4c-2.1,2.3-7.6,8.9-8.1,18.5h-4.5c0.5-8.9,6.1-16,7.9-18h-11.1l0.1-3.9h15.7V49.4z"/>
+		</g>
+		<g>
+			<path d="M97.9,51.2c-0.1-1.3-0.9-2.1-2.6-2.1c-2.9,0-3.5,3.3-3.7,6.1l0.1,0.1c0.6-0.8,1.7-1.9,4.2-1.9c4.6,0,6.8,3.5,6.8,6.9
+				c0,4.9-3,8.1-7.3,8.1c-6.7,0-8.1-5.6-8.1-11.2c0-4.2,0.6-11.7,8.3-11.7c0.9,0,3.5,0.3,4.6,1.4c1.2,1.2,1.7,1.9,2.1,4.2H97.9z
+				 M95.1,57c-1.7,0-3.4,1-3.4,3.8c0,2.4,1.4,4.1,3.5,4.1c1.6,0,3.1-1.2,3.1-4.2C98.3,57.9,96.5,57,95.1,57z"/>
+		</g>
+		<g>
+			<path d="M53.9,54.3c0.8-0.6,1.8-1.2,4-1.2c3,0,6.7,2.1,6.7,7.2c0,3-1.5,8-8.1,8c-3.5,0-7-2.1-7.2-6.6h4.4c0.2,1.8,1.2,3,3.1,3
+				c2.1,0,3.3-1.8,3.3-4.2c0-2-0.9-4-3.3-4c-0.6,0-2.1,0-3,1.6L50,58l1.5-12.2h12.2v3.7h-9.1L53.9,54.3z"/>
+		</g>
+		<g>
+			<path d="M25.8,63.2h-2.5v4.9H19v-4.9h-8.8v-3.8l8.2-13.6h5v13.9h2.5V63.2z M19,59.8c0-5.4,0.1-8.9,0.1-9.6H19l-5.6,9.6H19z"/>
+		</g>
+		<g>
+			<path d="M131.2,16.9h0.7c1.3,0,3.7-0.1,3.7-3c0-0.8-0.4-2.9-2.8-2.9c-3,0-3,2.9-3,3.6h-4.1c0-4.2,2.4-7.2,7.4-7.2
+				c3,0,6.9,1.5,6.9,6.2c0,2.3-1.4,3.7-2.7,4.2v0.1c0.8,0.2,3.4,1.4,3.4,5.2c0,4.2-3.1,7.2-7.6,7.2c-2.1,0-7.7-0.5-7.7-7.4h4.3l0,0
+				c0,1.2,0.3,3.9,3.3,3.9c1.8,0,3.3-1.2,3.3-3.7c0-3-3-3.2-5-3.2V16.9z"/>
+		</g>
+		<g>
+			<path d="M86.5,15.7c0-7.2,5.3-7.9,7.3-7.9c4.3,0,7.7,2.5,7.7,7c0,3.8-2.5,5.8-4.6,7.2c-3,2.1-4.5,3.1-5,4.1h9.7v3.9H86.2
+				c0.2-2.6,0.3-5.3,5.2-8.8c4-2.9,5.6-4,5.6-6.6c0-1.5-0.9-3.2-3.1-3.2c-3.1,0-3.2,2.5-3.2,4.2H86.5z"/>
+		</g>
+		<g>
+			<path d="M50.2,11.7h0.6c4.2,0,5.4-2.2,5.5-3.9h3.6v22.3h-4.4V14.8h-5.3V11.7z"/>
+		</g>
+	</svg>
+
 	<svg id="ball-sprite-sheet-9" viewBox="0 0 250 450" size="keep">
 		<style type="text/css">
 			.st0{fill:#ee0;}

@@ -59,9 +59,9 @@
 				break;
 			case "game-toggle-pause":
 				if (Project.game.halt) {
-					Self.dispatch({ type: "game-pause" });
-				} else {
 					Self.dispatch({ type: "game-resume" });
+				} else {
+					Self.dispatch({ type: "game-pause" });
 				}
 				break;
 		}

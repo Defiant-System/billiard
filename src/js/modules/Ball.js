@@ -35,6 +35,7 @@ var Ball = function(radius, spotNumber) {
 	this.sprite.width = this.circRad * 2;
 	this.sprite.height = this.circRad * 2;
 	this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+	// this.sprite.tint = 0x888888;
 	this.addChild(this.sprite);
 	//this.tint = color;
 	//this.addChild(ballCanvas);
@@ -43,7 +44,7 @@ var Ball = function(radius, spotNumber) {
 	
 	//var base = new MovieClip();
 	//ballCanvas.addChild(base);
-	if (this.ballType == 1){
+	if (this.ballType == 1) {
 		//base.graphics.beginFill(0xffffff);
 		//base.graphics.drawCircle(0, 0, circRad);
 		//base.graphics.endFill();
@@ -70,8 +71,16 @@ var Ball = function(radius, spotNumber) {
 	this.shade.anchor = new Point(0.5, 0.5);
 	this.shade.width = radius * 2.1;
 	this.shade.height = radius * 2.1;
+	this.shade.blendMode = PIXI.blendModes.MULTIPLY;
+	
+    this.highlight = new Phaser.Sprite(Project.game, 0, 0, "highlight");
+	this.addChild(this.highlight);
+	this.highlight.anchor = new Point(0.5, 0.5);
+	this.highlight.width = radius * 2.1;
+	this.highlight.height = radius * 2.1;
+	// this.highlight.blendMode = PIXI.blendModes.HARD_LIGHT;
 
-	if (spotNumber == 8){
+	if (spotNumber == 8) {
 		//this.shade.visible = false;
 	}
 	
@@ -86,14 +95,14 @@ Ball.prototype.updateRotation = function(vx, vy, r) {
 	var dy = r; //y rotation (y axis is looking straight down on the ball)
 	var dz = vy; // vy is the change in the balls y position in screen coordinates x
 	var len = Math.sqrt(dx*dx + dy*dy + dz*dz);
-	if (len > 0.01){
+	if (len > 0.01) {
 		this.ballRotation = this.rotateQuat(this.ballRotation, dy/len, dx/len, dz/len, len / (this.circRad));
 		this.ballRotation = this.normalize(this.ballRotation);
 		this.renderBall(this.ballRotation);
 	}
 }
 
-Ball.prototype.renderBall = function(q){
+Ball.prototype.renderBall = function(q) {
 	//ballRotation is a quaternion - x,y,z,w
 	//convert quaternion to Euler
 	var qy = q[0];
@@ -123,6 +132,7 @@ Ball.prototype.renderBall = function(q){
 	
 	this.angle = (180 / Math.PI) * rotationY;
 	this.shade.angle = -this.angle;
+	this.highlight.angle = -this.angle;
 	
 	//trace(rotationX);
 	
@@ -224,7 +234,7 @@ Ball.prototype.rotateQuat = function(q, _x, _y, _z, angle) {
 	return q_;
 }
 
-Ball.prototype.normalize = function(q){
+Ball.prototype.normalize = function(q) {
 	var len = Math.sqrt(q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3]);
 	var q_ = new Array();
 
