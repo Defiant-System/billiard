@@ -8,14 +8,6 @@ const loadState = {
 	    Project.game.scale.pageAlignVertically = true;
 		Project.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	    Project.game.input.maxPointers = 1;
-
-		Project.game.scale.setResizeCallback(this.onResize, this);
-	},
-	resizeGame(scale, bounds){ 
-
-	},
-	onResize(scale, bounds) {
-		
 	},
 	preload() {
 	    //load all game assets
@@ -23,13 +15,10 @@ const loadState = {
 	    this.load.image("cloth", "~/img/cloth.webp");
 	    this.load.image("tableTop", "~/img/tableTop.webp");
 
-	    // this.load.image("shade", "~/img/shade.png");
-	    // this.load.image("shadow", "~/img/shadow.webp");
 	    this.load.image("shade", "~/icons/ball-shade.png");
 	    this.load.image("highlight", "~/icons/ball-highlight.png");
 	    this.load.image("shadow", "~/icons/ball-shadow.png");
 	    this.load.image("cue", "~/img/cue.png");
-	    // this.load.image("cueShadow", "~/img/cueShadow.png");
 
 	    this.load.spritesheet("solidsSpriteSheet", "~/icons/solid-sprite-sheet.png", 48, 48, 9);
 	    this.load.spritesheet("ballSpriteSheet9", "~/icons/ball-sprite-sheet-9.png", 50, 50, 41);
@@ -42,15 +31,7 @@ const loadState = {
 	    this.load.spritesheet("spotSpriteSheet", "~/icons/spot-sprite-sheet.png", 38, 38, 16);
 
 	    this.load.image("mover", "~/img/mover.png");
-	    // this.load.image("8ball", "~/img/8ball.png");
 	    
-	    // this.load.image("spinSetterSmall", "~/img/spinSetterLarge.png");
-	    // this.load.image("cueBallSpot", "~/img/cueBallSpot.png");
-	    // this.load.image("spinSetterZoom", "~/img/spinSetterZoom.webp");
-	    // this.load.image("cueBallSpotZoom", "~/img/cueBallSpotZoom.png");
-
-	    // this.load.atlas("marker", "~/img/marker.png", "~/js/marker.json");
-
 	    this.load.audio("ballHit", ["~/audio/ballHit2.mp3"]);
 	    this.load.audio("cushionHit", ["~/audio/cushionHit.mp3"]);
 	    this.load.audio("pocketHit", ["~/audio/pocketHit.mp3"]);
@@ -63,9 +44,7 @@ const loadState = {
 
 	},
 	shutdown() {
-		var loaderInfo = this.loaderInfo;
-	    Project.game.scale.setResizeCallback(null, null);
-		loaderInfo = null;
+		this.loaderInfo = null;
 	}
 };
 

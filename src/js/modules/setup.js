@@ -1199,9 +1199,9 @@ playState.create = function () {
 			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
 			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
 
-			// graphics.lineStyle(2, 0xff0000, 1);
-			// graphics.moveTo(line.p3.x * gameInfo.physScale, line.p3.y * gameInfo.physScale);
-			// graphics.lineTo(line.p4.x * gameInfo.physScale, line.p4.y * gameInfo.physScale);
+			graphics.lineStyle(2, 0xffff00, 1);
+			graphics.moveTo(line.p3.x * gameInfo.physScale, line.p3.y * gameInfo.physScale);
+			graphics.lineTo(line.p4.x * gameInfo.physScale, line.p4.y * gameInfo.physScale);
 		}
 
 		// set a fill and line style

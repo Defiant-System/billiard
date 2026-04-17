@@ -991,7 +991,7 @@ playState.update = function () {
 		if (gameInfo.drawGuide == true) {
 			gameInfo.guideCanvas.visible = true;
 			gameInfo.guide.visible = true;
-			gameInfo.guide.lineStyle(3, 0xffffff, 1);
+			gameInfo.guide.lineStyle(3, 0xff0000, 1);
 
 			var startVec = gameInfo.ballArray[0].position;
 			var projectionVec = startVec.plus(
@@ -1054,7 +1054,7 @@ playState.update = function () {
 
 				//now draw lines - we now have the positions of the cueball, the object ball, and the intersect point
 				gameInfo.guide.clear();
-				gameInfo.guide.lineStyle(3, 0xff0000, 1);
+				gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 				var bearingAim = Maths.findBearing(
 					intersectPoint.x - cueBall.position.x,
@@ -1137,38 +1137,37 @@ playState.update = function () {
 
 				pointArray.push(
 					new Point(
-						gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius
+						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
+						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
 					)
 				);
 				pointArray.push(
 					new Point(
-						gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius
+						gameInfo.adjustmentScale * 31100 - gameInfo.ballRadius,
+						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
 					)
 				);
 				pointArray.push(
 					new Point(
-						gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius,
-						gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius
+						gameInfo.adjustmentScale * 31100 - gameInfo.ballRadius,
+						gameInfo.adjustmentScale * 15600 - gameInfo.ballRadius
 					)
 				);
 				pointArray.push(
 					new Point(
-						gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius
+						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
+						gameInfo.adjustmentScale * 15600 - gameInfo.ballRadius
 					)
 				);
 				pointArray.push(
 					new Point(
-						gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius
+						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
+						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
 					)
 				); //allows n+1 below to represent the first point
 
 				var A = new Point(cueBall.position.x, cueBall.position.y);
 				var B = new Point(projectionVec.x, projectionVec.y);
-
 				var intersectPoint;
 
 				for (var n = 0; n < 4; n++) {

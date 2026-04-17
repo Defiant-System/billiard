@@ -35,7 +35,7 @@
 				Project.numGames = 0;
 				Project.bestTime = 0;
 				
-				Project.mode = 1;
+				Project.mode = 2;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";
 				Project.tutorial = false;

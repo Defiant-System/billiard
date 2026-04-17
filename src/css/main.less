@@ -11,6 +11,22 @@ content {
 	bottom: 0;
 	border-radius: inherit;
 
+	i[class*="icon-"],
+	i[class^="icon-"] {
+		position: relative;
+		pointer-events: none;
+		display: inline-block;
+		vertical-align: middle;
+		width: 21px;
+		height: 21px;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		// background-color: rgba(#000,.1);
+
+		&.icon-menu { background-image: url(~/icons/icon-menu.png); }
+	}
+
 	.game-view {
 		background: #121034 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
 		position: absolute;
@@ -143,6 +159,22 @@ content {
 			left: 0;
 			z-index: 2;
 
+			// &:after {
+			// 	content: "";
+			// 	position: absolute;
+			// 	top: 165px;
+			// 	left: 125px;
+			// 	right: 125px;
+			// 	bottom: 81px;
+			// 	border-radius: inherit;
+			// 	background: url(/app/icons/logo-karaqu.png) 50% 50% no-repeat;
+			// 	background-size: auto 60px;
+			// 	filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75)) opacity(.4);
+			// 	mix-blend-mode: overlay;
+			// 	pointer-events: none;
+			// 	z-index: 2;
+			// }
+
 			canvas {
 				// background: #f00;
 			}
@@ -218,9 +250,15 @@ content {
 						right: 0;
 						bottom: 0;
 						border-radius: 6px;
-						background: linear-gradient(180deg, #0eec00, #05a800);
-						box-shadow: inset 0 1px 1px #fff7,
-									inset 0 -1px 2px #0307;
+						background: linear-gradient(180deg, #ffa557, #e05800);
+						box-shadow: inset 0 1px 1px #ffffa6d1,
+									inset 0 -1px 2px #da5a00;
+					}
+
+					i.icon-menu {
+						z-index: 2;
+						width: 42px;
+						height: 42px;
 					}
 				}
 			}
@@ -231,6 +269,19 @@ content {
 				width: 100px;
 
 				&:before {
+					content: "";
+					background: #0003;
+					position: absolute;
+					top: 2px;
+					left: 13px;
+					height: 73px;
+					width: 73px;
+					border-radius: 17px;
+					box-shadow: inset 0 1px 1px #0007,
+								inset 0 -1px 1px #fff5;
+				}
+
+				&:after {
 					content: "";
 					position: absolute;
 					top: 6px;

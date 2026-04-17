@@ -1,5 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 	
+	<svg id="icon-menu" viewBox="0 0 21 21">
+		<rect x="2" y="4" width="17" height="5"/>
+	</svg>
+	
 	<svg id="icon-champion" viewBox="0 0 59 61">
 		<style type="text/css">
 			.st0{fill:#B1520E;}
