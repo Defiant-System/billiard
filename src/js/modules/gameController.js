@@ -3,8 +3,26 @@ playState.getState = function() {
 	let gameInfo = this.gameInfo,
 		turn = gameInfo.turn,
 		pottedBallArray = gameInfo.pottedBallArray,
+		cueBallInHand = gameInfo.cueBallInHand,
+		p1 = [],
+		p2 = [],
 		balls = [];
-	// console.log(gameInfo);
+	console.log(gameInfo);
+
+	Project.APP.game.els.hud.find(`.player.left .ball-slots li`).map(elem => {
+		let el = $(elem),
+			id = el.data("id"),
+			state = el.prop("className");
+		p1.push({ id, state });
+	});
+
+	Project.APP.game.els.hud.find(`.player.right .ball-slots li`).map(elem => {
+		let el = $(elem),
+			id = el.data("id"),
+			state = el.prop("className");
+		p2.push({ id, state });
+	});
+
 	gameInfo.ballArray.map(ball => {
 		let { x, y } = ball.position,
 			targetType = ball.targetType;
@@ -12,34 +30,42 @@ playState.getState = function() {
 		balls.push({ x, y, targetType });
 	});
 	let cue = {
-		cueBallInHand: gameInfo.cueBallInHand,
-		anchor: {
-			x: gameInfo.cue.anchor.x,
-			y: gameInfo.cue.anchor.y,
-		},
-		x: gameInfo.cue.x,
-		y: gameInfo.cue.y,
+		x: gameInfo.cueCanvas.position.x,
+		y: gameInfo.cueCanvas.position.y,
 	}
-	return { cue, balls, pottedBallArray, turn };
+
+	return { p1, p2, cue, balls, pottedBallArray, cueBallInHand, turn };
 }
 
 playState.setState = function(state) {
 	var gameInfo = this.gameInfo,
-		{ cue, balls, pottedBallArray, turn } = state;
+		{ p1, p2, cue, balls, pottedBallArray, cueBallInHand, turn } = state,
+		p1Slots = Project.APP.game.els.hud.find(`.player.left .ball-slots li`),
+		p2Slots = Project.APP.game.els.hud.find(`.player.right .ball-slots li`);
+
+	p1.map((b, index) => p1Slots.get(index).data({ id: b.id }).addClass(b.state));
+	p2.map((b, index) => p2Slots.get(index).data({ id: b.id }).addClass(b.state));
+
 	balls.map((ball, index) => {
-		gameInfo.ballArray[index].targetType = ball.targetType;
-		gameInfo.ballArray[index].position.x = ball.x;
-		gameInfo.ballArray[index].position.y = ball.y;
+		let nBall = gameInfo.ballArray[index];
+		if (pottedBallArray.includes(index)) {
+			nBall.active = false;
+			nBall.shadow = null;
+		}
+		nBall.targetType = ball.targetType;
+		nBall.position.x = ball.x;
+		nBall.position.y = ball.y;
 	});
 
-	gameInfo.cue.anchor.x = cue.anchor.x;
-	gameInfo.cue.anchor.y = cue.anchor.y;
-	gameInfo.cue.position.x = cue.x;
-	gameInfo.cue.position.y = cue.y;
+	gameInfo.cueCanvas.position.x = cue.x;
+	gameInfo.cueCanvas.position.y = cue.y;
 
-	gameInfo.cueBallInHand = cue.cueBallInHand;
+	gameInfo.cueBallInHand = cueBallInHand;
 	gameInfo.pottedBallArray = pottedBallArray;
 	gameInfo.turn = turn;
+
+	gameInfo.phys.updatePhysics();
+	renderScreen();
 
 	// console.log( gameInfo.gameRunning );
 }
@@ -82,7 +108,6 @@ playState.update = function () {
 			}
 
 			//ai and p1/p2
-
 			updateCue();
 		}
 

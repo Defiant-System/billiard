@@ -1038,7 +1038,6 @@ playState.create = function () {
 	}
 
 	function toggleSound() {
-		return;
 		if (Sound.slave == false) {
 			Sound.setMute(false);
 			gameInfo.muteButtonPU.setFrames(1, 0, 1, 0);
@@ -1640,7 +1639,7 @@ playState.create = function () {
 			ball.shadow.anchor = new Point(0.5, 0.5);
 			ball.shadow.width = gameInfo.ballRadius * gameInfo.physScale * 4;
 			ball.shadow.height = gameInfo.ballRadius * gameInfo.physScale * 4;
-			ball.shadow.alpha = 0.7;
+			// ball.shadow.alpha = 0.9;
 
 			//marker
 			/*
