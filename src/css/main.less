@@ -229,6 +229,7 @@ content {
 					position: relative;
 					width: 43px;
 					height: 43px;
+					cursor: pointer;
 
 					&:before {
 						content: "";
@@ -250,15 +251,16 @@ content {
 						right: 0;
 						bottom: 0;
 						border-radius: 6px;
-						background: linear-gradient(180deg, #ffa557, #e05800);
-						box-shadow: inset 0 1px 1px #ffffa6d1,
-									inset 0 -1px 2px #da5a00;
+						background: linear-gradient(180deg, #15cb32, #008717);
+						box-shadow: inset 0 1px 1px #8cf388d1,
+									inset 0 -1px 1px #006102;
 					}
 
 					i.icon-menu {
 						z-index: 2;
 						width: 42px;
 						height: 42px;
+						filter: drop-shadow(0 1px 0 #15cb32);
 					}
 				}
 			}
@@ -270,26 +272,29 @@ content {
 
 				&:before {
 					content: "";
-					background: #0003;
+					background: #fff1;
 					position: absolute;
-					top: 2px;
-					left: 13px;
-					height: 73px;
-					width: 73px;
-					border-radius: 17px;
-					box-shadow: inset 0 1px 1px #0007,
-								inset 0 -1px 1px #fff5;
+					top: -1px;
+					left: 11px;
+					height: 77px;
+					width: 77px;
+					border-radius: 50%;
+					backdrop-filter: blur(2px);
+					box-shadow: inset 0 -1px 1px #0007,
+								inset 0 1px 1px #fff5,
+								0 1px 1px #fff5,
+								0 -1px 1px #0007;
 				}
 
 				&:after {
 					content: "";
 					position: absolute;
-					top: 6px;
+					top: 5px;
 					left: 20px;
 					width: 58px;
 					height: 61px;
 					background: url(~/icons/icon-champion.png) 50% 50%/contain no-repeat;
-					filter: brightness(1.25) saturate(1.15);
+					filter: brightness(1.5) saturate(1.15);
 				}
 			}
 

@@ -1,4 +1,49 @@
 
+playState.getState = function() {
+	let gameInfo = this.gameInfo,
+		turn = gameInfo.turn,
+		pottedBallArray = gameInfo.pottedBallArray,
+		balls = [];
+	// console.log(gameInfo);
+	gameInfo.ballArray.map(ball => {
+		let { x, y } = ball.position,
+			targetType = ball.targetType;
+		// console.log(ball);
+		balls.push({ x, y, targetType });
+	});
+	let cue = {
+		cueBallInHand: gameInfo.cueBallInHand,
+		anchor: {
+			x: gameInfo.cue.anchor.x,
+			y: gameInfo.cue.anchor.y,
+		},
+		x: gameInfo.cue.x,
+		y: gameInfo.cue.y,
+	}
+	return { cue, balls, pottedBallArray, turn };
+}
+
+playState.setState = function(state) {
+	var gameInfo = this.gameInfo,
+		{ cue, balls, pottedBallArray, turn } = state;
+	balls.map((ball, index) => {
+		gameInfo.ballArray[index].targetType = ball.targetType;
+		gameInfo.ballArray[index].position.x = ball.x;
+		gameInfo.ballArray[index].position.y = ball.y;
+	});
+
+	gameInfo.cue.anchor.x = cue.anchor.x;
+	gameInfo.cue.anchor.y = cue.anchor.y;
+	gameInfo.cue.position.x = cue.x;
+	gameInfo.cue.position.y = cue.y;
+
+	gameInfo.cueBallInHand = cue.cueBallInHand;
+	gameInfo.pottedBallArray = pottedBallArray;
+	gameInfo.turn = turn;
+
+	// console.log( gameInfo.gameRunning );
+}
+
 playState.update = function () {
 	var gameInfo = this.gameInfo;
 	var turn = gameInfo.turn;

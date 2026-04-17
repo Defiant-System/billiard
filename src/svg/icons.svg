@@ -1,7 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 	
 	<svg id="icon-menu" viewBox="0 0 21 21">
-		<rect x="2" y="4" width="17" height="5"/>
+		<style type="text/css">
+			.st0{fill:#006102;}
+		</style>
+		<rect class="st0" x="3.5" y="4" width="14" height="3" rx="1"/>
+		<rect class="st0" x="3.5" y="9" width="14" height="3" rx="1"/>
+		<rect class="st0" x="3.5" y="14" width="14" height="3" rx="1"/>
 	</svg>
 	
 	<svg id="icon-champion" viewBox="0 0 59 61">
