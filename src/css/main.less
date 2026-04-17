@@ -52,6 +52,7 @@ content {
 
 		.spin-setter {
 			position: relative;
+			top: -1px;
 			width: 73px;
 			--sY: 0;
 			--sX: 0;
@@ -228,6 +229,17 @@ content {
 				// background: #f001;
 				position: relative;
 				width: 100px;
+
+				&:before {
+					content: "";
+					position: absolute;
+					top: 6px;
+					left: 20px;
+					width: 58px;
+					height: 61px;
+					background: url(~/icons/icon-champion.png) 50% 50%/contain no-repeat;
+					filter: brightness(1.25) saturate(1.15);
+				}
 			}
 
 			.player {

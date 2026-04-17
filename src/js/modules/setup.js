@@ -1643,6 +1643,7 @@ playState.create = function () {
 			ball.shadow.alpha = 0.7;
 
 			//marker
+			/*
 			ball.marker = new Phaser.Sprite(Project.game, 0, 0, "marker");
 			gameInfo.ballCanvas.addChild(ball.marker);
 			ball.marker.anchor = new Point(0.5, 0.5);
@@ -1654,6 +1655,7 @@ playState.create = function () {
 				true
 			);
 			ball.marker.visible = false;
+			*/
 
 			//ball mc
 			var s;

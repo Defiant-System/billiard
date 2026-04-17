@@ -26,8 +26,8 @@ function renderScreen() {
 					gameInfo.physScale *
 					(ball.mc.y / (150 * 2.4));
 
-			ball.marker.x = ball.mc.x;
-			ball.marker.y = ball.mc.y;
+			// ball.marker.x = ball.mc.x;
+			// ball.marker.y = ball.mc.y;
 
 			if (n == 0) {
 				ball.mover.x = ball.mc.x;

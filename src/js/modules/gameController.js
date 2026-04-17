@@ -1054,7 +1054,7 @@ playState.update = function () {
 
 				//now draw lines - we now have the positions of the cueball, the object ball, and the intersect point
 				gameInfo.guide.clear();
-				gameInfo.guide.lineStyle(3, 0xffffff, 1);
+				gameInfo.guide.lineStyle(3, 0xff0000, 1);
 
 				var bearingAim = Maths.findBearing(
 					intersectPoint.x - cueBall.position.x,
@@ -1378,7 +1378,7 @@ playState.update = function () {
 		) {
 			gameInfo.beginStrike = true;
 
-			hideMarkers();
+			// hideMarkers();
 
 			var tweenTime = 1 / gameInfo.power;
 
@@ -2507,42 +2507,42 @@ playState.update = function () {
 			}
 
 			//show target balls
-			if (gameInfo.shotNum > 0 && gameInfo.rerack == false) {
-				for (var n = 1; n < gameInfo.ballArray.length; n++) {
-					var ball = gameInfo.ballArray[n];
-					if (ball.active == true) {
-						if (gameInfo.turn == "p1") {
-							if (
-								ball.targetType == gameInfo.p1TargetType ||
-								(gameInfo.p1TargetType == "ANY" && ball.targetType != "8 BALL")
-							) {
-								ball.marker.visible = true;
-								ball.marker.alpha = 0;
+			// if (gameInfo.shotNum > 0 && gameInfo.rerack == false) {
+			// 	for (var n = 1; n < gameInfo.ballArray.length; n++) {
+			// 		var ball = gameInfo.ballArray[n];
+			// 		if (ball.active == true) {
+			// 			if (gameInfo.turn == "p1") {
+			// 				if (
+			// 					ball.targetType == gameInfo.p1TargetType ||
+			// 					(gameInfo.p1TargetType == "ANY" && ball.targetType != "8 BALL")
+			// 				) {
+			// 					ball.marker.visible = true;
+			// 					ball.marker.alpha = 0;
 
-								ball.marker.x = ball.mc.x;
-								ball.marker.y = ball.mc.y;
-							} else {
-								//console.log("p1 target type: " + gameInfo.p1TargetType);
-							}
-						} else {
-							if (
-								ball.targetType == gameInfo.p2TargetType ||
-								(gameInfo.p2TargetType == "ANY" && ball.targetType != "8 BALL")
-							) {
-								ball.marker.visible = true;
-								ball.marker.alpha = 0;
+			// 					ball.marker.x = ball.mc.x;
+			// 					ball.marker.y = ball.mc.y;
+			// 				} else {
+			// 					//console.log("p1 target type: " + gameInfo.p1TargetType);
+			// 				}
+			// 			} else {
+			// 				if (
+			// 					ball.targetType == gameInfo.p2TargetType ||
+			// 					(gameInfo.p2TargetType == "ANY" && ball.targetType != "8 BALL")
+			// 				) {
+			// 					ball.marker.visible = true;
+			// 					ball.marker.alpha = 0;
 
-								ball.marker.x = ball.mc.x;
-								ball.marker.y = ball.mc.y;
-							} else {
-								//console.log("p2 target type: " + gameInfo.p2TargetType);
-							}
-						}
-					}
-				}
+			// 					ball.marker.x = ball.mc.x;
+			// 					ball.marker.y = ball.mc.y;
+			// 				} else {
+			// 					//console.log("p2 target type: " + gameInfo.p2TargetType);
+			// 				}
+			// 			}
+			// 		}
+			// 	}
 
-				playMarkerAnims();
-			}
+			// 	playMarkerAnims();
+			// }
 		} else {
 			if (gameInfo.cueBallInHand == true) {
 				gameInfo.ballArray[0].active = true;
@@ -2551,16 +2551,16 @@ playState.update = function () {
 			}
 		}
 
-		if (gameInfo.turn == "p2" && Project.mode == 1) {
-			//make sure all markers are hidden if it's not the player's turn next
-			for (var n = 1; n < gameInfo.ballArray.length; n++) {
-				var ball = gameInfo.ballArray[n];
-				//ball.marker.animations.stop(null, true);
-				ball.marker.visible = false;
-				ball.marker.x = ball.mc.x;
-				ball.marker.y = ball.mc.y;
-			}
-		}
+		// if (gameInfo.turn == "p2" && Project.mode == 1) {
+		// 	//make sure all markers are hidden if it's not the player's turn next
+		// 	for (var n = 1; n < gameInfo.ballArray.length; n++) {
+		// 		var ball = gameInfo.ballArray[n];
+		// 		//ball.marker.animations.stop(null, true);
+		// 		ball.marker.visible = false;
+		// 		ball.marker.x = ball.mc.x;
+		// 		ball.marker.y = ball.mc.y;
+		// 	}
+		// }
 
 		//ai's turn next
 		if (gameInfo.turn == "p2" && Project.mode == 1) {
@@ -2624,39 +2624,39 @@ playState.update = function () {
 		Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 	}
 
-	function hideMarkers() {
-		for (var n = 1; n < gameInfo.ballArray.length; n++) {
-			var ball = gameInfo.ballArray[n];
-			ball.marker.visible = false;
-		}
-	}
+	// function hideMarkers() {
+	// 	for (var n = 1; n < gameInfo.ballArray.length; n++) {
+	// 		var ball = gameInfo.ballArray[n];
+	// 		ball.marker.visible = false;
+	// 	}
+	// }
 
-	function playMarkerAnims() {
-		if (gameInfo.markerRepeat) {
-			Project.game.time.events.remove(gameInfo.markerRepeat);
-		}
-		Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, startAnim, this);
+	// function playMarkerAnims() {
+	// 	if (gameInfo.markerRepeat) {
+	// 		Project.game.time.events.remove(gameInfo.markerRepeat);
+	// 	}
+	// 	Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, startAnim, this);
 
-		function startAnim() {
-			for (var n = 1; n < gameInfo.ballArray.length; n++) {
-				var ball = gameInfo.ballArray[n];
-				ball.marker.alpha = 1;
-				ball.marker.animations.stop(1);
-				ball.marker.animations.play("markerAnim", 40, false);
-			}
+	// 	function startAnim() {
+	// 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
+	// 			var ball = gameInfo.ballArray[n];
+	// 			ball.marker.alpha = 1;
+	// 			ball.marker.animations.stop(1);
+	// 			ball.marker.animations.play("markerAnim", 40, false);
+	// 		}
 
-			//repeat the anim a little later
-			gameInfo.markerRepeat = Project.game.time.events.add(
-				Phaser.Timer.SECOND * 5,
-				startAnim,
-				this
-			);
-		}
-	}
+	// 		//repeat the anim a little later
+	// 		gameInfo.markerRepeat = Project.game.time.events.add(
+	// 			Phaser.Timer.SECOND * 5,
+	// 			startAnim,
+	// 			this
+	// 		);
+	// 	}
+	// }
 
-	function updateDebug() {
-		gameInfo.debugText.text = Project.game.time.fps;
-	}
+	// function updateDebug() {
+	// 	gameInfo.debugText.text = Project.game.time.fps;
+	// }
 
 	function aiPlaceCueBall() {
 		//trace("ai placing ball");

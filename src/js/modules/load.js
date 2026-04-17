@@ -49,7 +49,7 @@ const loadState = {
 	    // this.load.image("spinSetterZoom", "~/img/spinSetterZoom.webp");
 	    // this.load.image("cueBallSpotZoom", "~/img/cueBallSpotZoom.png");
 
-	    this.load.atlas("marker", "~/img/marker.png", "~/js/marker.json");
+	    // this.load.atlas("marker", "~/img/marker.png", "~/js/marker.json");
 
 	    this.load.audio("ballHit", ["~/audio/ballHit2.mp3"]);
 	    this.load.audio("cushionHit", ["~/audio/cushionHit.mp3"]);
