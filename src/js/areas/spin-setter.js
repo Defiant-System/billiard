@@ -83,6 +83,7 @@
 			case "reset-spin-setter":
 				Self.els.el.css({ "--sY": 0, "--sX": 0 });
 				APP.game.els.hud.find(".spin-setter .dot").css({ "--sY": 0, "--sX": 0 });
+				Self.dispatch({ type: "mouseup" });
 				break;
 			case "open-spin-setter":
 				if (APP.game.els.hud.hasClass("disabled")) return;

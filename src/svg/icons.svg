@@ -3,7 +3,7 @@
 	<svg id="solid-sprite-sheet" viewBox="0 0 148 148" size="keep">
 		<style type="text/css">
 			.st0{fill:#fff;}
-			.st1{fill:#ff0;}
+			.st1{fill:#dd0;}
 			.st2{fill:#00f;}
 			.st3{fill:#f00;}
 			.st4{fill:#f08;}
@@ -27,9 +27,9 @@
 		<style type="text/css">
 			.st0{fill:url(#SVGID_1_);}
 		</style>
-		<radialGradient id="SVGID_1_" cx="25" cy="25" r="15" gradientUnits="userSpaceOnUse">
-			<stop  offset="0" style="stop-color:#000"/>
-			<stop  offset="1" style="stop-color:#000;stop-opacity:0"/>
+		<radialGradient id="SVGID_1_" cx="25" cy="25" r="17" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#000;stop-opacity:0.9"/>
+			<stop  offset=".9" style="stop-color:#000;stop-opacity:0"/>
 		</radialGradient>
 		<circle class="st0" cx="25" cy="25" r="25"/>
 	</svg>
@@ -52,9 +52,9 @@
 
 	<svg id="ball-highlight" viewBox="0 0 52 52" size="keep">
 		<style type="text/css">
-			.st1{opacity:0.75;fill:url(#SVGID_2_);}
-			.st2{opacity:1;fill:url(#SVGID_3_);}
-			.st3{opacity:1;fill:url(#SVGID_4_);}
+			.st1{opacity:0.65;fill:url(#SVGID_2_);}
+			.st2{opacity:0.95;fill:url(#SVGID_3_);}
+			.st3{opacity:1.0;fill:url(#SVGID_4_);}
 		</style>
 		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="6.0811" y1="18.2199" x2="18.7608" y2="18.0038" gradientTransform="matrix(-0.808 -0.5892 0.5892 -0.808 10.1663 36.313)">
 			<stop  offset="0" style="stop-color:#F0F0F0;stop-opacity:0"/>
@@ -173,7 +173,7 @@
 
 	<svg id="ball-sprite-sheet-9" viewBox="0 0 250 450" size="keep">
 		<style type="text/css">
-			.st0{fill:#ee0;}
+			.st0{fill:#dd0;}
 			.st1{fill:#fff;}
 		</style>
 		<g>
