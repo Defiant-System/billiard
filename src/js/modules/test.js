@@ -51,7 +51,8 @@ let TestState = {
 
 let Test = {
 	init(APP) {
-
+		return;
+		
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);

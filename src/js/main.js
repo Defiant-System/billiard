@@ -9,7 +9,6 @@ const { Phaser, PIXI } = await window.fetch("~/js/bundle.js");
 @import "./modules/vector2d.js"
 @import "./modules/render.js"
 @import "./modules/sound.js"
-@import "./modules/effects.js"
 @import "./modules/load.js"
 @import "./modules/setup.js"
 @import "./modules/gameController.js"

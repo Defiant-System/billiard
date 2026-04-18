@@ -127,7 +127,8 @@ function awardBonuses(collisionData) {
         gameInfo.ballPotted = true;
         
 		if (Project.mode == 1 && gameInfo.turn == "p1") {
-			console.log( "Bonus", gameInfo.multiplier * 10 );
+			console.log("potted ball ", collisionData.ball);
+			// console.log( "Bonus", gameInfo.multiplier * 10 );
 			// createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
 			// Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
 		}

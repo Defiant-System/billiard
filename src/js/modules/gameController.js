@@ -2462,21 +2462,17 @@ playState.update = function () {
 			// gameInfo.rackSpotNumberArray[id].visible = false;
 		}
 
-		// if (gameInfo.p1TargetType == "8 BALL") {
-		// 	if (gameInfo.p1Rack == "solids") {
-		// 		gameInfo.rackSolids8ball.visible = true;
-		// 	} else {
-		// 		gameInfo.rackStripes8ball.visible = true;
-		// 	}
-		// }
+		if (gameInfo.p1TargetType == "8 BALL") {
+			let bSlot = Project.APP.game.els.hud.find(`.player.left .ball-slots li:nth-child(1)`);
+			bSlot.removeClass("potted");
+			bSlot.data({ id: "b8" });
+		}
 
-		// if (gameInfo.p2TargetType == "8 BALL") {
-		// 	if (gameInfo.p2Rack == "solids") {
-		// 		gameInfo.rackSolids8ball.visible = true;
-		// 	} else {
-		// 		gameInfo.rackStripes8ball.visible = true;
-		// 	}
-		// }
+		if (gameInfo.p2TargetType == "8 BALL") {
+			let bSlot = Project.APP.game.els.hud.find(`.player.right .ball-slots li:nth-child(1)`);
+			bSlot.removeClass("potted");
+			bSlot.data({ id: "b8" });
+		}
 	}
 
 	function checkWhosTurn() {
