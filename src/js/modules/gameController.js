@@ -1,13 +1,23 @@
 
+/*
+ * Remove first break flag
+ * Hide potted balls
+ * 
+ */
+
 playState.getState = function() {
 	let gameInfo = this.gameInfo,
+		mode = Project.mode,
 		turn = gameInfo.turn,
 		pottedBallArray = gameInfo.pottedBallArray,
 		cueBallInHand = gameInfo.cueBallInHand,
+		shotNum = gameInfo.shotNum,
+		p1TargetType = gameInfo.p1TargetType,
+		p2TargetType = gameInfo.p2TargetType,
 		p1 = [],
 		p2 = [],
 		balls = [];
-	console.log(gameInfo);
+	// console.log(gameInfo);
 
 	Project.APP.game.els.hud.find(`.player.left .ball-slots li`).map(elem => {
 		let el = $(elem),
@@ -34,23 +44,32 @@ playState.getState = function() {
 		y: gameInfo.cueCanvas.position.y,
 	}
 
-	return { p1, p2, cue, balls, pottedBallArray, cueBallInHand, turn };
+	return { mode, p1, p2, cue, balls, pottedBallArray, cueBallInHand, shotNum, p1TargetType, p2TargetType, turn };
 }
 
 playState.setState = function(state) {
 	var gameInfo = this.gameInfo,
-		{ p1, p2, cue, balls, pottedBallArray, cueBallInHand, turn } = state,
+		{ p1, p2, cue, balls } = state,
 		p1Slots = Project.APP.game.els.hud.find(`.player.left .ball-slots li`),
 		p2Slots = Project.APP.game.els.hud.find(`.player.right .ball-slots li`);
 
-	p1.map((b, index) => p1Slots.get(index).data({ id: b.id }).addClass(b.state));
-	p2.map((b, index) => p2Slots.get(index).data({ id: b.id }).addClass(b.state));
+	gameInfo.gameRunning = false;
+	gameInfo.paused = true;
+	this.game.paused = true;
+
+	// reset hud ball slots
+	Project.APP.game.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
+	p1.map((b, index) => p1Slots.get(index).data({ id: b.id }).addClass(b.state || ""));
+	p2.map((b, index) => p2Slots.get(index).data({ id: b.id }).addClass(b.state || ""));
 
 	balls.map((ball, index) => {
 		let nBall = gameInfo.ballArray[index];
-		if (pottedBallArray.includes(index)) {
+		if (state.pottedBallArray.includes(index)) {
+			gameInfo.shadowCanvas.add(nBall.shadow);
+			nBall.mc.visible = false;
+			nBall.shadow.visible = false;
 			nBall.active = false;
-			nBall.shadow = null;
+			// nBall.shadow = null;
 		}
 		nBall.targetType = ball.targetType;
 		nBall.position.x = ball.x;
@@ -60,14 +79,23 @@ playState.setState = function(state) {
 	gameInfo.cueCanvas.position.x = cue.x;
 	gameInfo.cueCanvas.position.y = cue.y;
 
-	gameInfo.cueBallInHand = cueBallInHand;
-	gameInfo.pottedBallArray = pottedBallArray;
-	gameInfo.turn = turn;
+	gameInfo.p1TargetType = state.p1TargetType;
+	gameInfo.p2TargetType = state.p2TargetType;
+	gameInfo.ballsPotted = state.pottedBallArray.length > 0;
+	gameInfo.pottedBallArray = state.pottedBallArray;
+	gameInfo.cueBallInHand = state.cueBallInHand;
+	gameInfo.shotNum = state.shotNum;
+	gameInfo.turn = state.turn;
 
+	Project.mode = state.mode;
+
+	gameInfo.gameRunning = true;
+	gameInfo.paused = false;
+	this.game.paused = false;
 	gameInfo.phys.updatePhysics();
 	renderScreen();
 
-	// console.log( gameInfo.gameRunning );
+	console.log( gameInfo );
 }
 
 playState.update = function () {
@@ -1874,17 +1902,8 @@ playState.update = function () {
 
 	function showFoulMessage() {
 		console.log(gameInfo.foulMessage);
-		if (
-			gameInfo.foulMessage != "potted the cue ball" ||
-			gameInfo.scratchFoulShown == false
-		) {
-			gameInfo.gameRunning = false;
-
-			if (gameInfo.foulMessage == "potted the cue ball") {
-				gameInfo.scratchFoulShown = true;
-			}
-
-			gameInfo.foulDisplayComplete = false;
+		if (gameInfo.foulMessage != "potted the cue ball") {
+			// gameInfo.gameRunning = false;
 
 			if (gameInfo.turn == "p2") {
 				//console.log("FOUL: Player 2 " + gameInfo.foulMessage);
@@ -1903,7 +1922,7 @@ playState.update = function () {
 
 			function hideFoulWindow() {
 				if (gameInfo.rerack == false) {
-						gameInfo.gameRunning = true;
+						// gameInfo.gameRunning = true;
 					}
 					applyRulings2();
 			}

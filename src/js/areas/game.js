@@ -28,6 +28,9 @@
 				Project.game.state.start("load");
 				break;
 			case "start-game":
+				Project.game.state.start("stop");
+				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
+
 				Project.levelComplete = false;
 				Project.guideOn = 1;
 				Project.aiRating = 2;
@@ -35,7 +38,7 @@
 				Project.numGames = 0;
 				Project.bestTime = 0;
 				
-				Project.mode = 2;
+				Project.mode = +event.arg || 1;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";
 				Project.tutorial = false;

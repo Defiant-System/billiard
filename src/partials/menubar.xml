@@ -5,7 +5,10 @@
 		<Menu name="Quit Billiard" shell="win -c"/>
 	</Menu>
 	<Menu name="Game" for="game-view">
-		<Menu name="New Game" click="new-game"/>
+		<Menu name="New Game">
+			<Menu name="Player vs AI" click="new-game" arg="1"/>
+			<Menu name="Player vs Player" click="new-game" arg="2"/>
+		</Menu>
 		<Menu type="divider"/>
 		<Menu name="Toggle Sound FX" click="toggle-sound-fx"/>
 		<Menu name="Toggle Music" click="toggle-music"/>
