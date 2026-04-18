@@ -69,59 +69,29 @@ function onContact(data) {
 			}
 			Sound.Play("cushionHit", volume);
 		}
-		
-		
-		
 	}
 	if (collisionData.collisionType == "pocket") {
+		//moved from physics
+		ball.active = false;
+		ball.velocity = new Vector2D(0, 0);
+		//console.log("inactive");
+
+		ball.contactArray.push(collisionObject);
 		
-		//if (ball.propelling == false) {
-
-			//moved from physics
-			ball.active = false;
-			ball.velocity = new Vector2D(0, 0);
-			//console.log("inactive");
-
-			ball.contactArray.push(collisionObject);
-			
-			if (gameInfo.trial == false) {
-				playPocketSound(collisionData);
-				playPocketAnimation(collisionData);
-				
-				
-				//if (gameInfo.turn == "player") {
-				if (!Project.tutorial) {
-					awardBonuses(collisionData);
-				
-				}
-				//}
-			}
-			
-			
-			
-			
-			if (ball.id == 0) {
-				
-				gameInfo.scratched = true;
-			}else {
-				gameInfo.ballsRemaining --;
-			}
-			
-			
-		//}
+		if (gameInfo.trial == false) {
+			playPocketSound(collisionData);
+			playPocketAnimation(collisionData);
+		}
+		
+		if (ball.id == 0) {
+			gameInfo.scratched = true;
+		} else {
+			gameInfo.ballsRemaining --;
+		}
 	}
-	
-	
-	
-	
-
 }
 
-
-
-
 function playPocketSound(collisionData) {
-	
 	var closingSpeed = collisionData.speed;
 	var volume = closingSpeed / 5000;
 	if (volume > 1.5) {
@@ -131,11 +101,9 @@ function playPocketSound(collisionData) {
 		volume = 0.3;
 	}
 	Sound.Play("pocketHit", volume);
-
 }
 
 function awardBonuses(collisionData) {
-	
 	var gameInfo = playState.gameInfo;
 	/*
 	var delay = 0;
@@ -150,12 +118,8 @@ function awardBonuses(collisionData) {
 	effect.Start();
 	*/
 
-
-
 	if (collisionData.ball.id != 0) {
-
 		var pocket = collisionData.target;
-
 
 		gameInfo.numBalls --;
 		gameInfo.pottedBallArray.push(collisionData.ball.id);
@@ -167,13 +131,9 @@ function awardBonuses(collisionData) {
 			// createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
 			// Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
 		}
-        
-       
 
         function updateScoreAndMultiplier() {
-	        
 	        //also update score and best score at the same time
-
 	        Project.score += gameInfo.multiplier * 10;
 	        if (Project.score > gameInfo.bestScore) {
 				gameInfo.bestScore = Project.score;
@@ -262,7 +222,7 @@ function awardBonuses(collisionData) {
 
 
 
-	}else{
+	} else{
 		//cue ball potted
 		gameInfo.fouled = true;
 	}
@@ -312,7 +272,7 @@ function playPocketAnimation(collisionData) {
 		//if (1==0) {
 			ball.shadow.parent.removeChild(ball.shadow); //null object error thrown here
 			ball.shadow = null;
-		}else {
+		} else {
 			ball.shadow.visible = false;
 		}
 		
@@ -353,7 +313,7 @@ function playPocketAnimation(collisionData) {
 		//if (1==0) {
 			pocketTween2.onComplete.add(function() {removeMC(ball)}, this);
 		
-		}else{
+		} else{
 			pocketTween2.onComplete.add(function() {returnCueBall()}, this);
 		}
 
@@ -442,7 +402,7 @@ function playPocketAnimation(collisionData) {
 			if (ball.id != 0) {
 				gameInfo.tunnelCanvas.removeChild(ball.mc);
 				ball.pocketTweenComplete = true;
-			}else {
+			} else {
 				/*
 				ball.mc.visible = false;
 				setTimeout(showCueBall, 1000);

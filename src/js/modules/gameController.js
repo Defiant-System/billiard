@@ -53,10 +53,6 @@ playState.setState = function(state) {
 		p1Slots = Project.APP.game.els.hud.find(`.player.left .ball-slots li`),
 		p2Slots = Project.APP.game.els.hud.find(`.player.right .ball-slots li`);
 
-	gameInfo.gameRunning = false;
-	gameInfo.paused = true;
-	this.game.paused = true;
-
 	// reset hud ball slots
 	Project.APP.game.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
 	p1.map((b, index) => p1Slots.get(index).data({ id: b.id }).addClass(b.state || ""));
@@ -89,9 +85,6 @@ playState.setState = function(state) {
 
 	Project.mode = state.mode;
 
-	gameInfo.gameRunning = true;
-	gameInfo.paused = false;
-	this.game.paused = false;
 	gameInfo.phys.updatePhysics();
 	renderScreen();
 
@@ -118,13 +111,11 @@ playState.update = function () {
 			if (gameInfo.turn == "p1" || Project.mode == 2) {
 				// real players only
 				updateCursor();
-				if (Project.tutorial == false) {
-					placeCueBall();
-					// setSpin();
-					aim();
-					setPower();
-					beginStrike();
-				}
+				placeCueBall();
+				// setSpin();
+				aim();
+				setPower();
+				beginStrike();
 			}
 
 			if (gameInfo.turn == "p2" && Project.mode == 1) {
@@ -141,10 +132,7 @@ playState.update = function () {
 
 		if (gameInfo.shotRunning == true) {
 			checkShotOver();
-
-			if (Project.tutorial == false) {
-				applyRulings(); // leads onto setNextTargetType, checkWhosTurn and resetVars
-			}
+			applyRulings(); // leads onto setNextTargetType, checkWhosTurn and resetVars
 
 			gameInfo.phys.updatePhysics();
 			renderScreen();
@@ -214,13 +202,13 @@ playState.update = function () {
 	// }
 
 	/*
-	function updateBonusDisc(){
+	function updateBonusDisc() {
 
-		//if(gameInfo.ballArray[8].active == true){
+		//if (gameInfo.ballArray[8].active == true) {
 			//gameInfo.ballArray[8].mc.angle += 1;
 		//}
 
-		for(var n = 0; n < 6; n ++){
+		for(var n = 0; n < 6; n ++) {
 			gameInfo.bonusStars[n].angle += 1;
 		}
 
@@ -487,12 +475,12 @@ playState.update = function () {
 
 			//if more than one ball intersects, find furthest from cueball
 			var furthestDist = 0;
-			for(var k = 0; k < collision.length; k ++){
+			for(var k = 0; k < collision.length; k ++) {
 
 				var distSq = (collision[k].position.x - cueBall.position.x) * (collision[k].position.x - cueBall.position.x) + (collision[k].position.y - cueBall.position.y) * (collision[k].position.y - cueBall.position.y);
 
 				//console.log("intersect dist: " + distSq);
-				if(distSq > furthestDist){
+				if (distSq > furthestDist) {
 					furthestDist = distSq;
 					ball = collision[k];
 					//console.log("ball: " + ball);
@@ -512,7 +500,7 @@ playState.update = function () {
 			var unitVec = targetVec.minus(intersectVec).normalize();
 
 			var newPos = intersectVec.minus(unitVec.times(200));
-			//if(checkOnTable(newPos) == true){
+			//if (checkOnTable(newPos) == true) {
 			cueBall.position = newPos;
 			//}
 
@@ -597,7 +585,7 @@ playState.update = function () {
 				var intersectVec = new Vector2D(intPoint.x, intPoint.y);
 				var unitVec = cursor.minus(intersectVec).normalize();
 				var newPos = intersectVec.minus(unitVec.times(100));
-				//if(checkOnTable(newPos) == true){
+				//if (checkOnTable(newPos) == true) {
 				cueBall.position = newPos;
 				//}
 				//cueBall.position = intersectVec;
@@ -836,7 +824,7 @@ playState.update = function () {
 		/*
 		if (gameInfo.settingPower == false && gameInfo.shotRunning == false) {
 
-			if(gameInfo.spinSetter.input.checkPointerDown(Project.game.input.activePointer)){
+			if (gameInfo.spinSetter.input.checkPointerDown(Project.game.input.activePointer)) {
 
 				gameInfo.preventAim = true;
 
@@ -844,7 +832,7 @@ playState.update = function () {
 				gameInfo.cueBallSpot.y = Project.game.input.y - gameInfo.spinSetter.y;
 
 				var distSq = gameInfo.cueBallSpot.x * gameInfo.cueBallSpot.x + gameInfo.cueBallSpot.y * gameInfo.cueBallSpot.y;
-				if (distSq > 50 * 50){
+				if (distSq > 50 * 50) {
 					var ang = Math.atan2(gameInfo.cueBallSpot.y, gameInfo.cueBallSpot.x);
 					gameInfo.cueBallSpot.x = 50 * Math.cos(ang);
 					gameInfo.cueBallSpot.y = 50 * Math.sin(ang);
@@ -947,7 +935,7 @@ playState.update = function () {
 	}
 
 	function aim() {
-		if (Project.tutorial == false && gameInfo.preventAim == false) {
+		if (gameInfo.preventAim == false) {
 			//console.log("aiming. cue visible: " + gameInfo.cueCanvas.visible);
 
 			if (gameInfo.settingPower == false) {
@@ -1306,7 +1294,7 @@ playState.update = function () {
 	}
 
 	function setPower() {
-		if (Project.tutorial == false && gameInfo.preventSetPower == false) {
+		if (gameInfo.preventSetPower == false) {
 			//mouse
 			if (!Project.game.device.touch) {
 				//start drag
@@ -1383,7 +1371,7 @@ playState.update = function () {
 
 					//check if finger is over powerbar area
 
-					//if(gameInfo.landscape && Project.game.input.y > Project.game.height - 120 || !gameInfo.landscape && Project.game.input.x < 120){
+					//if (gameInfo.landscape && Project.game.input.y > Project.game.height - 120 || !gameInfo.landscape && Project.game.input.x < 120) {
 					if (
 						(gameInfo.landscape && Project.game.input.x < 140) ||
 						(!gameInfo.landscape && Project.game.input.x < 120)
@@ -1553,7 +1541,7 @@ playState.update = function () {
 			// Start the time
 
 			gameInfo.timerStarted = true;
-			startTimer();
+			// startTimer();
 
 			// var tween = Project.game.add.tween(gameInfo.levelText);
 			// tween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 2000);
@@ -2516,16 +2504,16 @@ playState.update = function () {
 			gameInfo.rackStripes.tint = 1;
 			gameInfo.rackSolids.tint = 1;
 
-			if(gameInfo.p1Rack == "solids" && gameInfo.turn == "p1"){
+			if (gameInfo.p1Rack == "solids" && gameInfo.turn == "p1") {
 				gameInfo.rackStripes.tint = 0;
 			}
-			if(gameInfo.p1Rack == "stripes" && gameInfo.turn == "p1"){
+			if (gameInfo.p1Rack == "stripes" && gameInfo.turn == "p1") {
 				gameInfo.rackSolids.tint = 0;
 			}
-			if(gameInfo.p2Rack == "solids" && gameInfo.turn == "p2"){
+			if (gameInfo.p2Rack == "solids" && gameInfo.turn == "p2") {
 				gameInfo.rackStripes.tint = 0;
 			}
-			if(gameInfo.p2Rack == "stripes" && gameInfo.turn == "p2"){
+			if (gameInfo.p2Rack == "stripes" && gameInfo.turn == "p2") {
 				gameInfo.rackSolids.tint = 0;
 			}
 			*/
@@ -3054,7 +3042,7 @@ playState.update = function () {
 						//var bearingGhostToTargetBall = Maths.findBearing(ghost.ball.position.x - ghost.position.x, ghost.ball.position.y - ghost.position.y);
 						//var diff = Maths.angleDiff(bearingGhostToCueBall, bearingGhostToTargetBall);
 						//trace("found shot with angle = " + diff);
-						//if(diff > 105 || diff < -105){
+						//if (diff > 105 || diff < -105) {
 						//ghost.shotAngle = diff;
 						//}
 

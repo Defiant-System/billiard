@@ -41,8 +41,6 @@
 				Project.mode = +event.arg || 1;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";
-				Project.tutorial = false;
-				Project.clickedHelpButton = false;
 				Project.game.state.start("play");
 				break;
 			case "game-stop":

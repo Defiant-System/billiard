@@ -31,40 +31,6 @@ playState.create = function () {
 		gameInfo.gameCanvas.x = Project.game.width / 2;
 		gameInfo.gameCanvas.y = Project.game.height / 2 - 75;
 
-		//tutorial
-		if (Project.tutorial) {
-			gameInfo.skipText.x = Project.game.world.centerX;
-			gameInfo.skipText.y = Project.game.world.centerY + 230;
-
-			gameInfo.tutorialText.x = Project.game.world.centerX;
-			gameInfo.tutorialText.y = Project.game.world.centerY - 320;
-			if (Project.game.device.touch) {
-				gameInfo.hand.scale.x = 1;
-				gameInfo.hand.scale.y = 1;
-
-				if (gameInfo.tutStage >= 6) {
-					gameInfo.hand.angle = 180;
-
-					gameInfo.pointerStart = gameInfo.pointerStartL;
-					gameInfo.pointerEnd = gameInfo.pointerEndL;
-				}
-
-				if (gameInfo.tutStage == 6 || gameInfo.tutStage == 7) {
-					gameInfo.hand.x = gameInfo.pointerStart.x;
-					gameInfo.hand.y = gameInfo.pointerStart.y;
-				}
-
-				if (gameInfo.tutStage >= 8) {
-					gameInfo.hand.x =
-						gameInfo.pointerStart.x - gameInfo.pointerProgress;
-					gameInfo.hand.y = gameInfo.pointerStart.y;
-
-					gameInfo.powerBarMask.y = 0;
-					gameInfo.powerBarMask.x = -gameInfo.pointerProgress;
-				}
-			}
-		}
-
 		/*
 		//racks
 		gameInfo.rackSolids.x = Project.game.width / 4;
@@ -156,13 +122,9 @@ playState.create = function () {
 		if (Project.levelComplete == false) {
 			Project.level = 1;
 		} else {
-			//if(Project.level < gameInfo.numLevels){
+			//if (Project.level < gameInfo.numLevels) {
 			Project.level++;
 			//}
-		}
-
-		if (Project.tutorial == false) {
-			// window.famobi_analytics.trackScreen("SCREEN_LEVEL");
 		}
 	}
 
@@ -295,9 +257,6 @@ playState.create = function () {
 		// // gameInfo.successIcon.anchor = new Point(0.5, 0.5);
 		// // gameInfo.successIcon.alpha = 0.25;
 
-		// if (Project.tutorial == true) {
-		// 	gameInfo.levelText.visible = false;
-		// }
 		// gameInfo.levelText.visible = false;
 	}
 
@@ -314,9 +273,6 @@ playState.create = function () {
 	// 	gameInfo.skipText.anchor.x = 0.5;
 	// 	gameInfo.skipText.anchor.y = 0.5;
 	// 	gameInfo.skipText.alpha = 0.8;
-	// 	if (Project.tutorial) {
-	// 		gameInfo.skipText.visible = true;
-	// 	}
 	// 	gameInfo.skipText.visible = false;
 	// }
 
@@ -1017,20 +973,6 @@ playState.create = function () {
 
 		//============================================================================
 
-		if (Project.tutorial == true) {
-			if (!Project.game.device.touch) {
-				//gameInfo.guiPanel1.visible = false;
-			}
-
-			// gameInfo.menuButton.visible = false;
-			// gameInfo.turnArrow1.visible = false;
-			// gameInfo.turnArrow2.visible = false;
-			// gameInfo.humanIcon.visible = false;
-			// gameInfo.aiIcon.visible = false;
-			// gameInfo.rackSolids.visible = false;
-			// gameInfo.rackStripes.visible = false;
-			// gameInfo.spinSetter.visible = false;
-		}
 	}
 
 	function resume() {
@@ -1205,7 +1147,7 @@ playState.create = function () {
 
 		// set a fill and line style
 		graphics.beginFill(0xFFFFFF, .5);
-		for(var n = 0; n < gameInfo.vertexArray.length; n ++){
+		for(var n = 0; n < gameInfo.vertexArray.length; n ++) {
 			var vertex = gameInfo.vertexArray[n];
 			// graphics.drawCircle(vertex.position.x * gameInfo.physScale, vertex.position.y * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
 		}
@@ -1612,7 +1554,7 @@ playState.create = function () {
 		}
 
 		/*
-		for(var n = 0; n < gameInfo.vertexArray.length; n ++){
+		for(var n = 0; n < gameInfo.vertexArray.length; n ++) {
 			var vertex = gameInfo.vertexArray[n];
 			graphics.drawCircle(vertex.position.x * gameInfo.physScale, (vertex.position.y-dY) * gameInfo.physScale, gameInfo.ballRadius * 2 * gameInfo.physScale);
 		}

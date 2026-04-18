@@ -13,12 +13,8 @@ var setBallPositions = function(gameInfo) {
 	var k = 1.732 + spacingX; //1.732 spacing
 	var level = Project.level;
 	
-	if(level > gameInfo.numLevels) {
+	if (level > gameInfo.numLevels) {
 		level = gameInfo.numLevels;
-	}
-
-	if(Project.tutorial == true) {
-		level = 100;
 	}
 
 	level = 15;

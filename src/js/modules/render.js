@@ -34,7 +34,7 @@ function renderScreen() {
 				ball.mover.y = ball.mc.y;
 			}
 
-			//if(n != 8){
+			//if (n != 8) {
 			ball.mc.updateRotation(
 				ball.velocity.x * gameInfo.physScale * ball.grip,
 				ball.velocity.y * gameInfo.physScale * ball.grip,

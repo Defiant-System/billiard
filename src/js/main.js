@@ -10,7 +10,6 @@ const { Phaser, PIXI } = await window.fetch("~/js/bundle.js");
 @import "./modules/render.js"
 @import "./modules/sound.js"
 @import "./modules/effects.js"
-@import "./modules/timer.js"
 @import "./modules/load.js"
 @import "./modules/setup.js"
 @import "./modules/gameController.js"
@@ -23,7 +22,6 @@ const Project = {
 	width: 1920,
 	height: 1200,
 	alertSent: false,
-	tutorialPlayed: false,
 };
 
 const billiard = {
@@ -65,6 +63,7 @@ const billiard = {
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
 				break;
 			case "toggle-sound-fx":
+				console.log( Project );
 				break;
 			case "toggle-music":
 				break;

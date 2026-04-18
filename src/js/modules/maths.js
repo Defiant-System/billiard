@@ -3,12 +3,12 @@ var Maths = function() {
 
 }
 
-var Point = function(x, y){
+var Point = function(x, y) {
 	this.x = x;
 	this.y = y;
 }
 
-Point.interpolate = function(p1, p2, f){
+Point.interpolate = function(p1, p2, f) {
 
 	//precise method
 	var x = Maths.fixNumber((1-f)*p1.x + f*p2.x);
@@ -21,15 +21,12 @@ Point.interpolate = function(p1, p2, f){
 	return new Point(x, y);
 }
 
-Point.prototype.equals = function(toCompare){
-
-	if(this.x == toCompare.x && this.y == toCompare.y){
+Point.prototype.equals = function(toCompare) {
+	if (this.x == toCompare.x && this.y == toCompare.y) {
 		return true;
 	}
 	return false;
 }
-
-	
 
 
 //---------------------------------------------------------------
@@ -39,8 +36,7 @@ Point.prototype.equals = function(toCompare){
 //Return null if there is no intersection
 //---------------------------------------------------------------
 
-Maths.lineIntersectLine2 = function(a, b, c, d){
-
+Maths.lineIntersectLine2 = function(a, b, c, d) {
 	var distAB, cos, sin, newX, ABpos;
 	if ((a.x == b.x && a.y == b.y) || (c.x == d.x && c.y == d.y)) return null;
 
@@ -70,17 +66,8 @@ Maths.lineIntersectLine2 = function(a, b, c, d){
 	return new Point(a.x + ABpos * cos, a.y + ABpos * sin);			
 }
 
-
-
-
-
-
-
-
 Maths.lineIntersectLine = function(/*Point*/A, B, E, F, as_seg) {
-
 	as_seg = true;
-
 	var ip; //point
 	var a1; //numbers
 	var a2;
@@ -116,7 +103,7 @@ Maths.lineIntersectLine = function(/*Point*/A, B, E, F, as_seg) {
 	if ( as_seg ) {
 
 		var e = 0;
-		if (  ( ip.x - A.x ) * ( ip.x - B.x ) > e  ||  ( ip.y - A.y ) * ( ip.y - B.y ) > e  ||  ( ip.x - E.x ) * ( ip.x - F.x ) > e  ||  ( ip.y - E.y ) * ( ip.y - F.y ) > e){
+		if (  ( ip.x - A.x ) * ( ip.x - B.x ) > e  ||  ( ip.y - A.y ) * ( ip.y - B.y ) > e  ||  ( ip.x - E.x ) * ( ip.x - F.x ) > e  ||  ( ip.y - E.y ) * ( ip.y - F.y ) > e) {
 			return null ;
 		}
 	}
@@ -124,7 +111,7 @@ Maths.lineIntersectLine = function(/*Point*/A, B, E, F, as_seg) {
 }
 
 		
-Maths.lineIntersectCircle2 = function(A, B, C, r){
+Maths.lineIntersectCircle2 = function(A, B, C, r) {
 
 	var result = new Object ();
 	result.inside = false;
@@ -145,7 +132,7 @@ Maths.lineIntersectCircle2 = function(A, B, C, r){
 	var c = f.dot( f ) - r*r ;
 
 	var discriminant = b*b-4*a*c;
-	if( discriminant < 0 )
+	if ( discriminant < 0 )
 	{
 	  return result; // no intersection
 	}
@@ -157,7 +144,7 @@ Maths.lineIntersectCircle2 = function(A, B, C, r){
 
 	  discriminant = Maths.fixNumber(Math.sqrt(discriminant));
 
-	  if(discriminant == 0){
+	  if (discriminant == 0) {
 	  		//t1 will equal t2, so it's a tangent and we can ignore the contact
 	  		result.tangent = true;
 	  		console.log("! TANGENT !");
@@ -178,20 +165,20 @@ Maths.lineIntersectCircle2 = function(A, B, C, r){
 	  //       ->  o                     o ->              | -> |
 	  // FallShort (t1>1,t2>1), Past (t1<0,t2<0), CompletelyInside(t1<0, t2>1)
 
-	  if(t1 > 1 && t2 > 1){
+	  if (t1 > 1 && t2 > 1) {
 	  	return result;
 	  }
-	  if(t1 < 0 && t2 < 0){
+	  if (t1 < 0 && t2 < 0) {
 	  	return result;
 	  }
 
-	  if(t1<0 && t2>1){
+	  if (t1<0 && t2>1) {
 	  	result.inside = true;
 	  	return result;
 	  }
 
 
-	  if( t1 >= 0 && t1 <= 1 )
+	  if ( t1 >= 0 && t1 <= 1 )
 	  {
 	    // t1 is the intersection, and it's closer than t2
 	    // (since t1 uses -b - discriminant)
@@ -204,7 +191,7 @@ Maths.lineIntersectCircle2 = function(A, B, C, r){
 
 	  // here t1 didn't intersect so we are either started
 	  // inside the sphere or completely past it
-	  if( t2 >= 0 && t2 <= 1 )
+	  if ( t2 >= 0 && t2 <= 1 )
 	  {
 	    // ExitWound
 	    result.exit = Point.interpolate (A, B, t1);
@@ -218,11 +205,11 @@ Maths.lineIntersectCircle2 = function(A, B, C, r){
 	}
 }
 
-Maths.circleIntersectCircle = function(x1, y1, r1, x2, y2, r2){
+Maths.circleIntersectCircle = function(x1, y1, r1, x2, y2, r2) {
 
 	var result = new Object();
 
-	if(r1 < 0 || r2 < 0){
+	if (r1 < 0 || r2 < 0) {
 		result = null;
 		return result;
 	} 
@@ -231,7 +218,7 @@ Maths.circleIntersectCircle = function(x1, y1, r1, x2, y2, r2){
     var b = r1;
     var c = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 
-    if(c > r1 + r2){
+    if (c > r1 + r2) {
     	result = null;
 		return result;
     }
@@ -298,14 +285,14 @@ Maths.lineIntersectCircle = function(A, B, C, r) {
 }
 
 
-Maths.findBearing = function(x, y){
+Maths.findBearing = function(x, y) {
 	
 	var bearing = (180 / Math.PI) * Math.atan2(y,x);
 	return Maths.fixNumber(bearing);
 }
 
 
-Maths.angleDiff = function(bearing1, bearing2){
+Maths.angleDiff = function(bearing1, bearing2) {
 	
 	var diff = Maths.wrapValue(bearing1 + 180 - bearing2) - 180;
 	return Maths.fixNumber(diff);
@@ -316,19 +303,19 @@ Maths.angleDiff = function(bearing1, bearing2){
 
 
 
-Maths.wrapValue = function (input){
+Maths.wrapValue = function (input) {
 	
 	
-	if(input > 360){
+	if (input > 360) {
 		input -= 360;
 	}
-	if(input < 0){
+	if (input < 0) {
 		input += 360;
 	}
 	return input;
 }
 
-Maths.wrapInfinite = function (input){
+Maths.wrapInfinite = function (input) {
 
 
 }
@@ -349,7 +336,7 @@ Maths.createVectorFrom2Points = function(point1, point2) {
 	return vector;
 }
 
-Maths.checkObjectsConverging = function(p1, p2, v1, v2){
+Maths.checkObjectsConverging = function(p1, p2, v1, v2) {
 
 	//takes the position and velocity vectors of two objects and determines whether they are converging
 	
@@ -363,7 +350,7 @@ Maths.checkObjectsConverging = function(p1, p2, v1, v2){
 	//check the angle between the two vectors
 	var ang = v2Rel.angleBetween(normal);
 
-	if(ang > 90 ){
+	if (ang > 90 ) {
 		return true;
 	}
 	return false;
