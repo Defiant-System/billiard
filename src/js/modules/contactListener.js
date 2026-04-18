@@ -81,6 +81,7 @@ function onContact(data) {
 		if (gameInfo.trial == false) {
 			playPocketSound(collisionData);
 			playPocketAnimation(collisionData);
+			awardBonuses(collisionData);
 		}
 		
 		if (ball.id == 0) {
@@ -117,7 +118,6 @@ function awardBonuses(collisionData) {
 	effect.y = pocket.position.y * physScale;#
 	effect.Start();
 	*/
-
 	if (collisionData.ball.id != 0) {
 		var pocket = collisionData.target;
 
@@ -125,7 +125,7 @@ function awardBonuses(collisionData) {
 		gameInfo.pottedBallArray.push(collisionData.ball.id);
         checkLevelComplete();
         gameInfo.ballPotted = true;
-
+        
 		if (Project.mode == 1 && gameInfo.turn == "p1") {
 			console.log( "Bonus", gameInfo.multiplier * 10 );
 			// createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);

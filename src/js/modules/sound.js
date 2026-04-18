@@ -1,5 +1,5 @@
 
-var Sound = new function(){
+var Sound = new function() {
 	this.on = true;
 	this.master = this.on;
 	this.slave = this.on;
@@ -20,7 +20,7 @@ var Sound = new function(){
 }
 
 
-Sound.Play = function(type, volume){
+Sound.Play = function(type, volume) {
 	if (typeof(volume)==='undefined') {
 		volume = 1;
 	}

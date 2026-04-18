@@ -4,7 +4,7 @@ let TestState = {
     shotNum: 2,
     pottedBallArray: [6, 12, 15, 13],
     cueBallInHand: false,
-    turn: "p2",
+    turn: "p1",
     p1TargetType: "SOLIDS",
     p2TargetType: "STRIPES",
     p1: [
