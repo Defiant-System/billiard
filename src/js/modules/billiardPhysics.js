@@ -130,13 +130,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 							*/
 
 							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 							//                            NEW! CHECK intersection.inside TOO!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 							//after resolving a contact, the balls are placed at the intersection point.  Due to rounding errors, it's possible that this may cause balls which are very tightly packed to overlap very slightly, and this was causing the line-circle intersection detection to not detect collisions.  In these cases, the projected line was totally inside the circle.  Now we deal with those as collisions too, preventing the ball on ball tunnelling.
@@ -555,30 +549,6 @@ billiardPhysics.prototype.predictCollisions = function() {
 		}
 
 	} while (collisionArray.length > 0 && sanityCheck < 20);
-
-	//if (stop == false) {
-		//check overlaps
-		/*
-		for (var ba = 0; ba < this.ballArray.length; ba ++) {
-			var ballTest = this.ballArray[ba];
-			for (var ta = 0; ta < this.ballArray.length; ta ++) {
-				var targetTest = this.ballArray[ta];
-				if (ballTest != targetTest) {
-					var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
-					if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
-						//trace("overlap");
-						//trace("frame: " + frameCounter);
-						//ballTest.mc.alpha = 0.5;
-						//targetTest.mc.alpha = 0.5;
-						//////console.log("OVERLAP!");
-						break;
-
-					}
-				}
-			}
-		}
-		*/
-	//}
 }
 
 billiardPhysics.prototype.resolveCollision = function(collisionArray) {
@@ -604,28 +574,6 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			ctb = collision.time;
 			var overlap = false;
 
-			/*
-			//////console.log("=========================");
-			for (var ba = 0; ba < this.ballArray.length; ba ++) {
-				var ballTest = this.ballArray[ba];
-				for (var ta = 0; ta < this.ballArray.length; ta ++) {
-					var targetTest = this.ballArray[ta];
-					if (ballTest != targetTest) {
-						var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
-						if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
-							//trace("overlap");
-							//trace("frame: " + frameCounter);
-							//ballTest.mc.alpha = 0.5;
-							//targetTest.mc.alpha = 0.5;
-							//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
-
-
-						}
-					}
-				}
-			}
-			*/
-
 			var ball = collision.object;
 			ball.position = collision.objectIntersectPoint;
 			var target = collision.target;
@@ -635,31 +583,6 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			////////console.log(ball.id + " and " + target.id + " resolving");
 			target.position = collision.targetIntersectPoint;
 			//check overlaps
-			/*
-			for (var ba = 0; ba < this.ballArray.length; ba ++) {
-				var ballTest = this.ballArray[ba];
-				for (var ta = 0; ta < this.ballArray.length; ta ++) {
-					var targetTest = this.ballArray[ta];
-					if (ballTest != targetTest) {
-						var distSq = (targetTest.position.x - ballTest.position.x) * (targetTest.position.x - ballTest.position.x) + (targetTest.position.y - ballTest.position.y) * (targetTest.position.y - ballTest.position.y);
-						if (distSq < (this.ballRadius * 2) * (this.ballRadius * 2) - 1000) {
-							//trace("overlap");
-							//trace("frame: " + frameCounter);
-							//ballTest.mc.alpha = 0.5;
-							//targetTest.mc.alpha = 0.5;
-							//////console.log("OVERLAP: " + ballTest.id + " and " + targetTest.id);
-							overlap = true;
-
-
-						}
-					}
-				}
-			}
-			//////console.log("=========================");
-			if (overlap == true) {
-				gameInfo.overlap = true;
-			}
-			*/
 
 			this.omissionArray.push(ball);
 			this.omissionArray.push(target);
@@ -680,18 +603,6 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			//ball.velocity = ballVelocityTangent.plus(targetVelocityNormal.times(this.ballRestitution));
 			//target.velocity = targetVelocityTangent.plus(ballVelocityNormal.times(this.ballRestitution));
 
-
-			//instantaneous screw
-			/*
-			var newNormalVelocityBall:Vector2D;
-			if (ball.id == 0 && ball.firstContact == false) {
-				//if cueball on first contact, add screw
-				newNormalVelocityBall = (targetVelocityNormal.times(this.ballRestitution)).plus(ballVelocityNormal.times(1 - this.ballRestitution)).plus(ballVelocityNormal.times(-ball.screw));
-			} else{
-				newNormalVelocityBall = (targetVelocityNormal.times(this.ballRestitution)).plus(ballVelocityNormal.times(1 - this.ballRestitution));
-			}
-			*/
-
 			//ySpin (visual effect only - has no effect on physics)
 			//if (this.simType == 0) {
 				if (Math.abs(target.ySpin) < Math.abs(ball.ySpin)) {
@@ -701,64 +612,31 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 			//======================================
 			//graduated screw
-
 			if (ball.id == 0 && ball.firstContact == false) {
 				//if cueball on first contact, set initial screw vector
 				ball.deltaScrew = ballVelocityNormal.times( -ball.screw * 0.17); //0.17
-				if (ball.type == "real") {
-					//trace("spin applied");
-				}
 			}
 
 			var newNormalVelocityBall = (targetVelocityNormal.times(this.ballRestitution)).plus(ballVelocityNormal.times(1 - this.ballRestitution));
-
-
 			//=======================================
-
-
-
 			var newNormalVelocityTarget = (ballVelocityNormal.times(this.ballRestitution)).plus(targetVelocityNormal.times(1 - this.ballRestitution));
-
-
-
 
 			ball.velocity = ballVelocityTangent.plus(newNormalVelocityBall);
 			target.velocity = targetVelocityTangent.plus(newNormalVelocityTarget);
-
 			if (this.simType == 0) {
 				if (newNormalVelocityTarget.magnitude > 450) {
 					target.grip = 0;
 				}
 			}
 
-
 			ball.lastCollisionObject = target; // used
 			target.lastCollisionObject = ball; // used
-
-
-			//move balls away from contact - doesn't seem necessary - in fact, could force overlaps
-			//ball.position = ball.position.plus(ball.velocity.normalize());
-			//target.position = target.position.plus(target.velocity.normalize());
-
-
-
-
-
 		}
 
 		//ball on line
 		if (collision.type == "line") {
-
-
-			//if (collision.time == ctl) {
-				//console.log("double line: frame " + this.frame);
-			//}
 			ctl = collision.time;
-
-
-
 			//trace("line");
-
 			gameInfo.collisions ++;
 
 			var ball = collision.object;
@@ -766,27 +644,18 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			var line = collision.target;
 
 			//console.log("ball " + ball.id + " on line: " + line.name + ", frame: " + this.frame);
-
 			this.omissionArray.push(ball);
 
+			ball.ySpin += -ball.velocity.dot(line.direction) / 100; //300
+			//trace(ball.ySpin);
 
-			//////console.log("line: " + line);
-
-			//if (this.simType == 0) {
-				ball.ySpin += -ball.velocity.dot(line.direction) / 100; //300
-				//trace(ball.ySpin);
-
-				var spinMax = 50; //20
-				if (ball.ySpin > spinMax) {
-					ball.ySpin = spinMax;
-				}
-				if (ball.ySpin < -spinMax) {
-					ball.ySpin = -spinMax;
-				}
-			//}
-
-
-
+			var spinMax = 50; //20
+			if (ball.ySpin > spinMax) {
+				ball.ySpin = spinMax;
+			}
+			if (ball.ySpin < -spinMax) {
+				ball.ySpin = -spinMax;
+			}
 
 			//resolve ball velocity into components normal and tangential to the line
 			var ballVelocityNormal = line.normal.times(ball.velocity.dot(line.normal));
@@ -802,8 +671,6 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 				}
 			}
 
-
-
 			//reverse normal component
 			ball.velocity = (ballVelocityNormal.times( -this.cushionRestitution)).plus(ballVelocityTangent);
 
@@ -813,13 +680,8 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 				}
 			}
 
-
-
-
 			ball.lastCollisionObject = line; //now used
-
 			//move ball away from line by the smallest amount to prevent line intersection being detected on next iteration
-
 			//ball.position = ball.position.plus(ball.velocity.normalize());
 			ball.position = ball.position.plus(line.normal.times(200));
 
@@ -828,15 +690,8 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			}
 		}
 
-
 		//ball on corner
 		if (collision.type == "vertex") {
-
-			//if (collision.time == ctv) {
-				//console.log("double line: frame " + this.frame);
-			//}
-			//ctv = collision.time;
-
 			gameInfo.collisions ++;
 			//trace("vertex");
 			var ball = collision.object;
@@ -856,39 +711,14 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			var ballVelocityNormal = contactNormal.times(ball.velocity.dot(contactNormal));
 			var ballVelocityTangent = contactTangent.times(ball.velocity.dot(contactTangent));
 
-			//reverse normal component
-			//if (ball.lastCollisionObject != vertex) {
-			//if (ball.lastVertex != vertex.name) {
-
-				//if (ball.id == 8) {
-					//////console.log("ball " + ball.id + " bouncing off vertex " + vertex.name);
-					//console.log("vector before collision: " + ball.velocity.x + ", " + ball.velocity.y);
-					//console.log("normal: " + contactNormal.x + ", " + contactNormal.y);
-					//console.log("ball position: " + ball.position.x + ", " + ball.position.y);
-					//console.log("vertex position: " + vertex.position.x + ", " + vertex.position.y);
-					//var dist = Math.sqrt(((vertex.position.x - ball.position.x) * (vertex.position.x - ball.position.x)) + ((vertex.position.y - ball.position.y) * (vertex.position.y - ball.position.y)));
-					//console.log("dist ball to vertex: " + dist);
-					//console.log("ball radius: " + gameInfo.ballRadius);
-				//}
-
-				//console.log("ball " + ball.id + " changing direction");
-				ball.velocity = (ballVelocityNormal.times( -this.cushionRestitution)).plus(ballVelocityTangent);
-				//move ball away from vertex by the smallest amount to prevent intersection being detected on next iteration
-				//ball.position = ball.position.plus(ball.velocity.normalize());
-				ball.position = ball.position.minus(contactNormal.times(200));
-
-				//balls seem to be colliding twice with each vertex regardless of this line - which is odd because it should be changing the balls velocity twice and sending it the wrong way every time.  -- actually, it is - this is how the ball is penetrating the cushion.  Double contact causing double direction change.  Why is there a double contact?  -- Double contact occuring when ball hits vertex tangentially to the ball - ie the edge of the ball skims past the vertex. In this case the normal velocity is zero, and this line of code is having no effect. Solution? Perhaps don't allow tangential contacts? Tried, doesn't work.  Probably still getting zero normal velocity when very close to tangential.  Perhaps try moving ball back to previous frame. Tried, works - doesn't penetrate now, but doesn't contact cushion so is too extreme.  Found solution - using the lastCollisionObject above to prevent two subsequent collision responses with the same vertex.
-
-				if (ball.id == 8) {
-
-					//console.log("vector after collision: " + ball.velocity.x + ", " + ball.velocity.y);
-				}
-			//}
+			//console.log("ball " + ball.id + " changing direction");
+			ball.velocity = (ballVelocityNormal.times( -this.cushionRestitution)).plus(ballVelocityTangent);
+			//move ball away from vertex by the smallest amount to prevent intersection being detected on next iteration
+			//ball.position = ball.position.plus(ball.velocity.normalize());
+			ball.position = ball.position.minus(contactNormal.times(200));
 
 			ball.lastCollisionObject = vertex;
 			ball.lastVertex = vertex.name;
-
-
 
 			if (ball.id == 0) {
 				ball.deltaScrew = new Vector2D(0, 0); //clear screw after cushion contact
@@ -897,7 +727,6 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 
 		//ball in pocket
 		if (collision.type == "pocket") {
-
 			ctp = collision.time;
 			//trace("pocket");
 			if (collisionArray.length > 1) {
@@ -906,59 +735,13 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			var ball = collision.object;
 			ball.position = collision.objectIntersectPoint;
 			var pocket = collision.target;
-
-			//var vec = (pocket.position.minus(ball.position)).normalize()
-			//var contactNormal = new Vector2D(vec.x, vec.y);
-
-			//////console.log("ball " + ball.id + " in pocket");
-
 			this.omissionArray.push(ball);
 
 			//ball.active = false; //moved to contact listener
 			var sinkSpeed = ball.velocity.magnitude; // store this before setting to zero for sending to contact listener for volume info
-			//ball.velocity = new Vector2D(0, 0);  //moved to contact listener to allow ball to be returned from pocket
-			if (ball.hasOwnProperty("mc")) {
-				//ball.mc.visible = false;
-				//ball.shadow1.visible = false;
-
-
-				/*
-
-				//swap canvases and tween mc into pocket - this should really go in a different class eventually
-				ball.shadow1.parent.removeChild(ball.shadow1);
-				ball.shadow1 = null;
-
-
-				TweenLite.to(ball.mc, 0.5, { x: pocket.position.x * physScale, y: pocket.position.y * physScale, onComplete:swapCanvas } );
-
-				function swapCanvas():void {
-
-
-					var _x:Number = ball.mc.x;
-					var _y:Number = ball.mc.y;
-					var canvas = ball.lowerCanvas;
-					ball.mc.parent.removeChild(ball.mc);
-					canvas.addChild(ball.mc);
-					ball.mc.x = _x;
-					ball.mc.y = _y;
-					ball.mc.scaleX = 0.9;
-					ball.mc.scaleY = 0.9;
-				}
-
-
-				TweenLite.to(ball.mc, 0.3, { delay: 0.5, x: 0.8 * pocket.position.x * physScale, y: 0.8 * pocket.position.y * physScale, ease:Quad.easeIn, onComplete:removeMC, onCompleteParams:[ball.mc] } );
-				function removeMC(mc):void {
-					mc.parent.removeChild(mc);
-				}
-				*/
-
-			}
 		}
 
-
-
 		//allow information about this contact to be passed out of the class to the main program
-
 		var contactData = new Object();
 		contactData.collisionType = collision.type;
 		contactData.ball = ball;
@@ -979,10 +762,7 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 		}
 		this.sendContactEvent(contactData);
 
-		//******new********************************
-
 		//if collision was ball on ball, the target needs to send a contact event too, so that it's contactArray can be populated in the contactListener.  This has to be done here, because ball on target is only checked once (ie. no target on ball is checked to prevent double checking). May cause problems for playing sounds, where both balls will play a sound simultaneously
-
 		if (collision.type == "ball") {
 			//same as above but swap ball for target
 			contactData = new Object();
@@ -996,35 +776,14 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 			}
 			this.sendContactEvent(contactData);
 		}
-
-		//******************************************
-
 	}
-
-	if (collisionArray.length > 1) {
-
-		if (ctl == ctv ||  ctl == ctp || ctl == ctb || ctv == ctp || ctv == ctb || ctp == ctb) {
-			//console.log("dual impact: frame " + this.frame);
-		}
-
-	}
-
-
 }
 
 billiardPhysics.prototype.sendContactEvent = function(data) {
-
-
-
-
 	this.contactEvent.dispatch(data);
-
 }
 
-
-
 billiardPhysics.prototype.moveBalls = function(delta) {
-
 	for (var n = 0; n < this.ballArray.length; n ++) {
 		var ball = this.ballArray[n];
 
@@ -1035,22 +794,13 @@ billiardPhysics.prototype.moveBalls = function(delta) {
 		}
 
 	}
-
 	this.omissionArray = new Array(); //clear omission array here, as otherwise will not be cleared in time for next moveBalls() if there is no collision
 }
 
 billiardPhysics.prototype.updateFriction = function() {
-
 	//for simplicity, apply friction just once per frame here.  Applying this over variable time steps would be a nightmare.
-
-
-
-
 	for (var b = 0; b < this.ballArray.length; b ++) {
-
 		var ball = this.ballArray[b];
-
-
 		//apply and reduce screw
 		if (ball.id == 0) {
 			ball.velocity = ball.velocity.plus(ball.deltaScrew);
@@ -1060,15 +810,7 @@ billiardPhysics.prototype.updateFriction = function() {
 					ball.deltaScrew = new Vector2D(0, 0);
 				}
 			}
-			//trace(ball.deltaScrew.magnitude);
 		}
-
-
-
-
-
-
-
 
 		var ballSpeed = ball.velocity.magnitude;
 		ballSpeed -= this.friction;
@@ -1083,9 +825,6 @@ billiardPhysics.prototype.updateFriction = function() {
 		//add grip to balls
 		if (ball.grip < 1) {
 			ball.grip += 0.02; //.03
-			//if (ball.grip > 1) {
-				//ball.grip = 1;
-			//}
 		}
 		if (ball.ySpin >= 0.2) {
 			ball.ySpin -= 0.2;
@@ -1098,15 +837,11 @@ billiardPhysics.prototype.updateFriction = function() {
 		}
 
 		//experimental - add swerve to ball based on spin.
-
 		if (ball.ySpin != 0) {
 			var normal = ball.velocity.getLeftNormal().normalize();
-
 			var swerve = normal.times(0.3 * ball.ySpin * ball.velocity.magnitude / 800);
 			ball.velocity = ball.velocity.plus(swerve);
 		}
-
-
 	}
 }
 

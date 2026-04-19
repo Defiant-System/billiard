@@ -51,6 +51,8 @@ let TestState = {
 
 let Test = {
 	init(APP) {
+        
+        setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		return;
 		
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);

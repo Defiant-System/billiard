@@ -32,6 +32,7 @@
 					maxDist = 80 * 80;
 				// drag info
 				Self.drag = { click, maxDist };
+
 				// bind event handlers
 				Self.els.doc.on("mousemove mouseup", Self.dispatch);
 				break;

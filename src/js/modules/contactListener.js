@@ -4,12 +4,8 @@ function onContact(data) {
 	var gameInfo = playState.gameInfo;
 	var collisionData =  data;
 
-	//console.log("received event");
-	//console.log("data: " + data.collisionType);
-	
 	/*
 	collisionData (e.data) is an object with the following properties:
-		
 		collisionType:String (either "ball", "line", "vertex" or "pocket")
 		ball:Object (The ball which has collided, which contains all the properties of a ball object like id, position, velocity etc.)
 		target:Object (The target ball, line, vertex or pocket the ball has collided with)
@@ -38,8 +34,6 @@ function onContact(data) {
 	
 	collisionObject.type = collisionData.collisionType;
 	
-	
-	
 	if (collisionData.collisionType == "ball") {
 		//store ball on ball contact in the object ball's contact array
 		ball.contactArray.push(collisionObject);
@@ -56,7 +50,6 @@ function onContact(data) {
 		}
 	}
 	if (collisionData.collisionType == "line" || collisionData.collisionType == "vertex") {
-		
 		//store ball on cushion contact in the object ball's contact array
 		ball.contactArray.push(collisionObject);
 		
@@ -74,8 +67,6 @@ function onContact(data) {
 		//moved from physics
 		ball.active = false;
 		ball.velocity = new Vector2D(0, 0);
-		//console.log("inactive");
-
 		ball.contactArray.push(collisionObject);
 		
 		if (gameInfo.trial == false) {
@@ -87,14 +78,13 @@ function onContact(data) {
 		if (ball.id == 0) {
 			gameInfo.scratched = true;
 		} else {
-			gameInfo.ballsRemaining --;
+			gameInfo.ballsRemaining--;
 		}
 	}
 }
 
 function playPocketSound(collisionData) {
-	var closingSpeed = collisionData.speed;
-	var volume = closingSpeed / 5000;
+	var volume = collisionData.speed / 5000;
 	if (volume > 1.5) {
 		volume = 1.5;
 	}
@@ -106,18 +96,6 @@ function playPocketSound(collisionData) {
 
 function awardBonuses(collisionData) {
 	var gameInfo = playState.gameInfo;
-	/*
-	var delay = 0;
-	var ball = collisionData.ball;
-	var pocket = collisionData.target;
-	
-	
-	var effect = new ParticleExplosion("star_mc", 15, 0.5, 0, 0.01, 0, 1)
-	gameCanvas.addChild(effect);
-	effect.x = pocket.position.x * physScale;
-	effect.y = pocket.position.y * physScale;#
-	effect.Start();
-	*/
 	if (collisionData.ball.id != 0) {
 		var pocket = collisionData.target;
 
@@ -128,149 +106,33 @@ function awardBonuses(collisionData) {
         
 		if (Project.mode == 1 && gameInfo.turn == "p1") {
 			console.log("potted ball ", collisionData.ball);
-			// console.log( "Bonus", gameInfo.multiplier * 10 );
-			// createBonusText(0, String(gameInfo.multiplier * 10), 'font6', pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 56, false);
-			// Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, updateScoreAndMultiplier, this);
 		}
-
-        function updateScoreAndMultiplier() {
-	        //also update score and best score at the same time
-	        Project.score += gameInfo.multiplier * 10;
-	        if (Project.score > gameInfo.bestScore) {
-				gameInfo.bestScore = Project.score;
-				try{
-					window.famobi.localStorage.setItem('bestScore', gameInfo.bestScore);
-					//console.log("new highscore saved");
-				}catch(e) {
-					//console.log("save failed");
-				}
-				
-			}
-
-	        gameInfo.multiplier ++;
-	        // gameInfo.multiplierText.text = "x" + gameInfo.multiplier;
-
-	        //gameInfo.bonusText.alpha = 1;
-
-	        //var streakTween = Project.game.add.tween(gameInfo.bonusText);
-			//streakTween.to({alpha: 0}, 2000);
-			//streakTween.start();
-
-			// var streakTween = Project.game.add.tween(gameInfo.multiplierText);
-			// streakTween.from({size: 42}, 2000);
-			// streakTween.start();
-	    }
-
-
-
-
-		//console.log("score" + gameInfo.score);
-
-		
-		/*
-		if (gameInfo.bonusStars[pocket.id].visible == true) {
-
-			gameInfo.bonusStars[pocket.id].visible = false;
-			gameInfo.bonusStarOn = false;
-
-			var stars = new Stars(pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale);
-
-			//bonus time text
-			createBonusText(0, "+10s", 'font5', 0, 0, 70, true);
-
-			increaseTime();
-			gameInfo.timerText.text = Math.ceil(gameInfo.timeRemaining / 60);
-
-
-		} 
-
-
-		if (gameInfo.bonusStarOn == false) {
-
-			//var starNumber = Math.floor(Math.random() * 6);
-			gameInfo.bonusStarOn = true;
-			Project.game.time.events.add(Phaser.Timer.SECOND * 1, addStar, this);
-
-			function addStar() {
-				gameInfo.bonusStars[gameInfo.starNumber].visible = true;
-				
-
-				var starAlphaTween = Project.game.add.tween(gameInfo.bonusStars[gameInfo.starNumber]);
-				starAlphaTween.from({alpha: 0}, 2000);
-				starAlphaTween.start();
-
-				var starScaleTween = Project.game.add.tween(gameInfo.bonusStars[gameInfo.starNumber].scale);
-				starScaleTween.from({x: 5, y: 5}, 2000);
-				starScaleTween.start();
-
-				Sound.Play("shimmer", .3);
-
-				gameInfo.starNumber ++;
-
-				if (gameInfo.starNumber == 1 || gameInfo.starNumber == 4) {
-					gameInfo.starNumber ++;
-				}
-
-				if (gameInfo.starNumber > 5) {
-					gameInfo.starNumber = 0;
-				}
-			}
-
-		}
-
-		*/
-
-
-
-
 	} else{
 		//cue ball potted
 		gameInfo.fouled = true;
 	}
-
-
-
-
-	 
 }
 
-
-
-
 function checkLevelComplete() {
-
 	var gameInfo = playState.gameInfo;
-
-		if (gameInfo.numBalls <= 1) {
-			
-			//gameInfo.timer.running = false;
-			//gameInfo.timer.stop();			
-			Project.levelComplete = true;
-
-			
-		}
+	if (gameInfo.numBalls <= 1) {
+		//gameInfo.timer.running = false;
+		//gameInfo.timer.stop();			
+		Project.levelComplete = true;
 	}
-
+}
 
 function playPocketAnimation(collisionData) {
-
 	var gameInfo = playState.gameInfo;
-	
 	if (gameInfo.trial == false) {
-	
 		var ball = collisionData.ball;
 		var pocket = collisionData.target;
 		var closingSpeed = collisionData.speed;
 		
-		
-		
 		ball.pocketTweenComplete = false;
 		
 		//swap canvases and tween mc into pocket - this should really go in a different class eventually
-		
 		if (ball.id != 0) {
-
-		//if (1==0) {
 			ball.shadow.parent.removeChild(ball.shadow); //null object error thrown here
 			ball.shadow = null;
 		} else {
@@ -278,7 +140,6 @@ function playPocketAnimation(collisionData) {
 		}
 		
 		var tweenSpeed = 0.1;
-		
 		if (closingSpeed < 5000) {
 			tweenSpeed = 0.2;
 		}
@@ -295,32 +156,21 @@ function playPocketAnimation(collisionData) {
 
 		tweenSpeed *= 300;
 		
-		//ball.mc.scaleX = 0.9;
-		//ball.mc.scaleY = 0.9;
-		
-		
 		var pocketTween = Project.game.add.tween(ball.mc);
 		pocketTween.to({x: pocket.dropPosition.x * gameInfo.physScale, y: pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed);
 		pocketTween.onComplete.add(swapCanvas, this);
 		pocketTween.start();
 		
-		
 		var pocketTween2 = Project.game.add.tween(ball.mc);
 		pocketTween2.to({x: 0.7 * pocket.dropPosition.x * gameInfo.physScale, y: 0.7 * pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed * 1.2, Phaser.Easing.Linear.In);
 		
 		if (ball.id != 0) {
-
-
-		//if (1==0) {
 			pocketTween2.onComplete.add(function() {removeMC(ball)}, this);
-		
 		} else{
 			pocketTween2.onComplete.add(function() {returnCueBall()}, this);
 		}
 
 		function swapCanvas() {
-			
-			
 			var _x = ball.mc.x;
 			var _y = ball.mc.y;
 			//var canvas = ball.lowerCanvas;
@@ -332,35 +182,17 @@ function playPocketAnimation(collisionData) {
 			//ball.mc.scaleY = 0.9;
 
 			pocketTween2.start();
-			
 		}
 		
-		
 		function returnCueBall() {
-
-			/*
-			//switch pockets - so cue ball comes out of opposite pocket
-			pocket = gameInfo.pocketArray[5 - pocket.id]
-
-			
-			var pocketTween = Project.game.add.tween(ball.mc);
-			pocketTween.to({x: pocket.position.x * gameInfo.physScale, y: pocket.position.y * gameInfo.physScale}, tweenSpeed);
-			pocketTween.onComplete.add(swapCanvasBack, this);
-			pocketTween.start();
-			*/
-
 			//for 8 ball, place cue ball back on correct canvas, set tween complete and keep hidden until start of next turn
-			
 			gameInfo.tunnelCanvas.removeChild(ball.mc);
 			gameInfo.ballCanvas.addChild(ball.mc);
 			ball.pocketTweenComplete = true;
 			ball.mc.visible = false;
-			
 		}
 
 		function swapCanvasBack() {
-			
-			
 			var _x = ball.mc.x;
 			var _y = ball.mc.y;
 			
@@ -368,10 +200,8 @@ function playPocketAnimation(collisionData) {
 			gameInfo.ballCanvas.addChild(ball.mc);
 			ball.mc.x = _x;
 			ball.mc.y = _y;
-
 			ball.position.x = _x / gameInfo.physScale;
 			ball.position.y = _y / gameInfo.physScale;
-			
 			ball.shadow.visible = true;
 			
 			//propel ball from pocket
@@ -390,71 +220,13 @@ function playPocketAnimation(collisionData) {
 			ball.pocketTweenComplete = true;
 			ball.active = true;
 			//ball.propelling = true;
-
-			//var timer = Project.game.time.events.add(Phaser.Timer.SECOND * .5, resetFlag, this);
-			//function resetFlag() {
-			 //ball.propelling = false;
-				//console.log("propelling: " + ball.propelling);
-				//console.log("v: " + ball.velocity.x);
-			//}
 		}
 		
 		function removeMC(ball) {
 			if (ball.id != 0) {
 				gameInfo.tunnelCanvas.removeChild(ball.mc);
 				ball.pocketTweenComplete = true;
-			} else {
-				/*
-				ball.mc.visible = false;
-				setTimeout(showCueBall, 1000);
-				
-				function showCueBall() {
-					gameInfo.tunnelCanvas.removeChild(ball.mc);
-					gameInfo.ballCanvas.addChild(ball.mc);
-					ball.mc.visible = true;
-					ball.mc.scaleX = 1;
-					ball.mc.scaleY = 1;
-					ball.pocketTweenComplete = true;
-					ball.shadow.visible = true;
-					ball.active = true;
-					var ballPositionArray = setBallPositions(gameInfo);
-					ball.position = new Vector2D(ballPositionArray[0].x, ballPositionArray[0].y);
-					renderScreen();
-				}
-				*/
 			}
 		}
 	}
-
-
-	
-	
-
-/*
-    emitter = Project.game.add.emitter(pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, 100);
-	  
-	emitter.makeParticles('bonusStar');
-	 
-	//emitter.maxParticles = 10;
-	emitter.maxParticleScale = 0.2;
-	emitter.setAlpha(1, 0, 2000);
-
-
-
-	gameInfo.gameCanvas.addChild(emitter);
-    emitter.start(true, 1000, null, 10);
-
-    var starTween = Project.game.add.tween(emitter);
-    starTween.to({alpha: 0, }, 2000);
-	starTween.onComplete.add(destroyStars, this);
-	starTween.start();
-
-	function destroyStars() {
-		if (emitter) {
-			emitter.destroy();
-		}
-	}
-	*/
-
-
 }

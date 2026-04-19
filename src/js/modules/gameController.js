@@ -139,86 +139,12 @@ playState.update = function () {
 		}
 
 		if (Project.levelComplete == false) {
-			updateScore();
 			if (Project.mode == 1 && gameInfo.turn == "p1") {
 				// updateTimer();
 			}
 		}
 
-		//updateBonusDisc();
-		// updateDebug();
 		checkGameOver();
-	}
-
-	// transferBonusPoints();
-
-	//close popup menu
-
-	// if (gameInfo.popUpPanel.visible == true) {
-	// 	if (Project.game.input.activePointer.isDown) {
-	// 		//console.log("down, x: " + Project.game.input.activePointer.x + " y: " + Project.game.input.activePointer.y);
-	// 		//console.log("x: " + gameInfo.popUpPanel.x);
-	// 		//console.log("w/2: " + gameInfo.popUpPanelBG.width / 2);
-
-	// 		if (gameInfo.landscape == true) {
-	// 			if (
-	// 				Project.game.input.activePointer.x >
-	// 					gameInfo.popUpPanel.x + gameInfo.popUpPanelBG.width / 2 ||
-	// 				Project.game.input.activePointer.x <
-	// 					gameInfo.popUpPanel.x - gameInfo.popUpPanelBG.width / 2 ||
-	// 				Project.game.input.activePointer.y >
-	// 					gameInfo.popUpPanel.y + gameInfo.popUpPanelBG.height / 2 ||
-	// 				Project.game.input.activePointer.y <
-	// 					gameInfo.popUpPanel.y - gameInfo.popUpPanelBG.height / 2
-	// 			) {
-	// 				this.resumeGame();
-	// 			}
-	// 		} else {
-	// 			if (
-	// 				Project.game.input.activePointer.x >
-	// 					gameInfo.popUpPanel.x + gameInfo.popUpPanelBG.height / 2 ||
-	// 				Project.game.input.activePointer.x <
-	// 					gameInfo.popUpPanel.x - gameInfo.popUpPanelBG.height / 2 ||
-	// 				Project.game.input.activePointer.y >
-	// 					gameInfo.popUpPanel.y + gameInfo.popUpPanelBG.width / 2 ||
-	// 				Project.game.input.activePointer.y <
-	// 					gameInfo.popUpPanel.y - gameInfo.popUpPanelBG.width / 2
-	// 			) {
-	// 				this.resumeGame();
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	//close foul window
-
-	// if (Project.game.input.activePointer.isDown && gameInfo.foulWindow.visible == true) {
-	// 	gameInfo.foulWindow.visible = false;
-	// 	gameInfo.foulDisplayComplete = true;
-	// 	if (gameInfo.rerack == false) {
-	// 		gameInfo.gameRunning = true;
-	// 	}
-	// 	applyRulings2();
-	// }
-
-	/*
-	function updateBonusDisc() {
-
-		//if (gameInfo.ballArray[8].active == true) {
-			//gameInfo.ballArray[8].mc.angle += 1;
-		//}
-
-		for(var n = 0; n < 6; n ++) {
-			gameInfo.bonusStars[n].angle += 1;
-		}
-
-
-	}
-*/
-
-	function updateScore() {
-		// gameInfo.scoreText.text = Project.score;
-		//Project.bestScoreText.text = Project.bestScore;
 	}
 
 	function updateCursor() {
@@ -251,10 +177,6 @@ playState.update = function () {
 			gameInfo.cueCanvas.y = gameInfo.ballArray[0].position.y * gameInfo.physScale;
 			gameInfo.cue.x = -gameInfo.ballRadius * gameInfo.physScale * 1.5;
 			// gameInfo.cueShadow.x = gameInfo.cue.x;
-		} else {
-			//console.log("cue set: " + gameInfo.cueSet + ", preventUpdateCue: " + gameInfo.preventUpdateCue);
-			//console.log("cue not updated");
-			//console.log("shot running: " + gameInfo.shotRunning);
 		}
 	}
 
@@ -264,8 +186,6 @@ playState.update = function () {
 			gameInfo.shotRunning == false &&
 			gameInfo.settingPower == false
 		) {
-			//console.log("placing");
-
 			var cueBall = gameInfo.ballArray[0];
 			cueBall.mover.visible = true;
 
@@ -360,10 +280,6 @@ playState.update = function () {
 				renderScreen();
 			}
 
-			if (Project.game.device.touch && gameInfo.moverMouseDown == false) {
-				gameInfo.moverMouseOver = false;
-			}
-
 			if (
 				gameInfo.moverMouseDown == false &&
 				gameInfo.moverMouseOver == false
@@ -397,30 +313,11 @@ playState.update = function () {
 					Project.game.add.tween(cueBall.mover).to({ alpha: 0.2 }, 500, "Linear", true);
 				}
 			}
-
-			//check collision with pockets - actually, don't bother as forcing on table prevents this anyway.
-			/*
-			for (n = 0; n < pocketArray.length; n ++) {
-				var pocket = pocketArray[n];
-
-				var distSq = (pocket.position.x - cueBall.position.x) * (pocket.position.x - cueBall.position.x) + (pocket.position.y - cueBall.position.y) * (pocket.position.y - cueBall.position.y);
-				if (distSq < pocketRadius + gameInfo.ballRadius * pocketRadius + gameInfo.ballRadius + 10) {
-					placementLegal = false;
-					cueBall.mc.alpha = 0.3;
-				}
-
-			}
-			*/
-
-			//gameInfo.cueBallInHand = false;
-			//gameInfo.preventAim = false;
-			//updateAimingGuide();
 		}
 	}
 
 	function positionCueBall(cursor) {
 		//note - if break off shot, alter allowable area
-
 		var cueBall = gameInfo.ballArray[0];
 
 		//var projectionUnitVec = (cursor.minus(cueBall.position)).normalize(); //unit vector from current cue ball position to mouse cursor
@@ -470,27 +367,7 @@ playState.update = function () {
 		var intersectPoint;
 
 		if (collision.length == 1) {
-			/*
-			console.log(collision.length);
-
-			//if more than one ball intersects, find furthest from cueball
-			var furthestDist = 0;
-			for(var k = 0; k < collision.length; k ++) {
-
-				var distSq = (collision[k].position.x - cueBall.position.x) * (collision[k].position.x - cueBall.position.x) + (collision[k].position.y - cueBall.position.y) * (collision[k].position.y - cueBall.position.y);
-
-				//console.log("intersect dist: " + distSq);
-				if (distSq > furthestDist) {
-					furthestDist = distSq;
-					ball = collision[k];
-					//console.log("ball: " + ball);
-					intersectPoint = intersect[k];
-				}
-			}
-			*/
-
 			//position just infront of the intersect point - ie along the line between cue ball and cursor, just before intersection
-
 			//console.log(intersectPoint);
 			//var cueBallVec = new Vector2D(cueBall.position.x, cueBall.position.y);
 			ball = collision[0];
@@ -500,22 +377,11 @@ playState.update = function () {
 			var unitVec = targetVec.minus(intersectVec).normalize();
 
 			var newPos = intersectVec.minus(unitVec.times(200));
-			//if (checkOnTable(newPos) == true) {
 			cueBall.position = newPos;
-			//}
-
-			//
-
-			//var targetToCursor = cursor.minus(targetVec);
-			//var targetToCursorUnit = targetToCursor.normalize();
-			//cueBall.position = targetVec.plus(targetToCursorUnit.times(gameInfo.ballRadius*2.1));
-
-			//cueBall.position = new Vector2D(intersectPoint.x, intersectPoint.y);
 		}
 
 		if (collision.length > 1) {
 			//if the the cueBall to Cursor vector intersects more than one target balls, find out where the cue ball wouldn't be able to fit between target balls by performing a circle-circle intersection on target balls with raius * 2.  If these intersections exist, find the closest to the cursor and place cue ball there.
-
 			var intersectArray = new Array();
 
 			for (var c1 = 0; c1 < collision.length; c1++) {
@@ -573,31 +439,19 @@ playState.update = function () {
 						//console.log("overlaps");
 					}
 				}
-			} //else{
-			//console.log("no ints");
-			//}
-
-			//cueBall.x = intPoint.x;
-			//cueBall.y = intPoint.y;
+			}
 
 			//var targetVec = new Vector2D(ball.position.x, ball.position.y);
 			if (intPoint) {
 				var intersectVec = new Vector2D(intPoint.x, intPoint.y);
 				var unitVec = cursor.minus(intersectVec).normalize();
 				var newPos = intersectVec.minus(unitVec.times(100));
-				//if (checkOnTable(newPos) == true) {
 				cueBall.position = newPos;
-				//}
-				//cueBall.position = intersectVec;
-			} else {
-				//console.log("no int");
-				//collision.length = 0;
 			}
 		}
 
 		if (collision.length == 0) {
 			//no balls intersecting - check intersection with table edge
-
 			//array of four lines representing table edge (simpler than involving all lines)
 			var pointArray = new Array();
 
@@ -673,7 +527,6 @@ playState.update = function () {
 			}
 
 			var intersectPoint;
-
 			for (var n = 0; n < 4; n++) {
 				var intersect = Maths.lineIntersectLine(
 					A,
@@ -681,7 +534,6 @@ playState.update = function () {
 					pointArray[n],
 					pointArray[n + 1]
 				);
-
 				if (intersect != null) {
 					intersectPoint = intersect;
 				}
@@ -717,12 +569,9 @@ playState.update = function () {
 
 		var onTable = false;
 		if (
-			cueBallPosition.x >
-				gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius &&
-			cueBallPosition.x <
-				gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius &&
-			cueBallPosition.y >
-				gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius &&
+			cueBallPosition.x > gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius &&
+			cueBallPosition.x < gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius &&
+			cueBallPosition.y > gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius &&
 			cueBallPosition.y < gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius
 		) {
 			onTable = true;
@@ -730,124 +579,60 @@ playState.update = function () {
 
 		if (!onTable) {
 			var cushion;
-
-			if (
-				cueBallPosition.x <
-				gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5
-			) {
-				cueBallPosition.x =
-					gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5;
+			if (cueBallPosition.x < gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5) {
+				cueBallPosition.x = gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5;
 				cushion = "left";
 			}
-			if (
-				cueBallPosition.x >
-				gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5
-			) {
-				cueBallPosition.x =
-					gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5;
+			if (cueBallPosition.x > gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5) {
+				cueBallPosition.x = gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5;
 				cushion = "right";
 			}
-			if (
-				cueBallPosition.y <
-				gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5
-			) {
-				cueBallPosition.y =
-					gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5;
+			if (cueBallPosition.y < gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5) {
+				cueBallPosition.y = gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5;
 				cushion = "top";
 			}
-			if (
-				cueBallPosition.y >
-				gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5
-			) {
-				cueBallPosition.y =
-					gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5;
+			if (cueBallPosition.y > gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5) {
+				cueBallPosition.y = gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5;
 				cushion = "bottom";
 			}
 
-			while (
-				checkPositionOverlapping2(cueBallPosition.x, cueBallPosition.y) == true
-			) {
+			while (checkPositionOverlapping2(cueBallPosition.x, cueBallPosition.y) == true) {
 				//move ball clockwise around table edge until a free gap is found
 				if (cushion == "left") {
 					cueBallPosition.y -= gameInfo.ballRadius / 4;
-					if (
-						cueBallPosition.y <
-						gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5
-					) {
-						cueBallPosition.y =
-							gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5;
+					if (cueBallPosition.y < gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5) {
+						cueBallPosition.y = gameInfo.adjustmentScale * -15000 + gameInfo.ballRadius + 5;
 						cushion = "top";
 					}
 				}
 
 				if (cushion == "top") {
 					cueBallPosition.x += gameInfo.ballRadius / 4;
-					if (
-						cueBallPosition.x >
-						gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5
-					) {
-						cueBallPosition.x =
-							gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5;
+					if (cueBallPosition.x > gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5) {
+						cueBallPosition.x = gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius - 5;
 						cushion = "right";
 					}
 				}
 
 				if (cushion == "right") {
 					cueBallPosition.y += gameInfo.ballRadius / 4;
-					if (
-						cueBallPosition.y >
-						gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5
-					) {
-						cueBallPosition.y =
-							gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5;
+					if (cueBallPosition.y > gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5) {
+						cueBallPosition.y = gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius - 5;
 						cushion = "bottom";
 					}
 				}
 				if (cushion == "bottom") {
 					cueBallPosition.x -= gameInfo.ballRadius / 4;
-					if (
-						cueBallPosition.x <
-						gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5
-					) {
-						cueBallPosition.x =
-							gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5;
+					if (cueBallPosition.x < gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5) {
+						cueBallPosition.x = gameInfo.adjustmentScale * -30000 + gameInfo.ballRadius + 5;
 						cushion = "left";
 					}
 				}
-
-				//console.log("moving along cusion to find space");
 			}
 		}
 	}
 
 	function setSpin() {
-		/*
-		if (gameInfo.settingPower == false && gameInfo.shotRunning == false) {
-
-			if (gameInfo.spinSetter.input.checkPointerDown(Project.game.input.activePointer)) {
-
-				gameInfo.preventAim = true;
-
-				gameInfo.cueBallSpot.x = Project.game.input.x - gameInfo.spinSetter.x;
-				gameInfo.cueBallSpot.y = Project.game.input.y - gameInfo.spinSetter.y;
-
-				var distSq = gameInfo.cueBallSpot.x * gameInfo.cueBallSpot.x + gameInfo.cueBallSpot.y * gameInfo.cueBallSpot.y;
-				if (distSq > 50 * 50) {
-					var ang = Math.atan2(gameInfo.cueBallSpot.y, gameInfo.cueBallSpot.x);
-					gameInfo.cueBallSpot.x = 50 * Math.cos(ang);
-					gameInfo.cueBallSpot.y = 50 * Math.sin(ang);
-				}
-			}else{
-				gameInfo.preventAim = false;
-			}
-
-			gameInfo.ballArray[0].screw = Maths.fixNumber(0.5 * gameInfo.cueBallSpot.y / 50); //value between -0.5 (topspin) and 0.5 (backspin)
-			gameInfo.ballArray[0].english = Maths.fixNumber(gameInfo.cueBallSpot.x / 50); //value between -1 (left side) and 1 (right side)
-			gameInfo.cue.y = 0.8 * gameInfo.ballArray[0].english * gameInfo.ballRadius * gameInfo.physScale;
-
-		}
-		*/
-
 		if (gameInfo.startAim == false || !Project.game.device.touch) {
 			if (
 				gameInfo.spinSetterZoom.visible == true &&
@@ -855,14 +640,10 @@ playState.update = function () {
 			) {
 				if (Project.game.input.activePointer.isDown) {
 					if (
-						Project.game.input.activePointer.x >
-							gameInfo.spinSetterZoom.x + gameInfo.spinSetterZoom.width / 2 ||
-						Project.game.input.activePointer.x <
-							gameInfo.spinSetterZoom.x - gameInfo.spinSetterZoom.width / 2 ||
-						Project.game.input.activePointer.y >
-							gameInfo.spinSetterZoom.y + gameInfo.spinSetterZoom.height / 2 ||
-						Project.game.input.activePointer.y <
-							gameInfo.spinSetterZoom.y - gameInfo.spinSetterZoom.height / 2
+						Project.game.input.activePointer.x > gameInfo.spinSetterZoom.x + gameInfo.spinSetterZoom.width / 2 ||
+						Project.game.input.activePointer.x < gameInfo.spinSetterZoom.x - gameInfo.spinSetterZoom.width / 2 ||
+						Project.game.input.activePointer.y > gameInfo.spinSetterZoom.y + gameInfo.spinSetterZoom.height / 2 ||
+						Project.game.input.activePointer.y < gameInfo.spinSetterZoom.y - gameInfo.spinSetterZoom.height / 2
 					) {
 						gameInfo.spinSetterZoom.visible = false;
 						gameInfo.preventAim = false;
@@ -871,18 +652,14 @@ playState.update = function () {
 				}
 			}
 
-			if (
-				gameInfo.settingSpin == true &&
-				Project.game.input.activePointer.isDown == false
-			) {
-				gameInfo.settingSpin = false; //ensures mouse comes up once after setting spin before clicking away the spin setter above
+			if (gameInfo.settingSpin == true && Project.game.input.activePointer.isDown == false) {
+				//ensures mouse comes up once after setting spin before clicking away the spin setter above
+				gameInfo.settingSpin = false;
 			}
 
 			if (gameInfo.settingPower == false && gameInfo.shotRunning == false) {
 				if (
-					gameInfo.spinSetter.input.checkPointerDown(
-						Project.game.input.activePointer
-					) &&
+					gameInfo.spinSetter.input.checkPointerDown(Project.game.input.activePointer) &&
 					gameInfo.spinSetterZoom.visible == false
 				) {
 					gameInfo.spinSetterZoom.visible = true;
@@ -892,9 +669,7 @@ playState.update = function () {
 			}
 
 			if (
-				gameInfo.spinSetterZoom.input.checkPointerDown(
-					Project.game.input.activePointer
-				) &&
+				gameInfo.spinSetterZoom.input.checkPointerDown(Project.game.input.activePointer) &&
 				gameInfo.spinSetterZoom.visible == true
 			) {
 				gameInfo.settingSpin = true;
@@ -936,27 +711,17 @@ playState.update = function () {
 
 	function aim() {
 		if (gameInfo.preventAim == false) {
-			//console.log("aiming. cue visible: " + gameInfo.cueCanvas.visible);
-
 			if (gameInfo.settingPower == false) {
 				if (!Project.game.device.touch) {
-					var dx =
-						gameInfo.cursorLocal.x -
-						gameInfo.ballArray[0].position.x * gameInfo.physScale;
-					var dy =
-						gameInfo.cursorLocal.y -
-						gameInfo.ballArray[0].position.y * gameInfo.physScale;
+					var dx = gameInfo.cursorLocal.x - gameInfo.ballArray[0].position.x * gameInfo.physScale;
+					var dy = gameInfo.cursorLocal.y - gameInfo.ballArray[0].position.y * gameInfo.physScale;
 
 					gameInfo.cueCanvas.angle = (180 / Math.PI) * Math.atan2(dy, dx);
 
 					//shadow
-					var xOffset =
-						gameInfo.ballArray[0].position.x * gameInfo.physScale * 0.02;
-					var yOffset =
-						gameInfo.ballArray[0].position.y * gameInfo.physScale * -0.02;
-					var ang =
-						yOffset +
-						Math.sin((Math.PI / 180) * gameInfo.cueCanvas.angle) * xOffset;
+					var xOffset = gameInfo.ballArray[0].position.x * gameInfo.physScale * 0.02;
+					var yOffset = gameInfo.ballArray[0].position.y * gameInfo.physScale * -0.02;
+					var ang = yOffset + Math.sin((Math.PI / 180) * gameInfo.cueCanvas.angle) * xOffset;
 
 					if (ang > 5) {
 						ang = 5;
@@ -966,7 +731,6 @@ playState.update = function () {
 					}
 
 					// gameInfo.cueShadow.angle = 3 + ang;
-
 					var compX = Math.cos((gameInfo.cueCanvas.angle * Math.PI) / 180);
 					var compY = Math.sin((gameInfo.cueCanvas.angle * Math.PI) / 180);
 					gameInfo.aimDirectionVector = new Vector2D(compX, compY).normalize();
@@ -1003,17 +767,12 @@ playState.update = function () {
 							//var angleDiff;
 
 							angleDiff *= gameInfo.aimSensitivity;
-
 							//angleDiff = Math.abs(angleDiff) * 0.8;
-
 							gameInfo.cueCanvas.angle = gameInfo.startCue + angleDiff;
 
 							var compX = Math.cos((gameInfo.cueCanvas.angle * Math.PI) / 180);
 							var compY = Math.sin((gameInfo.cueCanvas.angle * Math.PI) / 180);
-							gameInfo.aimDirectionVector = new Vector2D(
-								compX,
-								compY
-							).normalize();
+							gameInfo.aimDirectionVector = new Vector2D(compX, compY).normalize();
 							updateAimingGuide();
 
 							if (angleDiff > 10 || angleDiff < -10) {
@@ -1021,18 +780,14 @@ playState.update = function () {
 								gameInfo.startAng =
 									(180 / Math.PI) *
 									Math.atan2(
-										gameInfo.cursorLocal.y / gameInfo.physScale -
-											gameInfo.ballArray[0].position.y,
-										gameInfo.cursorLocal.x / gameInfo.physScale -
-											gameInfo.ballArray[0].position.x
+										gameInfo.cursorLocal.y / gameInfo.physScale - gameInfo.ballArray[0].position.y,
+										gameInfo.cursorLocal.x / gameInfo.physScale - gameInfo.ballArray[0].position.x
 									);
 								gameInfo.aimSensitivity += 0.1;
 
 								if (gameInfo.aimSensitivity > 1) {
 									gameInfo.aimSensitivity = 1;
 								}
-
-								//console.log(gameInfo.aimSensitivity);
 							}
 						} else {
 							if (
@@ -1042,21 +797,17 @@ playState.update = function () {
 								gameInfo.cursorLocal.y > -gameInfo.tableTop.height / 2
 							) {
 								gameInfo.preventSetPower = true;
-
 								gameInfo.startCue = Maths.wrapValue(gameInfo.cueCanvas.angle);
 								gameInfo.startAng =
 									(180 / Math.PI) *
 									Math.atan2(
-										gameInfo.cursorLocal.y / gameInfo.physScale -
-											gameInfo.ballArray[0].position.y,
-										gameInfo.cursorLocal.x / gameInfo.physScale -
-											gameInfo.ballArray[0].position.x
+										gameInfo.cursorLocal.y / gameInfo.physScale - gameInfo.ballArray[0].position.y,
+										gameInfo.cursorLocal.x / gameInfo.physScale - gameInfo.ballArray[0].position.x
 									);
 								gameInfo.startAim = true;
 								gameInfo.aimSensitivity = 0.5;
 
 								if (!gameInfo.firstTouch) {
-									//gameInfo.cueCanvas.angle = gameInfo.startAng;
 									gameInfo.startCue = gameInfo.cueCanvas.angle;
 									gameInfo.firstTouch = true;
 								}
@@ -1066,8 +817,6 @@ playState.update = function () {
 						gameInfo.startAim = false;
 						gameInfo.preventSetPower = false;
 					}
-
-					//console.log(gameInfo.preventSetPower);
 				}
 			}
 		}
@@ -1080,16 +829,10 @@ playState.update = function () {
 			gameInfo.guide.lineStyle(3, 0xff0000, 1);
 
 			var startVec = gameInfo.ballArray[0].position;
-			var projectionVec = startVec.plus(
-				gameInfo.aimDirectionVector.times(500000)
-			);
-
+			var projectionVec = startVec.plus(gameInfo.aimDirectionVector.times(500000));
 			var collision = new Array();
 			var intersect = new Array();
 			var touching = false;
-
-			//find all balls intersecting aiming line
-
 			var cueBall = gameInfo.ballArray[0];
 
 			for (var n = 1; n < gameInfo.ballArray.length; n++) {
@@ -1159,14 +902,8 @@ playState.update = function () {
 				);
 
 				if (Project.guideOn == true) {
-					gameInfo.guide.moveTo(
-						cueBall.position.x * gameInfo.physScale,
-						cueBall.position.y * gameInfo.physScale
-					);
-					gameInfo.guide.lineTo(
-						intersectPoint.x * gameInfo.physScale,
-						intersectPoint.y * gameInfo.physScale
-					);
+					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
+					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
 				}
 
 				//draw the circle regardless of whether guide is on or off
@@ -1220,7 +957,6 @@ playState.update = function () {
 
 				//array of four lines representing table edge (simpler than involving all lines)
 				var pointArray = new Array();
-
 				pointArray.push(
 					new Point(
 						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
@@ -1313,9 +1049,6 @@ playState.update = function () {
 						//store mouse position
 						gameInfo.mouseX = Project.game.input.x;
 						gameInfo.mouseY = Project.game.input.y;
-
-						//gui.powerMeter._mask.height = 0;
-						//gui.powerMeter.cue.y = 5;
 					}
 				}
 
@@ -1326,12 +1059,9 @@ playState.update = function () {
 					gameInfo.beginStrike == false
 				) {
 					//measure mouse drag from original position, in direction of aim
-
 					var dragX = Project.game.input.x - gameInfo.mouseX;
 					var dragY = Project.game.input.y - gameInfo.mouseY;
-
 					var maxDrag = 180;
-
 					var dragVector = new Vector2D(-dragX, -dragY);
 
 					if (!gameInfo.landscape) {
@@ -1346,96 +1076,9 @@ playState.update = function () {
 						drag = 0;
 					}
 
-					gameInfo.power =
-						gameInfo.maxPower * (Math.pow(drag, 1.4) / Math.pow(maxDrag, 1.4));
-
+					gameInfo.power = gameInfo.maxPower * (Math.pow(drag, 1.4) / Math.pow(maxDrag, 1.4));
 					updateAimingGuide();
-
-					gameInfo.cue.x =
-						-0.5 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
-					// gameInfo.cueShadow.x = gameInfo.cue.x;
-				}
-			}
-
-			//touch
-			if (Project.game.device.touch) {
-				//check if finger is on the power bar graphic
-
-				//start drag
-				if (
-					Project.game.input.activePointer.isDown == true &&
-					gameInfo.settingPower == false &&
-					gameInfo.beginStrike == false
-				) {
-					//console.log("touch is down");
-
-					//check if finger is over powerbar area
-
-					//if (gameInfo.landscape && Project.game.input.y > Project.game.height - 120 || !gameInfo.landscape && Project.game.input.x < 120) {
-					if (
-						(gameInfo.landscape && Project.game.input.x < 140) ||
-						(!gameInfo.landscape && Project.game.input.x < 120)
-					) {
-						//console.log("started drag");
-
-						gameInfo.settingPower = true;
-						//store pointer y position
-
-						gameInfo.mouseX = Project.game.input.x;
-						gameInfo.mouseY = Project.game.input.y;
-						//gui.powerMeter._mask.height = 0;
-						//gui.powerMeter.cue.y = 5;
-					}
-				}
-
-				//continue drag
-				if (
-					Project.game.input.activePointer.isDown == true &&
-					gameInfo.settingPower == true &&
-					gameInfo.beginStrike == false
-				) {
-					//measure drag from original position
-
-					var drag;
-					if (gameInfo.landscape) {
-						//drag = gameInfo.mouseX - Project.game.input.x;
-						drag = Project.game.input.y - gameInfo.mouseY;
-					} else {
-						drag = Project.game.input.y - gameInfo.mouseY;
-					}
-					var maxDrag = 500;
-
-					if (drag > maxDrag) {
-						drag = maxDrag;
-					}
-					if (drag < 0) {
-						drag = 0;
-					}
-
-					//gameInfo.power = gameInfo.maxPower * ((drag) / (maxDrag));
-					gameInfo.power =
-						gameInfo.maxPower * (Math.pow(drag, 1.4) / Math.pow(maxDrag, 1.4));
-
-					//gameInfo.powerBarMask.width = drag / 2;
-
-					//console.log("m.x init: " + gameInfo.powerBarMask.x);
-
-					if (gameInfo.landscape) {
-						//gameInfo.powerBarMask.x = - drag;
-						gameInfo.powerBarMask.y = drag;
-					} else {
-						gameInfo.powerBarMask.y = drag;
-					}
-
-					//console.log("pb.x: " + gameInfo.powerBar.x);
-					//console.log("m.x: " + gameInfo.powerBarMask.x);
-
-					gameInfo.powerBarCue.x = gameInfo.powerBarBase.x + 250 - drag * 0.9;
-					//console.log("dragging");
-
-					updateAimingGuide();
-
-					gameInfo.cue.x = -0.3 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
+					gameInfo.cue.x = -0.5 * drag - gameInfo.ballRadius * 1.5 * gameInfo.physScale;
 					// gameInfo.cueShadow.x = gameInfo.cue.x;
 				}
 			}
@@ -1491,16 +1134,6 @@ playState.update = function () {
 			var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
 			cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 1500);
 			cueFadeTween.onComplete.add(hideCueCanvas, this);
-
-			if (Project.game.device.touch) {
-				var powerBarCueTween = Project.game.add.tween(gameInfo.powerBarCue);
-				powerBarCueTween.to(
-					{ x: 250 },
-					tweenTime * 1000,
-					Phaser.Easing.Linear.Out
-				);
-				powerBarCueTween.start();
-			}
 
 			cueTween.start();
 			// cueShadowTween.start();
@@ -2517,10 +2150,6 @@ playState.update = function () {
 	}
 
 	function resetVars() {
-		if (Project.game.device.touch) {
-			gameInfo.powerBarMask.x = 0;
-			gameInfo.powerBarMask.y = 0;
-		}
 		gameInfo.cueSet = false;
 		gameInfo.lockAim = false;
 		gameInfo.executeStrike = false;
@@ -2664,13 +2293,6 @@ playState.update = function () {
 			gameInfo.shotReset = true;
 		}
 
-		//gameInfo.gui.spinSetter.crosshair.x = 0;
-		//gameInfo.gui.spinSetter.crosshair.y = 0;
-		// gameInfo.cueBallSpot.x = 0;
-		// gameInfo.cueBallSpot.y = 0;
-		// gameInfo.cueBallSpotZoom.x = 0;
-		// gameInfo.cueBallSpotZoom.y = 0;
-
 		gameInfo.ballArray[0].spin = 0;
 		gameInfo.ballArray[0].english = 0;
 
@@ -2695,40 +2317,6 @@ playState.update = function () {
 
 		Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 	}
-
-	// function hideMarkers() {
-	// 	for (var n = 1; n < gameInfo.ballArray.length; n++) {
-	// 		var ball = gameInfo.ballArray[n];
-	// 		ball.marker.visible = false;
-	// 	}
-	// }
-
-	// function playMarkerAnims() {
-	// 	if (gameInfo.markerRepeat) {
-	// 		Project.game.time.events.remove(gameInfo.markerRepeat);
-	// 	}
-	// 	Project.game.time.events.add(Phaser.Timer.SECOND * 1.5, startAnim, this);
-
-	// 	function startAnim() {
-	// 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
-	// 			var ball = gameInfo.ballArray[n];
-	// 			ball.marker.alpha = 1;
-	// 			ball.marker.animations.stop(1);
-	// 			ball.marker.animations.play("markerAnim", 40, false);
-	// 		}
-
-	// 		//repeat the anim a little later
-	// 		gameInfo.markerRepeat = Project.game.time.events.add(
-	// 			Phaser.Timer.SECOND * 5,
-	// 			startAnim,
-	// 			this
-	// 		);
-	// 	}
-	// }
-
-	// function updateDebug() {
-	// 	gameInfo.debugText.text = Project.game.time.fps;
-	// }
 
 	function aiPlaceCueBall() {
 		//trace("ai placing ball");
@@ -2791,7 +2379,6 @@ playState.update = function () {
 					}
 				}
 			}
-
 			//trace("found " + targetBallArray.length + " target balls");
 
 			//now find out which of the target balls have a clear path to pocket
@@ -2813,7 +2400,6 @@ playState.update = function () {
 			//now, if there are any balls which have clear paths to pocket, try to find a position for the cue ball which is on the other side of the ball and not intersected by any other balls.  Try various positions with random elements and keep iterating until a suitable position is found.
 
 			var success = false;
-
 			if (pathClearArray.length > 0) {
 				//trace("found " + pathClearArray.length + " clear paths");
 				for (var n3 = 0; n3 < pathClearArray.length; n3++) {
@@ -2921,9 +2507,7 @@ playState.update = function () {
 
 	function checkPositionOverlapping2(_x, _y) {
 		var overlapping = false;
-
 		//check for this position overlapping all balls except cue ball
-
 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
 			var ball = gameInfo.ballArray[n];
 			if (ball.active == true) {
@@ -2942,9 +2526,7 @@ playState.update = function () {
 
 	function checkPathClear(object1, object2) {
 		//checks the path is clear between the two objects, assuming all objects are of radius gameInfo.ballRadius
-
 		var clear = true;
-
 		var A = new Point(object1.position.x, object1.position.y); //position of object1
 		var B = new Point(object2.position.x, object2.position.y); //position of object2
 		var r = 2 * gameInfo.ballRadius; //doubling the ball radius has the effect of testing a line of thickness = gameInfo.ballRadius
@@ -2966,11 +2548,8 @@ playState.update = function () {
 
 	function checkPathBetweenPointsClear(A, B) {
 		//checks the path is clear of balls between the two points, not counting intersections with the cue ball
-
 		var clear = true;
-
 		var r = 2 * gameInfo.ballRadius; //doubling the ball radius has the effect of testing a line of thickness = gameInfo.ballRadius
-
 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
 			var ball = gameInfo.ballArray[n]; //test for all active balls (not including the cue ball for intersection with this line
 			if (ball.active == true) {
@@ -3154,7 +2733,6 @@ playState.update = function () {
 	function aiFindRandomShots() {
 		//we come here just once, only if no calculated shots were found, OR if all the calculated shots were trialled and still gave a best shot of 0
 		//so - two different entry points into this function, but still only want one execution ... so call this from those two places rather than from the main loop.
-
 		//console.log("testing random shots");
 
 		if (gameInfo.foundRandomShots == false) {
@@ -3182,7 +2760,6 @@ playState.update = function () {
 
 	function aiTestShot() {
 		//come through here each loop if gameInfo.shotsToTest > 0, and assuming we haven't already found the perfect shot (rating == 1, potting 8 ball legally)
-
 		//if break off shot, trial is false so we don't do this
 
 		if (gameInfo.trial == true) {
@@ -3190,13 +2767,10 @@ playState.update = function () {
 
 			if (gameInfo.testNumber < gameInfo.shotTrialArray.length) {
 				gameInfo.shotRating = 0;
-
 				//trace("testing shot number " + gameInfo.testNumber + ". Calculated = " + gameInfo.shotInfo.calculated);
 
 				var aimVector = gameInfo.shotTrialArray[gameInfo.testNumber];
-
 				strikeBallAI(aimVector.x, aimVector.y, 0, 0);
-
 				//console.log("testing shot");
 
 				do {
@@ -3204,18 +2778,13 @@ playState.update = function () {
 					checkShotOver();
 				} while (gameInfo.shotRunning == true);
 
-				//console.log("testing shot complete");
-
 				applyRulings();
-
-				//console.log("apply rulings complete");
 
 				//evaluate the shot rating, and if it's the best one so far, store it
 				//trace("rating = " + gameInfo.shotRating);
 
 				if (gameInfo.shotRating > gameInfo.bestShot) {
 					gameInfo.bestShot = gameInfo.shotRating;
-
 					gameInfo.shotInfo.aimVector = aimVector;
 
 					//shotInfo.ghostPosition = pathClearArray[i].position; //debug info
@@ -3228,8 +2797,6 @@ playState.update = function () {
 				//reset the balls and shot number
 				restorePositions(gameInfo.storeBallArray);
 				gameInfo.testNumber++;
-
-				//console.log("next test: " + gameInfo.testNumber);
 
 				//check to see if all of the above trials have been completed, and if they have, and if they were calculated, check if the best shot rating is above 0.  If it isn't then we need to add some random shots to the trial
 
@@ -3308,16 +2875,6 @@ playState.update = function () {
 
 	function aiPlayShot() {
 		//need to come here once - this is the actual shot to be played
-
-		//trace("playing shot with rating: " + gameInfo.bestShot);
-		//trace("calculated: " + gameInfo.shotInfo.calculated);
-		//if (gameInfo.shotInfo.calculated == true) {
-		//var ghostMarker = new ghostMarker_mc();
-		//gameInfo.gameCanvas.addChild(ghostMarker);
-		//ghostMarker.x = shotInfo.ghostPosition.x * gameInfo.physScale;
-		//ghostMarker.y = shotInfo.ghostPosition.y * gameInfo.physScale;
-		//trace("shot angle = " + gameInfo.shotInfo.shotAngle);
-		//}
 
 		//gui.thinking.visible = false;
 		//gui.thinking.dots.stop();
@@ -3414,19 +2971,6 @@ playState.update = function () {
 						true
 					);
 
-				//TweenLite.to(cue.shadow, 0.5, { x: (power / 600), ease:Quad.easeOut } );
-
-				// Project.game.add
-				// 	.tween(gameInfo.cueShadow)
-				// 	.to(
-				// 		{ x: gameInfo.power / 600 },
-				// 		500,
-				// 		Phaser.Easing.Linear.easeOut,
-				// 		true
-				// 	);
-
-				//TweenLite.to(cueCanvas, 1, { delay: 1.5, alpha: 0, onComplete:hideCueCanvas } );
-
 				var hideCueTween = Project.game.add.tween(gameInfo.cueCanvas);
 				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 1500);
 				hideCueTween.onComplete.add(hideCueCanvas, this);
@@ -3438,8 +2982,6 @@ playState.update = function () {
 					gameInfo.cueTweenComplete = true;
 				}
 			}
-		} else {
-			//something has gone badly wrong if a shot was received during my turn, but should probably deal with it here in case.  Basically, who's turn it is is in dispute and game should probably be abandoned.
 		}
 	}
 
@@ -3481,10 +3023,6 @@ playState.update = function () {
 					}
 				}
 			}
-		}
-
-		if (ghostArray.length == 0) {
-			//console.log("no ghosts found");
 		}
 
 		return ghostArray;

@@ -2,6 +2,9 @@
 background: transparent;
 overflow: visible;
 
+@import "start";
+@import "game";
+
 content {
 	background: #111;
 	position: absolute;
@@ -10,6 +13,18 @@ content {
 	right: 0;
 	bottom: 0;
 	border-radius: inherit;
+
+	&[data-show="start"] {
+		.start-view {
+			display: block;
+		}
+	}
+
+	&[data-show="game"] {
+		.game-view {
+			display: block;
+		}
+	}
 
 	i[class*="icon-"],
 	i[class^="icon-"] {
@@ -26,488 +41,104 @@ content {
 
 		&.icon-menu { background-image: url(~/icons/icon-menu.png); }
 	}
+	
+	.button {
+		position: relative;
+		padding: 7px 0 0 0;
+		margin: 0 7px 7px 0;
+		width: 90px;
+		height: 29px;
+		display: inline-block;
+		border-radius: 4px;
+		vertical-align: top;
+		white-space: nowrap;
+		text-align: center;
+		font-size: 17px;
+		cursor: pointer;
+		text-shadow: 0 1px 1px rgba(#000,.25);
+		background: radial-gradient(circle at bottom center, #8585857a, transparent 90%),
+					linear-gradient(180deg, #555864, #333441 50%, #1b1d2a 50%, #1b1c2a);
+		box-shadow: 0 0 0 1px rgba(#000,.25),
+					inset 0 1px 0 rgba(#fff,.2),
+					inset 0 -1px 0 rgba(#000,.1),
+					0 1px 1px rgba(#000,.2);
 
-	.game-view {
-		background: #121034 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		border-radius: inherit;
-
-		&:before {
-			content: "";
-			background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='30' height='40' patternTransform='scale(1) rotate(5)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M1.624 19.09l6.597-1.595a.503.503 0 11.238.98L2.145 20l6.314 1.526a.504.504 0 01-.238.98l-6.597-1.595 3.426 3.426a3.813 3.813 0 005.386 0l1.1-1.1a4.584 4.584 0 000-6.475l-1.1-1.099a3.814 3.814 0 00-5.386 0zM-.911 18.377l-1.595-6.597a.504.504 0 11.98-.237L0 17.856l1.526-6.313a.503.503 0 11.98.237L.911 18.377l3.426-3.426a3.813 3.813 0 000-5.386l-1.1-1.099A4.548 4.548 0 000 7.125a4.547 4.547 0 00-3.238 1.341l-1.099 1.099a3.813 3.813 0 000 5.386zM-11.535 16.763a4.584 4.584 0 000 6.476l1.1 1.099a3.813 3.813 0 005.385 0l3.426-3.426-6.597 1.595a.501.501 0 01-.609-.371.504.504 0 01.372-.609l6.313-1.526-6.313-1.526a.504.504 0 11.237-.98l6.597 1.595-3.426-3.426a3.796 3.796 0 00-2.693-1.113c-.975 0-1.95.37-2.693 1.113zM.911 21.625l1.595 6.597a.504.504 0 11-.98.237L0 22.146l-1.526 6.313a.505.505 0 01-.98-.237l1.595-6.597-3.426 3.426a3.813 3.813 0 000 5.386l1.1 1.099a4.584 4.584 0 006.475 0l1.099-1.099a3.813 3.813 0 000-5.386zM31.624 19.09l6.597-1.595a.503.503 0 11.238.98L32.145 20l6.314 1.526a.504.504 0 01-.238.98l-6.597-1.595 3.426 3.426a3.813 3.813 0 005.386 0l1.1-1.1a4.584 4.584 0 000-6.475l-1.1-1.099a3.814 3.814 0 00-5.386 0zM29.089 18.377l-1.595-6.597a.504.504 0 11.98-.237L30 17.856l1.526-6.313a.503.503 0 11.98.237l-1.595 6.597 3.426-3.426a3.813 3.813 0 000-5.386l-1.1-1.099A4.548 4.548 0 0030 7.125a4.547 4.547 0 00-3.238 1.341l-1.099 1.099a3.813 3.813 0 000 5.386zM18.465 16.763a4.584 4.584 0 000 6.476l1.1 1.099a3.813 3.813 0 005.385 0l3.426-3.426-6.597 1.595a.501.501 0 01-.609-.371.504.504 0 01.372-.609l6.313-1.526-6.313-1.526a.504.504 0 11.237-.98l6.597 1.595-3.426-3.426a3.796 3.796 0 00-2.693-1.113c-.975 0-1.95.37-2.693 1.113zM30.911 21.625l1.595 6.597a.504.504 0 11-.98.237L30 22.146l-1.526 6.313a.505.505 0 01-.98-.237l1.595-6.597-3.426 3.426a3.813 3.813 0 000 5.386l1.1 1.099a4.584 4.584 0 006.475 0l1.099-1.099a3.813 3.813 0 000-5.386zM16.624 39.09l6.597-1.595a.503.503 0 11.238.98L17.145 40l6.314 1.526a.504.504 0 01-.238.98l-6.597-1.595 3.426 3.426a3.813 3.813 0 005.386 0l1.1-1.1a4.584 4.584 0 000-6.475l-1.1-1.099a3.814 3.814 0 00-5.386 0zM14.089 38.377l-1.595-6.597a.504.504 0 11.98-.237L15 37.856l1.526-6.313a.503.503 0 11.98.237l-1.595 6.597 3.426-3.426a3.813 3.813 0 000-5.386l-1.1-1.099A4.548 4.548 0 0015 27.125a4.547 4.547 0 00-3.238 1.341l-1.099 1.099a3.813 3.813 0 000 5.386zM3.465 36.763a4.584 4.584 0 000 6.476l1.1 1.099a3.813 3.813 0 005.385 0l3.426-3.426-6.597 1.595a.501.501 0 01-.609-.371.504.504 0 01.372-.609l6.313-1.526-6.313-1.526a.504.504 0 11.237-.98l6.597 1.595-3.426-3.426a3.796 3.796 0 00-2.693-1.113c-.975 0-1.95.37-2.693 1.113zM15.911 41.625l1.595 6.597a.504.504 0 11-.98.237L15 42.146l-1.526 6.313a.505.505 0 01-.98-.237l1.595-6.597-3.426 3.426a3.813 3.813 0 000 5.386l1.1 1.1a4.584 4.584 0 006.475 0l1.099-1.1a3.813 3.813 0 000-5.386zM16.624-.91l6.597-1.595a.503.503 0 11.238.98L17.145 0l6.314 1.526a.504.504 0 01-.238.98L16.624.912l3.426 3.426a3.813 3.813 0 005.386 0l1.1-1.1a4.584 4.584 0 000-6.475l-1.1-1.099a3.814 3.814 0 00-5.386 0zM14.089-1.623L12.494-8.22a.504.504 0 11.98-.237L15-2.144l1.526-6.313a.503.503 0 11.98.237l-1.595 6.597 3.426-3.426a3.813 3.813 0 000-5.386l-1.1-1.099A4.548 4.548 0 0015-12.875a4.547 4.547 0 00-3.238 1.341l-1.099 1.099a3.813 3.813 0 000 5.386zM3.465-3.237a4.584 4.584 0 000 6.476l1.1 1.099a3.813 3.813 0 005.385 0L13.376.912 6.779 2.507a.501.501 0 01-.609-.371.504.504 0 01.372-.609L12.855.001 6.542-1.525a.504.504 0 11.237-.98L13.376-.91 9.95-4.336a3.796 3.796 0 00-2.693-1.113c-.975 0-1.95.37-2.693 1.113zM15.911 1.625l1.595 6.597a.504.504 0 11-.98.237L15 2.146 13.474 8.46a.505.505 0 01-.98-.237l1.595-6.597-3.426 3.426a3.813 3.813 0 000 5.386l1.1 1.099a4.584 4.584 0 006.475 0l1.099-1.099a3.813 3.813 0 000-5.386z'  stroke-width='1' stroke='none' fill='hsla(258.5,59.4%,59.4%,1)'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			opacity: .035;
+		&:hover {
+			background: radial-gradient(circle at bottom center, #8585859a, transparent 90%),
+						linear-gradient(180deg, #555864, #333441 50%, #1b1d2a 50%, #1b1c2a);
 		}
 
-		&.show-spin-setter {
-			&:after {
-				content: "";
-				background: #0005;
-				backdrop-filter: blur(2px);
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				border-radius: inherit;
-				z-index: 5;
-			}
+		&.red {
+			background: radial-gradient(circle at bottom center, #ff87878e, transparent 90%),
+						linear-gradient(180deg, #d5747a, #cf5f69 50%, #c6202c 50%, #c1212e);
 
-			.spin-setter.big {
-				display: block;
+			&:hover {
+				background: radial-gradient(circle at bottom center, #ff8787ae, transparent 90%),
+							linear-gradient(180deg, #d5747a, #cf5f69 50%, #c6202c 50%, #c1212e);
 			}
 		}
 
-		.spin-setter {
-			position: relative;
-			top: -1px;
-			width: 73px;
-			--sY: 0;
-			--sX: 0;
+		&.gray {
+			// width: 45px;
+			// height: 27px;
+			background: radial-gradient(circle at bottom center, #dddddd80, transparent 90%),
+						linear-gradient(180deg, #878995, #606270 50%, #474857 50%, #545563);
+
+			&:not(.disabled):hover {
+				background: radial-gradient(circle at bottom center, #dddddda0, transparent 90%),
+							linear-gradient(180deg, #878995, #606270 50%, #474857 50%, #545563);
+			}
 
 			&.disabled {
-				&:after {
-					filter: brightness(0.7);
-				}
-
-				.dot {
-					opacity: 0;
-				}
-			}
-
-			&.big {
-				display: none;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				width: 180px;
-				height: 180px;
-				z-index: 6;
-				transform: translate(-50%, -50%);
-
-				&:before {
-					top: 0;
-					left: 0;
-					width: inherit;
-					height: inherit;
-					box-shadow: 0 0 0 5px #0003,
-								0 0 19px #000;
-				}
-
-				&:after {
-					width: inherit;
-					height: inherit;
-				}
-
-				.dot {
-					width: 16px;
-					height: 16px;
-					transform: translate(-8px, -8px);
-					top: calc( 90px + calc( var( --sY ) * 1px ) );
-					left: calc( 90px + calc( var( --sX ) * 1px ) );
-					box-shadow: 0 0 0 3px #000a;
-				}
-			}
-
-			&:before {
-				content: "";
-				position: absolute;
-				top: -3px;
-				left: -3px;
-				width: 79px;
-				height: 79px;
-				border-radius: 50%;
-				box-shadow: inset 0 2px 3px #0007,
-							0 1px 2px #fff7;
-			}
-
-			&:after {
-				content: "";
-				background: url(~/img/spinSetterZoom.webp) 50% 50%/contain no-repeat;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 73px;
-				height: 73px;
-			}
-
-			.dot {
-				background: #f00;
-				position: absolute;
-				top: calc( 37px + calc( var( --sY ) * 1px ) );
-				left: calc( 37px + calc( var( --sX ) * 1px ) );
-				width: 8px;
-				height: 8px;
-				transform: translate(-4px, -4px);
-				z-index: 2;
-				border-radius: 50%;
-				box-shadow: 0 0 0 2px #000a;
+				cursor: default;
+				color: rgba(#111,.5);
+				text-shadow: 0 1px 0 #929292;
 			}
 		}
 
-		.game-cvs {
+		&.green {
+			background: radial-gradient(circle at bottom center, #aecaff77, transparent 90%),
+						linear-gradient(180deg, #70ba71, #3cab3b 50%, #229a14 50%, #249f15);
+
+			&:hover {
+				background: radial-gradient(circle at bottom center, #aecaff97, transparent 90%),
+							linear-gradient(180deg, #70ba71, #3cab3b 50%, #249f15 50%, #249f15);
+			}
+		}
+
+		&.blue {
+			background: radial-gradient(circle at bottom center, #aeffc260, transparent 90%),
+						linear-gradient(180deg, #83a3e9, #5f86e5 50%, #4472e0 50%, #4973d2);
+
+			&:hover {
+				background: radial-gradient(circle at bottom center, #aeffc280, transparent 90%),
+							linear-gradient(180deg, #83a3e9, #5f86e5 50%, #4472e0 50%, #4973d2);
+			}
+		}
+
+		&:hover:active {
+			padding-top: 8px;
+			padding-bottom: 3px;
+			background-position: 0 1px;
+			box-shadow: 0 0 0 1px rgba(#000,.25),
+						inset 0 1px 0 rgba(#fff,.01),
+						0 1px 1px rgba(#000,.2);
+		}
+
+		&:before,
+		&:after {
+			content: "";
 			position: absolute;
+			left: 3px;
+			right: 3px;
+			height: 1px;
+			bottom: -2px;
+			background: linear-gradient(90deg, transparent, rgba(#fff,.3), transparent);
+		}
+
+		&:after {
 			top: 0;
-			left: 0;
-			z-index: 2;
-
-			// &:after {
-			// 	content: "";
-			// 	position: absolute;
-			// 	top: 165px;
-			// 	left: 125px;
-			// 	right: 125px;
-			// 	bottom: 81px;
-			// 	border-radius: inherit;
-			// 	background: url(/app/icons/logo-karaqu.png) 50% 50% no-repeat;
-			// 	background-size: auto 60px;
-			// 	filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75)) opacity(.4);
-			// 	mix-blend-mode: overlay;
-			// 	pointer-events: none;
-			// 	z-index: 2;
-			// }
-
-			canvas {
-				// background: #f00;
-			}
-		}
-
-		.hud {
-			// background: #0001;
-			position: absolute;
-			top: 19px;
-			left: 19px;
-			right: 19px;
-			height: 73px;
-			display: flex;
-			z-index: 3;
-			--outline: 0;
-			--color: #eef;
-			--thinkTime: 30s;
-
-			&[data-turn="p1"] {
-				.player.left {
-					filter: none;
-
-					.name:after { }
-				}
-
-				.player.right {
-					filter: grayscale(1);
-
-					.name:after { }
-				}
-			}
-
-			&[data-turn="p2"] {
-				.player.left {
-					filter: grayscale(1);
-
-					.name:after { }
-				}
-
-				.player.right {
-					filter: none;
-
-					.name:after { }
-				}
-			}
-
-			.head {
-				// background: #f002;
-				width: 73px;
-
-				.menu {
-					position: relative;
-					width: 43px;
-					height: 43px;
-					cursor: pointer;
-
-					&:before {
-						content: "";
-						position: absolute;
-						top: -1px;
-						left: -1px;
-						right: -1px;
-						bottom: -1px;
-						border-radius: 7px;
-						box-shadow: inset 0 2px 3px #0007,
-									0 1px 2px #fff7;
-					}
-
-					&:after {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						border-radius: 6px;
-						background: linear-gradient(180deg, #15cb32, #008717);
-						box-shadow: inset 0 1px 1px #8cf388d1,
-									inset 0 -1px 1px #006102;
-					}
-
-					i.icon-menu {
-						z-index: 2;
-						width: 42px;
-						height: 42px;
-						filter: drop-shadow(0 1px 0 #15cb32);
-					}
-				}
-			}
-
-			.pot {
-				// background: #f001;
-				position: relative;
-				width: 109px;
-
-				&:before {
-					content: "";
-					background: #fff1;
-					position: absolute;
-					top: -5px;
-					left: 15px;
-					height: 77px;
-					width: 77px;
-					border-radius: 50%;
-					backdrop-filter: blur(2px);
-					box-shadow: inset 0 -1px 1px #0007,
-								inset 0 1px 1px #fff5,
-								0 1px 1px #fff5,
-								0 -1px 1px #0007;
-				}
-
-				&:after {
-					content: "";
-					position: absolute;
-					top: 2px;
-					left: 23px;
-					width: 58px;
-					height: 61px;
-					background: url(~/icons/icon-champion.png) 50% 50%/contain no-repeat;
-					filter: brightness(1.5) saturate(1.15);
-				}
-			}
-
-			.player {
-				// background: #0f01;
-				position: relative;
-				flex: 1;
-
-				&.thinking {
-					svg.outline {
-						display: block;
-
-						rect {
-							--outline: 365;
-							stroke-dashoffset: var( --outline );
-							filter: drop-shadow(0 0 1px var( --color ))
-									drop-shadow(0 0 3px var( --color ))
-									drop-shadow(0 0 5px var( --color ));
-							animation: var( --thinkTime ) animOutline linear forwards;
-						}
-					}
-				}
-
-				&.left {
-					.name {
-						text-align: right;
-
-						&:before {
-							right: 81px;
-						}
-
-						&:after {
-							right: 0;
-						}
-
-						.border {
-							right: -5px;
-						}
-
-						svg.outline {
-							right: -2px;
-						}
-					}
-
-					.ball-slots {
-						right: 79px;
-					}
-				}
-
-				&.right {
-					.name {
-						text-align: left;
-
-						&:before {
-							left: 81px;
-						}
-
-						&:after {
-							left: 0;
-						}
-
-						.border {
-							left: -5px;
-						}
-
-						svg.outline {
-							left: -2px;
-						}
-					}
-
-					.ball-slots {
-						left: 79px;
-					}
-				}
-
-				.name {
-					// background: #0001;
-					position: absolute;
-					top: 0;
-					right: 0;
-					left: 0;
-
-					&:before {
-						content: attr(data-name);
-						position: absolute;
-						top: -3px;
-						color: #fff;
-						font-size: 16px;
-						text-shadow: 0 2px 3px #0003;
-						background: #0003;
-					    width: 239px;
-					    padding: 6px 7px 5px;
-					    border-radius: 5px;
-					    box-shadow: inset 0 1px 0 #0005,
-					    			inset 0 -1px 0 #fff2;
-					}
-
-					&:after {
-						content: "";
-						position: absolute;
-						top: 0;
-						height: 63px;
-						width: 63px;
-						border-radius: 5px;
-						background: 50% 50% no-repeat;
-						background-image: inherit;
-						background-size: auto 100%;
-						box-shadow: inset 0 1px 1px #fff5,
-									inset 0 -1px 1px #0007;
-						// box-shadow: inset 0 0 3px rgba(#000,.5),
-						// 			inset 0 0 7px rgba(#000,.75),
-						// 			inset 0 0 11px rgba(#000,.85);
-					}
-
-					&[data-name="Yasmin"]:after { background-image: url(~/gfx/yasmin.webp); }
-					&[data-name="Sean"]:after { background-image: url(~/gfx/sean.webp); }
-					&[data-name="Ann"]:after { background-image: url(~/gfx/ann.webp); }
-					&[data-name="Denise"]:after { background-image: url(~/gfx/denise.webp); }
-					&[data-name="Adam"]:after { background-image: url(~/gfx/adam.webp); }
-					&[data-name="Ali"]:after { background-image: url(~/gfx/ali.webp); }
-
-					.border {
-						position: absolute;
-						top: -5px;
-						width: 73px;
-						height: 73px;
-						border-radius: 9px;
-						border: 5px solid #0005;
-						box-shadow: inset 0 0 3px #0009;
-					}
-				}
-
-				.ball-slots {
-					position: absolute;
-					bottom: 7px;
-					list-style: none;
-					padding: 0;
-					margin: 0;
-					font-size: 0;
-
-					li {
-						background: #0002;
-						position: relative;
-						display: inline-block;
-						width: 36px;
-						height: 36px;
-						margin: 0 1px 0 0;
-						border-radius: 50%;
-						box-shadow: inset 0 2px 3px #0007,
-									inset 0 15px 9px #0004,
-									0 1px 1px #fff7;
-
-						&.potted {
-							&:before {
-								display: none;
-								// scale: .75;
-								// filter: grayscale(1) brightness(0.75);
-							}
-						}
-
-						&:before {
-							content: "";
-							position: absolute;
-							top: 2px;
-							left: 2px;
-							width: 32px;
-							height: 32px;
-							background: url(~/img/balls.webp) no-repeat;
-							background-size: 128px auto;
-							background-position: 32px 32px;
-						}
-
-						&[data-id="b1"]:before { background-position: -32px 0px; }
-						&[data-id="b2"]:before { background-position: -64px 0px; }
-						&[data-id="b3"]:before { background-position: -96px 0px; }
-						&[data-id="b4"]:before { background-position: 0px -32px; }
-						&[data-id="b5"]:before { background-position: -32px -32px; }
-						&[data-id="b6"]:before { background-position: -64px -32px; }
-						&[data-id="b7"]:before { background-position: -96px -32px; }
-						
-						&[data-id="b8"]:before { background-position: 0px -64px; }
-
-						&[data-id="b9"]:before { background-position: -32px -64px; }
-						&[data-id="b10"]:before { background-position: -64px -64px; }
-						&[data-id="b11"]:before { background-position: -96px -64px; }
-						&[data-id="b12"]:before { background-position: 0px -96px; }
-						&[data-id="b13"]:before { background-position: -32px -96px; }
-						&[data-id="b14"]:before { background-position: -64px -96px; }
-						&[data-id="b15"]:before { background-position: -96px -96px; }
-					}
-				}
-
-				svg.outline {
-					display: none;
-					position: absolute;
-					top: -2px;
-					width: 67px;
-					height: 67px;
-					overflow: visible;
-					z-index: 3;
-
-					rect {
-						fill: none;
-						stroke: var( --color );
-						stroke-linejoin: round;
-						stroke-linecap: round;
-						stroke-width: 3;
-						stroke-dasharray: var( --outline );
-						filter: drop-shadow(0 0 3px var( --color ))
-								drop-shadow(0 0 9px var( --color ));
-					}
-				}
-			}
+			bottom: auto;
 		}
 	}
 }
