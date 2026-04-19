@@ -62,7 +62,6 @@ const billiard = {
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
 				break;
 			case "toggle-sound-fx":
-				console.log( Project );
 				break;
 			case "toggle-music":
 				break;
@@ -72,6 +71,11 @@ const billiard = {
 			case "output-pgn":
 				value = playState.getState();
 				console.log( JSON.stringify(value) );
+				break;
+			case "close-congratulations":
+				Self.game.dispatch({ type: "game-stop" });
+				Self.els.content.removeClass("game-won");
+				Self.els.content.data({ show: "start" });
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

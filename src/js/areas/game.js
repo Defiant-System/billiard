@@ -29,11 +29,12 @@
 				break;
 			case "start-game":
 				Project.game.state.start("stop");
+				Self.els.hud.find(`.player.right .name`).data({ name: event.name || "Yasmin" });
 				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
 
 				Project.levelComplete = false;
 				Project.guideOn = 1;
-				Project.aiRating = 2;
+				Project.aiRating = event.level || 2;
 				Project.bestScore = 0;
 				Project.numGames = 0;
 				Project.bestTime = 0;

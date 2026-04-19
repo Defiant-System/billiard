@@ -9,7 +9,7 @@ content {
 		right: 0;
 		bottom: 0;
 		border-radius: inherit;
-		padding: 73px 0 0;
+		padding: 23px 0 0;
 		text-align: center;
 
 		&:before {
@@ -21,6 +21,15 @@ content {
 			right: 0;
 			bottom: 0;
 			opacity: .035;
+			pointer-events: none;
+		}
+
+		.logo {
+			background: #0001;
+			display: inline-block;
+			position: relative;
+			width: 500px;
+			height: 340px;
 		}
 		
 		.opponents {
@@ -28,8 +37,9 @@ content {
 			display: block;
 			height: 130px;
 			padding: 7px 0 0;
-			margin: 5px auto 73px;
+			margin: 5px auto 47px;
 			font-size: 0;
+			font-family: BebasNeueRegular, Arial, sans-serif;
 			list-style: none;
 
 			&:hover {
@@ -175,9 +185,9 @@ content {
 
 		.button {
 			width: auto;
-			padding: 8px 11px 0;
+			padding: 5px 11px 0;
 			text-transform: uppercase;
-			font-size: 13px;
+			// font-size: 13px;
 			color: #fff;
 
 			&:focus,

@@ -1286,7 +1286,6 @@ playState.update = function () {
 		//new - apply rulings split into 2 to allow time delay after showing foul messsage and before continuing with switching turns and moving onto next shot.
 		if (gameInfo.gameRunning == true) {
 			//prevents coming here in the event of rerack, in which case gameRunning is set to false
-
 			//console.log("apply rulings 2");
 
 			//check to see if all object balls have been potted, in which case end the game
@@ -1308,11 +1307,6 @@ playState.update = function () {
 					checkWhosTurn();
 				}
 				resetVars();
-			} else {
-				//game is over - show results
-				//trace("game over");
-				//gameInfo.gameRunning = false;
-				//showGameOver();
 			}
 		}
 
@@ -1325,51 +1319,6 @@ playState.update = function () {
 		}
 	}
 
-	/*
-	function initNextLevel() {
-		if (Project.levelComplete == true) {
-			//gameInfo.allowTransferPoints = true;
-		}
-	}
-	*/
-
-	/*
-	function transferBonusPoints() {
-		if (gameInfo.allowTransferPoints == true) {
-			//here every loop if stage complete
-
-			if (parseInt(gameInfo.gameOverPanel.text1.text) < Project.score) {
-				gameInfo.gameOverPanel.text1.text = String(
-					parseInt(gameInfo.gameOverPanel.text1.text) + 5
-				);
-
-				if (parseInt(gameInfo.gameOverPanel.text1.text) > Project.score) {
-					gameInfo.gameOverPanel.text1.text = String(Project.score);
-				}
-
-				//update highscore display
-				if (
-					parseInt(gameInfo.gameOverPanel.text2.text) <
-					parseInt(gameInfo.gameOverPanel.text1.text)
-				) {
-					gameInfo.gameOverPanel.text2.text = gameInfo.gameOverPanel.text1.text;
-				}
-
-				Sound.Play("ding", 0.3);
-			} else {
-				gameInfo.allowTransferPoints = false;
-				if (gameInfo.transfer1Complete == false) {
-					gameInfo.transfer1Complete = true;
-					Project.game.time.events.add(1000, showBonus2, this);
-				}
-				if (gameInfo.transfer2Complete == false) {
-					gameInfo.transfer2Complete = true;
-				}
-			}
-		}
-	}
-	*/
-
 	function checkGameOver() {
 		//gameInfo.gameOver = true is set in timer.js when time runs out.
 		if (gameInfo.gameOver == true) {
@@ -1378,148 +1327,20 @@ playState.update = function () {
 
 			gameInfo.cueBaseCanvas.visible = false;
 			gameInfo.guideCanvas.visible = false;
-
 			gameInfo.gameRunning = false;
 
 			showGameOver();
 		}
 	}
 
-	function showGameOver(forceWinP1 = false) {
-		if (forceWinP1) gameInfo.winner = "p1";
-
+	function showGameOver() {
 		if (gameInfo.winner = "p1") {
 			Project.APP.els.content.addClass("game-won");
 		} else {
 			Project.APP.els.content.addClass("game-lost");
 		}
 		
-		return console.log("winner: ", gameInfo.winner);
-		
-
-		//console.log("show game over");
-
-		// window.famobi_analytics.trackScreen("SCREEN_LEVELRESULT");
-
-		gameInfo.gameOverPanel.visible = true;
-
-		if (gameInfo.winner == "p1" && Project.mode == 1) {
-			gameInfo.playerWin.visible = true;
-		}
-		if (gameInfo.winner == "p2" && Project.mode == 1) {
-			gameInfo.aiWin.visible = true;
-			Project.score = 0;
-		}
-
-		if (Project.mode == 2) {
-			gameInfo.p1Icon.visible = true;
-			gameInfo.p2Icon.visible = true;
-
-			let pIconY = -100;
-
-			if (gameInfo.winner == "p1") {
-				gameInfo.p2Icon.rosette.visible = false;
-				gameInfo.p2Icon.scale = new Phaser.Point(0.4, 0.4);
-
-				gameInfo.p2Icon.y = pIconY + 256 * 0.05;
-				gameInfo.p1Icon.y = pIconY;
-			} else {
-				gameInfo.p1Icon.rosette.visible = false;
-				gameInfo.p1Icon.scale = new Phaser.Point(0.4, 0.4);
-
-				gameInfo.p2Icon.y = pIconY;
-				gameInfo.p1Icon.y = pIconY + 256 * 0.05;
-			}
-
-			gameInfo.gameOverWindow.visible = false;
-			gameInfo.GOscoreIcon.visible = false;
-			gameInfo.GOhighScoreIcon.visible = false;
-			gameInfo.gameOverPanel.text1.visible = false;
-			gameInfo.gameOverPanel.text2.visible = false;
-		}
-
-		gameInfo.gameOverPanel.text1.text = String(Project.score);
-		gameInfo.gameOverPanel.text2.text = String(Project.bestScore);
-
-		gameInfo.GOaiLevel.visible = false;
-		gameInfo.GOclockIcon.visible = false;
-
-		gameInfo.gameOverPanel.text3.visible = false;
-		gameInfo.gameOverPanel.text4.visible = false;
-
-		if (gameInfo.winner == "p1" && Project.mode == 1) {
-			gameInfo.quitButton2.visible = false;
-			gameInfo.replayButton.visible = false;
-			showBonuses();
-		} else {
-			gameInfo.quitButton2.visible = false;
-			gameInfo.replayButton.visible = false;
-
-			var showButtons = function () {
-				gameInfo.quitButton2.visible = true;
-				gameInfo.replayButton.visible = true;
-
-				gameInfo.quitButton2.input.enabled = true;
-				gameInfo.replayButton.input.enabled = true;
-			};
-
-			Project.game.time.events.add(
-				2000,
-				function () {
-					sendGameOverToAPI().then(showButtons, showButtons);
-				},
-				this
-			);
-		}
-	}
-
-	window.FORCE_LOSE = (forceP1 = true) => {
-		showGameOver(forceP1);
-	};
-
-	function showBonuses() {
-		// Sound.Play("cheer", 1);
-		Project.game.time.events.add(2000, showBonus1, this);
-	}
-
-	function showBonus1() {
-		gameInfo.GOclockIcon.visible = true;
-		var timeBonus = 180 - Math.round(gameInfo.time / 60);
-		if (timeBonus < 0) {
-			timeBonus = 0;
-		}
-		gameInfo.gameOverPanel.text3.text = String(timeBonus);
-
-		gameInfo.gameOverPanel.text3.visible = true;
-
-		Project.score += timeBonus;
-
-		if (timeBonus > 0) {
-			gameInfo.allowTransferPoints = true;
-			gameInfo.transfer1Complete = false;
-		} else {
-			Project.game.time.events.add(2000, showBonus2, this);
-		}
-	}
-
-	function showBonus2() {
-		gameInfo.GOaiLevel.visible = true;
-		gameInfo.GOaiLevel.frame = Project.aiRating - 1;
-		gameInfo.gameOverPanel.text4.visible = true;
-		var levelBonus = Project.aiRating * 100;
-		gameInfo.gameOverPanel.text4.text = String(levelBonus);
-
-		Project.score += levelBonus;
-
-		gameInfo.allowTransferPoints = true;
-		gameInfo.transfer2Complete = false;
-	}
-
-	function showButtons() {
-		gameInfo.quitButton2.visible = true;
-		gameInfo.replayButton.visible = true;
-		gameInfo.quitButton2.input.enabled = true;
-		gameInfo.replayButton.input.enabled = true;
+		console.log("winner: ", gameInfo.winner);
 	}
 
 	function rerackBalls() {

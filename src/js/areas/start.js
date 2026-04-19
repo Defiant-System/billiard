@@ -17,7 +17,13 @@
 		switch (event.type) {
 			case "select-opponent":
 				APP.els.content.data({ show: "game" });
-				APP.game.dispatch({ type: "start-game" });
+				
+				el = $(event.target);
+				APP.game.dispatch({
+					type: "start-game",
+					name: el.find(".photo").data("name"),
+					level: +el.find(".photo").data("level"),
+				});
 				break;
 		}
 	}
