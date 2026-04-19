@@ -93,6 +93,7 @@ const billiard = {
 				}
 		}
 	},
+	start: @import "./areas/start.js",
 	game: @import "./areas/game.js",
 	spinSetter: @import "./areas/spin-setter.js",
 };

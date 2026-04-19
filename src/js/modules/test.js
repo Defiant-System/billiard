@@ -52,9 +52,11 @@ let TestState = {
 let Test = {
 	init(APP) {
         
-        setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
+        // setTimeout(() => APP.els.content.addClass("game-won"), 500);
+
 		return;
 		
+        // setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);

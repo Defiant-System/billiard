@@ -16,6 +16,7 @@
 		// console.log(event);
 		switch (event.type) {
 			case "select-opponent":
+				APP.els.content.data({ show: "game" });
 				APP.game.dispatch({ type: "start-game" });
 				break;
 		}

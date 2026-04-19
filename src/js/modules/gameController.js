@@ -1387,6 +1387,12 @@ playState.update = function () {
 
 	function showGameOver(forceWinP1 = false) {
 		if (forceWinP1) gameInfo.winner = "p1";
+
+		if (gameInfo.winner = "p1") {
+			Project.APP.els.content.addClass("game-won");
+		} else {
+			Project.APP.els.content.addClass("game-lost");
+		}
 		
 		return console.log("winner: ", gameInfo.winner);
 		
