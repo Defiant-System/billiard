@@ -432,6 +432,15 @@ content {
 							}
 						}
 
+						&.appear:before {
+							opacity: 0;
+							animation: appear 250ms ease-in-out forwards;
+						}
+
+						&.disappear:before {
+							animation: disappear 400ms ease-in-out forwards;
+						}
+
 						&:before {
 							content: "";
 							position: absolute;
@@ -444,23 +453,23 @@ content {
 							background-position: 32px 32px;
 						}
 
-						&[data-id="b1"]:before { background-position: -32px 0px; }
-						&[data-id="b2"]:before { background-position: -64px 0px; }
-						&[data-id="b3"]:before { background-position: -96px 0px; }
-						&[data-id="b4"]:before { background-position: 0px -32px; }
-						&[data-id="b5"]:before { background-position: -32px -32px; }
-						&[data-id="b6"]:before { background-position: -64px -32px; }
-						&[data-id="b7"]:before { background-position: -96px -32px; }
+						&[data-id="b1"]:before { background-position: -32px 0px; animation-delay: 0ms; }
+						&[data-id="b2"]:before { background-position: -64px 0px; animation-delay: 20ms; }
+						&[data-id="b3"]:before { background-position: -96px 0px; animation-delay: 40ms; }
+						&[data-id="b4"]:before { background-position: 0px -32px; animation-delay: 60ms; }
+						&[data-id="b5"]:before { background-position: -32px -32px; animation-delay: 80ms; }
+						&[data-id="b6"]:before { background-position: -64px -32px; animation-delay: 100ms; }
+						&[data-id="b7"]:before { background-position: -96px -32px; animation-delay: 120ms; }
 						
 						&[data-id="b8"]:before { background-position: 0px -64px; }
 
-						&[data-id="b9"]:before { background-position: -32px -64px; }
-						&[data-id="b10"]:before { background-position: -64px -64px; }
-						&[data-id="b11"]:before { background-position: -96px -64px; }
-						&[data-id="b12"]:before { background-position: 0px -96px; }
-						&[data-id="b13"]:before { background-position: -32px -96px; }
-						&[data-id="b14"]:before { background-position: -64px -96px; }
-						&[data-id="b15"]:before { background-position: -96px -96px; }
+						&[data-id="b9"]:before { background-position: -32px -64px; animation-delay: 0ms; }
+						&[data-id="b10"]:before { background-position: -64px -64px; animation-delay: 20ms; }
+						&[data-id="b11"]:before { background-position: -96px -64px; animation-delay: 40ms; }
+						&[data-id="b12"]:before { background-position: 0px -96px; animation-delay: 60ms; }
+						&[data-id="b13"]:before { background-position: -32px -96px; animation-delay: 80ms; }
+						&[data-id="b14"]:before { background-position: -64px -96px; animation-delay: 100ms; }
+						&[data-id="b15"]:before { background-position: -96px -96px; animation-delay: 120ms; }
 					}
 				}
 
@@ -487,4 +496,16 @@ content {
 			}
 		}
 	}
+}
+
+@keyframes appear {
+	0%   { opacity: 0; transform: scale(.5); }
+	90%  { opacity: 1; transform: scale(1.25); }
+	100% { opacity: 1; transform: scale(1.0); }
+}
+
+@keyframes disappear {
+	0%   { opacity: 1; transform: scale(1.0); }
+	10%  { opacity: 1; transform: scale(1.25); }
+	100% { opacity: 0; transform: scale(.5); }
 }

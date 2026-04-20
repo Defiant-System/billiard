@@ -33,14 +33,12 @@
 				Self.els.hud.find(`.player.left .name`).data({ name: ME.name });
 				Self.els.hud.find(`.player.right .name`).data({ name: event.name || "Yasmin" });
 				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
+				// toggle sound
+				Sound.setMute(APP.settings.audio === "off");
 
 				Project.levelComplete = false;
-				Project.guideOn = 1;
+				Project.guideOn = APP.settings.guide === "on" ? 1 : 0;
 				Project.aiRating = event.level || 2;
-				Project.bestScore = 0;
-				Project.numGames = 0;
-				Project.bestTime = 0;
-				
 				Project.mode = +event.arg || 1;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";

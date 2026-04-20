@@ -107,6 +107,11 @@ function awardBonuses(collisionData) {
 		if (Project.mode == 1 && gameInfo.turn == "p1") {
 			console.log("potted ball ", collisionData.ball);
 		}
+
+		Project.APP.game.els.hud.find(`.ball-slots li[data-id="b${collisionData.ball.id}"]`)
+			.cssSequence("disappear", "animatinend", el => {
+				el.removeClass("disappear").removeAttr("data-id");
+			});
 	} else{
 		//cue ball potted
 		gameInfo.fouled = true;

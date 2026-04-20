@@ -26,6 +26,7 @@ const Project = {
 // default settings
 const defaultSettings = {
 	audio: "off",
+	guide: "on",
 };
 
 const billiard = {
@@ -69,8 +70,6 @@ const billiard = {
 			case "init-settings":
 				// get settings, if any
 				Self.settings = window.settings.getItem("settings") || defaultSettings;
-				// toggle sound
-				Sound.setMute(Self.settings === "off");
 				break;
 
 			case "new-game":

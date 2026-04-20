@@ -1303,10 +1303,8 @@ playState.update = function () {
 			}
 
 			if (gameInfo.gameOver == false) {
-				if (gameInfo.trial == false && gameInfo.mode != "practice") {
-					setNextTargetType();
-					checkWhosTurn();
-				}
+				setNextTargetType();
+				checkWhosTurn();
 				resetVars();
 			}
 		}
@@ -1676,7 +1674,7 @@ playState.update = function () {
 					if (ball.id == 8 && gameInfo.mode != "practice") {
 						if (targetType == "8 BALL") {
 							//8 ball was the target, and was potted - so game is won
-							console.log("game won");
+							console.log("game won", gameInfo.turn);
 
 							if (gameInfo.trial == true) {
 								gameInfo.shotRating = 1;
@@ -1810,9 +1808,13 @@ playState.update = function () {
 				gameInfo.p2Rack = "stripes";
 
 				Project.APP.game.els.hud.find(`.player.left .ball-slots li`)
-						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
+						.map((el, index) => {
+							$(el).data({ id: `b${index + 1}` }).cssSequence("appear", "animationend", el => el.removeClass("appear"));
+						});
 				Project.APP.game.els.hud.find(`.player.right .ball-slots li`)
-						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
+						.map((el, index) => {
+							$(el).data({ id: `b${index + 9}` }).cssSequence("appear", "animationend", el => el.removeClass("appear"));
+						});
 			}
 
 			if (gameInfo.p1TargetType == "STRIPES") {
@@ -1820,9 +1822,13 @@ playState.update = function () {
 				gameInfo.p1Rack = "stripes";
 
 				Project.APP.game.els.hud.find(`.player.left .ball-slots li`)
-						.map((el, index) => $(el).data({ id: `b${index + 9}` }));
+						.map((el, index) => {
+							$(el).data({ id: `b${index + 9}` }).cssSequence("appear", "animationend", el => el.removeClass("appear"));
+						});
 				Project.APP.game.els.hud.find(`.player.right .ball-slots li`)
-						.map((el, index) => $(el).data({ id: `b${index + 1}` }));
+						.map((el, index) => {
+							$(el).data({ id: `b${index + 1}` }).cssSequence("appear", "animationend", el => el.removeClass("appear"));
+						});
 			}
 			// console.log(`P1 is ${gameInfo.p1Rack}`);
 
