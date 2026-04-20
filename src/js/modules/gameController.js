@@ -88,7 +88,7 @@ playState.setState = function(state) {
 	gameInfo.phys.updatePhysics();
 	renderScreen();
 
-	console.log( gameInfo );
+	// console.log( gameInfo );
 }
 
 playState.update = function () {
@@ -631,7 +631,7 @@ playState.update = function () {
 			}
 		}
 	}
-
+	/*
 	function setSpin() {
 		if (gameInfo.startAim == false || !Project.game.device.touch) {
 			if (
@@ -708,7 +708,7 @@ playState.update = function () {
 			}
 		}
 	}
-
+	*/
 	function aim() {
 		if (gameInfo.preventAim == false) {
 			if (gameInfo.settingPower == false) {
@@ -736,7 +736,7 @@ playState.update = function () {
 					gameInfo.aimDirectionVector = new Vector2D(compX, compY).normalize();
 					updateAimingGuide();
 				}
-
+				/*
 				if (Project.game.device.touch) {
 					if (Project.game.input.activePointer.isDown == true) {
 						if (gameInfo.startAim) {
@@ -818,6 +818,7 @@ playState.update = function () {
 						gameInfo.preventSetPower = false;
 					}
 				}
+				*/
 			}
 		}
 	}
@@ -1309,14 +1310,6 @@ playState.update = function () {
 				resetVars();
 			}
 		}
-
-		preventQuit = false;
-
-		if (gameInfo.rerack == true) {
-			preventQuit = true;
-			//setTimeout(rerackBalls, 3000);
-			Project.game.time.events.add(500, rerackBalls, this);
-		}
 	}
 
 	function checkGameOver() {
@@ -1334,7 +1327,7 @@ playState.update = function () {
 	}
 
 	function showGameOver() {
-		if (gameInfo.winner = "p1") {
+		if (gameInfo.winner === "p1") {
 			Project.APP.els.content.addClass("game-won");
 		} else {
 			Project.APP.els.content.addClass("game-lost");
@@ -1359,34 +1352,11 @@ playState.update = function () {
 				//console.log("FOUL: Player 1 " + gameInfo.foulMessage);
 			}
 
-			// gameInfo.foulWindow.visible = true;
-			// gameInfo.foulWindow.alpha = 0;
-			// Project.game.add
-			// 	.tween(gameInfo.foulWindow)
-			// 	.to({ alpha: 1 }, 1000, "Linear", true);
-			// Project.game.time.events.add(Phaser.Timer.SECOND * 4, fadeFoulWindow, this);
-
 			setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
 
 			function hideFoulWindow() {
-				if (gameInfo.rerack == false) {
-						// gameInfo.gameRunning = true;
-					}
-					applyRulings2();
+				applyRulings2();
 			}
-
-			function fadeFoulWindow() {
-				if (gameInfo.foulWindow.visible == true) {
-					var foulTween = Project.game.add.tween(gameInfo.foulWindow);
-					foulTween.to({ alpha: 0 }, 1000, "Linear", true);
-					foulTween.onComplete.add(hideFoulWindow, this);
-				}
-			}
-
-			// gameInfo.foulWindow.display1.visible = false;
-			// gameInfo.foulWindow.display2.visible = false;
-			// gameInfo.foulWindow.display3.visible = false;
-			// gameInfo.foulWindow.display4.visible = false;
 
 			/*
 			switch (gameInfo.foulDisplay1) {
@@ -1706,7 +1676,7 @@ playState.update = function () {
 					if (ball.id == 8 && gameInfo.mode != "practice") {
 						if (targetType == "8 BALL") {
 							//8 ball was the target, and was potted - so game is won
-							//console.log("game won");
+							console.log("game won");
 
 							if (gameInfo.trial == true) {
 								gameInfo.shotRating = 1;
@@ -1722,9 +1692,9 @@ playState.update = function () {
 								gameInfo.shotRating = -1.5;
 							} else {
 								gameInfo.gameOver = true;
-								//console.log("game lost");
+								console.log("game lost");
 
-								gameInfo.foulDisplay3 = "POTTED8BALL";
+								// gameInfo.foulDisplay3 = "POTTED8BALL";
 
 								if (gameInfo.turn == "p2") {
 									gameInfo.winner = "p1";
@@ -2123,10 +2093,10 @@ playState.update = function () {
 		gameInfo.ballArray[0].spin = 0;
 		gameInfo.ballArray[0].english = 0;
 
-		gameInfo.foulDisplay1 = "NONE";
-		gameInfo.foulDisplay2 = "NONE";
-		gameInfo.foulDisplay3 = "NONE";
-		gameInfo.foulDisplay4 = "NONE";
+		// gameInfo.foulDisplay1 = "NONE";
+		// gameInfo.foulDisplay2 = "NONE";
+		// gameInfo.foulDisplay3 = "NONE";
+		// gameInfo.foulDisplay4 = "NONE";
 
 		gameInfo.placedInCenter = false;
 
@@ -2479,10 +2449,8 @@ playState.update = function () {
 								var virtualGhost;
 								var virtualCueBall;
 
-								var width =
-									gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius;
-								var height =
-									gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius;
+								var width = gameInfo.adjustmentScale * 30000 - gameInfo.ballRadius;
+								var height = gameInfo.adjustmentScale * 15000 - gameInfo.ballRadius;
 								switch (c) {
 									case 0:
 										//right hand cushion
@@ -2793,13 +2761,13 @@ playState.update = function () {
 					.tween(gameInfo.cue)
 					.to(
 						{ x: gameInfo.power / 600 },
-						500,
+						50,
 						Phaser.Easing.Linear.easeOut,
 						true
 					);
 
 				var hideCueTween = Project.game.add.tween(gameInfo.cueCanvas);
-				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 1500);
+				hideCueTween.to({ alpha: 0 }, 100, "Linear", true, 1000);
 				hideCueTween.onComplete.add(hideCueCanvas, this);
 				gameInfo.cueTweenComplete = false;
 

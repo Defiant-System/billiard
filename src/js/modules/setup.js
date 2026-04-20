@@ -46,7 +46,8 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
+			gameInfo.turn = "p2";
+			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
 			gameInfo.turn = Project.lastBreaker == "p2" ? "p1" : "p2";
@@ -128,7 +129,7 @@ playState.create = function () {
 
 		gameInfo.aimDirectionVector = new Vector2D(1, 0).normalize();
 	}
-
+/*
 	function resume() {
 		playState.resumeGame();
 	}
@@ -194,7 +195,7 @@ playState.create = function () {
 
 		Project.game.state.start("play");
 	}
-
+*/
 	function initCanvases() {
 		gameInfo.bgCanvas = new Phaser.Group(Project.game, Project.game.stage, "bgCanvas");
 		gameInfo.guiBaseCanvas = new Phaser.Group(

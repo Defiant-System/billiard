@@ -15,12 +15,17 @@ const { Phaser, PIXI } = await window.fetch("~/js/bundle.js");
 
 @import "./modules/test.js"
 
-
 //global variables - persistent across states
+const ME = karaqu.user;
+
 const Project = {
 	width: 1920,
 	height: 1200,
-	alertSent: false,
+};
+
+// default settings
+const defaultSettings = {
+	audio: "off",
 };
 
 const billiard = {
@@ -34,6 +39,9 @@ const billiard = {
 		Object.keys(this)
 			.filter(i => typeof this[i].init === "function")
 			.map(i => this[i].init(this));
+
+		// init settings
+		this.dispatch({ type: "init-settings" });
 
 		// DEV-ONLY-START
 		Test.init(this);
@@ -58,15 +66,19 @@ const billiard = {
 				Self.game.dispatch({ type: "game-stop" });
 				break;
 			// custom events
+			case "init-settings":
+				// get settings, if any
+				Self.settings = window.settings.getItem("settings") || defaultSettings;
+				// toggle sound
+				Sound.setMute(Self.settings === "off");
+				break;
+
 			case "new-game":
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
 				break;
 			case "toggle-sound-fx":
 				break;
 			case "toggle-music":
-				break;
-			case "restore-state":
-				playState.setState(event.state);
 				break;
 			case "output-pgn":
 				value = playState.getState();

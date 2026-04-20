@@ -29,6 +29,8 @@
 				break;
 			case "start-game":
 				Project.game.state.start("stop");
+				APP.els.content.data({ show: "game" });
+				Self.els.hud.find(`.player.left .name`).data({ name: ME.name });
 				Self.els.hud.find(`.player.right .name`).data({ name: event.name || "Yasmin" });
 				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
 
@@ -65,6 +67,10 @@
 				} else {
 					Self.dispatch({ type: "game-pause" });
 				}
+				break;
+			case "restore-state":
+				Self.dispatch({ type: "start-game", arg: 2 });
+				setTimeout(() => playState.setState(event.state), 400);
 				break;
 		}
 	}

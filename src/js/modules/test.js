@@ -2,7 +2,7 @@
 let TestState = {
 	mode: 1,
     shotNum: 2,
-    pottedBallArray: [6, 12, 15, 13],
+    pottedBallArray: [6, 7, 9, 12, 15, 13, 11],
     cueBallInHand: false,
     turn: "p1",
     p1TargetType: "SOLIDS",
@@ -38,7 +38,7 @@ let TestState = {
         { x: 29967.1538, y: 3673.5693, targetType: "SOLIDS" },
         { x: -68124.2809, y: -34033.1264, targetType: "SOLIDS" },
         { x: 29637.2366, y: -7413.3544, targetType: "SOLIDS" },
-        { x: 42782.5504, y: -2223.4473, targetType: "8 BALL" },
+        { x: 47782.5504, y: -11223.4473, targetType: "8 BALL" },
         { x: 39627.2423, y: -5993.9949, targetType: "STRIPES" },
         { x: 53724.4171, y: -28461.2471, targetType: "STRIPES" },
         { x: 53131.062, y: -19767.0209, targetType: "STRIPES" },
@@ -51,16 +51,25 @@ let TestState = {
 
 let Test = {
 	init(APP) {
+        // return;
         
         // setTimeout(() => APP.els.content.addClass("game-won"), 500);
 
-		return;
+        return setTimeout(() => {
+            APP.game.dispatch({
+                type: "start-game",
+                name: "Ali",
+                level: 5,
+                arg: 1,
+            });
+        }, 500);
+
 		
         // setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
-		setTimeout(() => APP.dispatch({ type: "restore-state", state: TestState }), 500);
+		setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
 
 		// setTimeout(() => {
 		// 	APP.game.dispatch({ type: "game-stop" });

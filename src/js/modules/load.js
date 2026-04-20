@@ -18,7 +18,7 @@ const loadState = {
 		this.load.image("shade", "~/icons/ball-shade.png");
 		this.load.image("highlight", "~/icons/ball-highlight.png");
 		this.load.image("shadow", "~/icons/ball-shadow.png");
-		this.load.image("cue", "~/img/cue.png");
+		this.load.image("cue", "~/img/cue.webp");
 
 		this.load.spritesheet("solidsSpriteSheet", "~/icons/solid-sprite-sheet.png", 48, 48, 9);
 		this.load.spritesheet("ballSpriteSheet9", "~/icons/ball-sprite-sheet-9.png", 50, 50, 41);
