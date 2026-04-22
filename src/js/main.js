@@ -71,7 +71,6 @@ const billiard = {
 				// get settings, if any
 				Self.settings = window.settings.getItem("settings") || defaultSettings;
 				break;
-
 			case "new-game":
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
 				break;

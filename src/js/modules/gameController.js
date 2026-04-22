@@ -138,11 +138,11 @@ playState.update = function () {
 			renderScreen();
 		}
 
-		if (Project.levelComplete == false) {
-			if (Project.mode == 1 && gameInfo.turn == "p1") {
-				// updateTimer();
-			}
-		}
+		// if (Project.levelComplete == false) {
+		// 	if (Project.mode == 1 && gameInfo.turn == "p1") {
+		// 		updateTimer();
+		// 	}
+		// }
 
 		checkGameOver();
 	}
@@ -1303,8 +1303,10 @@ playState.update = function () {
 			}
 
 			if (gameInfo.gameOver == false) {
-				setNextTargetType();
-				checkWhosTurn();
+                if (gameInfo.trial == false) {
+                    setNextTargetType();
+                    checkWhosTurn();
+                }
 				resetVars();
 			}
 		}
@@ -1340,7 +1342,6 @@ playState.update = function () {
 	}
 
 	function showFoulMessage() {
-		console.log(gameInfo.foulMessage);
 		if (gameInfo.foulMessage != "potted the cue ball") {
 			// gameInfo.gameRunning = false;
 
@@ -1584,7 +1585,6 @@ playState.update = function () {
 					gameInfo.fouled = true;
 					//trace("no cushion contact");
 					gameInfo.foulMessage = " failed to make a ball hit a cushion after the first contact with the cue ball";
-
 					gameInfo.foulDisplay3 = "CUSHION";
 				}
 			}
@@ -1613,6 +1613,7 @@ playState.update = function () {
 		var ball = gameInfo.ballArray[0];
 		for (var n = 0; n < ball.contactArray.length; n++) {
 			var contact = ball.contactArray[n];
+			// `contactListener.js` stores collision kind on `contact.type`
 			if (contact.collisionType == "ball") {
 				miss = false;
 				break;
@@ -1657,9 +1658,9 @@ playState.update = function () {
 				//trace(contact.type);
 				if (contact.type == "pocket") {
 					//ball was potted
-					if (gameInfo.trial == false) {
-						//trace("ball potted")
-					}
+					// if (gameInfo.trial == false) {
+					// 	trace("ball potted")
+					// }
 
 					gameInfo.ballsPotted++;
 
@@ -1912,7 +1913,7 @@ playState.update = function () {
 	}
 
 	function checkWhosTurn() {
-		//trace("should we switch turns?");
+		// console.log("should we switch turns?");
 
 		if (gameInfo.turnExtended == false || gameInfo.fouled == true) {
 			/**/
@@ -1925,7 +1926,7 @@ playState.update = function () {
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}
-			
+
 			Project.APP.game.els.hud.find(".spin-setter").toggleClass("disabled", gameInfo.turn === "p1");
 			Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 
@@ -2767,13 +2768,13 @@ playState.update = function () {
 					.tween(gameInfo.cue)
 					.to(
 						{ x: gameInfo.power / 600 },
-						50,
+						500,
 						Phaser.Easing.Linear.easeOut,
 						true
 					);
 
 				var hideCueTween = Project.game.add.tween(gameInfo.cueCanvas);
-				hideCueTween.to({ alpha: 0 }, 100, "Linear", true, 1000);
+				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 1500);
 				hideCueTween.onComplete.add(hideCueCanvas, this);
 				gameInfo.cueTweenComplete = false;
 

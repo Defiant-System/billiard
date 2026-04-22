@@ -46,8 +46,8 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			// gameInfo.turn = "p2";
-			gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
+			gameInfo.turn = "p1";
+			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
 			gameInfo.turn = Project.lastBreaker == "p2" ? "p1" : "p2";
@@ -84,7 +84,6 @@ playState.create = function () {
 		gameInfo.cushionRestitution = 0.6; //.56
 		gameInfo.ballRestitution = 0.94; //.91
 		gameInfo.maxPower = 5000;
-		gameInfo.trial = false;
 		gameInfo.overlap = false; // debugging
 		gameInfo.cueBallInHand = true;
 		gameInfo.preventAim = false;
@@ -102,7 +101,6 @@ playState.create = function () {
 		gameInfo.rulingsApplied = false;
 		gameInfo.shotNum = 0;
 		gameInfo.scratched = false;
-		gameInfo.trial = false;
 		gameInfo.pottedBallArray = new Array();
 		gameInfo.time = 0;
 		gameInfo.scratchFoulShown = false;

@@ -51,35 +51,41 @@ let TestState = {
 
 let Test = {
 	init(APP) {
+
 		// return;
 		
+		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// setTimeout(() => APP.els.content.addClass("game-won"), 500);
 
-		// setTimeout(() => {
-		//     let slot = APP.game.els.hud.find(".right .ball-slots li:nth-child(1)");
-		//     slot.data({ id: "b5" });
-		//     slot.cssSequence("appear", "animationend", el => {
-		//     	el.removeClass("appear");
+		/*
+		setTimeout(() => {
+		    let slot = APP.game.els.hud.find(".right .ball-slots li:nth-child(1)");
+		    slot.data({ id: "b5" });
+		    slot.cssSequence("appear", "animationend", el => {
+		    	el.removeClass("appear");
 
-		//     	setTimeout(() => el.addClass("disappear"), 1000);
-		//     });
-		// }, 1000);
+		    	setTimeout(() => el.addClass("disappear"), 1000);
+		    });
+		}, 1000);
+		*/
 
+		/**/
 		return setTimeout(() => {
 		    APP.game.dispatch({
 		        type: "start-game",
 		        name: "Ali",
-		        level: 5,
+		        level: 15,
 		        arg: 1,
 		    });
 		}, 500);
+		
 
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
-		setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
+		// setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
 
 		// setTimeout(() => {
 		// 	APP.game.dispatch({ type: "game-stop" });
