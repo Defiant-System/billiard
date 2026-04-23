@@ -827,7 +827,7 @@ playState.update = function () {
 		if (gameInfo.drawGuide == true) {
 			gameInfo.guideCanvas.visible = true;
 			gameInfo.guide.visible = true;
-			gameInfo.guide.lineStyle(3, 0xff0000, 1);
+			// gameInfo.guide.lineStyle(3, 0xff0000, 1);
 
 			var startVec = gameInfo.ballArray[0].position;
 			var projectionVec = startVec.plus(gameInfo.aimDirectionVector.times(500000));
@@ -884,7 +884,6 @@ playState.update = function () {
 
 				//now draw lines - we now have the positions of the cueball, the object ball, and the intersect point
 				gameInfo.guide.clear();
-				gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 				var bearingAim = Maths.findBearing(
 					intersectPoint.x - cueBall.position.x,
@@ -903,18 +902,35 @@ playState.update = function () {
 				);
 
 				if (Project.guideOn == true) {
+					gameInfo.guide.lineStyle(8, 0x000000, .5);
 					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
 					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
-				}
+					//draw the circle regardless of whether guide is on or off
+					gameInfo.guide.drawCircle(
+						intersectPoint.x * gameInfo.physScale,
+						intersectPoint.y * gameInfo.physScale,
+						gameInfo.ballRadius * 2 * gameInfo.physScale
+					);
 
-				//draw the circle regardless of whether guide is on or off
-				gameInfo.guide.drawCircle(
-					intersectPoint.x * gameInfo.physScale,
-					intersectPoint.y * gameInfo.physScale,
-					gameInfo.ballRadius * 2 * gameInfo.physScale
-				);
+					gameInfo.guide.moveTo(
+						ball.position.x * gameInfo.physScale,
+						ball.position.y * gameInfo.physScale
+					);
+					gameInfo.guide.lineTo(
+						dest.x * gameInfo.physScale,
+						dest.y * gameInfo.physScale
+					);
 
-				if (Project.guideOn == true) {
+					gameInfo.guide.lineStyle(4, 0xffffff, 1);
+					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
+					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
+					//draw the circle regardless of whether guide is on or off
+					gameInfo.guide.drawCircle(
+						intersectPoint.x * gameInfo.physScale,
+						intersectPoint.y * gameInfo.physScale,
+						gameInfo.ballRadius * 2 * gameInfo.physScale
+					);
+
 					gameInfo.guide.moveTo(
 						ball.position.x * gameInfo.physScale,
 						ball.position.y * gameInfo.physScale
@@ -943,6 +959,17 @@ playState.update = function () {
 						intersectPoint.y + mag * Math.sin((bearingRebound * Math.PI) / 180)
 					);
 					if (Project.guideOn == true) {
+						gameInfo.guide.lineStyle(8, 0x000000, .5);
+						gameInfo.guide.moveTo(
+							intersectPoint.x * gameInfo.physScale,
+							intersectPoint.y * gameInfo.physScale
+						);
+						gameInfo.guide.lineTo(
+							dest2.x * gameInfo.physScale,
+							dest2.y * gameInfo.physScale
+						);
+						
+						gameInfo.guide.lineStyle(4, 0xffffff, 1);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
@@ -1008,9 +1035,9 @@ playState.update = function () {
 
 				if (intersectPoint != null) {
 					gameInfo.guide.clear();
-					gameInfo.guide.lineStyle(3, 0xffffff, 1);
 
 					if (Project.guideOn == true) {
+						gameInfo.guide.lineStyle(8, 0x000000, .5);
 						gameInfo.guide.moveTo(
 							cueBall.position.x * gameInfo.physScale,
 							cueBall.position.y * gameInfo.physScale
@@ -1019,12 +1046,27 @@ playState.update = function () {
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
 						);
+						gameInfo.guide.drawCircle(
+							intersectPoint.x * gameInfo.physScale,
+							intersectPoint.y * gameInfo.physScale,
+							gameInfo.ballRadius * 2 * gameInfo.physScale
+						);
+
+						gameInfo.guide.lineStyle(4, 0xffffff, 1);
+						gameInfo.guide.moveTo(
+							cueBall.position.x * gameInfo.physScale,
+							cueBall.position.y * gameInfo.physScale
+						);
+						gameInfo.guide.lineTo(
+							intersectPoint.x * gameInfo.physScale,
+							intersectPoint.y * gameInfo.physScale
+						);
+						gameInfo.guide.drawCircle(
+							intersectPoint.x * gameInfo.physScale,
+							intersectPoint.y * gameInfo.physScale,
+							gameInfo.ballRadius * 2 * gameInfo.physScale
+						);
 					}
-					gameInfo.guide.drawCircle(
-						intersectPoint.x * gameInfo.physScale,
-						intersectPoint.y * gameInfo.physScale,
-						gameInfo.ballRadius * 2 * gameInfo.physScale
-					);
 				}
 			}
 		}
