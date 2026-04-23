@@ -1121,7 +1121,7 @@ playState.update = function () {
 			var cueTween = Project.game.add.tween(gameInfo.cue);
 			cueTween.to(
 				{ x: gameInfo.power / 400 },
-				tweenTime * 1000,
+				tweenTime * 500,
 				Phaser.Easing.Linear.Out
 			);
 
@@ -1133,7 +1133,7 @@ playState.update = function () {
 			// );
 
 			var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
-			cueFadeTween.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, 1500);
+			cueFadeTween.to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, 1000);
 			cueFadeTween.onComplete.add(hideCueCanvas, this);
 
 			cueTween.start();
@@ -1238,45 +1238,43 @@ playState.update = function () {
 			checkPots(); //need to check even if foul was committed in case 8 ball was illegally potted
 			checkCushionContacts(); //has to come after checkPots because if a ball is potted, this is irrelevant.
 
-			if (gameInfo.mode != "practice") {
-				if (gameInfo.fouled == true) {
-					//trace("foul committed:");
+			if (gameInfo.fouled == true) {
+				//trace("foul committed:");
 
-					if (gameInfo.trial == false) {
-						//Project.game.time.events.add(Phaser.Timer.SECOND * 5, applyRulings2, this);
+				if (gameInfo.trial == false) {
+					//Project.game.time.events.add(Phaser.Timer.SECOND * 5, applyRulings2, this);
 
-						gameInfo.cueBallInHand = true;
+					gameInfo.cueBallInHand = true;
 
-						//if break off shot, rerack
-						if (gameInfo.shotNum == 1) {
-							gameRunning = false;
-							gameInfo.rerack = true;
-						}
-
-						showFoulMessage();
-					} else {
-						gameInfo.shotRating = -1;
-						applyRulings2();
+					//if break off shot, rerack
+					if (gameInfo.shotNum == 1) {
+						gameRunning = false;
+						gameInfo.rerack = true;
 					}
+
+					showFoulMessage();
 				} else {
-					//no foul occured, so theoretically there is no chance of a rerack - we can reset rerack and lastBreaker here.
-					if (gameInfo.trial == false) {
-						gameInfo.cueBallInHand = false;
-						Project.lastBreaker = "none";
-						gameInfo.rerack = false;
-						//console.log("rerack = false");
-					}
-
-					if (!gameInfo.fouled) {
-						if (gameInfo.turn == "p1") {
-							// famobi_analytics.trackEvent("EVENT_LIVESCORE", {
-							// 	liveScore: Project.score,
-							// });
-						}
-					}
-
+					gameInfo.shotRating = -1;
 					applyRulings2();
 				}
+			} else {
+				//no foul occured, so theoretically there is no chance of a rerack - we can reset rerack and lastBreaker here.
+				if (gameInfo.trial == false) {
+					gameInfo.cueBallInHand = false;
+					Project.lastBreaker = "none";
+					gameInfo.rerack = false;
+					//console.log("rerack = false");
+				}
+
+				if (!gameInfo.fouled) {
+					if (gameInfo.turn == "p1") {
+						// famobi_analytics.trackEvent("EVENT_LIVESCORE", {
+						// 	liveScore: Project.score,
+						// });
+					}
+				}
+
+				applyRulings2();
 			}
 		}
 	}
@@ -1289,19 +1287,6 @@ playState.update = function () {
 			//prevents coming here in the event of rerack, in which case gameRunning is set to false
 			//console.log("apply rulings 2");
 
-			//check to see if all object balls have been potted, in which case end the game
-			if (gameInfo.mode == "practice") {
-				var ballActive = false;
-				for (var n = 1; n < gameInfo.ballArray.length; n++) {
-					if (gameInfo.ballArray[n].active == true) {
-						ballActive = true;
-					}
-				}
-				if (ballActive == false) {
-					gameInfo.gameOver = true;
-				}
-			}
-
 			if (gameInfo.gameOver == false) {
                 if (gameInfo.trial == false) {
                     setNextTargetType();
@@ -1310,6 +1295,14 @@ playState.update = function () {
 				resetVars();
 			}
 		}
+
+        preventQuit = false;
+
+        if (gameInfo.rerack == true) {
+            preventQuit = true;
+            //setTimeout(rerackBalls, 3000);
+            Project.game.time.events.add(500, rerackBalls, this);
+        }
 	}
 
 	function checkGameOver() {
@@ -1337,7 +1330,7 @@ playState.update = function () {
 	}
 
 	function rerackBalls() {
-		Project.lastBreaker = gameInfo.turn;
+		// Project.lastBreaker = gameInfo.turn;
 		Project.game.state.start("play");
 	}
 
@@ -1346,9 +1339,9 @@ playState.update = function () {
 			// gameInfo.gameRunning = false;
 
 			if (gameInfo.turn == "p2") {
-				//console.log("FOUL: Player 2 " + gameInfo.foulMessage);
+				console.log("FOUL: Player 2 " + gameInfo.foulMessage);
 			} else {
-				//console.log("FOUL: Player 1 " + gameInfo.foulMessage);
+				console.log("FOUL: Player 1 " + gameInfo.foulMessage);
 			}
 
 			setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
@@ -1433,6 +1426,7 @@ playState.update = function () {
 			}
 			*/
 		} else {
+			console.log(gameInfo.foulMessage);
 			applyRulings2();
 		}
 	}
@@ -1599,11 +1593,6 @@ playState.update = function () {
 			gameInfo.fouled = true;
 			gameInfo.foulMessage = "potted the cue ball";
 			gameInfo.foulDisplay3 = "POTTEDCUEBALL";
-
-			//note - cueBallInHand is set in applyRulings, although not for practice mode, so do it here
-			if (gameInfo.mode == "practice") {
-				gameInfo.cueBallInHand = true;
-			}
 		}
 	}
 
@@ -1672,7 +1661,7 @@ playState.update = function () {
 					}
 
 					//firstly check if 8 ball was potted
-					if (ball.id == 8 && gameInfo.mode != "practice") {
+					if (ball.id == 8) {
 						if (targetType == "8 BALL") {
 							//8 ball was the target, and was potted - so game is won
 							console.log("game won", gameInfo.turn);
@@ -1915,6 +1904,7 @@ playState.update = function () {
 	function checkWhosTurn() {
 		// console.log("should we switch turns?");
 
+		console.log("fouled", gameInfo.fouled);
 		if (gameInfo.turnExtended == false || gameInfo.fouled == true) {
 			/**/
 			if (gameInfo.turn == "p2") {
@@ -2655,14 +2645,14 @@ playState.update = function () {
 							gameInfo.shotInfo.aimVector.x
 						),
 				},
-				1000,
+				200,
 				Phaser.Easing.Linear.easeInOut,
 				true
 			);
 
 			//setTimeout(strikeBallAI, 2000, gameInfo.shotInfo.aimVector.x, gameInfo.shotInfo.aimVector.y, 0, 0);
 			Project.game.time.events.add(
-				2000,
+				500,
 				strikeBallAI,
 				this,
 				gameInfo.shotInfo.aimVector.x,
@@ -2714,7 +2704,7 @@ playState.update = function () {
 						gameInfo.shotInfo.aimVector.x
 					),
 			},
-			1000,
+			250,
 			Phaser.Easing.Linear.easeInOut,
 			true
 		);
@@ -2774,7 +2764,7 @@ playState.update = function () {
 					);
 
 				var hideCueTween = Project.game.add.tween(gameInfo.cueCanvas);
-				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 1500);
+				hideCueTween.to({ alpha: 0 }, 1000, "Linear", true, 500);
 				hideCueTween.onComplete.add(hideCueCanvas, this);
 				gameInfo.cueTweenComplete = false;
 
