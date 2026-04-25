@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 	
+	@import "logo.svg"
+
 	<svg id="icon-menu" viewBox="0 0 21 21">
 		<style type="text/css">
 			.st0{fill:#006102;}

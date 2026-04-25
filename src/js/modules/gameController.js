@@ -968,7 +968,7 @@ playState.update = function () {
 							dest2.x * gameInfo.physScale,
 							dest2.y * gameInfo.physScale
 						);
-						
+
 						gameInfo.guide.lineStyle(4, 0xffffff, 1);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
@@ -1932,13 +1932,13 @@ playState.update = function () {
 
 		if (gameInfo.p1TargetType == "8 BALL") {
 			let bSlot = Project.APP.game.els.hud.find(`.player.left .ball-slots li:nth-child(1)`);
-			bSlot.removeClass("potted");
+			bSlot.removeClass("potted disappear").addClass("appear");
 			bSlot.data({ id: "b8" });
 		}
 
 		if (gameInfo.p2TargetType == "8 BALL") {
 			let bSlot = Project.APP.game.els.hud.find(`.player.right .ball-slots li:nth-child(1)`);
-			bSlot.removeClass("potted");
+			bSlot.removeClass("potted disappear").addClass("appear");
 			bSlot.data({ id: "b8" });
 		}
 	}
@@ -1946,7 +1946,6 @@ playState.update = function () {
 	function checkWhosTurn() {
 		// console.log("should we switch turns?");
 
-		console.log("fouled", gameInfo.fouled);
 		if (gameInfo.turnExtended == false || gameInfo.fouled == true) {
 			/**/
 			if (gameInfo.turn == "p2") {

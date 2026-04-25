@@ -2,27 +2,27 @@
 let TestState = {
 	mode: 1,
 	shotNum: 2,
-	pottedBallArray: [6, 7, 9, 12, 15, 13, 11],
+	pottedBallArray: [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15],
 	cueBallInHand: false,
-	turn: "p2",
+	turn: "p1",
 	p1TargetType: "SOLIDS",
 	p2TargetType: "STRIPES",
 	p1: [
 		{ id: "b1" },
-		{ id: "b2" },
-		{ id: "b3" },
-		{ id: "b4" },
-		{ id: "b5" },
+		{ id: "b2", state: "potted" },
+		{ id: "b3", state: "potted" },
+		{ id: "b4", state: "potted" },
+		{ id: "b5", state: "potted" },
 		{ id: "b6", state: "potted" },
-		{ id: "b7" }
+		{ id: "b7", state: "potted" }
 	],
 	p2: [
-		{ id: "b9" },
-		{ id: "b10" },
-		{ id: "b11" },
+		{ id: "b9", state: "potted" },
+		{ id: "b10", state: "potted" },
+		{ id: "b11", state: "potted" },
 		{ id: "b12", state: "potted" },
-		{ id: "b13", state: "potted" },
-		{ id: "b14" },
+		{ id: "b13" },
+		{ id: "b14", state: "potted" },
 		{ id: "b15", state: "potted" }
 	],
 	cue: {
@@ -31,7 +31,7 @@ let TestState = {
 	},
 	balls: [
 		{ x: 39273.5479, y: 6797.4199 },
-		{ x: 18364.2897, y: 26091.2899, targetType: "SOLIDS" },
+		{ x: -18364.2897, y: 26091.2899, targetType: "SOLIDS" },
 		{ x: 19983.6955, y: 13832.9609, targetType: "SOLIDS" },
 		{ x: 24539.3554, y: 20780.6278, targetType: "SOLIDS" },
 		{ x: 15044.1497, y: 19414.3481, targetType: "SOLIDS" },
@@ -43,7 +43,7 @@ let TestState = {
 		{ x: 53724.4171, y: -28461.2471, targetType: "STRIPES" },
 		{ x: 53131.062, y: -19767.0209, targetType: "STRIPES" },
 		{ x: 70295.2821, y: 32818.9528, targetType: "STRIPES" },
-		{ x: -68422.9292, y: 33590.9773, targetType: "STRIPES" },
+		{ x: -58422.9292, y: -13590.9773, targetType: "STRIPES" },
 		{ x: 51520.8057, y: 5451.8491, targetType: "STRIPES" },
 		{ x: 68920.5847, y: 33161.9828, targetType: "STRIPES" }
 	]
@@ -52,7 +52,7 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// setTimeout(() => APP.els.content.addClass("game-won"), 500);
@@ -69,7 +69,7 @@ let Test = {
 		}, 1000);
 		*/
 
-		/**/
+		/*
 		return setTimeout(() => {
 		    APP.game.dispatch({
 		        type: "start-game",
@@ -78,14 +78,14 @@ let Test = {
 		        arg: 1,
 		    });
 		}, 500);
-		
+		*/
 
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
-		// setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
+		setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
 
 		// setTimeout(() => {
 		// 	APP.game.dispatch({ type: "game-stop" });
