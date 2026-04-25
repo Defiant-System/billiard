@@ -19,6 +19,8 @@
 			el;
 		// console.log(event);
 		switch (event.type) {
+			case "init-view":
+				break;
 			case "init-boot-sequence":
 				Project.APP = APP;
 				Project.game = new Phaser.Game(Project.width, Project.height, Phaser.CANVAS, Self.els.cvs[0], {}, true);
@@ -68,7 +70,22 @@
 				break;
 			case "restore-state":
 				Self.dispatch({ type: "start-game", arg: 2 });
-				setTimeout(() => playState.setState(event.state), 400);
+				setTimeout(() => {
+					Self.dispatch({ type: "set-player-turn", turn: event.state.turn });
+					playState.setState(event.state);
+				}, 400);
+				break;
+			case "start-player-timer":
+				Self.els.hud.find(".player.left").cssSequence("timer", "transitionend", el => {
+					el.removeClass("timer");
+					// set turn
+					Self.dispatch({ type: "set-player-turn", turn: "p2" });
+				});
+				break;
+			case "set-player-turn":
+				playState.gameInfo.turn = event.turn;
+				Self.els.hud.find(".spin-setter").toggleClass("disabled", playState.gameInfo.turn === "p1");
+				Self.els.hud.data({ turn: playState.gameInfo.turn });
 				break;
 		}
 	}

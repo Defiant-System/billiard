@@ -5,6 +5,11 @@
 		<Menu name="Quit Billiard" shell="win -c"/>
 	</Menu>
 	<Menu name="Game" for="game-view">
+		<Menu name="Views">
+			<Menu name="Start" click="switch-view" arg="start"/>
+			<Menu name="Game" click="switch-view" arg="game"/>
+		</Menu>
+		<Menu type="divider"/>
 		<Menu name="New Game">
 			<Menu name="Player vs AI" click="new-game" arg="1"/>
 			<Menu name="Player vs Player" click="new-game" arg="2"/>

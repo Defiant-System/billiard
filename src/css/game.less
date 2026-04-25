@@ -165,9 +165,6 @@ content {
 			height: 73px;
 			display: flex;
 			z-index: 3;
-			--outline: 0;
-			--color: #eef;
-			--thinkTime: 30s;
 
 			&[data-turn="p1"] {
 				.player.left {
@@ -278,8 +275,15 @@ content {
 				// background: #0f01;
 				position: relative;
 				flex: 1;
+				min-height: 0;
+				--outline: 0;
+				--color: #fff;
+				--thinkTime: 3s;
 
-				&.thinking {
+				&.timer {
+					min-height: 1px;
+					transition: min-height calc( var( --thinkTime ) * .8 );
+
 					svg.outline {
 						display: block;
 
@@ -497,6 +501,11 @@ content {
 			}
 		}
 	}
+}
+
+@keyframes animOutline {
+	0%   { stroke-dashoffset: var( --outline ); }
+	100% { stroke-dashoffset: 0; }
 }
 
 @keyframes appear {

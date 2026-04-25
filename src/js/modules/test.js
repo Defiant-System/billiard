@@ -52,7 +52,7 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		return;
+		// return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// setTimeout(() => APP.els.content.addClass("game-won"), 500);
@@ -86,6 +86,7 @@ let Test = {
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
 		setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
+		setTimeout(() => APP.game.dispatch({ type: "start-player-timer" }), 800);
 
 		// setTimeout(() => {
 		// 	APP.game.dispatch({ type: "game-stop" });

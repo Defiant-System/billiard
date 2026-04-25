@@ -22,7 +22,7 @@
 				Self.dispatch({ type: "twinkle-star" });
 				break;
 			case "twinkle-star":
-				let starIndex = (Math.random() * 8 | 0) + 1,
+				let starIndex = (Math.random() * 9 | 0) + 1,
 					timer = ((Math.random() * 15 | 0) * 100) + 800;
 				setTimeout(() => {
 					if (Self.els.content.data("show") !== "start") return;

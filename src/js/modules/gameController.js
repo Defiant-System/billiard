@@ -1958,8 +1958,7 @@ playState.update = function () {
 				// gameInfo.turnArrow2.frame = 1;
 			}
 
-			Project.APP.game.els.hud.find(".spin-setter").toggleClass("disabled", gameInfo.turn === "p1");
-			Project.APP.game.els.hud.data({ turn: gameInfo.turn });
+			Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
 
 			//console.log("switching turns");
 

@@ -44,7 +44,7 @@ const billiard = {
 		// init settings
 		this.dispatch({ type: "init-settings" });
 		// show intro view
-		this.start.dispatch({ type: "init-view" });
+		this.dispatch({ type: "switch-view", arg: "start" });
 
 		// DEV-ONLY-START
 		Test.init(this);
@@ -72,6 +72,10 @@ const billiard = {
 			case "init-settings":
 				// get settings, if any
 				Self.settings = window.settings.getItem("settings") || defaultSettings;
+				break;
+			case "switch-view":
+				Self.els.content.data({ show: event.arg });
+				Self[event.arg].dispatch({ type: "init-view" });
 				break;
 			case "new-game":
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
