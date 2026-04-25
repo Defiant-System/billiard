@@ -31,6 +31,51 @@ content {
 			width: 500px;
 			height: 340px;
 			filter: drop-shadow(0 2px 7px #000);
+
+			.star {
+				position: absolute;
+				opacity: 0;
+				transform: scale(0);
+				// top: 34px; right: 12px;
+				
+				&.twinkle-1 { top: 5px; left: 12px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-2 { top: 89px; left: 155px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-3 { top: 120px; left: 364px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-4 { top: 168px; left: 264px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-5 { top: 168px; left: 424px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-6 { top: 218px; left: 113px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-7 { top: 278px; left: 223px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-8 { top: 306px; left: 490px; animation: twinkle 1000ms linear forwards; }
+				&.twinkle-9 { top: 246px; left: 46px; animation: twinkle 1000ms linear forwards; }
+
+				&:before {
+					content: "";
+					position: absolute;
+					top: -25px;
+					left: -25px;
+					width: 50px;
+					height: 50px;
+					background: linear-gradient(-5deg, #fff 2%, #ffffff00 8%),
+								linear-gradient(-85deg, #fff 2%, #ffffff00 8%),
+								linear-gradient(5deg, #fff 2%, #ffffff00 8%),
+								linear-gradient(85deg, #fff 2%, #ffffff00 8%),
+								linear-gradient(5deg, #ffffff00 92%, #fff 98%),
+								linear-gradient(85deg, #ffffff00 92%, #fff 98%),
+								linear-gradient(-5deg, #ffffff00 92%, #fff 98%),
+								linear-gradient(-85deg, #ffffff00 92%, #fff 98%);
+					background-position: 0% 0%,
+										0% 0%,
+										100% 0%,
+										100% 0%,
+										0% 100%,
+										0% 100%,
+										100% 100%,
+										100% 100%;
+					background-size: 50% 50%;
+					background-repeat: no-repeat;
+					// transform: rotate(0) scale(0);
+				}
+			}
 		}
 		
 		.opponents {
@@ -197,4 +242,11 @@ content {
 			}
 		}
 	}
+}
+
+@keyframes twinkle {
+	0%   { opacity: 0; transform: rotate(0deg) scale(.25); }
+	35%  { opacity: 1; transform: rotate(40deg) scale(1.0); }
+	65%  { opacity: 1; transform: rotate(90deg) scale(1.0); }
+	100% { opacity: 0; transform: rotate(150deg) scale(.5); }
 }

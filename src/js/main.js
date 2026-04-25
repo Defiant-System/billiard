@@ -43,6 +43,8 @@ const billiard = {
 
 		// init settings
 		this.dispatch({ type: "init-settings" });
+		// show intro view
+		this.start.dispatch({ type: "init-view" });
 
 		// DEV-ONLY-START
 		Test.init(this);
