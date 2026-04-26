@@ -208,6 +208,23 @@ content {
 					width: 43px;
 					height: 43px;
 					cursor: pointer;
+					filter: grayscale(.25) brightness(0.85);
+
+					&:hover {
+						filter: none;
+					}
+
+					&:active {
+						filter: grayscale(.25) brightness(0.85);
+
+						&:after {
+							background: linear-gradient(0deg, #15cb32, #008717);
+						}
+
+						i.icon-menu {
+							top: 1px;
+						}
+					}
 
 					&:before {
 						content: "";

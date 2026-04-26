@@ -52,10 +52,10 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
-		return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
+		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
 
 		/*
 		setTimeout(() => {
@@ -85,7 +85,7 @@ let Test = {
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
-		setTimeout(() => APP.dispatch({ type: "restore-game" }), 500);
+		setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		// setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
 		// setTimeout(() => APP.game.dispatch({ type: "start-player-timer" }), 800);
 

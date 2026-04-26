@@ -10,7 +10,7 @@ playState.init = function () {
 
 playState.create = function () {
 
-	function resizeGame(scale, bounds) {
+	function resizeGame() {
 		//set to landscape mode
 		gameInfo.landscape = true;
 		//Project.game.scale.setGameSize(1024, 690);
