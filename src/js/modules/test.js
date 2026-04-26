@@ -1,7 +1,7 @@
 
 let TestState = {
 	mode: 1,
-	shotNum: 2,
+	shotNum: 3,
 	pottedBallArray: [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15],
 	cueBallInHand: false,
 	turn: "p1",
@@ -55,7 +55,7 @@ let Test = {
 		// return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
-		// setTimeout(() => APP.els.content.addClass("game-won"), 500);
+		return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
 
 		/*
 		setTimeout(() => {

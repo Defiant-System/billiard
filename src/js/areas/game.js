@@ -75,9 +75,21 @@
 					playState.setState(event.state);
 				}, 400);
 				break;
+			case "show-game-over":
+				Self.els.hud.find(`.player.timer`).removeClass("timer");
+
+				if (playState.gameInfo.winner === "p1") {
+					Project.APP.els.content.addClass("game-won");
+				} else {
+					Project.APP.els.content.addClass("game-lost");
+				}
+				
+				console.log("winner: ", playState.gameInfo.winner);
+				break;
 			case "start-player-timer":
 				Self.els.hud.find(`.player.${event.turn}`).cssSequence("timer", "transitionend", el => {
 					el.removeClass("timer");
+					if (playState.gameInfo.gameOver) return;
 					// set turn
 					let turn = event.turn === "p1" ? "p2" : "p1";
 					Self.dispatch({ type: "set-player-turn", turn });
@@ -87,10 +99,13 @@
 				Self.els.hud.find(".player.timer").removeClass("timer");
 				break;
 			case "set-player-turn":
+				if (playState.gameInfo.gameOver) return;
+
 				playState.gameInfo.turn = event.turn;
 				Self.els.hud.data({ turn: playState.gameInfo.turn });
 				Self.dispatch({ type: "reset-player-timer" });
 				Self.dispatch({ type: "start-player-timer", turn: playState.gameInfo.turn });
+				APP.spinSetter.dispatch({ type: "reset-spin-setter" });
 
 				switch (playState.gameInfo.turn) {
 					case "p1":
@@ -99,7 +114,12 @@
 					case "p2":
 						if (Project.mode === 1) {
 							Self.els.hud.find(".spin-setter").addClass("disabled");
+							
 							console.log("engage ai");
+							playState.gameInfo.turnExtended = false;
+							playState.gameInfo.shotRunning = false;
+							playState.gameInfo.shotReset = true;
+
 						} else {
 							Self.els.hud.find(".spin-setter").removeClass("disabled");
 						}

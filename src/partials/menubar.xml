@@ -8,6 +8,8 @@
 		<Menu name="Views">
 			<Menu name="Start" click="switch-view" arg="start"/>
 			<Menu name="Game" click="switch-view" arg="game"/>
+			<Menu name="Winner" click="switch-view" arg="winner"/>
+			<Menu name="Loser" click="switch-view" arg="loser"/>
 		</Menu>
 		<Menu type="divider"/>
 		<Menu name="New Game">

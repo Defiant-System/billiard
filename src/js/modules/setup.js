@@ -74,7 +74,7 @@ playState.create = function () {
 		gameInfo.transferCounter = 0;
 		gameInfo.bonusStarOn = false;
 		gameInfo.starNumber = 2;
-		gameInfo.timerStarted = false;
+		// gameInfo.timerStarted = false;
 		gameInfo.ballPotted = false;
 		gameInfo.ballsPotted = 0;
 		gameInfo.fouled = false;
@@ -103,7 +103,7 @@ playState.create = function () {
 		gameInfo.shotNum = 0;
 		gameInfo.scratched = false;
 		gameInfo.pottedBallArray = new Array();
-		gameInfo.time = 0;
+		// gameInfo.time = 0;
 		gameInfo.scratchFoulShown = false;
 
 		//added from bb5
@@ -120,11 +120,11 @@ playState.create = function () {
 		gameInfo.shotReset = true;
 
 		gameInfo.drawGuide = true;
-		gameInfo.allowTransferPoints = false;
+		// gameInfo.allowTransferPoints = false;
 		gameInfo.placedInCenter = false;
-		gameInfo.foulDisplayComplete = true;
-		gameInfo.transfer1Complete = true;
-		gameInfo.transfer2Complete = true;
+		// gameInfo.foulDisplayComplete = true;
+		// gameInfo.transfer1Complete = true;
+		// gameInfo.transfer2Complete = true;
 
 		gameInfo.aimDirectionVector = new Vector2D(1, 0).normalize();
 	}

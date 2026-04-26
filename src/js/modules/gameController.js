@@ -60,6 +60,7 @@ playState.setState = function(state) {
 
 	balls.map((ball, index) => {
 		let nBall = gameInfo.ballArray[index];
+		if (index === 0) nBall.mover.visible = false;
 		if (state.pottedBallArray.includes(index)) {
 			gameInfo.shadowCanvas.add(nBall.shadow);
 			nBall.mc.visible = false;
@@ -205,10 +206,7 @@ playState.update = function () {
 				var i = 0;
 				do {
 					i++;
-					if (
-						checkPositionOverlapping(cueBall.position.x, cueBall.position.y) ==
-						false
-					) {
+					if (checkPositionOverlapping(cueBall.position.x, cueBall.position.y) == false) {
 						success = true;
 					} else {
 						cueBall.x -= gameInfo.ballRadius;
@@ -418,12 +416,7 @@ playState.update = function () {
 
 				for (var k = 0; k < intersectArray.length; k++) {
 					//does intersect point overlap another ball?
-					if (
-						checkPositionOverlapping2(
-							intersectArray[k].x,
-							intersectArray[k].y
-						) == false
-					) {
+					if (checkPositionOverlapping(intersectArray[k].x, intersectArray[k].y, -10) == false) {
 						var distSq =
 							(intersectArray[k].x - cursor.x) *
 								(intersectArray[k].x - cursor.x) +
@@ -552,7 +545,7 @@ playState.update = function () {
 
 		//final belt and braces check for overlaps, simply move ball to the left if so
 		while (
-			checkPositionOverlapping2(cueBall.position.x, cueBall.position.y) == true
+			checkPositionOverlapping(cueBall.position.x, cueBall.position.y, -10) == true
 		) {
 			cueBall.position.x -= gameInfo.ballRadius / 4;
 		}
@@ -595,7 +588,7 @@ playState.update = function () {
 				cushion = "bottom";
 			}
 
-			while (checkPositionOverlapping2(cueBallPosition.x, cueBallPosition.y) == true) {
+			while (checkPositionOverlapping(cueBallPosition.x, cueBallPosition.y, -10) == true) {
 				//move ball clockwise around table edge until a free gap is found
 				if (cushion == "left") {
 					cueBallPosition.y -= gameInfo.ballRadius / 4;
@@ -1216,10 +1209,10 @@ playState.update = function () {
 		);
 		gameInfo.shotReset = false;
 
-		if (gameInfo.timerStarted == false) {
+		// if (gameInfo.timerStarted == false) {
 			// Start the time
 
-			gameInfo.timerStarted = true;
+			// gameInfo.timerStarted = true;
 			// startTimer();
 
 			// var tween = Project.game.add.tween(gameInfo.levelText);
@@ -1229,7 +1222,7 @@ playState.update = function () {
 			// function hideText() {
 			// 	gameInfo.levelText.visible = false;
 			// }
-		}
+		// }
 	}
 
 	function checkShotOver() {
@@ -1326,21 +1319,18 @@ playState.update = function () {
 		}
 	}
 
-	function applyRulings2() {
+	function updateHud() {
 		if (gameInfo.hudUpdated == false) {
 			gameInfo.hudUpdated = true;
-
-			Project.APP.spinSetter.dispatch({ type: "reset-spin-setter" });
-
-			// hud UI/UX
-			Project.APP.game.dispatch({ type: "start-player-timer" });
-
-			setTimeout(() => {
-				Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
-			}, 50);
+			// hud ui/ux
+			setTimeout(() => Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn }), 50);
 
 			console.log("update hud", gameInfo.turn);
 		}
+	}
+
+	function applyRulings2() {
+		updateHud();
 
 		//new - apply rulings split into 2 to allow time delay after showing foul messsage and before continuing with switching turns and moving onto next shot.
 		if (gameInfo.gameRunning == true) {
@@ -1375,18 +1365,8 @@ playState.update = function () {
 			gameInfo.guideCanvas.visible = false;
 			gameInfo.gameRunning = false;
 
-			showGameOver();
+			Project.APP.game.dispatch({ type: "show-game-over" });
 		}
-	}
-
-	function showGameOver() {
-		if (gameInfo.winner === "p1") {
-			Project.APP.els.content.addClass("game-won");
-		} else {
-			Project.APP.els.content.addClass("game-lost");
-		}
-		
-		console.log("winner: ", gameInfo.winner);
 	}
 
 	function rerackBalls() {
@@ -1975,6 +1955,8 @@ playState.update = function () {
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}
+			updateHud();
+			console.log( "gameInfo.turn", gameInfo.turn );
 
 			//turns have now been switched
 			/*
@@ -2332,28 +2314,7 @@ playState.update = function () {
 		}
 	}
 
-	function checkPositionOverlapping(_x, _y) {
-		var overlapping = false;
-
-		//check for this position overlapping all balls except cue ball
-
-		for (var n = 1; n < gameInfo.ballArray.length; n++) {
-			var ball = gameInfo.ballArray[n];
-			if (ball.active == true) {
-				var distSq =
-					(ball.position.x - _x) * (ball.position.x - _x) +
-					(ball.position.y - _y) * (ball.position.y - _y);
-				if (distSq < gameInfo.ballRadius * 2 * gameInfo.ballRadius * 2 + 10) {
-					overlapping = true;
-					break;
-				}
-			}
-		}
-
-		return overlapping;
-	}
-
-	function checkPositionOverlapping2(_x, _y) {
+	function checkPositionOverlapping(_x, _y, _m=10) {
 		var overlapping = false;
 		//check for this position overlapping all balls except cue ball
 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
@@ -2362,7 +2323,7 @@ playState.update = function () {
 				var distSq =
 					(ball.position.x - _x) * (ball.position.x - _x) +
 					(ball.position.y - _y) * (ball.position.y - _y);
-				if (distSq < gameInfo.ballRadius * 2 * gameInfo.ballRadius * 2 - 10) {
+				if (distSq < gameInfo.ballRadius * 2 * gameInfo.ballRadius * 2 + _m) {
 					overlapping = true;
 					break;
 				}
@@ -2758,7 +2719,7 @@ playState.update = function () {
 						gameInfo.shotInfo.aimVector.x
 					),
 			},
-			250,
+			1250,
 			Phaser.Easing.Linear.easeInOut,
 			true
 		);
@@ -2771,6 +2732,7 @@ playState.update = function () {
 				0,
 				0
 			);
+			Project.APP.game.dispatch({ type: "reset-player-timer" });
 		}
 	}
 
