@@ -2,6 +2,9 @@
 content {
 	.start-view {
 		display: none;
+		opacity: 0;
+		transition: opacity 500ms ease,
+					display 500ms ease allow-discrete;
 		background: #121034 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
 		position: absolute;
 		top: 0;
@@ -86,6 +89,7 @@ content {
 			font-size: 0;
 			font-family: BebasNeueRegular, Arial, sans-serif;
 			list-style: none;
+			z-index: 3;
 
 			&:hover {
 				li {

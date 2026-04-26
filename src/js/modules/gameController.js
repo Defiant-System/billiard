@@ -2719,7 +2719,7 @@ playState.update = function () {
 						gameInfo.shotInfo.aimVector.x
 					),
 			},
-			1250,
+			500,
 			Phaser.Easing.Linear.easeInOut,
 			true
 		);

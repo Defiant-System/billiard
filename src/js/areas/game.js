@@ -79,12 +79,10 @@
 				Self.els.hud.find(`.player.timer`).removeClass("timer");
 
 				if (playState.gameInfo.winner === "p1") {
-					Project.APP.els.content.addClass("game-won");
+					APP.els.content.data({ show: "winner" });
 				} else {
-					Project.APP.els.content.addClass("game-lost");
+					APP.els.content.data({ show: "loser" });
 				}
-				
-				console.log("winner: ", playState.gameInfo.winner);
 				break;
 			case "start-player-timer":
 				Self.els.hud.find(`.player.${event.turn}`).cssSequence("timer", "transitionend", el => {

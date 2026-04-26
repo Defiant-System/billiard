@@ -18,6 +18,9 @@
 		switch (event.type) {
 			case "init-view":
 				break;
+			case "show-start":
+				APP.els.content.data({ show: "start" });
+				break;
 		}
 	}
 }
