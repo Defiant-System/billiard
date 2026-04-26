@@ -59,14 +59,14 @@ const billiard = {
 			// system events
 			case "window.init":
 				break;
+			case "window.close":
+				Project.game.destroy(true);
+				break;
 			case "window.blur":
 				Self.game.dispatch({ type: "game-pause" });
 				break;
 			case "window.focus":
 				Self.game.dispatch({ type: "game-resume" });
-				break;
-			case "window.close":
-				Self.game.dispatch({ type: "game-stop" });
 				break;
 			// custom events
 			case "init-settings":
@@ -79,6 +79,9 @@ const billiard = {
 				break;
 			case "new-game":
 				Self.game.dispatch({ type: "start-game", arg: +event.arg });
+				break;
+			case "restore-game":
+				Self.game.dispatch({ type: "restore-state", state: TestState });
 				break;
 			case "toggle-sound-fx":
 				break;

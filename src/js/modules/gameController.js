@@ -102,7 +102,6 @@ playState.update = function () {
 
 		if (gameInfo.shotRunning == false && gameInfo.shotReset == true) {
 			//pre-shot functions
-
 			if (gameInfo.initVars == false) {
 				resetVars();
 				gameInfo.initVars = true;
@@ -1202,8 +1201,12 @@ playState.update = function () {
 	}
 
 	function strikeBall() {
+		// sound fx
 		Sound.Play("cueHit", 1);
-		//console.log("strike");
+		// hud UI/UX
+		Project.APP.game.dispatch({ type: "reset-player-timer" });
+
+		gameInfo.hudUpdated = false;
 
 		gameInfo.ballArray[0].mover.visible = false;
 		gameInfo.shotRunning = true;
@@ -1282,6 +1285,8 @@ playState.update = function () {
 
 			if (gameInfo.fouled == true) {
 				//trace("foul committed:");
+		
+				gameInfo.hudUpdated = false;
 
 				if (gameInfo.trial == false) {
 					//Project.game.time.events.add(Phaser.Timer.SECOND * 5, applyRulings2, this);
@@ -1322,7 +1327,20 @@ playState.update = function () {
 	}
 
 	function applyRulings2() {
-		Project.APP.spinSetter.dispatch({ type: "reset-spin-setter" });
+		if (gameInfo.hudUpdated == false) {
+			gameInfo.hudUpdated = true;
+
+			Project.APP.spinSetter.dispatch({ type: "reset-spin-setter" });
+
+			// hud UI/UX
+			Project.APP.game.dispatch({ type: "start-player-timer" });
+
+			setTimeout(() => {
+				Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
+			}, 50);
+
+			console.log("update hud", gameInfo.turn);
+		}
 
 		//new - apply rulings split into 2 to allow time delay after showing foul messsage and before continuing with switching turns and moving onto next shot.
 		if (gameInfo.gameRunning == true) {
@@ -1494,8 +1512,8 @@ playState.update = function () {
 						//8 ball was struck first
 						gameInfo.fouled = true;
 						gameInfo.foulMessage = "struck the wrong ball first";
-						gameInfo.foulDisplay1 = "8 BALL"; //what was hit
-						gameInfo.foulDisplay2 = targetType; //what should have been hit
+						// gameInfo.foulDisplay1 = "8 BALL"; //what was hit
+						// gameInfo.foulDisplay2 = targetType; //what should have been hit
 					}
 				}
 				if (targetType == "SOLIDS") {
@@ -1504,11 +1522,11 @@ playState.update = function () {
 						gameInfo.fouled = true;
 						gameInfo.foulMessage = "struck the wrong ball first";
 						if (targetID == 8) {
-							gameInfo.foulDisplay1 = "8 BALL"; //what was hit
+							// gameInfo.foulDisplay1 = "8 BALL"; //what was hit
 						} else {
-							gameInfo.foulDisplay1 = "STRIPES";
+							// gameInfo.foulDisplay1 = "STRIPES";
 						}
-						gameInfo.foulDisplay2 = "SOLIDS"; //what should have been hit
+						// gameInfo.foulDisplay2 = "SOLIDS"; //what should have been hit
 					}
 				}
 				if (targetType == "STRIPES") {
@@ -1518,11 +1536,11 @@ playState.update = function () {
 						gameInfo.foulMessage = "struck the wrong ball first";
 
 						if (targetID == 8) {
-							gameInfo.foulDisplay1 = "8 BALL"; //what was hit
+							// gameInfo.foulDisplay1 = "8 BALL"; //what was hit
 						} else {
-							gameInfo.foulDisplay1 = "SOLIDS";
+							// gameInfo.foulDisplay1 = "SOLIDS";
 						}
-						gameInfo.foulDisplay2 = "STRIPES"; //what should have been hit
+						// gameInfo.foulDisplay2 = "STRIPES"; //what should have been hit
 					}
 				}
 				if (targetType == "8 BALL") {
@@ -1532,11 +1550,11 @@ playState.update = function () {
 						gameInfo.foulMessage = "struck the wrong ball first";
 
 						if (targetID < 8) {
-							gameInfo.foulDisplay1 = "SOLIDS"; //what was hit
+							// gameInfo.foulDisplay1 = "SOLIDS"; //what was hit
 						} else {
-							gameInfo.foulDisplay1 = "STRIPES";
+							// gameInfo.foulDisplay1 = "STRIPES";
 						}
-						gameInfo.foulDisplay2 = "8 BALL"; //what should have been hit
+						// gameInfo.foulDisplay2 = "8 BALL"; //what should have been hit
 					}
 				}
 				break;
@@ -1580,7 +1598,7 @@ playState.update = function () {
 				if (counter < 2) {
 					gameInfo.fouled = true;
 					gameInfo.foulMessage = " failed to make 2 balls hit the cushions on the break";
-					gameInfo.foulDisplay4 = "CUSHIONONBREAK";
+					// gameInfo.foulDisplay4 = "CUSHIONONBREAK";
 				}
 			} else {
 				//after the break, 1 ball needs to hit a cushion after first contact (could be the cue ball)
@@ -1621,7 +1639,7 @@ playState.update = function () {
 					gameInfo.fouled = true;
 					//trace("no cushion contact");
 					gameInfo.foulMessage = " failed to make a ball hit a cushion after the first contact with the cue ball";
-					gameInfo.foulDisplay3 = "CUSHION";
+					// gameInfo.foulDisplay3 = "CUSHION";
 				}
 			}
 		}
@@ -1634,7 +1652,7 @@ playState.update = function () {
 			//trace("cue ball in pocket");
 			gameInfo.fouled = true;
 			gameInfo.foulMessage = "potted the cue ball";
-			gameInfo.foulDisplay3 = "POTTEDCUEBALL";
+			// gameInfo.foulDisplay3 = "POTTEDCUEBALL";
 		}
 	}
 
@@ -1654,7 +1672,7 @@ playState.update = function () {
 		if (miss == true) {
 			gameInfo.foulMessage = "missed the balls";
 			gameInfo.fouled = true;
-			gameInfo.foulDisplay1 = "MISS";
+			// gameInfo.foulDisplay1 = "MISS";
 
 			var targetType;
 			if (gameInfo.turn == "p2") {
@@ -1663,7 +1681,7 @@ playState.update = function () {
 				targetType = gameInfo.p1TargetType;
 			}
 
-			gameInfo.foulDisplay2 = targetType;
+			// gameInfo.foulDisplay2 = targetType;
 		}
 	}
 
@@ -1957,10 +1975,6 @@ playState.update = function () {
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}
-
-			Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
-
-			//console.log("switching turns");
 
 			//turns have now been switched
 			/*

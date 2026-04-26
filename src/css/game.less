@@ -174,17 +174,19 @@ content {
 				}
 
 				.player.right {
-					filter: grayscale(1);
-
-					.name:after { }
+					.name:before { color: #999; }
+					.name:after { filter: grayscale(1) brightness(0.6); }
 				}
 			}
 
 			&[data-turn="p2"] {
 				.player.left {
-					filter: grayscale(1);
+					.name:before { color: #999; }
+					.name:after { filter: grayscale(1) brightness(0.6); }
 
-					.name:after { }
+					.ball-slots {
+						li:before { filter: brightness(0.75) contrast(0.75); }
+					}
 				}
 
 				.player.right {
@@ -278,7 +280,7 @@ content {
 				min-height: 0;
 				--outline: 0;
 				--color: #fff;
-				--thinkTime: 3s;
+				--thinkTime: 30s;
 
 				&.timer {
 					min-height: 1px;
@@ -302,21 +304,10 @@ content {
 					.name {
 						text-align: right;
 
-						&:before {
-							right: 81px;
-						}
-
-						&:after {
-							right: 0;
-						}
-
-						.border {
-							right: -5px;
-						}
-
-						svg.outline {
-							right: -2px;
-						}
+						&:before { right: 81px; }
+						&:after { right: 0; }
+						.border { right: -5px; }
+						svg.outline { right: -2px; }
 					}
 
 					.ball-slots {
@@ -328,26 +319,13 @@ content {
 					.name {
 						text-align: left;
 
-						&:before {
-							left: 81px;
-						}
-
-						&:after {
-							left: 0;
-						}
-
-						.border {
-							left: -5px;
-						}
-
-						svg.outline {
-							left: -2px;
-						}
+						&:before { left: 81px; }
+						&:after { left: 0; }
+						.border { left: -5px; }
+						svg.outline { left: -2px; }
 					}
 
-					.ball-slots {
-						left: 79px;
-					}
+					.ball-slots { left: 79px; }
 				}
 
 				.name {
@@ -361,10 +339,11 @@ content {
 						content: attr(data-name);
 						position: absolute;
 						top: -3px;
-						color: #fff;
 						font-size: 16px;
 						text-shadow: 0 2px 3px #0003;
 						background: #0003;
+						color: #fff;
+						backdrop-filter: blur(3px);
 					    width: 239px;
 					    padding: 6px 7px 5px;
 					    border-radius: 5px;
@@ -418,7 +397,8 @@ content {
 					font-size: 0;
 
 					li {
-						background: #0002;
+						background: #0001;
+						backdrop-filter: blur(3px);
 						position: relative;
 						display: inline-block;
 						width: 36px;
@@ -456,6 +436,7 @@ content {
 							background: url(~/img/balls.webp) no-repeat;
 							background-size: 128px auto;
 							background-position: 32px 32px;
+							filter: saturate(1.35);
 						}
 
 						&[data-id="b1"]:before { background-position: -32px 0px; animation-delay: 0ms; }

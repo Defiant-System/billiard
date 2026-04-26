@@ -13,6 +13,8 @@
 		<Menu name="New Game">
 			<Menu name="Player vs AI" click="new-game" arg="1"/>
 			<Menu name="Player vs Player" click="new-game" arg="2"/>
+			<Menu type="divider"/>
+			<Menu name="Restore Game" click="restore-game"/>
 		</Menu>
 		<Menu type="divider"/>
 		<Menu name="Toggle Sound FX" click="toggle-sound-fx"/>
