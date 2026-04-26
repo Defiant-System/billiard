@@ -2,13 +2,14 @@
 content {
 	.winner-view {
 		display: none;
-		background: #3a0a52 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
+		background: #520 radial-gradient(circle at top center, #f954, #210);
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		border-radius: inherit;
+		text-align: center;
 
 		&:before {
 			content: "";
@@ -23,29 +24,48 @@ content {
 			mix-blend-mode: hard-light;
 		}
 
+		.winner-8-ball {
+			background: url(~/img/8-balls.webp) no-repeat no-repeat;
+			background-position: 0 0;
+			display: block;
+			margin: 37px auto 7px;
+			position: relative;
+			width: 245px;
+			height: 253px;
+		}
+
+		h2 {
+		    color: #f5f5f5;
+		    filter: sepia(1) saturate(3) hue-rotate(-15deg);
+			text-shadow: 0 1px 0 hsl(174,5%,80%),
+						0 2px 0 hsl(174,5%,75%),
+						0 3px 0 hsl(174,5%,70%),
+						0 4px 0 hsl(174,5%,66%),
+						0 5px 0 hsl(174,5%,64%),
+						0 6px 0 hsl(174,5%,62%),
+						0 7px 0 hsl(174,5%,61%),
+						0 8px 0 hsl(174,5%,60%),
+						0 10px 10px #0007,
+						0 12px 18px #0005;
+		}
+
+		h3 {
+			color: #eee;
+			text-shadow: 0 3px 0 #0008;
+		}
+
 		.congratulations {
-			opacity: 1;
-			visibility: visible;
+			// opacity: 1;
+			// visibility: visible;
 			position: absolute;
 			top: 0;
 			left: 0;
 			right: 0;
 			bottom: 0;
 			z-index: 99;
-			border-radius: inherit;
-			background: rgba(0,0,0,.35);
-			transition: opacity 300ms ease-in-out 100ms;
+			// transition: opacity 300ms ease-in-out 100ms;
 			perspective: 100px;
-
-			h2 {
-				position: absolute;
-				top: 35%;
-				width: 100%;
-				text-align: center;
-				font-size: 61px;
-				font-weight: 100;
-				transform: translateZ(0);
-			}
+			pointer-events: none;
 
 			.pyro {
 				position: absolute;
@@ -70,11 +90,6 @@ content {
 					animation-delay: 1.25s, 1.25s, 1.25s;
 					animation-duration: 1.25s, 1.25s, 6.25s;
 				}
-			}
-
-			h2 {
-				animation: textBounce 1000ms 4 ease-in-out,
-							textColors 3500ms infinite;
 			}
 		}
 	}
