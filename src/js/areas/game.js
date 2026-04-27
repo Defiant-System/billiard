@@ -31,6 +31,7 @@
 				Project.game.state.start("load");
 				break;
 			case "start-game":
+				Project.game.stage.disableVisibilityChange = true;
 				Project.game.paused = true;
 				APP.els.content.data({ show: "game" });
 				Self.els.hud.find(`.player.left .name`).data({ name: ME.name });
@@ -38,6 +39,9 @@
 				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
 				// toggle sound
 				Sound.setMute(APP.settings.audio === "off");
+
+				// reset ball slots
+				Self.els.hud.find(`.player .ball-slots li`).addClass("appear disappear potted").removeAttr("data-id");
 
 				Project.levelComplete = false;
 				Project.guideOn = APP.settings.guide === "on" ? 1 : 0;

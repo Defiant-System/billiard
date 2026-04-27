@@ -53,7 +53,7 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
