@@ -54,7 +54,7 @@ let Test = {
 	init(APP) {
 
 		// return;
-		return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
@@ -71,7 +71,7 @@ let Test = {
 		}, 1000);
 		*/
 
-		/*
+		/**/
 		return setTimeout(() => {
 		    APP.game.dispatch({
 		        type: "start-game",
@@ -80,7 +80,7 @@ let Test = {
 		        arg: 1,
 		    });
 		}, 500);
-		*/
+		
 
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);

@@ -1235,6 +1235,7 @@ playState.update = function () {
 	function updateHud() {
 		if (gameInfo.hudUpdated == false) {
 			gameInfo.hudUpdated = true;
+
 			// hud ui/ux
 			setTimeout(() => Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn }), 50);
 
@@ -2680,6 +2681,8 @@ playState.update = function () {
 					volume = 0.3;
 				}
 				Sound.Play("cueHit", volume);
+				
+				Project.APP.game.dispatch({ type: "reset-player-timer" });
 
 				//not sure why this was here - wrong angle
 				//gameInfo.cueCanvas.rotation = (180 / Math.PI) * Math.atan2(vy, vx);

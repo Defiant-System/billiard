@@ -121,11 +121,15 @@
 						if (Project.mode === 1) {
 							Self.els.hud.find(".spin-setter").addClass("disabled");
 							
-							console.log("engage ai");
 							playState.gameInfo.turnExtended = false;
 							playState.gameInfo.shotRunning = false;
 							playState.gameInfo.shotReset = true;
 							playState.gameInfo.cueBallInHand = false;
+							playState.gameInfo.ballArray[0].mover.visible = false;
+							// playState.gameInfo.cueBaseCanvas.visible = false;
+							playState.gameInfo.guideCanvas.visible = false;
+
+							console.log("engage ai");
 
 						} else {
 							Self.els.hud.find(".spin-setter").removeClass("disabled");
