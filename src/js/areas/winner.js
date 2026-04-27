@@ -21,6 +21,14 @@
 			case "show-start":
 				APP.els.content.data({ show: "start" });
 				break;
+			case "play-again":
+				APP.game.dispatch({
+					type: "start-game",
+					name: Self.els.content.find(`.player.right .name`).data("name"),
+					level: Project.aiRating,
+					arg: Project.mode,
+				});
+				break;
 		}
 	}
 }

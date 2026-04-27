@@ -8,21 +8,107 @@ playState.init = function () {
 	
 };
 
+playState.getState = function() {
+	let gameInfo = this.gameInfo,
+		mode = Project.mode,
+		turn = gameInfo.turn,
+		pottedBallArray = gameInfo.pottedBallArray,
+		cueBallInHand = gameInfo.cueBallInHand,
+		shotNum = gameInfo.shotNum,
+		p1TargetType = gameInfo.p1TargetType,
+		p2TargetType = gameInfo.p2TargetType,
+		opponent,
+		p1 = [],
+		p2 = [],
+		balls = [];
+	// console.log(gameInfo);
+
+	oppnent = Project.APP.game.els.hud.find(`.player.right .name`).data("name");
+
+	Project.APP.game.els.hud.find(`.player.left .ball-slots li`).map(elem => {
+		let el = $(elem),
+			id = el.data("id"),
+			state = el.prop("className");
+		p1.push({ id, state });
+	});
+
+	Project.APP.game.els.hud.find(`.player.right .ball-slots li`).map(elem => {
+		let el = $(elem),
+			id = el.data("id"),
+			state = el.prop("className");
+		p2.push({ id, state });
+	});
+
+	gameInfo.ballArray.map(ball => {
+		let { x, y } = ball.position,
+			targetType = ball.targetType;
+		// console.log(ball);
+		balls.push({ x, y, targetType });
+	});
+	let cue = {
+		x: gameInfo.cueCanvas.position.x,
+		y: gameInfo.cueCanvas.position.y,
+	}
+
+	return { mode, p1, p2, cue, balls, opponent, pottedBallArray, cueBallInHand, shotNum, p1TargetType, p2TargetType, turn };
+}
+
+playState.setState = function(state) {
+	var gameInfo = this.gameInfo,
+		{ p1, p2, cue, balls } = state,
+		p1Slots = Project.APP.game.els.hud.find(`.player.left .ball-slots li`),
+		p2Slots = Project.APP.game.els.hud.find(`.player.right .ball-slots li`);
+
+	// set opponent name
+	Project.APP.game.els.hud.find(`.player.right .name`).data({ name: state.opponent });
+
+	// reset hud ball slots
+	Project.APP.game.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
+	p1.map((b, index) => p1Slots.get(index).data({ id: b.id }).addClass(b.state || ""));
+	p2.map((b, index) => p2Slots.get(index).data({ id: b.id }).addClass(b.state || ""));
+
+	balls.map((ball, index) => {
+		let nBall = gameInfo.ballArray[index];
+		if (index === 0) nBall.mover.visible = false;
+		if (state.pottedBallArray.includes(index)) {
+			gameInfo.shadowCanvas.add(nBall.shadow);
+			nBall.mc.visible = false;
+			nBall.shadow.visible = false;
+			nBall.active = false;
+			// nBall.shadow = null;
+		}
+		nBall.targetType = ball.targetType;
+		nBall.position.x = ball.x;
+		nBall.position.y = ball.y;
+	});
+
+	gameInfo.cueCanvas.position.x = cue.x;
+	gameInfo.cueCanvas.position.y = cue.y;
+
+	gameInfo.p1TargetType = state.p1TargetType;
+	gameInfo.p2TargetType = state.p2TargetType;
+	gameInfo.ballsPotted = state.pottedBallArray.length > 0;
+	gameInfo.pottedBallArray = state.pottedBallArray;
+	gameInfo.cueBallInHand = state.cueBallInHand;
+	gameInfo.shotNum = state.shotNum;
+	gameInfo.turn = state.turn;
+
+	Project.mode = state.mode;
+
+	gameInfo.phys.updatePhysics();
+	renderScreen();
+
+	// console.log( gameInfo );
+}
+
 playState.create = function () {
 
 	function resizeGame() {
 		//set to landscape mode
 		gameInfo.landscape = true;
-		//Project.game.scale.setGameSize(1024, 690);
+		gameInfo.gameCanvas.x = (Project.game.width / 2) + diffX;
+		gameInfo.gameCanvas.y = (Project.game.height / 2 - 75) + diffY;
 		Project.game.scale.setGameSize(Project.width, Project.height);
-
-		gameInfo.gameCanvas.x = Project.game.width / 2;
-		gameInfo.gameCanvas.y = Project.game.height / 2 - 75;
-
-		//rotate table
-		gameInfo.gameCanvas.y += diffY;
-		gameInfo.gameCanvas.x += diffX;
-		gameInfo.gameCanvas.angle = 0;
 	};
 
 	this.gameInfo = new Object(); //gameInfo is a property of playState
@@ -46,8 +132,8 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p1";
-			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
+			// gameInfo.turn = "p1";
+			gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
 			gameInfo.turn = Project.lastBreaker == "p2" ? "p1" : "p2";

@@ -5,6 +5,7 @@
 	init() {
 		// fast references
 		this.els = {
+			content: window.find("content"),
 			el: window.find(".game-view"),
 			cvs: window.find(".game-cvs"),
 			hud: window.find(".hud"),
@@ -30,7 +31,7 @@
 				Project.game.state.start("load");
 				break;
 			case "start-game":
-				Project.game.state.start("stop");
+				Project.game.paused = true;
 				APP.els.content.data({ show: "game" });
 				Self.els.hud.find(`.player.left .name`).data({ name: ME.name });
 				Self.els.hud.find(`.player.right .name`).data({ name: event.name || "Yasmin" });
@@ -44,6 +45,7 @@
 				Project.mode = +event.arg || 1;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";
+				Project.game.paused = false;
 				Project.game.state.start("play");
 				break;
 			case "game-stop":
@@ -53,12 +55,14 @@
 				if (playState.gameInfo && playState.gameInfo.gameRunning) {
 					Project.game.halt = true;
 					Project.game.paused = true;
+					Self.els.content.data({ state: "paused" });
 				}
 				break;
 			case "game-resume":
 				if (playState.gameInfo && playState.gameInfo.gameRunning) {
 					Project.game.halt = false;
 					Project.game.paused = false;
+					Self.els.content.removeAttr("data-state");
 				}
 				break;
 			case "game-toggle-pause":
@@ -85,7 +89,7 @@
 				}
 				break;
 			case "start-player-timer":
-				Self.els.hud.find(`.player.${event.turn}`).cssSequence("timer", "transitionend", el => {
+				Self.els.hud.find(`.player.${event.turn}`).cssSequence("timer", "animationend", el => {
 					el.removeClass("timer");
 					if (playState.gameInfo.gameOver) return;
 					// set turn

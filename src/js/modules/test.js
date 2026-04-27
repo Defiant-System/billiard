@@ -2,6 +2,7 @@
 let TestState = {
 	mode: 1,
 	shotNum: 3,
+	opponent: "Ali",
 	pottedBallArray: [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15],
 	cueBallInHand: false,
 	turn: "p1",
@@ -52,7 +53,7 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		return;
+		// return;
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);
@@ -86,6 +87,8 @@ let Test = {
 		
 		// setTimeout(() => APP.dispatch({ type: "output-pgn" }), 500);
 		setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		// setTimeout(() => APP.game.dispatch({ type: "game-pause" }), 4500);
+		// setTimeout(() => console.log( Project.game.state ), 1500);
 		// setTimeout(() => APP.game.dispatch({ type: "restore-state", state: TestState }), 500);
 		// setTimeout(() => APP.game.dispatch({ type: "start-player-timer" }), 800);
 
