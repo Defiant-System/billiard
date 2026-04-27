@@ -1861,10 +1861,12 @@ playState.update = function () {
 			/**/
 			if (gameInfo.turn == "p2") {
 				gameInfo.turn = "p1";
+				gameInfo.hudUpdated = false;
 				// gameInfo.turnArrow1.frame = 1;
 				// gameInfo.turnArrow2.frame = 0;
 			} else {
 				gameInfo.turn = "p2";
+				gameInfo.hudUpdated = false;
 				// gameInfo.turnArrow1.frame = 0;
 				// gameInfo.turnArrow2.frame = 1;
 			}

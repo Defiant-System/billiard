@@ -41,7 +41,7 @@
 				Sound.setMute(APP.settings.audio === "off");
 
 				// reset ball slots
-				Self.els.hud.find(`.player .ball-slots li`).addClass("appear disappear potted").removeAttr("data-id");
+				Self.els.hud.find(`.player .ball-slots li`).removeClass("appear disappear potted").removeAttr("data-id");
 
 				Project.levelComplete = false;
 				Project.guideOn = APP.settings.guide === "on" ? 1 : 0;
@@ -125,6 +125,7 @@
 							playState.gameInfo.turnExtended = false;
 							playState.gameInfo.shotRunning = false;
 							playState.gameInfo.shotReset = true;
+							playState.gameInfo.cueBallInHand = false;
 
 						} else {
 							Self.els.hud.find(".spin-setter").removeClass("disabled");
