@@ -91,6 +91,11 @@ playState.update = function () {
 			gameInfo.cue.x = -gameInfo.ballRadius * gameInfo.physScale * 1.5;
 			// gameInfo.cueShadow.x = gameInfo.cue.x;
 		}
+
+		var cueBall = gameInfo.ballArray[0];
+		if (cueBall.mover.visible == true) {
+			cueBall.mover.angle += .5;
+		}
 	}
 
 	function placeCueBall() {
@@ -199,10 +204,8 @@ playState.update = function () {
 					gameInfo.preventSetPower = false;
 					gameInfo.cueCanvas.visible = true;
 					gameInfo.placeFirstTimeMouseUp = false;
-					gameInfo.cueCanvas.x =
-						gameInfo.ballArray[0].position.x * gameInfo.physScale;
-					gameInfo.cueCanvas.y =
-						gameInfo.ballArray[0].position.y * gameInfo.physScale;
+					gameInfo.cueCanvas.x = gameInfo.ballArray[0].position.x * gameInfo.physScale;
+					gameInfo.cueCanvas.y = gameInfo.ballArray[0].position.y * gameInfo.physScale;
 
 					var ang = Maths.findBearing(
 						-gameInfo.cueCanvas.x,
@@ -2681,7 +2684,7 @@ playState.update = function () {
 					volume = 0.3;
 				}
 				Sound.Play("cueHit", volume);
-				
+
 				Project.APP.game.dispatch({ type: "reset-player-timer" });
 
 				//not sure why this was here - wrong angle

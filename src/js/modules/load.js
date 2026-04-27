@@ -19,6 +19,7 @@ const loadState = {
 		this.load.image("highlight", "~/icons/ball-highlight.png");
 		this.load.image("shadow", "~/icons/ball-shadow.png");
 		this.load.image("cue", "~/img/cue.webp");
+		this.load.image("mover", "~/icons/cue-ball-mover.png");
 
 		this.load.spritesheet("solidsSpriteSheet", "~/icons/solid-sprite-sheet.png", 48, 48, 9);
 		this.load.spritesheet("ballSpriteSheet9", "~/icons/ball-sprite-sheet-9.png", 50, 50, 41);
@@ -29,8 +30,6 @@ const loadState = {
 		this.load.spritesheet("ballSpriteSheet14", "~/icons/ball-sprite-sheet-14.png", 50, 50, 41);
 		this.load.spritesheet("ballSpriteSheet15", "~/icons/ball-sprite-sheet-15.png", 50, 50, 41);
 		this.load.spritesheet("spotSpriteSheet", "~/icons/spot-sprite-sheet.png", 38, 38, 16);
-
-		this.load.image("mover", "~/img/mover.png");
 		
 		this.load.audio("ballHit", ["~/audio/ballHit.mp3"]);
 		this.load.audio("cushionHit", ["~/audio/cushionHit.mp3"]);
