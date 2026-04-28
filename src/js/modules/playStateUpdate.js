@@ -776,16 +776,12 @@ playState.update = function () {
 				var closestDist = 100000000000;
 				for (var k = 0; k < collision.length; k++) {
 					var distSq =
-						(collision[k].position.x - cueBall.position.x) *
-							(collision[k].position.x - cueBall.position.x) +
-						(collision[k].position.y - cueBall.position.y) *
-							(collision[k].position.y - cueBall.position.y);
+						(collision[k].position.x - cueBall.position.x) * (collision[k].position.x - cueBall.position.x) +
+						(collision[k].position.y - cueBall.position.y) * (collision[k].position.y - cueBall.position.y);
 
-					//console.log("intersect dist: " + distSq);
 					if (distSq < closestDist) {
 						closestDist = distSq;
 						ball = collision[k];
-						//console.log("ball: " + ball);
 						intersectPoint = intersect[k];
 					}
 				}
@@ -808,6 +804,9 @@ playState.update = function () {
 					ball.position.x + Math.cos((bearingBall * Math.PI) / 180) * mag,
 					ball.position.y + Math.sin((bearingBall * Math.PI) / 180) * mag
 				);
+				
+				let isBallOk = ["ANY", ball.targetType].includes(gameInfo.p1TargetType),
+					lineColor = isBallOk ? 0xffffff : 0xff0000;
 
 				if (Project.guideOn == true) {
 					gameInfo.guide.lineStyle(8, 0x000000, .5);
@@ -820,33 +819,38 @@ playState.update = function () {
 						gameInfo.ballRadius * 2 * gameInfo.physScale
 					);
 
-					gameInfo.guide.moveTo(
-						ball.position.x * gameInfo.physScale,
-						ball.position.y * gameInfo.physScale
-					);
-					gameInfo.guide.lineTo(
-						dest.x * gameInfo.physScale,
-						dest.y * gameInfo.physScale
-					);
+					if (isBallOk) {
+						gameInfo.guide.moveTo(
+							ball.position.x * gameInfo.physScale,
+							ball.position.y * gameInfo.physScale
+						);
+						gameInfo.guide.lineTo(
+							dest.x * gameInfo.physScale,
+							dest.y * gameInfo.physScale
+						);
+					}
 
 					gameInfo.guide.lineStyle(4, 0xffffff, 1);
 					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
 					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
 					//draw the circle regardless of whether guide is on or off
+					gameInfo.guide.lineStyle(4, lineColor, 1);
 					gameInfo.guide.drawCircle(
 						intersectPoint.x * gameInfo.physScale,
 						intersectPoint.y * gameInfo.physScale,
 						gameInfo.ballRadius * 2 * gameInfo.physScale
 					);
 
-					gameInfo.guide.moveTo(
-						ball.position.x * gameInfo.physScale,
-						ball.position.y * gameInfo.physScale
-					);
-					gameInfo.guide.lineTo(
-						dest.x * gameInfo.physScale,
-						dest.y * gameInfo.physScale
-					);
+					if (isBallOk) {
+						gameInfo.guide.moveTo(
+							ball.position.x * gameInfo.physScale,
+							ball.position.y * gameInfo.physScale
+						);
+						gameInfo.guide.lineTo(
+							dest.x * gameInfo.physScale,
+							dest.y * gameInfo.physScale
+						);
+					}
 				}
 
 				//draw cueball path
@@ -866,7 +870,7 @@ playState.update = function () {
 						intersectPoint.x + mag * Math.cos((bearingRebound * Math.PI) / 180),
 						intersectPoint.y + mag * Math.sin((bearingRebound * Math.PI) / 180)
 					);
-					if (Project.guideOn == true) {
+					if (Project.guideOn == true && isBallOk) {
 						gameInfo.guide.lineStyle(8, 0x000000, .5);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
@@ -877,7 +881,7 @@ playState.update = function () {
 							dest2.y * gameInfo.physScale
 						);
 
-						gameInfo.guide.lineStyle(4, 0xffffff, 1);
+						gameInfo.guide.lineStyle(4, lineColor, 1);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
@@ -1653,9 +1657,6 @@ playState.update = function () {
 				gameInfo.p2TargetType = gameInfo.typesPotted;
 				if (gameInfo.p2TargetType == "STRIPES") {
 					gameInfo.p1TargetType = "SOLIDS";
-
-					//gameInfo.rackSolids.x = Project.game.width / 4;
-					//gameInfo.rackStripes.x = 3 * Project.game.width / 4;
 				} else {
 					gameInfo.p1TargetType = "STRIPES";
 				}
