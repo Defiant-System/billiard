@@ -43,7 +43,7 @@ const loadState = {
 
 	},
 	shutdown() {
-		this.loaderInfo = null;
+		
 	}
 };
 

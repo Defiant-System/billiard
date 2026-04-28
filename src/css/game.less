@@ -150,6 +150,33 @@ content {
 			}
 		}
 
+		.foul-message {
+			position: absolute;
+			top: 96px;
+			left: 0;
+			right: 0;
+			// z-index: 9;
+			text-align: center;
+			transform: translateY(50px);
+
+			&.show {
+				animation: showFoulMessage 3500ms ease-in-out;
+			}
+
+		    span {
+				font-size: 16px;
+		    	display: inline-block;
+				backdrop-filter: blur(3px);
+				background: #0009;
+				color: #fff;
+				text-shadow: 0 2px 3px #0003;
+			    padding: 7px 17px;
+			    border-radius: 7px;
+			    box-shadow: inset 0 1px 0 #0005,
+			    			inset 0 -1px 0 #fff2;
+		    }
+		}
+
 		.game-cvs {
 			position: absolute;
 			top: 0;
@@ -224,6 +251,7 @@ content {
 			.head {
 				// background: #f002;
 				width: 73px;
+				font-family: Righteous, sans-serif;
 
 				.menu {
 					position: relative;
@@ -322,7 +350,7 @@ content {
 				// min-height: 0;
 				--outline: 0;
 				--color: #fff;
-				--thinkTime: 60s;
+				--thinkTime: 30s;
 
 				&.timer {
 					// min-height: 1px;
@@ -344,6 +372,8 @@ content {
 				}
 
 				&.left {
+					--thinkTime: 3s;
+
 					.name {
 						text-align: right;
 
@@ -525,6 +555,14 @@ content {
 			}
 		}
 	}
+}
+
+
+@keyframes showFoulMessage {
+	0%   { transform: translateY(50px); }
+	10%  { transform: translateY(0px); }
+	90%  { transform: translateY(0px); }
+	100% { transform: translateY(50px); }
 }
 
 

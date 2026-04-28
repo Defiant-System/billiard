@@ -1211,6 +1211,7 @@ playState.update = function () {
 					showFoulMessage();
 				} else {
 					gameInfo.shotRating = -1;
+					gameInfo.hudUpdated = true;
 					applyRulings2();
 				}
 			} else {
@@ -1292,20 +1293,23 @@ playState.update = function () {
 	}
 
 	function showFoulMessage() {
-		if (gameInfo.foulMessage != "potted the cue ball") {
+		let message = gameInfo.foulMessage;
+		if (message != "potted the cue ball") {
 			// gameInfo.gameRunning = false;
 
-			if (gameInfo.turn == "p2") {
-				console.log("FOUL: Player 2 " + gameInfo.foulMessage);
-			} else {
-				console.log("FOUL: Player 1 " + gameInfo.foulMessage);
-			}
+			Project.APP.game.dispatch({
+		        type: "show-foul-message",
+		        message: `Player ${gameInfo.turn == "p2" ? 2 : 1} ${message}`,
+		        callback: () => {
+		        	applyRulings2();
+		        }
+		    })
 
-			setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
+			// setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
 
-			function hideFoulWindow() {
-				applyRulings2();
-			}
+			// function hideFoulWindow() {
+			// 	applyRulings2();
+			// }
 
 			/*
 			switch (gameInfo.foulDisplay1) {

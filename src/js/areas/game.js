@@ -9,6 +9,8 @@
 			el: window.find(".game-view"),
 			cvs: window.find(".game-cvs"),
 			hud: window.find(".hud"),
+			foulMsg: window.find(".game-view .foul-message"),
+			foulMsgText: window.find(".game-view .foul-message span"),
 		};
 		// start booting game
 		this.dispatch({ type: "init-boot-sequence" });
@@ -92,6 +94,16 @@
 					APP.els.content.data({ show: "loser" });
 				}
 				break;
+			case "show-foul-message":
+				Self.dispatch({ type: "game-pause" });
+				APP.game.els.foulMsgText.html(event.message);
+				APP.game.els.foulMsg.cssSequence("show", "animationend", el => {
+					// reset element
+					el.removeClass("show");
+					Self.dispatch({ type: "game-resume" });
+					if (typeof event.callback === "function") event.callback();
+				});
+				break;
 			case "start-player-timer":
 				Self.els.hud.find(`.player.${event.turn}`).cssSequence("timer", "animationend", el => {
 					el.removeClass("timer");
@@ -124,10 +136,14 @@
 							playState.gameInfo.turnExtended = false;
 							playState.gameInfo.shotRunning = false;
 							playState.gameInfo.shotReset = true;
-							playState.gameInfo.cueBallInHand = false;
+							// playState.gameInfo.cueBallInHand = true;
 							playState.gameInfo.ballArray[0].mover.visible = false;
-							// playState.gameInfo.cueBaseCanvas.visible = false;
+							// playState.gameInfo.cueCanvas.visible = true;
 							playState.gameInfo.guideCanvas.visible = false;
+
+							// playState.gameInfo.preventAim = false;
+							// playState.gameInfo.settingPower = false;
+							playState.gameInfo.beginStrike = false
 
 							console.log("engage ai");
 

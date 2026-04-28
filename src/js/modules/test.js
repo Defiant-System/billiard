@@ -71,7 +71,8 @@ let Test = {
 		}, 1000);
 		*/
 
-		/**/
+		/*
+		*/
 		return setTimeout(() => {
 		    APP.game.dispatch({
 		        type: "start-game",
@@ -79,8 +80,12 @@ let Test = {
 		        level: 15,
 		        arg: 1,
 		    });
+
+		    // setTimeout(() => APP.game.dispatch({
+		    //     type: "show-foul-message",
+		    //     message: "Player 1 potted cue ball",
+		    // }), 1500);
 		}, 500);
-		
 
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
