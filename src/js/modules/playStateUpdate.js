@@ -1295,99 +1295,17 @@ playState.update = function () {
 	function showFoulMessage() {
 		let message = gameInfo.foulMessage;
 		if (message != "potted the cue ball") {
-			// gameInfo.gameRunning = false;
-
 			Project.APP.game.dispatch({
 		        type: "show-foul-message",
 		        message: `Player ${gameInfo.turn == "p2" ? 2 : 1} ${message}`,
-		        callback: () => {
-		        	applyRulings2();
-		        }
-		    })
-
-			// setTimeout(hideFoulWindow, Phaser.Timer.SECOND);
-
-			// function hideFoulWindow() {
-			// 	applyRulings2();
-			// }
-
-			/*
-			switch (gameInfo.foulDisplay1) {
-				case "8 BALL":
-					gameInfo.foulWindow.display1.visible = true;
-					gameInfo.foulWindow.display1.frame = 0;
-					break;
-
-				case "MISS":
-					gameInfo.foulWindow.display1.visible = true;
-					gameInfo.foulWindow.display1.frame = 1;
-					//console.log("showing frame 2");
-					break;
-
-				case "SOLIDS":
-					gameInfo.foulWindow.display1.visible = true;
-					gameInfo.foulWindow.display1.frame = 2;
-					break;
-
-				case "STRIPES":
-					gameInfo.foulWindow.display1.visible = true;
-					gameInfo.foulWindow.display1.frame = 3;
-					break;
-			}
-
-			switch (gameInfo.foulDisplay2) {
-				case "8 BALL":
-					gameInfo.foulWindow.display2.visible = true;
-					gameInfo.foulWindow.display2.frame = 0;
-					break;
-
-				case "SOLIDS":
-					gameInfo.foulWindow.display2.visible = true;
-					gameInfo.foulWindow.display2.frame = 2;
-					break;
-
-				case "ANY":
-					gameInfo.foulWindow.display2.visible = true;
-					gameInfo.foulWindow.display2.frame = 2;
-					break;
-
-				case "STRIPES":
-					gameInfo.foulWindow.display2.visible = true;
-					gameInfo.foulWindow.display2.frame = 3;
-					break;
-			}
-
-			switch (gameInfo.foulDisplay3) {
-				case "CUSHION":
-					gameInfo.foulWindow.display1.visible = false; //fouls of this type can also trigger display1 and 2 to show as fouls override each other
-					gameInfo.foulWindow.display2.visible = false;
-					gameInfo.foulWindow.display3.visible = true;
-					gameInfo.foulWindow.display3.frame = 0;
-					break;
-
-				case "POTTED8BALL":
-					gameInfo.foulWindow.display1.visible = false;
-					gameInfo.foulWindow.display2.visible = false;
-					gameInfo.foulWindow.display3.visible = true;
-					gameInfo.foulWindow.display3.frame = 1;
-					break;
-
-				case "POTTEDCUEBALL":
-					gameInfo.foulWindow.display1.visible = false;
-					gameInfo.foulWindow.display2.visible = false;
-					gameInfo.foulWindow.display3.visible = true;
-					gameInfo.foulWindow.display3.frame = 2;
-					break;
-			}
-
-			switch (gameInfo.foulDisplay4) {
-				case "CUSHIONONBREAK":
-					gameInfo.foulWindow.display4.visible = true;
-					break;
-			}
-			*/
+		        callback: () => applyRulings2(),
+		    });
 		} else {
-			console.log(gameInfo.foulMessage);
+			Project.APP.game.dispatch({
+		        type: "show-foul-message",
+		        message: `Player ${message}`,
+		        callback: () => applyRulings2(),
+		    });
 			applyRulings2();
 		}
 	}
