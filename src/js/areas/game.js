@@ -85,6 +85,10 @@
 					playState.setState(event.state);
 				}, 400);
 				break;
+			case "show-settings":
+				Self.dispatch({ type: "game-pause" });
+				Self.els.content.addClass("show-settings");
+				break;
 			case "show-game-over":
 				Self.els.hud.find(`.player.timer`).removeClass("timer");
 

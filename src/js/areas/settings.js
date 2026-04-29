@@ -18,6 +18,10 @@
 		switch (event.type) {
 			case "init-view":
 				break;
+			case "close-settings":
+				Self.els.content.removeClass("show-settings");
+				APP.game.dispatch({ type: "game-resume" });
+				break;
 		}
 	}
 }

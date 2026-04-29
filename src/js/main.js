@@ -71,7 +71,7 @@ const billiard = {
 			// custom events
 			case "init-settings":
 				// get settings, if any
-				Self.settings = window.settings.getItem("settings") || defaultSettings;
+				// Self.settings = window.settings.getItem("settings") || defaultSettings;
 				break;
 			case "switch-view":
 				Self.els.content.data({ show: event.arg });
@@ -111,6 +111,7 @@ const billiard = {
 					if (!pEl.length) pEl = Self.els.showcase;
 					if (pEl && pEl.length) {
 						name = pEl.data("area");
+						console.log(pEl, name);
 						return Self[name].dispatch(event);
 					}
 				}
