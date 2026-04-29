@@ -26,6 +26,10 @@
 			case "init-settings":
 				Self.values = window.settings.getItem("settings") || Self.defaultSettings;
 				break;
+			case "show-settings":
+				Self.els.content.addClass("show-settings");
+				APP.game.dispatch({ type: "game-pause" });
+				break;
 			case "close-settings":
 				Self.els.content.removeClass("show-settings");
 				APP.game.dispatch({ type: "game-resume" });

@@ -102,7 +102,6 @@ const billiard = {
 					if (!pEl.length) pEl = Self.els.showcase;
 					if (pEl && pEl.length) {
 						name = pEl.data("area");
-						console.log(pEl, name);
 						return Self[name].dispatch(event);
 					}
 				}

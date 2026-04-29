@@ -44,6 +44,9 @@
 					level: +el.find(".photo").data("level"),
 				});
 				break;
+			case "show-settings":
+				APP.settings.dispatch({ type: "show-settings" });
+				break;
 		}
 	}
 }
