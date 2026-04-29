@@ -23,11 +23,6 @@ const Project = {
 	height: 1200,
 };
 
-// default settings
-const defaultSettings = {
-	audio: "off",
-	guide: "on",
-};
 
 const billiard = {
 	init() {
@@ -42,7 +37,7 @@ const billiard = {
 			.map(i => this[i].init(this));
 
 		// init settings
-		this.dispatch({ type: "init-settings" });
+		this.settings.dispatch({ type: "init-settings" });
 		// show intro view
 		this.dispatch({ type: "switch-view", arg: "start" });
 
@@ -69,10 +64,6 @@ const billiard = {
 				Self.game.dispatch({ type: "game-resume" });
 				break;
 			// custom events
-			case "init-settings":
-				// get settings, if any
-				// Self.settings = window.settings.getItem("settings") || defaultSettings;
-				break;
 			case "switch-view":
 				Self.els.content.data({ show: event.arg });
 				Self[event.arg].dispatch({ type: "init-view" });

@@ -40,13 +40,13 @@
 				Self.els.hud.find(`.player.right .name`).data({ name: event.name || "Yasmin" });
 				Self.els.hud.find(`.ball-slots li`).removeAttr("data-id").removeClass("potted");
 				// toggle sound
-				Sound.setMute(APP.settings.audio === "off");
+				Sound.setMute(APP.settings.values.audio === "off");
 
 				// reset ball slots
 				Self.els.hud.find(`.player .ball-slots li`).removeClass("appear disappear potted").removeAttr("data-id");
 
 				Project.levelComplete = false;
-				Project.guideOn = APP.settings.guide === "on" ? 1 : 0;
+				Project.guideOn = APP.settings.values.guide === "on" ? 1 : 0;
 				Project.aiRating = event.level || 2;
 				Project.mode = +event.arg || 1;
 				Project.levelName = "1player_" + String(Project.aiRating);
