@@ -1,0 +1,69 @@
+
+content {
+	&.show-settings {
+		&:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			background: #0003;
+			backdrop-filter: blur(3px);
+			z-index: 4;
+		}
+	}
+
+	.settings-view {
+		display: none;
+		opacity: 0;
+		transition: opacity 500ms ease,
+					display 500ms ease allow-discrete;
+		background: url(~/icons/settings.png) 50% 50%/contain no-repeat;
+		position: absolute;
+		top: 120px;
+		left: 290px;
+		width: 498px;
+		height: 400px;
+		z-index: 11;
+		filter: drop-shadow(0 5px 11px #000);
+
+		h2 {
+			position: relative;
+			top: 11px;
+			left: -15px;
+			height: 30px;
+			font-size: 39px;
+			text-align: center;
+			letter-spacing: 1px;
+
+			&:before {
+				content: attr(data-head) / "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				color: #f99;
+				text-shadow: 0 1px 1px #fff,
+							0 2px 0 hsl(35,65%,75%),
+							0 3px 0 hsl(35,65%,70%),
+							0 4px 0 hsl(35,65%,66%),
+							0 0 1px #000,
+							0 0 2px #0001,
+							0 5px 3px #0007;
+			}
+
+			&:after {
+				content: attr(data-head) / "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				background: linear-gradient(to bottom, #bd9c24 0%, #ffeab3 49%, #e1941b 50%, #fdf1c3 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+		}
+	}
+}

@@ -117,6 +117,7 @@ const billiard = {
 		}
 	},
 	start: @import "./areas/start.js",
+	settings: @import "./areas/settings.js",
 	game: @import "./areas/game.js",
 	winner: @import "./areas/winner.js",
 	loser: @import "./areas/loser.js",

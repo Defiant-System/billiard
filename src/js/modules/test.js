@@ -54,7 +54,9 @@ let Test = {
 	init(APP) {
 
 		// return;
-		return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		
+		return setTimeout(() => APP.els.content.addClass("show-settings"), 700);
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
 		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "winner" }), 500);

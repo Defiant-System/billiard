@@ -19,7 +19,7 @@
 			case "init-view":
 				break;
 			case "show-start":
-				APP.els.content.data({ show: "start" });
+				APP.dispatch({ type: "switch-view", arg: "start" });
 				break;
 			case "try-again":
 				APP.game.dispatch({

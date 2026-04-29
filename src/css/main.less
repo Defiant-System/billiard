@@ -6,6 +6,7 @@ overflow: visible;
 @import "game";
 @import "winner";
 @import "loser";
+@import "settings";
 
 content {
 	background: #111;
@@ -39,6 +40,13 @@ content {
 
 	&[data-show="loser"] {
 		.loser-view {
+			display: block;
+			opacity: 1;
+		}
+	}
+
+	&.show-settings {
+		.settings-view {
 			display: block;
 			opacity: 1;
 		}

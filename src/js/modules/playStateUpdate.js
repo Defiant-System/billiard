@@ -1310,7 +1310,6 @@ playState.update = function () {
 		        message: `Player ${message}`,
 		        callback: () => applyRulings2(),
 		    });
-			applyRulings2();
 		}
 	}
 
