@@ -204,9 +204,11 @@ content {
 				width: 150px;
 				height: 19px;
 				border-radius: 21px;
+				cursor: ew-resize;
 				box-shadow: inset 0 1px 0 #0005,
 							inset 0 -1px 0 #fff5,
 							inset 0 11px 13px #0003;
+				--value: attr(data-value number);
 
 				&:after {
 					content: attr(data-value) "%";
@@ -222,8 +224,9 @@ content {
 					position: absolute;
 					top: 2px;
 					left: 2px;
-					width: 73px;
+					width: calc( calc( var( --value ) / 100 ) * 130px );
 					height: 15px;
+					pointer-events: none;
 					border-radius: 21px;
 					background: #d70;
 					box-shadow: inset 0 1px 0 #fff5,
@@ -236,8 +239,8 @@ content {
 					right: -3px;
 					width: 21px;
 					height: 21px;
-					cursor: ew-resize;
 					border-radius: 50%;
+					opacity: .5;
 					background: linear-gradient(180deg, #fa3, #d70);
 					box-shadow: inset 0 1px 0 #fff5,
 								inset 0 -1px 0 #0005,
@@ -275,7 +278,7 @@ content {
 
 				&[data-value="on"] {
 					.handle {
-						left: 34px;
+						transform: translateX(32px);
 					}
 				}
 
@@ -288,7 +291,8 @@ content {
 					font-size: 17px;
 					text-shadow: 0 1px 0 #0005;
 					border-radius: 50%;
-					transition: left 80ms ease-in-out;
+					pointer-events: none;
+					transition: transform 120ms ease-in-out;
 					background: linear-gradient(180deg, #fa3, #d70);
 					box-shadow: inset 0 1px 0 #fff5,
 								inset 0 -1px 0 #0005,

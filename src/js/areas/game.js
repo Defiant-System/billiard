@@ -69,6 +69,7 @@
 					Project.game.halt = false;
 					Project.game.paused = false;
 					Self.els.content.removeAttr("data-state");
+					console.log(Self.els.content[0]);
 				}
 				break;
 			case "game-toggle-pause":
