@@ -34,6 +34,11 @@
 				Self.els.content.removeClass("show-settings");
 				APP.game.dispatch({ type: "game-resume" });
 				break;
+			case "quit-game":
+				Self.els.content.removeClass("show-settings");
+				APP.game.dispatch({ type: "game-pause" });
+				APP.dispatch({ type: "switch-view", arg: "start" });
+				break;
 		}
 	}
 }
