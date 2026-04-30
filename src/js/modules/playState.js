@@ -134,8 +134,8 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p1";
-			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
+			// gameInfo.turn = "p1";
+			gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
 			gameInfo.turn = Project.lastBreaker == "p2" ? "p1" : "p2";

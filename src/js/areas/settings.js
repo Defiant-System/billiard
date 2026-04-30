@@ -12,7 +12,7 @@
 		// default settings
 		this.defaultSettings = {
 			music: "off",
-			soundFx: "off",
+			soundFx: "on",
 			guide: "on",
 			ai: .4,
 		};
@@ -59,16 +59,20 @@
 				value = event.el.data("value") === "on";
 				if (value) {
 					event.el.removeAttr("data-value");
+					Sound.setMute(true);
 				} else {
 					event.el.data({ value: "on" });
+					Sound.setMute(false);
 				}
 				break;
 			case "toggle-aim-assist":
 				value = event.el.data("value") === "on";
 				if (value) {
 					event.el.removeAttr("data-value");
+					Project.guideOn = false;
 				} else {
 					event.el.data({ value: "on" });
+					Project.guideOn = true;
 				}
 				break;
 		}
@@ -81,14 +85,17 @@
 			case "mousedown":
 				let el = $(event.target),
 					startV = +el.data("value"),
-					clientX = event.clientX;
-				Self.drag = { el, startV, clientX };
+					clientX = event.clientX,
+					minX = 0,
+					maxX = 100;
+				Self.drag = { el, startV, clientX, minX, maxX };
 
 				// bind event handlers
 				Self.els.doc.on("mousemove mouseup", Self.doRange);
 				break;
 			case "mousemove":
 				let value = Drag.startV + (event.clientX - Drag.clientX);
+				value = Math.min(Math.max(value, Drag.minX), Drag.maxX);
 				// console.log(value);
 				Drag.el.data({ value });
 				break;

@@ -53,7 +53,7 @@ let TestState = {
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 		
 		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		

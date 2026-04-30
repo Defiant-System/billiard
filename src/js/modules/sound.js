@@ -36,7 +36,6 @@ Sound.createNewAudioContext = function() {
 	//console.log('create new audio context');
 	Project.game.sound.context = new AudioContext();
 	Project.game.sound.masterGain.disconnect();
-
 	Project.game.sound.masterGain = Project.game.sound.context.createGain();
 	Project.game.sound.masterGain.connect(Project.game.sound.context.destination);
 }
