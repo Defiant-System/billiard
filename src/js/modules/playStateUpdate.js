@@ -1247,7 +1247,7 @@ playState.update = function () {
 			// hud ui/ux
 			setTimeout(() => Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn }), 50);
 
-			console.log("update hud", gameInfo.turn);
+			if (DEBUG) console.log("update hud", gameInfo.turn);
 		}
 	}
 
@@ -1546,7 +1546,7 @@ playState.update = function () {
 					if (ball.id == 8) {
 						if (targetType == "8 BALL") {
 							//8 ball was the target, and was potted - so game is won
-							console.log("game won", gameInfo.turn);
+							if (DEBUG) console.log("game won", gameInfo.turn);
 
 							if (gameInfo.trial == true) {
 								gameInfo.shotRating = 1;
@@ -1562,7 +1562,7 @@ playState.update = function () {
 								gameInfo.shotRating = -1.5;
 							} else {
 								gameInfo.gameOver = true;
-								console.log("game lost");
+								if (DEBUG) console.log("game lost");
 
 								// gameInfo.foulDisplay3 = "POTTED8BALL";
 
@@ -1702,7 +1702,7 @@ playState.update = function () {
 			// console.log(`P1 is ${gameInfo.p1Rack}`);
 
 			//show all balls
-			console.log("show all balls");
+			if (DEBUG) console.log("show all balls");
 			// for (var n = 0; n < 7; n++) {
 			// 	gameInfo.rackSolidsArray[n].visible = true;
 			// 	gameInfo.rackStripesArray[n].visible = true;
@@ -1797,7 +1797,7 @@ playState.update = function () {
 				// gameInfo.turnArrow2.frame = 1;
 			}
 			updateHud();
-			console.log( "gameInfo.turn", gameInfo.turn );
+			if (DEBUG) console.log( "gameInfo.turn", gameInfo.turn );
 
 			//turns have now been switched
 			/*

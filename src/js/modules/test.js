@@ -1,4 +1,6 @@
 
+let DEBUG;
+
 let TestState = {
 	mode: 1,
 	shotNum: 3,
@@ -52,6 +54,8 @@ let TestState = {
 
 let Test = {
 	init(APP) {
+
+		DEBUG = true;
 
 		return;
 		

@@ -17,6 +17,22 @@ content {
 	bottom: 0;
 	border-radius: inherit;
 
+	&:after {
+		content: "";
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #0003;
+		backdrop-filter: blur(3px);
+		z-index: 4;
+		transition: min-height 200ms;
+		transition-delay: inherit;
+	}
+
 	&[data-show="start"] {
 		.start-view {
 			display: block;

@@ -105,7 +105,7 @@ function awardBonuses(collisionData) {
         gameInfo.ballPotted = true;
         
 		if (Project.mode == 1 && gameInfo.turn == "p1") {
-			console.log("potted ball ", collisionData.ball);
+			if (DEBUG) console.log("potted ball ", collisionData.ball);
 		}
 
 		Project.APP.game.els.hud.find(`.ball-slots li[data-id="b${collisionData.ball.id}"]`)

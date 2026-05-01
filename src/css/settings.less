@@ -1,6 +1,6 @@
 
 content {
-	--popDuration: 250ms;
+	--popDuration: 260ms;
 	min-height: 0;
 	transition: min-height var(--popDuration);
 
@@ -8,15 +8,8 @@ content {
 		min-height: 1px;
 
 		&:after {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: #0003;
-			backdrop-filter: blur(3px);
-			z-index: 4;
+			opacity: 1;
+			visibility: visible;
 		}
 
 		.settings-view {
@@ -178,6 +171,14 @@ content {
 
 			.row {
 				display: flex;
+
+				&.disabled {
+					opacity: .5;
+
+					.control {
+						pointer-events: none;
+					}
+				}
 
 				i {
 					background-color: #0003;
