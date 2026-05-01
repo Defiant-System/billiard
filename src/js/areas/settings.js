@@ -16,6 +16,8 @@
 			guide: "on",
 			ai: .4,
 		};
+		// music info
+		this.tune = { name: "tune-1" };
 		// bind event handlers
 		this.els.el.on("mousedown", ".control .track", this.doRange);
 	},
@@ -30,50 +32,86 @@
 				break;
 			case "init-settings":
 				Self.values = window.settings.getItem("settings") || Self.defaultSettings;
+				// apply settings
+				for (let key in Self.values) {
+					let type = "toggle-"+ key,
+						arg = Self.values[key] === "off";
+					// call dispatch
+					Self.dispatch({ type, arg });
+				}
 				break;
 			case "show-settings":
-				Self.els.content.addClass("show-settings");
 				APP.game.dispatch({ type: "game-pause" });
+				Self.els.content.cssSequence("open-settings", "transitionend", el => {
+					// anything to do?
+				});
 				break;
 			case "close-settings":
-				Self.els.content.removeClass("show-settings");
-				APP.game.dispatch({ type: "game-resume" });
+				Self.els.content.cssSequence("close-settings", "transitionend", el => {
+					el.removeClass("open-settings close-settings");
+					APP.game.dispatch({ type: "game-resume" });
+				});
 				break;
 			case "quit-game":
 				Self.els.content.removeClass("show-settings");
 				APP.game.dispatch({ type: "game-pause" });
 				APP.dispatch({ type: "switch-view", arg: "start" });
 				break;
-			case "set-ai-difficulty":
-				console.log(event.value);
-				break;
 			case "toggle-music":
-				value = event.el.data("value") === "on";
+				el = Self.els.el.find(`div[data-click="${event.type}"]`);
+				value = event.arg === undefined ? el.data("value") === "on" : event.arg;
 				if (value) {
-					event.el.removeAttr("data-value");
+					el.removeAttr("data-value");
+					if (Self.tune.song) Self.tune.song.stop();
+					delete Self.tune.song;
 				} else {
-					event.el.data({ value: "on" });
+					el.data({ value: "on" });
+					if (!Self.tune.song) {
+						let opt = {
+								onend: e => {
+									if (!Self.tune.song) return;
+									let [a, b] = Self.tune.name.split("-");
+									b = (+b) + 1;
+									// next tune
+									if (b > 3) b = 1;
+									Self.tune.name = "tune-"+ b;
+									// play next song
+									playSong();
+								}
+							},
+							playSong = () => window.audio.play(Self.tune.name, opt)
+													.then(song => Self.tune.song = song);
+						playSong();
+						return true;
+					}
 				}
 				break;
 			case "toggle-soundFx":
-				value = event.el.data("value") === "on";
+				el = Self.els.el.find(`div[data-click="${event.type}"]`);
+				value = event.arg === undefined ? el.data("value") === "on" : event.arg;
 				if (value) {
-					event.el.removeAttr("data-value");
+					el.removeAttr("data-value");
 					Sound.setMute(true);
 				} else {
-					event.el.data({ value: "on" });
+					el.data({ value: "on" });
 					Sound.setMute(false);
 				}
 				break;
-			case "toggle-aim-assist":
-				value = event.el.data("value") === "on";
+			case "toggle-guide":
+				el = Self.els.el.find(`div[data-click="${event.type}"]`);
+				value = event.arg === undefined ? el.data("value") === "on" : event.arg;
 				if (value) {
-					event.el.removeAttr("data-value");
+					el.removeAttr("data-value");
 					Project.guideOn = false;
 				} else {
-					event.el.data({ value: "on" });
+					el.data({ value: "on" });
 					Project.guideOn = true;
 				}
+				break;
+			case "set-ai-difficulty":
+				console.log(event.value);
+				// multiply ai rating
+				// Project.aiRating
 				break;
 		}
 	},
@@ -100,6 +138,8 @@
 				Drag.el.data({ value });
 				break;
 			case "mouseup":
+				// update ai difficulty
+				Self.dispatch({ type: "set-ai-difficulty", value: +Drag.el.data("value") });
 				// unbind event handlers
 				Self.els.doc.off("mousemove mouseup", Self.doRange);
 				break;

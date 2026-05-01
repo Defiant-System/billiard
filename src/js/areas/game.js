@@ -69,7 +69,6 @@
 					Project.game.halt = false;
 					Project.game.paused = false;
 					Self.els.content.removeAttr("data-state");
-					console.log(Self.els.content[0]);
 				}
 				break;
 			case "game-toggle-pause":
@@ -87,8 +86,7 @@
 				}, 400);
 				break;
 			case "show-settings":
-				Self.dispatch({ type: "game-pause" });
-				Self.els.content.addClass("show-settings");
+				APP.settings.dispatch({ type: "show-settings" });
 				break;
 			case "show-game-over":
 				Self.els.hud.find(`.player.timer`).removeClass("timer");
@@ -150,7 +148,7 @@
 							// playState.gameInfo.settingPower = false;
 							playState.gameInfo.beginStrike = false
 
-							console.log("engage ai");
+							// console.log("engage ai");
 
 						} else {
 							Self.els.hud.find(".spin-setter").removeClass("disabled");

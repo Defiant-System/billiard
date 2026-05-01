@@ -45,13 +45,6 @@ content {
 		}
 	}
 
-	&.show-settings {
-		.settings-view {
-			display: block;
-			opacity: 1;
-		}
-	}
-
 	i[class*="icon-"],
 	i[class^="icon-"] {
 		position: relative;
@@ -130,6 +123,16 @@ content {
 			&:hover {
 				background: radial-gradient(circle at bottom center, #ff8787ae, transparent 90%),
 							linear-gradient(180deg, #d5747a, #cf5f69 50%, #c6202c 50%, #c1212e);
+			}
+		}
+
+		&.orange {
+			background: radial-gradient(circle at bottom center, #ffba878e, transparent 90%),
+						linear-gradient(180deg, #d5a274, #cfa25f 50%, #c37a34 50%, #b24d0c);
+
+			&:hover {
+				background: radial-gradient(circle at bottom center, #fecba58e, transparent 90%),
+							linear-gradient(180deg, #e0b38b, #dab378 50%, #c2864c 50%, #ba6732);
 			}
 		}
 

@@ -55,6 +55,9 @@ const billiard = {
 			case "window.init":
 				break;
 			case "window.close":
+				// save settings
+				window.settings.setItem("settings", Self.settings);
+				// stop game
 				Project.game.destroy(true);
 				break;
 			case "window.blur":
@@ -73,10 +76,6 @@ const billiard = {
 				break;
 			case "restore-game":
 				Self.game.dispatch({ type: "restore-state", state: TestState });
-				break;
-			case "toggle-sound-fx":
-				break;
-			case "toggle-music":
 				break;
 			case "output-pgn":
 				value = playState.getState();
