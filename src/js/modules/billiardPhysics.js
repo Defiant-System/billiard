@@ -247,7 +247,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 						if (intersectPoint == null) {
 							intersectPoint = Maths.lineIntersectLine(new Point(ball.position.x, ball.position.y), new Point(nextBallPosition.x, nextBallPosition.y), new Point(line.p5.x, line.p5.y), new Point(line.p6.x, line.p6.y));
 							if (intersectPoint != null) {
-								console.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
+								if (DEBUG) console.log("!!! SAVED BY SECOND LINE  !!! Ball: " + ball.id + ", line: " + line.name + ", Frame: " + this.frame);
 								//adjust the intersect point so it is on the first line instead of the second
 								var currentPointAsVec = new Vector2D(intersectPoint.x, intersectPoint.y);
 								var normalProjection = line.normal.times(this.ballRadius * 0.2);
@@ -295,7 +295,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 									collision.target = line;
 									//this collision happens (occassionally) in addition to any others, at the exact same time so add to the collision array,
 									collisionArray.push(collision);
-									console.log("double collision (line): frame " + this.frame);
+									if (DEBUG) console.log("double collision (line): frame " + this.frame);
 								}
 							}
 						}
@@ -333,16 +333,16 @@ billiardPhysics.prototype.predictCollisions = function() {
 								}
 								if (intersection3.exit != null) {
 									intersectPoint3	= intersection3.exit;
-									console.log("!!!!!!   EXIT !!!!!!!!!!!!!!!: frame " + this.frame);
+									if (DEBUG) console.log("!!!!!!   EXIT !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
 								if (intersection3.enter != null && intersection3.exit != null) {
-									console.log("!!!!!! STRAIGHT THROUGH !!!!!!!!!!!!!!!: frame " + this.frame);
+									if (DEBUG) console.log("!!!!!! STRAIGHT THROUGH !!!!!!!!!!!!!!!: frame " + this.frame);
 									intersectPoint3	= intersection3.enter;
 								}
 
 								if (intersection3.enter == null && intersection3.exit != null) {
-									console.log("!!!!!! EXIT ONLY !!!!!!!!!!!!!!!: frame " + this.frame);
+									if (DEBUG) console.log("!!!!!! EXIT ONLY !!!!!!!!!!!!!!!: frame " + this.frame);
 								}
 
 								var intersectPointAsVector3;
@@ -365,7 +365,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 									intersectPointAsVector3 = new Vector2D(intersectPoint3.x, intersectPoint3.y);
 									intersectTime3 = time;
 
-									console.log("overlapping vertex: frame " + this.frame);
+									if (DEBUG) console.log("overlapping vertex: frame " + this.frame);
 								}
 
 								if (intersectTime3 < collisionTime) {
@@ -398,7 +398,7 @@ billiardPhysics.prototype.predictCollisions = function() {
 
 										//don't clear array - this is another collision at the same time
 										collisionArray.push(collision);
-										console.log("double collision (vertex): frame " + this.frame);
+										if (DEBUG) console.log("double collision (vertex): frame " + this.frame);
 									}
 								}
 							}

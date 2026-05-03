@@ -54,8 +54,7 @@ let TestState = {
 
 let Test = {
 	init(APP) {
-
-		DEBUG = true;
+		// DEBUG = true;
 
 		return;
 		
