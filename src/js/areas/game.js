@@ -118,15 +118,17 @@
 				break;
 			case "reset-player-timer":
 				Self.els.hud.find(".player.timer").removeClass("timer");
+				playState.gameInfo.timerStarted = false;
 				break;
 			case "set-player-turn":
 				if (playState.gameInfo.gameOver) return;
 
 				playState.gameInfo.turn = event.turn;
 				Self.els.hud.data({ turn: playState.gameInfo.turn });
-				Self.dispatch({ type: "reset-player-timer" });
+				// Self.dispatch({ type: "reset-player-timer" });
 				Self.dispatch({ type: "start-player-timer", turn: playState.gameInfo.turn });
 				APP.spinSetter.dispatch({ type: "reset-spin-setter" });
+				playState.gameInfo.timerStarted = true;
 
 				switch (playState.gameInfo.turn) {
 					case "p1":

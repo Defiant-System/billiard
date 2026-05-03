@@ -32,6 +32,7 @@ playState.update = function () {
 			}
 
 			if (gameInfo.turn == "p2" && Project.mode == 1) {
+				gameInfo.hudUpdated = false;
 				//ai only
 				aiPlaceCueBall();
 				aiFindCalculatedShots();
@@ -1116,8 +1117,7 @@ playState.update = function () {
 	function strikeBall() {
 		// sound fx
 		Sound.Play("cueHit", 1);
-		// hud UI/UX
-		Project.APP.game.dispatch({ type: "reset-player-timer" });
+		resetHudTimer();
 
 		gameInfo.hudUpdated = false;
 
@@ -1240,8 +1240,13 @@ playState.update = function () {
 		}
 	}
 
+	function resetHudTimer() {
+		// hud UI/UX
+		Project.APP.game.dispatch({ type: "reset-player-timer" });
+	}
+
 	function updateHud() {
-		if (gameInfo.hudUpdated == false) {
+		if (gameInfo.hudUpdated == false && gameInfo.timerStarted == false) {
 			gameInfo.hudUpdated = true;
 
 			// hud ui/ux
@@ -1260,21 +1265,21 @@ playState.update = function () {
 			//console.log("apply rulings 2");
 
 			if (gameInfo.gameOver == false) {
-                if (gameInfo.trial == false) {
-                    setNextTargetType();
-                    checkWhosTurn();
-                }
+				if (gameInfo.trial == false) {
+					setNextTargetType();
+					checkWhosTurn();
+				}
 				resetVars();
 			}
 		}
 
-        preventQuit = false;
+		preventQuit = false;
 
-        if (gameInfo.rerack == true) {
-            preventQuit = true;
-            //setTimeout(rerackBalls, 3000);
-            Project.game.time.events.add(500, rerackBalls, this);
-        }
+		if (gameInfo.rerack == true) {
+			preventQuit = true;
+			//setTimeout(rerackBalls, 3000);
+			Project.game.time.events.add(500, rerackBalls, this);
+		}
 	}
 
 	function checkGameOver() {
@@ -1298,19 +1303,11 @@ playState.update = function () {
 
 	function showFoulMessage() {
 		let message = gameInfo.foulMessage;
-		if (message != "potted the cue ball") {
-			Project.APP.game.dispatch({
-		        type: "show-foul-message",
-		        message: `Player ${gameInfo.turn == "p2" ? 2 : 1} ${message}`,
-		        callback: () => applyRulings2(),
-		    });
-		} else {
-			Project.APP.game.dispatch({
-		        type: "show-foul-message",
-		        message: `Player ${message}`,
-		        callback: () => applyRulings2(),
-		    });
-		}
+		Project.APP.game.dispatch({
+			type: "show-foul-message",
+			message: `Player ${gameInfo.turn == "p2" ? 2 : 1} ${message}`,
+			callback: () => applyRulings2(),
+		});
 	}
 
 	function checkIllegalContact() {
@@ -1986,7 +1983,7 @@ playState.update = function () {
 
 		gameInfo.moverMouseDown = false;
 
-		Project.APP.game.els.hud.data({ turn: gameInfo.turn });
+		// Project.APP.game.els.hud.data({ turn: gameInfo.turn });
 	}
 
 	function aiPlaceCueBall() {
@@ -2573,7 +2570,6 @@ playState.update = function () {
 				0,
 				0
 			);
-			Project.APP.game.dispatch({ type: "reset-player-timer" });
 		}
 	}
 
@@ -2606,8 +2602,7 @@ playState.update = function () {
 					volume = 0.3;
 				}
 				Sound.Play("cueHit", volume);
-
-				Project.APP.game.dispatch({ type: "reset-player-timer" });
+				resetHudTimer();
 
 				//not sure why this was here - wrong angle
 				//gameInfo.cueCanvas.rotation = (180 / Math.PI) * Math.atan2(vy, vx);
