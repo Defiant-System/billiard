@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 55 55" style="enable-background:new 0 0 55 55;" xml:space="preserve">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55">
 <style type="text/css">
-	.st0{fill:url(#SVGID_1_);stroke:#000000;stroke-miterlimit:10;}
+	.st0{fill:url(#SVGID_1_);stroke:#000000;stroke-miterlimit:10;filter:url(#ds1);}
 	.st1{opacity:0.61;fill:url(#SVGID_2_);}
 	.st2{fill:url(#SVGID_3_);}
 	.st3{fill:url(#SVGID_4_);}
@@ -11,25 +9,25 @@
 	.st5{fill:url(#SVGID_5_);}
 	.st6{fill:url(#SVGID_6_);}
 	.st7{fill:url(#SVGID_7_);}
-	.st8{opacity:0.72;fill:url(#glow_11_);}
+	.st8{opacity:0.72;fill:url(#glow_11_);filter:url(#glow);}
 	.st9{opacity:0.5;fill:#FEFCF8;}
 	.st10{fill:url(#SVGID_8_);}
 	.st11{fill:url(#SVGID_9_);}
 	.st12{fill:url(#SVGID_10_);}
 	.st13{fill:url(#SVGID_11_);}
 	.st14{fill:url(#SVGID_12_);}
-	.st15{opacity:0.72;fill:url(#glow_12_);}
+	.st15{opacity:0.72;fill:url(#glow_12_);filter:url(#glow);}
 	.st16{fill:url(#SVGID_13_);stroke:#D6F2FA;stroke-width:0.125;stroke-miterlimit:10;}
 	.st17{fill:url(#SVGID_14_);}
 	.st18{opacity:0.85;}
-	.st19{opacity:0.72;fill:url(#glow_13_);}
+	.st19{opacity:0.72;fill:url(#glow_13_);filter:url(#glow);}
 	.st20{fill:url(#SVGID_15_);}
 	.st21{fill:url(#SVGID_16_);}
 	.st22{fill:url(#SVGID_17_);}
 	.st23{fill:url(#SVGID_18_);}
 	.st24{fill:url(#SVGID_19_);}
 	.st25{fill:url(#SVGID_20_);}
-	.st26{fill:url(#glow_14_);}
+	.st26{fill:url(#glow_14_);filter:url(#glow);}
 	.st27{fill:url(#SVGID_21_);stroke:#000000;stroke-width:0.125;stroke-miterlimit:10;}
 	.st28{fill:url(#SVGID_22_);stroke:#000000;stroke-width:0.125;stroke-miterlimit:10;}
 	.st29{fill:url(#SVGID_23_);}
@@ -46,6 +44,12 @@
 	.st40{fill:#069BF6;}
 	.st41{fill:#36E1FE;}
 </style>
+<filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+	<feDropShadow dx="0" dy="0" stdDeviation=".5" flood-color="#ffffff" flood-opacity="1" />
+</filter>
+<filter id="ds1" x="-40%" y="-40%" width="180%" height="180%">
+	<feDropShadow dx="0" dy=".5" stdDeviation="1" flood-color="#000000" flood-opacity=".4" />
+</filter>
 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="27.5" y1="2.4284" x2="27.5" y2="52.5716">
 	<stop  offset="0" style="stop-color:#000109"/>
 	<stop  offset="0.4999" style="stop-color:#000D16"/>
