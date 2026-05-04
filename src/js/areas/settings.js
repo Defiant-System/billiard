@@ -66,7 +66,8 @@
 				} else {
 					el.data({ value: "on" });
 					if (!Self.tune.song) {
-						let opt = {
+						let rowEl = el.parents(".row").addClass("loading"),
+							opt = {
 								onend: e => {
 									if (!Self.tune.song) return;
 									let [a, b] = Self.tune.name.split("-");
@@ -79,7 +80,10 @@
 								}
 							},
 							playSong = () => window.audio.play(Self.tune.name, opt)
-													.then(song => Self.tune.song = song);
+													.then(song => {
+														rowEl.removeClass("loading");
+														Self.tune.song = song;
+													});
 						playSong();
 						return true;
 					}

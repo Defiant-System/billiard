@@ -180,6 +180,12 @@ content {
 					}
 				}
 
+				&.loading {
+					svg.loader {
+						display: inline-block;
+					}
+				}
+
 				i {
 					background-color: #0003;
 					background-size: 22px auto;
@@ -202,6 +208,27 @@ content {
 				.control {
 					// background: #00f2;
 					flex: 1;
+				}
+
+				svg.loader {
+					display: none;
+					position: relative;
+					top: 0px;
+					left: 3px;
+					width: 19px;
+					height: 19px;
+					transform-origin: center center;
+					animation: rotate 2.5s linear infinite;
+
+					.loader-path {
+						stroke-dasharray: 150, 200;
+						stroke-dashoffset: -10;
+						stroke-linecap: round;
+						stroke: #fff;
+						stroke-width: 4px;
+						fill: none;
+						animation: dash 1.5s ease-in-out infinite;
+					}
 				}
 			}
 

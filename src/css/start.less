@@ -1,10 +1,31 @@
 
 content {
+	&[data-show="start"] {
+		.start-view {
+			opacity: 1;
+			visibility: visible;
+
+			.logo {
+				animation: pop-8-ball 400ms forwards;
+				animation-delay: 350ms;
+			}
+
+			h3 {
+				animation: pop-8-ball 300ms forwards;
+				animation-delay: 700ms;
+			}
+
+			.opponents {
+				animation: fade-in 300ms ease-in-out forwards;
+				animation-delay: 1000ms;
+			}
+		}
+	}
+
 	.start-view {
-		display: none;
 		opacity: 0;
-		transition: opacity 500ms ease,
-					display 500ms ease allow-discrete;
+		visibility: hidden;
+		transition: opacity 350ms ease-in-out;
 		background: #121034 radial-gradient(circle at top center, #a2a9ff4f, #0200204f);
 		position: absolute;
 		top: 0;
@@ -34,6 +55,7 @@ content {
 			width: 500px;
 			height: 340px;
 			filter: drop-shadow(0 2px 7px #000);
+			opacity: 0;
 
 			.star {
 				position: absolute;
@@ -82,8 +104,10 @@ content {
 
 		h3 {
 			font-family: Righteous, sans-serif;
-			margin-top: 17px;
-			margin-bottom: 11px;
+			font-size: 22px;
+			margin-top: 23px;
+			margin-bottom: 17px;
+			opacity: 0;
 		}
 		
 		.opponents {
@@ -95,14 +119,15 @@ content {
 			font-family: BebasNeueRegular, Arial, sans-serif;
 			list-style: none;
 			z-index: 3;
+			opacity: 0;
 
 			&:hover {
 				li {
 					div.photo {
-						color: #ccc;
+						color: #ddd7;
 
 						&:before {
-							filter: grayscale(1) blur(2px);
+							filter: grayscale(1) blur(3px) opacity(.8);
 						}
 					}
 
@@ -191,6 +216,7 @@ content {
 							padding: 5px 0 2px;
 							text-align: center;
 							font-size: 15px;
+							letter-spacing: 0;
 							text-shadow: 0 1px 1px #0007;
 						}
 
