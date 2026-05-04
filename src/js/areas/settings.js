@@ -42,7 +42,7 @@
 				break;
 			case "show-settings":
 				APP.game.dispatch({ type: "game-pause" });
-				setTimeout(() => Self.els.content.addClass("open-settings"), 10);
+				Self.els.content.addClass("open-settings");
 				break;
 			case "close-settings":
 				Self.els.content.cssSequence("close-settings", "transitionend", el => {
