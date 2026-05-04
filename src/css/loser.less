@@ -1,10 +1,36 @@
 
 content {
+	&[data-show="loser"] {
+		.loser-view {
+			opacity: 1;
+			visibility: visible;
+
+			.loser-8-ball {
+				animation: pop-8-ball 200ms forwards;
+				animation-delay: 250ms;
+			}
+
+			h2 {
+				animation: pop-8-ball 200ms forwards;
+				animation-delay: 500ms;
+			}
+
+			h3 {
+				animation: fade-in 200ms ease-in-out forwards;
+				animation-delay: 800ms;
+			}
+
+			.button-row {
+				animation: fade-in 200ms ease-in-out forwards;
+				animation-delay: 1200ms;
+			}
+		}
+	}
+
 	.loser-view {
-		display: none;
 		opacity: 0;
-		transition: opacity 500ms ease,
-					display 500ms ease allow-discrete;
+		visibility: hidden;
+		transition: opacity 350ms ease-in-out;
 		background: #101010 radial-gradient(circle at top center, #9994, #0004);
 		position: absolute;
 		top: 0;
@@ -35,11 +61,13 @@ content {
 			position: relative;
 			width: 245px;
 			height: 253px;
+			opacity: 0;
 		}
 
 		h2 {
 			position: relative;
 			height: 100px;
+			opacity: 0;
 
 			&:before {
 				content: attr(data-head) / "";
@@ -75,6 +103,11 @@ content {
 		h3 {
 			color: #d65050;
 			text-shadow: 0 3px 0 #400a;
+			opacity: 0;
+		}
+
+		.button-row {
+			opacity: 0;
 		}
 	}
 }

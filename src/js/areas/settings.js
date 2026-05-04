@@ -53,6 +53,7 @@
 			case "quit-game":
 				Self.els.content.removeClass("show-settings");
 				APP.game.dispatch({ type: "game-pause" });
+				APP.game.dispatch({ type: "game-stop" });
 				APP.dispatch({ type: "switch-view", arg: "start" });
 				break;
 			case "toggle-music":

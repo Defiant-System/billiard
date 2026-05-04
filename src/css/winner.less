@@ -1,10 +1,36 @@
 
 content {
+	&[data-show="winner"] {
+		.winner-view {
+			opacity: 1;
+			visibility: visible;
+
+			.winner-8-ball {
+				animation: pop-8-ball 400ms forwards;
+				animation-delay: 350ms;
+			}
+
+			h2 {
+				animation: pop-8-ball 300ms forwards;
+				animation-delay: 700ms;
+			}
+
+			h3 {
+				animation: fade-in 300ms ease-in-out forwards;
+				animation-delay: 1000ms;
+			}
+
+			.button-row {
+				animation: fade-in 200ms ease-in-out forwards;
+				animation-delay: 1500ms;
+			}
+		}
+	}
+
 	.winner-view {
-		display: none;
 		opacity: 0;
-		transition: opacity 500ms ease,
-					display 500ms ease allow-discrete;
+		visibility: hidden;
+		transition: opacity 350ms ease-in-out;
 		background: #520 radial-gradient(circle at top center, #f954, #210);
 		position: absolute;
 		top: 0;
@@ -35,11 +61,13 @@ content {
 			position: relative;
 			width: 245px;
 			height: 253px;
+			opacity: 0;
 		}
 
 		h2 {
 			position: relative;
 			height: 100px;
+			opacity: 0;
 
 			&:before {
 				content: attr(data-head) / "";
@@ -75,6 +103,11 @@ content {
 		h3 {
 			color: #eee;
 			text-shadow: 0 3px 0 #0008;
+			opacity: 0;
+		}
+
+		.button-row {
+			opacity: 0;
 		}
 
 		.congratulations {
@@ -213,4 +246,15 @@ content {
 		margin-top: 30%;
 		margin-left: 80%;
 	}
+}
+
+@keyframes pop-8-ball {
+	0% { scale: .8; opacity: 0; }
+	90% { scale: 1.05; opacity: 1; }
+	100% { scale: 1; opacity: 1; }
+}
+
+@keyframes fade-in {
+	0% { letter-spacing: 3px; opacity: 0; }
+	100% { letter-spacing: 0; opacity: 1; }
 }
