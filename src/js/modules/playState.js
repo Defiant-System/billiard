@@ -1,6 +1,6 @@
 
 
-var diffY = 150;
+var diffY = 130;
 var diffX = 0;
 var playState = new Object();
 
@@ -117,7 +117,7 @@ playState.create = function () {
 	initGameInfo();
 	initCanvases();
 	initTable();
-	// initDebug(); //
+	initDebug(); //
 	initBalls();
 	initGuide();
 	initCue();
@@ -128,13 +128,14 @@ playState.create = function () {
 
 	resizeGame();
 
-	gameInfo.gameRunning = true;
-
-	Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
+	setTimeout(() => {
+		gameInfo.gameRunning = true;
+		Project.APP.game.dispatch({ type: "set-player-turn", turn: gameInfo.turn });
+	}, 1000);
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p2";
+			gameInfo.turn = "p1";
 			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
@@ -285,11 +286,11 @@ playState.create = function () {
 */
 	function initCanvases() {
 		gameInfo.bgCanvas = new Phaser.Group(Project.game, Project.game.stage, "bgCanvas");
-		gameInfo.guiBaseCanvas = new Phaser.Group(
-			Project.game,
-			Project.game.stage,
-			"guiBaseCanvas"
-		);
+		// gameInfo.guiBaseCanvas = new Phaser.Group(
+		// 	Project.game,
+		// 	Project.game.stage,
+		// 	"guiBaseCanvas"
+		// );
 		//creates game canvas and adds it to the stage
 		gameInfo.gameCanvas = new Phaser.Group(Project.game, Project.game.stage, "gameCanvas");
 
@@ -307,7 +308,7 @@ playState.create = function () {
 			gameInfo.gameCanvas,
 			"ballCanvas"
 		);
-		gameInfo.guiCanvas = new Phaser.Group(Project.game, Project.game.stage, "guiCanvas");
+		// gameInfo.guiCanvas = new Phaser.Group(Project.game, Project.game.stage, "guiCanvas");
 		gameInfo.cueBaseCanvas = new Phaser.Group(
 			Project.game,
 			gameInfo.gameCanvas,
@@ -400,11 +401,18 @@ playState.create = function () {
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
 
 		//create table physics
-		//note, a line going from left to right will detect collisions from below, so make sure lines are drawn in the right direction.  Draw all lines clockwise around the table
-		//table playing area is 600 x 300 pixels.  Physics values are x100, so table area in physics is 60,000 x 30,000.
+		/* note, a line going from left to right will detect collisions from below, so make
+		 * sure lines are drawn in the right direction.  Draw all lines clockwise around the table
+		 * table playing area is 600 x 300 pixels.  Physics values are x100, so table area in 
+		 * physics is 60,000 x 30,000.
+		 */
 
-		var tableScale = gameInfo.adjustmentScale * 600; //allows conversion from inches (assuming a 100" by 50" playing surface, standard for a 9' table) to physics values (60,000 x 30,000)
-		// ^ additional multiple of 1.4 applied after we scaled up the table in flash by multiplying dimensions of all layers by 1.4
+		var tableScale = gameInfo.adjustmentScale * 600;
+		/* allows conversion from inches (assuming a 100" by 50" playing surface, standard 
+		 * for a 9' table) to physics values (60,000 x 30,000)
+		 * ^ additional multiple of 1.4 applied after we scaled up the table in flash 
+		 * by multiplying dimensions of all layers by 1.4
+		 */
 
 		var line;
 		var vertex;
@@ -896,9 +904,9 @@ playState.resumeGame = function () {
 playState.shutdown = function () {
 	var gameInfo = this.gameInfo;
 	gameInfo.gameCanvas.destroy();
-	gameInfo.guiCanvas.destroy();
+	// gameInfo.guiCanvas.destroy();
 	gameInfo.debugCanvas.destroy();
-	gameInfo.guiBaseCanvas.destroy();
+	// gameInfo.guiBaseCanvas.destroy();
 	gameInfo.cueBaseCanvas.destroy();
 };
 

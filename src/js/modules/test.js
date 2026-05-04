@@ -54,16 +54,16 @@ let TestState = {
 
 let Test = {
 	init(APP) {
-		DEBUG = true;
+		return;
 
-		// return;
+		DEBUG = true;
 		
 		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		
 		// return setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
 		
 		// return setTimeout(() => APP.els.content.find(".opponents .player").get(2).trigger("click"), 500);
-		return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "game" }), 500);
+		// return setTimeout(() => APP.dispatch({ type: "switch-view", arg: "game" }), 500);
 
 		/*
 		return setTimeout(() => {
@@ -74,7 +74,8 @@ let Test = {
 		        arg: 1,
 		    });
 
-		    setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
+		    // setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
+			// setTimeout(() => APP.game.dispatch({ type: "game-pause" }), 500);
 
 		    // setTimeout(() => APP.game.dispatch({
 		    //     type: "show-foul-message",
