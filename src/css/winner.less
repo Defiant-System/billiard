@@ -129,22 +129,26 @@ content {
 				left: 0;
 				right: 0;
 				z-index: 100;
+			}
 
-				> .before,
-				> .after {
-					position: absolute;
-					width: 5px;
-					height: 5px;
-					border-radius: 50%;
-					.pyroShadowLoop(50);
-					animation: 1s bang ease-out 7 backwards,
-								1s gravity ease-in 7 backwards,
-								5s position linear 7 backwards;
-				}
+			&.fireworks {
+				.pyro {
+					> .before,
+					> .after {
+						position: absolute;
+						width: 5px;
+						height: 5px;
+						border-radius: 50%;
+						.pyroShadowLoop(50);
+						animation: 1s bang ease-out 7 backwards,
+									1s gravity ease-in 7 backwards,
+									5s position linear 7 backwards;
+					}
 
-				> .after {
-					animation-delay: 1.25s, 1.25s, 1.25s;
-					animation-duration: 1.25s, 1.25s, 6.25s;
+					> .after {
+						animation-delay: 1.25s, 1.25s, 1.25s;
+						animation-duration: 1.25s, 1.25s, 6.25s;
+					}
 				}
 			}
 		}
@@ -152,8 +156,8 @@ content {
 }
 
 .pyroShadowLoop(@count) when (@count > 0) {
-		.pyroShadowLoop(@count - 1);
-		box-shadow+: 0 0 #fff;
+	.pyroShadowLoop(@count - 1);
+	box-shadow+: 0 0 #fff;
 }
 
 // copied from: https://codepen.io/yshlin/pen/ylDEk

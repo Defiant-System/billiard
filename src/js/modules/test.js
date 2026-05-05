@@ -2,54 +2,53 @@
 let DEBUG;
 
 let TestState = {
-	mode: 1,
-	shotNum: 3,
-	opponent: "Ali",
-	pottedBallArray: [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15],
-	cueBallInHand: false,
-	turn: "p1",
-	p1TargetType: "SOLIDS",
-	p2TargetType: "STRIPES",
-	p1: [
-		{ id: "b1" },
-		{ id: "b2", state: "potted" },
-		{ id: "b3", state: "potted" },
-		{ id: "b4", state: "potted" },
-		{ id: "b5", state: "potted" },
-		{ id: "b6", state: "potted" },
-		{ id: "b7", state: "potted" }
-	],
-	p2: [
-		{ id: "b9", state: "potted" },
-		{ id: "b10", state: "potted" },
-		{ id: "b11", state: "potted" },
-		{ id: "b12", state: "potted" },
-		{ id: "b13" },
-		{ id: "b14", state: "potted" },
-		{ id: "b15", state: "potted" }
-	],
-	cue: {
-		x: 392.735479,
-		y: 67.974199
-	},
-	balls: [
-		{ x: 39273.5479, y: 6797.4199 },
-		{ x: -18364.2897, y: 26091.2899, targetType: "SOLIDS" },
-		{ x: 19983.6955, y: 13832.9609, targetType: "SOLIDS" },
-		{ x: 24539.3554, y: 20780.6278, targetType: "SOLIDS" },
-		{ x: 15044.1497, y: 19414.3481, targetType: "SOLIDS" },
-		{ x: 29967.1538, y: 3673.5693, targetType: "SOLIDS" },
-		{ x: -68124.2809, y: -34033.1264, targetType: "SOLIDS" },
-		{ x: 29637.2366, y: -7413.3544, targetType: "SOLIDS" },
-		{ x: 47782.5504, y: -11223.4473, targetType: "8 BALL" },
-		{ x: 39627.2423, y: -5993.9949, targetType: "STRIPES" },
-		{ x: 53724.4171, y: -28461.2471, targetType: "STRIPES" },
-		{ x: 53131.062, y: -19767.0209, targetType: "STRIPES" },
-		{ x: 70295.2821, y: 32818.9528, targetType: "STRIPES" },
-		{ x: -58422.9292, y: -13590.9773, targetType: "STRIPES" },
-		{ x: 51520.8057, y: 5451.8491, targetType: "STRIPES" },
-		{ x: 68920.5847, y: 33161.9828, targetType: "STRIPES" }
-	]
+    "mode": 1,
+    "p1": [
+        { "id": "b8", "state": "" },
+        { "id": "b10", "state": "appear potted" },
+        { "id": "b11", "state": "disappear potted" },
+        { "id": "b12", "state": "disappear potted" },
+        { "id": "b13", "state": "disappear potted" },
+        { "id": "b14", "state": "disappear potted" },
+        { "id": "b15", "state": "disappear potted" }
+    ],
+    "p2": [
+        { "id": "b1", "state": "" },
+        { "id": "b2", "state": "disappear potted" },
+        { "id": "b3", "state": "" },
+        { "id": "b4", "state": "" },
+        { "id": "b5", "state": "" },
+        { "id": "b6", "state": "disappear potted" },
+        { "id": "b7", "state": "disappear potted" }
+    ],
+    "cue": {
+        "x": 221.596279,
+        "y": -149.480242
+    },
+    "balls": [
+        { "x": -10671.565, "y": -9165.3437, "targetType": "SOLIDS" },
+        { "x": -39710.2925, "y": 19234.3956, "targetType": "SOLIDS" },
+        { "x": -38165.2732, "y": -3442.4365, "targetType": "SOLIDS" },
+        { "x": -20676.5707, "y": 7056.9468, "targetType": "SOLIDS" },
+        { "x": -17905.4418, "y": 13390.4472, "targetType": "SOLIDS" },
+        { "x": -40165.6303, "y": -18471.0543, "targetType": "SOLIDS" },
+        { "x": 34194.8033, "y": 18658.1814, "targetType": "SOLIDS" },
+        { "x": 9291.4488, "y": -6541.6433, "targetType": "8 BALL" },
+        { "x": 34036.4348, "y": -19059.2901, "targetType": "STRIPES" },
+        { "x": 35441.4295, "y": -17658.7496, "targetType": "STRIPES" },
+        { "x": 34677.476, "y": -18058.5505, "targetType": "STRIPES" },
+        { "x": -3108.6012, "y": -18387.3082, "targetType": "STRIPES" },
+        { "x": 34635.8591, "y": -18094.4205, "targetType": "STRIPES" },
+        { "x": 34132.1659, "y": -18788.535, "targetType": "STRIPES" },
+        { "x": 34142.0471, "y": 18766.2649, "targetType": "STRIPES" }
+    ],
+    "opponent": "Ali",
+    "pottedBallArray": [10, 9, 14, 7, 15, 2, 6, 12, 13, 11],
+    "cueBallInHand": false,
+    "shotNum": 7,
+    "p1TargetType": "8 BALL",
+    "p2TargetType": "SOLIDS",
+    "turn": "p1"
 };
 
 let Test = {
@@ -58,7 +57,7 @@ let Test = {
 
 		// DEBUG = true;
 		
-		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		
 		// return setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
 		

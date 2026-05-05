@@ -69,6 +69,7 @@ const billiard = {
 				break;
 			// custom events
 			case "switch-view":
+				Self.els.content.find(".congratulations.fireworks").removeClass("fireworks");
 				Self.els.content.data({ show: event.arg });
 				Self[event.arg].dispatch({ type: "init-view" });
 				break;

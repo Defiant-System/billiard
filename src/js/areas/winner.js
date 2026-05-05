@@ -17,6 +17,7 @@
 		// console.log(event);
 		switch (event.type) {
 			case "init-view":
+				Self.els.el.find(".congratulations").addClass("fireworks");
 				break;
 			case "show-start":
 				APP.dispatch({ type: "switch-view", arg: "start" });

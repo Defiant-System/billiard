@@ -23,7 +23,7 @@ playState.getState = function() {
 		balls = [];
 	// console.log(gameInfo);
 
-	oppnent = Project.APP.game.els.hud.find(`.player.right .name`).data("name");
+	opponent = Project.APP.game.els.hud.find(`.player.right .name`).data("name");
 
 	Project.APP.game.els.hud.find(`.player.left .ball-slots li`).map(elem => {
 		let el = $(elem),
@@ -117,7 +117,7 @@ playState.create = function () {
 	initGameInfo();
 	initCanvases();
 	initTable();
-	// initDebug(); //
+	initDebug(); //
 	initBalls();
 	initGuide();
 	initCue();
@@ -341,18 +341,29 @@ playState.create = function () {
 
 	function initDebug() {
 		var graphics = new Phaser.Graphics(Project.game, 0, 0);
+		var lineWidth = 2;
         gameInfo.debugCanvas.addChild(graphics);
+
+		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
+		for (var n = 0; n < gameInfo.trayArray.length; n++) {
+			//debug drawings
+			var line = gameInfo.trayArray[n];
+			console.log(line);
+			// graphics.lineStyle(lineWidth, 0xff00ff, 1);
+			// graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
+			// graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
+		}
 
 		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
 		for (var n = 0; n < gameInfo.lineArray.length; n++) {
 			//debug drawings
 			var line = gameInfo.lineArray[n];
 
-			graphics.lineStyle(2, 0xff0000, 1);
+			graphics.lineStyle(lineWidth, 0xff0000, 1);
 			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
 			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
 
-			// graphics.lineStyle(2, 0xffff00, 1);
+			// graphics.lineStyle(lineWidth, 0xffff00, 1);
 			// graphics.moveTo(line.p3.x * gameInfo.physScale, line.p3.y * gameInfo.physScale);
 			// graphics.lineTo(line.p4.x * gameInfo.physScale, line.p4.y * gameInfo.physScale);
 		}
@@ -363,7 +374,7 @@ playState.create = function () {
 			graphics.drawCircle(pocket.position.x * gameInfo.physScale, pocket.position.y * gameInfo.physScale, gameInfo.pocketRadius * 2 * gameInfo.physScale);
 		}
 		// drop position
-		graphics.lineStyle(2, 0x00ff00, 1);
+		graphics.lineStyle(lineWidth, 0x00ff00, 1);
 		for(var n = 0; n < gameInfo.pocketArray.length; n ++) {
 			var pocket = gameInfo.pocketArray[n];
 			graphics.drawCircle(pocket.dropPosition.x * gameInfo.physScale, pocket.dropPosition.y * gameInfo.physScale, gameInfo.pocketRadius * 1.5 * gameInfo.physScale);
@@ -423,6 +434,7 @@ playState.create = function () {
 		var pocket;
 
 		gameInfo.wallsArray = new Array();
+		gameInfo.trayArray = new Array();
 		gameInfo.pocketArray = new Array();
 		gameInfo.vertexArray = new Array();
 		gameInfo.lineArray = new Array();
@@ -459,6 +471,15 @@ playState.create = function () {
 			)
 		);
 		//allows n+1 below to represent the first point
+
+
+		// array of four lines representing potted tray
+		gameInfo.trayArray.push(
+			new Vector2D(
+				-54 * tableScale - gameInfo.pocketRadius / 2,
+				-25.25 * tableScale - gameInfo.pocketRadius / 4
+			)
+		);
 
 
 		//    \                  /  \                  /

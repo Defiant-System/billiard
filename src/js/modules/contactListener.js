@@ -162,12 +162,20 @@ function playPocketAnimation(collisionData) {
 		tweenSpeed *= 300;
 		
 		var pocketTween = Project.game.add.tween(ball.mc);
-		pocketTween.to({x: pocket.dropPosition.x * gameInfo.physScale, y: pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed);
+		pocketTween.to({
+			x: pocket.dropPosition.x * gameInfo.physScale,
+			y: pocket.dropPosition.y * gameInfo.physScale,
+		}, tweenSpeed);
 		pocketTween.onComplete.add(swapCanvas, this);
 		pocketTween.start();
 		
 		var pocketTween2 = Project.game.add.tween(ball.mc);
-		pocketTween2.to({x: 0.7 * pocket.dropPosition.x * gameInfo.physScale, y: 0.7 * pocket.dropPosition.y * gameInfo.physScale}, tweenSpeed * 1.2, Phaser.Easing.Linear.In);
+		pocketTween2.to({
+			x: 0.7 * pocket.dropPosition.x * gameInfo.physScale,
+			y: 0.7 * pocket.dropPosition.y * gameInfo.physScale},
+			tweenSpeed * 1.2,
+			Phaser.Easing.Linear.In
+		);
 		
 		if (ball.id != 0) {
 			pocketTween2.onComplete.add(function() {removeMC(ball)}, this);
@@ -217,7 +225,10 @@ function playPocketAnimation(collisionData) {
 			//ball.velocity = v;
 			//ball.velocity = new Vector2D(0.8 * pocket.position.x - pocket.position.x, 0.8 * pocket.position.y - pocket.position.y).normalize().times(200);
 
-			ball.velocity = new Vector2D(0.8 * pocket.position.x - pocket.position.x, 0.8 * pocket.position.y - pocket.position.y).normalize().times(200);
+			ball.velocity = new Vector2D(
+				0.8 * pocket.position.x - pocket.position.x,
+				0.8 * pocket.position.y - pocket.position.y
+			).normalize().times(200);
 			//console.log("vx: " + v.x);
 			//console.log("vy: " + v.y);
 			//console.log("propelling: shotRunning = " + gameInfo.shotRunning);

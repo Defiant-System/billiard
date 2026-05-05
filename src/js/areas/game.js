@@ -92,9 +92,9 @@
 				Self.els.hud.find(`.player.timer`).removeClass("timer");
 
 				if (playState.gameInfo.winner === "p1") {
-					APP.els.content.data({ show: "winner" });
+					APP.dispatch({ type: "switch-view", arg: "winner" });
 				} else {
-					APP.els.content.data({ show: "loser" });
+					APP.dispatch({ type: "switch-view", arg: "loser" });
 				}
 				break;
 			case "show-foul-message":
