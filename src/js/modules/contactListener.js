@@ -145,20 +145,10 @@ function playPocketAnimation(collisionData) {
 		}
 		
 		var tweenSpeed = 0.1;
-		if (closingSpeed < 5000) {
-			tweenSpeed = 0.2;
-		}
-		
-		if (closingSpeed < 3000) {
-			tweenSpeed = 0.3;
-		}
-		if (closingSpeed < 2000) {
-			tweenSpeed = 0.4;
-		}
-		if (closingSpeed < 1000) {
-			tweenSpeed = 0.5;
-		}
-
+		if (closingSpeed < 5000) tweenSpeed = 0.2;
+		if (closingSpeed < 3000) tweenSpeed = 0.3;
+		if (closingSpeed < 2000) tweenSpeed = 0.4;
+		if (closingSpeed < 1000) tweenSpeed = 0.5;
 		tweenSpeed *= 300;
 		
 		var pocketTween = Project.game.add.tween(ball.mc);
@@ -178,9 +168,10 @@ function playPocketAnimation(collisionData) {
 		);
 		
 		if (ball.id != 0) {
-			pocketTween2.onComplete.add(function() {removeMC(ball)}, this);
+			pocketTween2.onComplete.add(() => putInTray(ball), this);
+			// pocketTween2.onComplete.add(() => removeMC(ball), this);
 		} else{
-			pocketTween2.onComplete.add(function() {returnCueBall()}, this);
+			pocketTween2.onComplete.add(() => returnCueBall(), this);
 		}
 
 		function swapCanvas() {
@@ -236,6 +227,25 @@ function playPocketAnimation(collisionData) {
 			ball.pocketTweenComplete = true;
 			ball.active = true;
 			//ball.propelling = true;
+		}
+		
+		function putInTray(ball) {
+			ball.mc.x = 395;
+			ball.mc.y = -140;
+			ball.pocketTweenComplete = true;
+
+			gameInfo.tunnelCanvas.removeChild(ball.mc);
+			gameInfo.trayCanvas.addChild(ball.mc);
+
+			var pocketTween = Project.game.add.tween(ball.mc);
+			pocketTween.to({
+					x: 450,
+					y: 170
+				},
+				2000,
+				Phaser.Easing.Linear.In
+			);
+			pocketTween.start();
 		}
 		
 		function removeMC(ball) {

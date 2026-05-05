@@ -46,7 +46,7 @@ let TestState = {
     "pottedBallArray": [10, 9, 14, 7, 15, 2, 6, 12, 13, 11],
     "cueBallInHand": false,
     "shotNum": 7,
-    "p1TargetType": "8 BALL",
+    "p1TargetType": "STRIPES",
     "p2TargetType": "SOLIDS",
     "turn": "p1"
 };
@@ -57,7 +57,7 @@ let Test = {
 
 		// DEBUG = true;
 		
-		return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
+		// return setTimeout(() => APP.dispatch({ type: "restore-game" }), 700);
 		
 		// return setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
 		

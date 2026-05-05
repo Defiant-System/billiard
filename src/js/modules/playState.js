@@ -135,7 +135,7 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p1";
+			gameInfo.turn = "p2";
 			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
@@ -308,6 +308,11 @@ playState.create = function () {
 			gameInfo.gameCanvas,
 			"ballCanvas"
 		);
+		gameInfo.trayCanvas = new Phaser.Group(
+			Project.game,
+			gameInfo.gameCanvas,
+			"trayCanvas"
+		);
 		// gameInfo.guiCanvas = new Phaser.Group(Project.game, Project.game.stage, "guiCanvas");
 		gameInfo.cueBaseCanvas = new Phaser.Group(
 			Project.game,
@@ -345,21 +350,20 @@ playState.create = function () {
         gameInfo.debugCanvas.addChild(graphics);
 
 		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
+		graphics.lineStyle(lineWidth, 0xff00ff, 1);
 		for (var n = 0; n < gameInfo.trayArray.length; n++) {
 			//debug drawings
 			var line = gameInfo.trayArray[n];
-			console.log(line);
-			// graphics.lineStyle(lineWidth, 0xff00ff, 1);
-			// graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
-			// graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
+			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
+			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
 		}
 
 		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
+		graphics.lineStyle(lineWidth, 0xff0000, 1);
 		for (var n = 0; n < gameInfo.lineArray.length; n++) {
 			//debug drawings
 			var line = gameInfo.lineArray[n];
 
-			graphics.lineStyle(lineWidth, 0xff0000, 1);
 			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
 			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
 
@@ -402,6 +406,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.cloth = new Phaser.Sprite(Project.game, 0, 0, "cloth");
+		gameInfo.cloth.alpha = .5;
 		gameInfo.cloth.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.cloth);
 
@@ -412,6 +417,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.tableTop = new Phaser.Sprite(Project.game, 0, 0, "tableTop");
+		gameInfo.tableTop.alpha = .5;
 		gameInfo.tableTop.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
 
@@ -474,12 +480,56 @@ playState.create = function () {
 
 
 		// array of four lines representing potted tray
-		gameInfo.trayArray.push(
-			new Vector2D(
-				-54 * tableScale - gameInfo.pocketRadius / 2,
-				-25.25 * tableScale - gameInfo.pocketRadius / 4
-			)
-		);
+		/*
+		 * A-----B
+		 *        C
+		 * L---K   \
+		 *      J   \
+		 *      |    D
+		 *      |    E
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      |    |
+		 *      I    F
+		 *      H----G
+		 *
+		 */
+
+		gameInfo.trayArray.push({
+			name: "AB",
+			p1: new Vector2D(51 * tableScale, -20 * tableScale),
+			p2: new Vector2D(59 * tableScale, -20 * tableScale),
+		});
+		gameInfo.trayArray.push({
+			name: "CD",
+			p1: new Vector2D(59 * tableScale, -20 * tableScale),
+			p2: new Vector2D(61.5 * tableScale, -18 * tableScale),
+		});
+		gameInfo.trayArray.push({
+			name: "EF",
+			p1: new Vector2D(61.5 * tableScale, -18 * tableScale),
+			p2: new Vector2D(61.5 * tableScale, 25 * tableScale),
+		});
+		gameInfo.trayArray.push({
+			name: "GH",
+			p1: new Vector2D(61.5 * tableScale, 25 * tableScale),
+			p2: new Vector2D(57.5 * tableScale, 25 * tableScale),
+		});
+		gameInfo.trayArray.push({
+			name: "IJ",
+			p1: new Vector2D(57.5 * tableScale, 25 * tableScale),
+			p2: new Vector2D(57.5 * tableScale, -16.5 * tableScale),
+		});
+		gameInfo.trayArray.push({
+			name: "KL",
+			p1: new Vector2D(57.5 * tableScale, -16.5 * tableScale),
+			p2: new Vector2D(51 * tableScale, -16.5 * tableScale),
+		});
 
 
 		//    \                  /  \                  /
@@ -687,8 +737,8 @@ playState.create = function () {
 		//line KL
 		line = new Object();
 		line.name = "KL";
-		line.p1 = new Vector2D(46.75 * tableScale, (24.5 - mouth) * tableScale);
-		line.p2 = new Vector2D((46.75 + mouth) * tableScale, 24.5 * tableScale);
+		line.p1 = new Vector2D(47 * tableScale, (24.5 - mouth) * tableScale);
+		line.p2 = new Vector2D((47 + mouth) * tableScale, 24.5 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//line MN
