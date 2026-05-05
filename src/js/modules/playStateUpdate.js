@@ -897,40 +897,6 @@ playState.update = function () {
 				}
 			} else {
 				//no balls intersecting - draw line to table edge
-
-				//array of four lines representing table edge (simpler than involving all lines)
-				var pointArray = new Array();
-				pointArray.push(
-					new Point(
-						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
-					)
-				);
-				pointArray.push(
-					new Point(
-						gameInfo.adjustmentScale * 31100 - gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
-					)
-				);
-				pointArray.push(
-					new Point(
-						gameInfo.adjustmentScale * 31100 - gameInfo.ballRadius,
-						gameInfo.adjustmentScale * 15600 - gameInfo.ballRadius
-					)
-				);
-				pointArray.push(
-					new Point(
-						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * 15600 - gameInfo.ballRadius
-					)
-				);
-				pointArray.push(
-					new Point(
-						gameInfo.adjustmentScale * -31100 + gameInfo.ballRadius,
-						gameInfo.adjustmentScale * -15400 + gameInfo.ballRadius
-					)
-				); //allows n+1 below to represent the first point
-
 				var A = new Point(cueBall.position.x, cueBall.position.y);
 				var B = new Point(projectionVec.x, projectionVec.y);
 				var intersectPoint;
@@ -939,8 +905,8 @@ playState.update = function () {
 					var intersect = Maths.lineIntersectLine(
 						A,
 						B,
-						pointArray[n],
-						pointArray[n + 1]
+						gameInfo.wallsArray[n],
+						gameInfo.wallsArray[n + 1]
 					);
 
 					if (intersect != null) {

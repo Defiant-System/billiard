@@ -422,9 +422,44 @@ playState.create = function () {
 		var vertex;
 		var pocket;
 
+		gameInfo.wallsArray = new Array();
 		gameInfo.pocketArray = new Array();
 		gameInfo.vertexArray = new Array();
 		gameInfo.lineArray = new Array();
+
+		// array of four lines representing table edge (simpler than involving all lines)
+		gameInfo.wallsArray.push(
+			new Point(
+				gameInfo.adjustmentScale * -34100 + gameInfo.ballRadius,
+				gameInfo.adjustmentScale * -15500 + gameInfo.ballRadius
+			)
+		);
+		gameInfo.wallsArray.push(
+			new Point(
+				gameInfo.adjustmentScale * 29500 - gameInfo.ballRadius,
+				gameInfo.adjustmentScale * -15500 + gameInfo.ballRadius
+			)
+		);
+		gameInfo.wallsArray.push(
+			new Point(
+				gameInfo.adjustmentScale * 29500 - gameInfo.ballRadius,
+				gameInfo.adjustmentScale * 15500 - gameInfo.ballRadius
+			)
+		);
+		gameInfo.wallsArray.push(
+			new Point(
+				gameInfo.adjustmentScale * -34100 + gameInfo.ballRadius,
+				gameInfo.adjustmentScale * 15500 - gameInfo.ballRadius
+			)
+		);
+		gameInfo.wallsArray.push(
+			new Point(
+				gameInfo.adjustmentScale * -34100 + gameInfo.ballRadius,
+				gameInfo.adjustmentScale * -15500 + gameInfo.ballRadius
+			)
+		);
+		//allows n+1 below to represent the first point
+
 
 		//    \                  /  \                  /
 		//     \                /    \                /
