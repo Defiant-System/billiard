@@ -7,7 +7,7 @@ let TestState = {
 	opponent: "Ali",
 	pottedBallArray: [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15],
 	cueBallInHand: false,
-	turn: "p2",
+	turn: "p1",
 	p1TargetType: "SOLIDS",
 	p2TargetType: "STRIPES",
 	p1: [
@@ -83,7 +83,6 @@ let Test = {
 		    //     message: "Player 1 potted cue ball",
 		    // }), 1500);
 		}, 500);
-
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);

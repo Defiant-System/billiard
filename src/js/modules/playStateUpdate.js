@@ -744,6 +744,8 @@ playState.update = function () {
 			var intersect = new Array();
 			var touching = false;
 			var cueBall = gameInfo.ballArray[0];
+			var lineShadow = 5;
+			var lineWidth = 2.5;
 
 			for (var n = 1; n < gameInfo.ballArray.length; n++) {
 				var target = gameInfo.ballArray[n];
@@ -810,7 +812,7 @@ playState.update = function () {
 					lineColor = isBallOk ? 0xffffff : 0xff0000;
 
 				if (Project.guideOn == true) {
-					gameInfo.guide.lineStyle(8, 0x000000, .5);
+					gameInfo.guide.lineStyle(lineShadow, 0x000000, .5);
 					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
 					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
 					//draw the circle regardless of whether guide is on or off
@@ -831,11 +833,11 @@ playState.update = function () {
 						);
 					}
 
-					gameInfo.guide.lineStyle(4, 0xffffff, 1);
+					gameInfo.guide.lineStyle(lineWidth, 0xffffff, 1);
 					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
 					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
 					//draw the circle regardless of whether guide is on or off
-					gameInfo.guide.lineStyle(4, lineColor, 1);
+					gameInfo.guide.lineStyle(lineWidth, lineColor, 1);
 					gameInfo.guide.drawCircle(
 						intersectPoint.x * gameInfo.physScale,
 						intersectPoint.y * gameInfo.physScale,
@@ -872,7 +874,7 @@ playState.update = function () {
 						intersectPoint.y + mag * Math.sin((bearingRebound * Math.PI) / 180)
 					);
 					if (Project.guideOn == true && isBallOk) {
-						gameInfo.guide.lineStyle(8, 0x000000, .5);
+						gameInfo.guide.lineStyle(lineShadow, 0x000000, .5);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
@@ -882,7 +884,7 @@ playState.update = function () {
 							dest2.y * gameInfo.physScale
 						);
 
-						gameInfo.guide.lineStyle(4, lineColor, 1);
+						gameInfo.guide.lineStyle(lineWidth, lineColor, 1);
 						gameInfo.guide.moveTo(
 							intersectPoint.x * gameInfo.physScale,
 							intersectPoint.y * gameInfo.physScale
@@ -950,7 +952,7 @@ playState.update = function () {
 					gameInfo.guide.clear();
 
 					if (Project.guideOn == true) {
-						gameInfo.guide.lineStyle(8, 0x000000, .5);
+						gameInfo.guide.lineStyle(lineShadow, 0x000000, .5);
 						gameInfo.guide.moveTo(
 							cueBall.position.x * gameInfo.physScale,
 							cueBall.position.y * gameInfo.physScale
@@ -965,7 +967,7 @@ playState.update = function () {
 							gameInfo.ballRadius * 2 * gameInfo.physScale
 						);
 
-						gameInfo.guide.lineStyle(4, 0xffffff, 1);
+						gameInfo.guide.lineStyle(lineWidth, 0xffffff, 1);
 						gameInfo.guide.moveTo(
 							cueBall.position.x * gameInfo.physScale,
 							cueBall.position.y * gameInfo.physScale

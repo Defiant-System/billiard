@@ -4,8 +4,8 @@ const loadState = {
 		Project.APP.game.els.cvs.css({ maxWidth: "100%", maxHeight: "100%" });
 		Project.game.scale.pageAlignHorizontally = true;
 		Project.game.time.advancedTiming = true;
-		Project.game.scale.windowConstraints.bottom = "visual";
-		Project.game.scale.pageAlignVertically = true;
+		// Project.game.scale.windowConstraints.bottom = "visual";
+		// Project.game.scale.pageAlignVertically = true;
 		Project.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		Project.game.input.maxPointers = 1;
 	},

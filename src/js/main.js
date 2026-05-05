@@ -19,8 +19,8 @@ const { Phaser, PIXI } = await window.fetch("~/js/bundle.js");
 const ME = karaqu.user;
 
 const Project = {
-	width: 1920,
-	height: 1200,
+	width: 1056,
+	height: 660,
 };
 
 
@@ -50,6 +50,7 @@ const billiard = {
 			name,
 			value,
 			el;
+		// console.log(event);
 		switch (event.type) {
 			// system events
 			case "window.init":

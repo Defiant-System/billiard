@@ -104,14 +104,14 @@
 			C18.1,12.4,17.6,13.7,16.8,14.9z"/>
 	</svg>
 
-	<svg id="cue-ball-mover" viewBox="0 0 40 40">
+	<svg id="cue-ball-mover" viewBox="0 0 25 25">
 		<style type="text/css">
 			.st0{fill:#fffa;}
 		</style>
-		<path class="st0" d="M34.2,20l5.8-5.8v11.6C40,25.8,34.2,19.8,34.2,20z"/>
-		<path class="st0" d="M5.8,20L0,14.2v11.6C0,25.7,5.8,19.8,5.8,20z"/>
-		<path class="st0" d="M20,34.2l5.8,5.8H14.2C14.2,40,20.1,34.2,20,34.2z"/>
-		<path class="st0" d="M20,5.8L25.8,0H14.2C14.2,0,20.2,5.8,20,5.8z"/>
+		<path class="st0" d="M21.4,12.5L25,8.9v7.2C25,16.1,21.4,12.4,21.4,12.5z"/>
+		<path class="st0" d="M3.6,12.5L0,8.9v7.2C0,16.1,3.6,12.4,3.6,12.5z"/>
+		<path class="st0" d="M12.5,21.4l3.6,3.6H8.9C8.9,25,12.6,21.4,12.5,21.4z"/>
+		<path class="st0" d="M12.5,3.6L16.1,0H8.9C8.9,0,12.6,3.6,12.5,3.6z"/>
 	</svg>
 
 	<svg id="user-placeholder" viewBox="0 0 74 59">

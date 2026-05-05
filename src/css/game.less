@@ -9,6 +9,10 @@ content {
 				transform: translateY(0px);
 			}
 
+			.foul-message {
+				opacity: 1;
+			}
+
 			.game-cvs {
 				canvas {
 					opacity: 1;
@@ -176,6 +180,9 @@ content {
 			// z-index: 9;
 			text-align: center;
 			transform: translateY(50px);
+			opacity: 0;
+			transition: opacity 100ms;
+			transition-delay: 500ms;
 
 			&.show {
 				animation: showFoulMessage 3500ms ease-in-out;
