@@ -69,7 +69,7 @@ let Test = {
 		return setTimeout(() => {
 		    APP.game.dispatch({
 		        type: "start-game",
-		        name: "Ali",
+		        name: "Yasmin",
 		        level: 15,
 		        arg: 1,
 		    });
@@ -81,7 +81,25 @@ let Test = {
 		    //     type: "show-foul-message",
 		    //     message: "Player 1 potted cue ball",
 		    // }), 1500);
-		}, 500);
+
+		    return;
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 1 }), 200);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 2 }), 1500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 3 }), 3000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 4 }), 4500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 5 }), 6000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 6 }), 7500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 7 }), 9000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 8 }), 10500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 9 }), 12000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 10 }), 13500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 11 }), 15000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 12 }), 16500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 13 }), 18000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 14 }), 19500);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 15 }), 21000);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 0 }), 22500);
+		}, 300);
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);

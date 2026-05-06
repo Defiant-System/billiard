@@ -1,7 +1,7 @@
 
 
-var diffY = 110;
-var diffX = 24;
+var diffY = 95;
+var diffX = 0;
 var playState = new Object();
 
 playState.init = function () {
@@ -135,7 +135,7 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p2";
+			gameInfo.turn = "p1";
 			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
@@ -155,7 +155,7 @@ playState.create = function () {
 		gameInfo.pointerProgress = 0;
 
 		gameInfo.numLevels = 6;
-		gameInfo.ballRadius = gameInfo.adjustmentScale * 1100; //1.4 * 1000 * 1.7; //800
+		gameInfo.ballRadius = gameInfo.adjustmentScale * 1050; //1.4 * 1000 * 1.7; //800
 		gameInfo.physScale = 0.01; //physics values are 100 times bigger than screen values.  Helps increase precision without increasing number of decimal places
 		gameInfo.friction = 1.5;
 		gameInfo.gameOver = false;
@@ -217,80 +217,8 @@ playState.create = function () {
 
 		gameInfo.aimDirectionVector = new Vector2D(1, 0).normalize();
 	}
-/*
-	function resume() {
-		playState.resumeGame();
-	}
 
-	function toggleSound() {
-		if (Sound.slave == false) {
-			Sound.setMute(false);
-			gameInfo.muteButtonPU.setFrames(1, 0, 1, 0);
-		} else {
-			//Sound.on = false;
-			Sound.setMute(true);
-			gameInfo.muteButtonPU.setFrames(3, 2, 3, 2);
-		}
-
-		playState.resumeGame();
-	}
-
-	function gameToPopUpMenu() {
-		if (gameInfo.foulWindow.visible != true && gameInfo.gameOver == false) {
-			// window.famobi_analytics.trackScreen("SCREEN_PAUSE");
-
-			gameInfo.gameRunning = false;
-			gameInfo.popUpPanel.visible = true;
-
-			gameInfo.quitButtonPU.input.enabled = true;
-			gameInfo.replayButtonPU.input.enabled = true;
-			gameInfo.playButtonPU.input.enabled = true;
-			gameInfo.muteButtonPU.input.enabled = true;
-		}
-	}
-
-	function gameToMenu() {
-		//console.log("game to menu");
-
-		var tween1 = Project.game.add
-			.tween(gameInfo.guiCanvas)
-			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-		var tween3 = Project.game.add
-			.tween(gameInfo.guiBaseCanvas)
-			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-		var tween2 = Project.game.add
-			.tween(gameInfo.gameCanvas)
-			.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-		tween2.onComplete.add(initMenu, this);
-
-		function initMenu() {
-			if (gameInfo.gameOver) {
-				Project.game.state.start("mainMenu");
-				return;
-			}
-
-			Project.game.state.start("mainMenu");
-		}
-	}
-
-	function replayGame() {
-		Project.lastBreaker = "none";
-
-		if (gameInfo.gameOver) {
-			Project.game.state.start("play");
-			return;
-		}
-
-		Project.game.state.start("play");
-	}
-*/
 	function initCanvases() {
-		// gameInfo.bgCanvas = new Phaser.Group(Project.game, Project.game.stage, "bgCanvas");
-		// gameInfo.guiBaseCanvas = new Phaser.Group(
-		// 	Project.game,
-		// 	Project.game.stage,
-		// 	"guiBaseCanvas"
-		// );
 		//creates game canvas and adds it to the stage
 		gameInfo.gameCanvas = new Phaser.Group(Project.game, Project.game.stage, "gameCanvas");
 
@@ -350,15 +278,6 @@ playState.create = function () {
         gameInfo.debugCanvas.addChild(graphics);
 
 		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
-		graphics.lineStyle(lineWidth, 0xff00ff, 1);
-		for (var n = 0; n < gameInfo.trayArray.length; n++) {
-			//debug drawings
-			var line = gameInfo.trayArray[n];
-			graphics.moveTo(line.p1.x * gameInfo.physScale, line.p1.y * gameInfo.physScale);
-			graphics.lineTo(line.p2.x * gameInfo.physScale, line.p2.y * gameInfo.physScale);
-		}
-
-		//for each line, store the direction vector, normal vector and projection (p3 and p4) of line by distance r (see notes)
 		graphics.lineStyle(lineWidth, 0xff0000, 1);
 		for (var n = 0; n < gameInfo.lineArray.length; n++) {
 			//debug drawings
@@ -399,6 +318,10 @@ playState.create = function () {
 		gameInfo.pockets.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.pockets);
 
+		gameInfo.pottedTray = new Phaser.Sprite(Project.game, -42, 268, "pottedTray");
+		gameInfo.pottedTray.anchor = new Phaser.Point(0.5, 0.5);
+		gameInfo.tableCanvas.add(gameInfo.pottedTray);
+
 		gameInfo.tunnelCanvas = new Phaser.Group(
 			Project.game,
 			gameInfo.tableCanvas,
@@ -406,7 +329,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.cloth = new Phaser.Sprite(Project.game, 0, 0, "cloth");
-		gameInfo.cloth.alpha = .5;
+		// gameInfo.cloth.alpha = .5;
 		gameInfo.cloth.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.cloth);
 
@@ -417,7 +340,7 @@ playState.create = function () {
 		); //balls are switched to this canvas after being potted
 
 		gameInfo.tableTop = new Phaser.Sprite(Project.game, 0, 0, "tableTop");
-		gameInfo.tableTop.alpha = .5;
+		// gameInfo.tableTop.alpha = .5;
 		gameInfo.tableTop.anchor = new Phaser.Point(0.5, 0.5);
 		gameInfo.tableCanvas.add(gameInfo.tableTop);
 
@@ -440,7 +363,6 @@ playState.create = function () {
 		var pocket;
 
 		gameInfo.wallsArray = new Array();
-		gameInfo.trayArray = new Array();
 		gameInfo.pocketArray = new Array();
 		gameInfo.vertexArray = new Array();
 		gameInfo.lineArray = new Array();
@@ -500,37 +422,40 @@ playState.create = function () {
 		 *
 		 */
 
-		gameInfo.trayArray.push({
-			name: "AB",
-			p1: new Vector2D(51 * tableScale, -20 * tableScale),
-			p2: new Vector2D(59 * tableScale, -20 * tableScale),
+		let trayWidth = 3.65;
+		/*
+		gameInfo.lineArray.push({
+			name: "tAB",
+			p1: new Vector2D(51 * tableScale, -24.5 * tableScale),
+			p2: new Vector2D(59.5 * tableScale, -24.5 * tableScale),
 		});
-		gameInfo.trayArray.push({
-			name: "CD",
-			p1: new Vector2D(59 * tableScale, -20 * tableScale),
-			p2: new Vector2D(61.5 * tableScale, -18 * tableScale),
+		gameInfo.lineArray.push({
+			name: "tCD",
+			p1: new Vector2D(59.5 * tableScale, -24.5 * tableScale),
+			p2: new Vector2D((57.75 + trayWidth) * tableScale, -22.5 * tableScale),
 		});
-		gameInfo.trayArray.push({
-			name: "EF",
-			p1: new Vector2D(61.5 * tableScale, -18 * tableScale),
-			p2: new Vector2D(61.5 * tableScale, 25 * tableScale),
+		gameInfo.lineArray.push({
+			name: "tEF",
+			p1: new Vector2D((57.75 + trayWidth) * tableScale, -22.5 * tableScale),
+			p2: new Vector2D((57.75 + trayWidth) * tableScale, 27 * tableScale),
 		});
-		gameInfo.trayArray.push({
-			name: "GH",
-			p1: new Vector2D(61.5 * tableScale, 25 * tableScale),
-			p2: new Vector2D(57.5 * tableScale, 25 * tableScale),
+		gameInfo.lineArray.push({
+			name: "tHG",
+			stopper: true,
+			p1: new Vector2D((57.75 + trayWidth) * tableScale, 27 * tableScale),
+			p2: new Vector2D(57.75 * tableScale, 27 * tableScale),
 		});
-		gameInfo.trayArray.push({
-			name: "IJ",
-			p1: new Vector2D(57.5 * tableScale, 25 * tableScale),
-			p2: new Vector2D(57.5 * tableScale, -16.5 * tableScale),
+		gameInfo.lineArray.push({
+			name: "tIJ",
+			p1: new Vector2D(57.75 * tableScale, 27 * tableScale),
+			p2: new Vector2D(57.75 * tableScale, (-20 + trayWidth) * tableScale),
 		});
-		gameInfo.trayArray.push({
-			name: "KL",
-			p1: new Vector2D(57.5 * tableScale, -16.5 * tableScale),
-			p2: new Vector2D(51 * tableScale, -16.5 * tableScale),
+		gameInfo.lineArray.push({
+			name: "tKL",
+			p1: new Vector2D(57.75 * tableScale, (-20 + trayWidth) * tableScale),
+			p2: new Vector2D(51 * tableScale, (-20 + trayWidth) * tableScale),
 		});
-
+		*/
 
 		//    \                  /  \                  /
 		//     \                /    \                /
@@ -645,8 +570,8 @@ playState.create = function () {
 		//line AB
 		line = new Object();
 		line.name = "AB";
-		line.p1 = new Vector2D(-54 * tableScale, -(25.5 + mouth) * tableScale);
-		line.p2 = new Vector2D(-(53.5 - mouth) * tableScale, -25.15 * tableScale);
+		line.p1 = new Vector2D(-50.5 * tableScale, -(25.5 + mouth) * tableScale);
+		line.p2 = new Vector2D(-(50 - mouth) * tableScale, -25.15 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertexB
@@ -658,8 +583,8 @@ playState.create = function () {
 		//line BC
 		line = new Object();
 		line.name = "BC";
-		line.p1 = new Vector2D(-(53.5 - mouth) * tableScale, -25.15 * tableScale);
-		line.p2 = new Vector2D(-8.75 * tableScale, -25.15 * tableScale);
+		line.p1 = new Vector2D(-(50 - mouth) * tableScale, -25.15 * tableScale);
+		line.p2 = new Vector2D(-5.25 * tableScale, -25.15 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex C
@@ -671,15 +596,15 @@ playState.create = function () {
 		//line CD
 		line = new Object();
 		line.name = "CD";
-		line.p1 = new Vector2D(-8.75 * tableScale, -25.15 * tableScale);
-		line.p2 = new Vector2D(-6.75 * tableScale, -(23.75 + mouth) * tableScale);
+		line.p1 = new Vector2D(-5.25 * tableScale, -25.15 * tableScale);
+		line.p2 = new Vector2D(-3.25 * tableScale, -(23.75 + mouth) * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//line EF
 		line = new Object();
 		line.name = "EF";
-		line.p1 = new Vector2D(-.5 * tableScale, -(23.75 + mouth) * tableScale);
-		line.p2 = new Vector2D(1.75 * tableScale, -25.15 * tableScale);
+		line.p1 = new Vector2D(3 * tableScale, -(23.75 + mouth) * tableScale);
+		line.p2 = new Vector2D(5.25 * tableScale, -25.15 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex F
@@ -691,8 +616,8 @@ playState.create = function () {
 		//line FG
 		line = new Object();
 		line.name = "FG";
-		line.p1 = new Vector2D(1.75 * tableScale, -25.15 * tableScale);
-		line.p2 = new Vector2D((45.5 - mouth) * tableScale, -25.15 * tableScale);
+		line.p1 = new Vector2D(5.25 * tableScale, -25.15 * tableScale);
+		line.p2 = new Vector2D((49.25 - mouth) * tableScale, -25.15 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex G
@@ -704,15 +629,15 @@ playState.create = function () {
 		//line GH
 		line = new Object();
 		line.name = "GH";
-		line.p1 = new Vector2D((45.5 - mouth) * tableScale, -25.15 * tableScale);
-		line.p2 = new Vector2D(46.75 * tableScale, -(25.5 + mouth) * tableScale);
+		line.p1 = new Vector2D((49.25 - mouth) * tableScale, -25.15 * tableScale);
+		line.p2 = new Vector2D(50.25 * tableScale, -(25.5 + mouth) * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//line IJ
 		line = new Object();
 		line.name = "IJ";
-		line.p1 = new Vector2D((47 + mouth) * tableScale, -24.5 * tableScale);
-		line.p2 = new Vector2D(47 * tableScale, -(24.5 - mouth) * tableScale);
+		line.p1 = new Vector2D((50.5 + mouth) * tableScale, -24.5 * tableScale);
+		line.p2 = new Vector2D(50.5 * tableScale, -(24.5 - mouth) * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex J
@@ -724,8 +649,8 @@ playState.create = function () {
 		//line JK
 		line = new Object();
 		line.name = "JK";
-		line.p1 = new Vector2D(47 * tableScale, -(24.5 - mouth) * tableScale);
-		line.p2 = new Vector2D(47 * tableScale, (24.5 - mouth) * tableScale);
+		line.p1 = new Vector2D(50.5 * tableScale, -(24.5 - mouth) * tableScale);
+		line.p2 = new Vector2D(50.5 * tableScale, (24.5 - mouth) * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex K
@@ -737,15 +662,15 @@ playState.create = function () {
 		//line KL
 		line = new Object();
 		line.name = "KL";
-		line.p1 = new Vector2D(47 * tableScale, (24.5 - mouth) * tableScale);
-		line.p2 = new Vector2D((47 + mouth) * tableScale, 24.5 * tableScale);
+		line.p1 = new Vector2D(50.5 * tableScale, (24.5 - mouth) * tableScale);
+		line.p2 = new Vector2D((50.5 + mouth) * tableScale, 24.5 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//line MN
 		line = new Object();
 		line.name = "MN";
-		line.p1 = new Vector2D(46.05 * tableScale, (25 + mouth) * tableScale);
-		line.p2 = new Vector2D((46.05 - mouth) * tableScale, 25 * tableScale);
+		line.p1 = new Vector2D(49.55 * tableScale, (25 + mouth) * tableScale);
+		line.p2 = new Vector2D((49.55 - mouth) * tableScale, 25 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex N
@@ -757,8 +682,8 @@ playState.create = function () {
 		//line NO
 		line = new Object();
 		line.name = "NO";
-		line.p1 = new Vector2D((46.05 - mouth) * tableScale, 25 * tableScale);
-		line.p2 = new Vector2D(1.75 * tableScale, 25 * tableScale);
+		line.p1 = new Vector2D((49.55 - mouth) * tableScale, 25 * tableScale);
+		line.p2 = new Vector2D(5.25 * tableScale, 25 * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//vertex O
@@ -770,8 +695,8 @@ playState.create = function () {
 		//line OP
 		line = new Object();
 		line.name = "OP";
-		line.p1 = new Vector2D(1.75 * tableScale, 25 * tableScale);
-		line.p2 = new Vector2D(-1.5 * tableScale, (25 + mouth) * tableScale);
+		line.p1 = new Vector2D(5.25 * tableScale, 25 * tableScale);
+		line.p2 = new Vector2D(2 * tableScale, (25 + mouth) * tableScale);
 		gameInfo.lineArray.push(line);
 
 		//line QR
@@ -884,25 +809,25 @@ playState.create = function () {
 			// ball.shadow.alpha = 0.9;
 
 			//ball mc
-			var s;
-			switch (n) {
-				case 0: s = 0;   break;
-				case 1: s = 12;  break;
-				case 2: s = 13;  break;
-				case 3: s = 8;   break;
-				case 4: s = 14;  break;
-				case 5: s = 3;   break;
-				case 6: s = 11;  break;
-				case 7: s = 4;   break;
-				case 8: s = 15;  break;
-				case 9: s = 5;   break;
-				case 10: s = 1;  break;
-				case 11: s = 6;  break;
-				case 12: s = 10; break;
-				case 13: s = 7;  break;
-				case 14: s = 9;  break;
-				case 15: s = 2;  break;
-			}
+			// var s;
+			// switch (n) {
+			// 	case 0: s = 0;   break;
+			// 	case 1: s = 12;  break;
+			// 	case 2: s = 13;  break;
+			// 	case 3: s = 8;   break;
+			// 	case 4: s = 14;  break;
+			// 	case 5: s = 3;   break;
+			// 	case 6: s = 11;  break;
+			// 	case 7: s = 4;   break;
+			// 	case 8: s = 15;  break;
+			// 	case 9: s = 5;   break;
+			// 	case 10: s = 1;  break;
+			// 	case 11: s = 6;  break;
+			// 	case 12: s = 10; break;
+			// 	case 13: s = 7;  break;
+			// 	case 14: s = 9;  break;
+			// 	case 15: s = 2;  break;
+			// }
 			ball.mc = new Ball(gameInfo.ballRadius * gameInfo.physScale, n);
 			gameInfo.ballCanvas.add(ball.mc);
 
@@ -915,14 +840,11 @@ playState.create = function () {
 			}
 
 			//ball properties
-			if (n < 8 && n != 0) {
-				ball.targetType = "SOLIDS";
-			}
-			if (n > 8) {
-				ball.targetType = "STRIPES";
-			}
-			if (n == 8) {
-				ball.targetType = "8 BALL";
+			switch (true) {
+				case n === 0: break; // cue ball
+				case n == 8: ball.targetType = "8 BALL"; break;
+				case n < 8: ball.targetType = "SOLIDS"; break;
+				case n > 8: ball.targetType = "STRIPES"; break;
 			}
 
 			ball.position = new Vector2D(

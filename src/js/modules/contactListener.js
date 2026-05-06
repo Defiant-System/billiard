@@ -52,7 +52,6 @@ function onContact(data) {
 	if (collisionData.collisionType == "line" || collisionData.collisionType == "vertex") {
 		//store ball on cushion contact in the object ball's contact array
 		ball.contactArray.push(collisionObject);
-		
 		if (gameInfo.trial == false) {
 			//play cushion sound
 			var closingSpeed = collisionData.normalVelocity.magnitude;
@@ -80,6 +79,12 @@ function onContact(data) {
 		} else {
 			gameInfo.ballsRemaining--;
 		}
+	}
+	if (data.target.stopper) {
+		// console.log(data);
+		ball.stopper = true;
+		ball.position.x = 45000;
+		ball.velocity = new Vector2D(0, 0);
 	}
 }
 
@@ -127,6 +132,39 @@ function checkLevelComplete() {
 	}
 }
 
+function playTrayAnimation(ball) {
+	var gameInfo = playState.gameInfo;
+
+	putInTray(ball);
+
+	function putInTray(ball) {
+		var scale = gameInfo.adjustmentScale;
+		var px = 15000;
+
+		ball.active = true;
+		ball.inTray = true;
+		ball.position = new Vector2D((px + 16000) * scale, (-11500) * scale);
+		ball.velocity = new Vector2D(100, 0).normalize().times(200);
+
+		gameInfo.shotRunning = true;
+
+		// gameInfo.tunnelCanvas.removeChild(ball.mc);
+		// gameInfo.trayCanvas.addChild(ball.mc);
+
+
+		// var pocketTween = Project.game.add.tween(ball.mc);
+		// pocketTween.to({
+		// 		x: 450,
+		// 		y: 170
+		// 	},
+		// 	2000,
+		// 	Phaser.Easing.Linear.In
+		// );
+		// pocketTween.start();
+	}
+	
+}
+
 function playPocketAnimation(collisionData) {
 	var gameInfo = playState.gameInfo;
 	if (gameInfo.trial == false) {
@@ -168,9 +206,9 @@ function playPocketAnimation(collisionData) {
 		);
 		
 		if (ball.id != 0) {
-			pocketTween2.onComplete.add(() => putInTray(ball), this);
-			// pocketTween2.onComplete.add(() => removeMC(ball), this);
-		} else{
+			// pocketTween2.onComplete.add(() => putInTray(ball), this);
+			pocketTween2.onComplete.add(() => removeMC(ball), this);
+		} else {
 			pocketTween2.onComplete.add(() => returnCueBall(), this);
 		}
 
@@ -227,25 +265,6 @@ function playPocketAnimation(collisionData) {
 			ball.pocketTweenComplete = true;
 			ball.active = true;
 			//ball.propelling = true;
-		}
-		
-		function putInTray(ball) {
-			ball.mc.x = 395;
-			ball.mc.y = -140;
-			ball.pocketTweenComplete = true;
-
-			gameInfo.tunnelCanvas.removeChild(ball.mc);
-			gameInfo.trayCanvas.addChild(ball.mc);
-
-			var pocketTween = Project.game.add.tween(ball.mc);
-			pocketTween.to({
-					x: 450,
-					y: 170
-				},
-				2000,
-				Phaser.Easing.Linear.In
-			);
-			pocketTween.start();
 		}
 		
 		function removeMC(ball) {

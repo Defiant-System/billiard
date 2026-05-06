@@ -20,7 +20,7 @@ const ME = karaqu.user;
 
 const Project = {
 	width: 1056,
-	height: 660,
+	height: 700,
 };
 
 

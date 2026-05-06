@@ -263,14 +263,8 @@ billiardPhysics.prototype.predictCollisions = function() {
 							var vectorAB = Maths.createVectorFrom2Points(ball.position, nextBallPosition); //current ball position to ball position at next frame
 							var vectorAP = Maths.createVectorFrom2Points(ball.position, intersectPointAsVector); //current ball position to intersect point
 							var intersectTime = Maths.fixNumber(time + (vectorAP.magnitude / vectorAB.magnitude) * omegaTime);
-							//trace("time: " + time);
-							//trace("intersectTime: " + intersectTime);
-							//trace("collisionTime: " + collisionTime);
 
 							if (intersectTime < collisionTime) {
-								//trace("line");
-								//trace("it: " + intersectTime);
-								//temporarily set the collision time and data to this collision.  This will be overriden if an earlier collision time is found on this iteration
 								collision = new Object();
 								collisionTime = intersectTime;
 								collision.type = "line";
@@ -555,9 +549,9 @@ billiardPhysics.prototype.resolveCollision = function(collisionArray) {
 	var gameInfo = playState.gameInfo;
 	this.omissionArray = new Array(); //these are all balls whose positions have been updated in this function, and don't need to be updated in moveBalls();
 
-	if (collisionArray.length > 1) {
-		//trace("num simult colls: " + collisionArray.length + ": " + collisionArray[0].type + ", " + collisionArray[1].type);
-	}
+	// if (collisionArray.length > 1) {
+	// 	trace("num simult colls: " + collisionArray.length + ": " + collisionArray[0].type + ", " + collisionArray[1].type);
+	// }
 
 	var ctp = 96;
 	var ctb = 97;
@@ -813,7 +807,7 @@ billiardPhysics.prototype.updateFriction = function() {
 		}
 
 		var ballSpeed = ball.velocity.magnitude;
-		ballSpeed -= this.friction;
+		if (!ball.inTray) ballSpeed -= this.friction;
 		var ballUnitVec = ball.velocity.normalize();
 		ball.velocity = ballUnitVec.times(ballSpeed);
 

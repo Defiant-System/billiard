@@ -812,6 +812,7 @@ playState.update = function () {
 					lineColor = isBallOk ? 0xffffff : 0xff0000;
 
 				if (Project.guideOn == true) {
+					gameInfo.guide.lineCap = "round";
 					gameInfo.guide.lineStyle(lineShadow, 0x000000, .5);
 					gameInfo.guide.moveTo(cueBall.position.x * gameInfo.physScale, cueBall.position.y * gameInfo.physScale);
 					gameInfo.guide.lineTo(intersectPoint.x * gameInfo.physScale, intersectPoint.y * gameInfo.physScale);
@@ -1056,7 +1057,7 @@ playState.update = function () {
 			// );
 
 			var cueFadeTween = Project.game.add.tween(gameInfo.cueCanvas);
-			cueFadeTween.to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, 1000);
+			cueFadeTween.to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, 1000);
 			cueFadeTween.onComplete.add(hideCueCanvas, this);
 
 			cueTween.start();
@@ -1092,9 +1093,7 @@ playState.update = function () {
 		gameInfo.ballArray[0].mover.visible = false;
 		gameInfo.shotRunning = true;
 		gameInfo.shotNum++;
-		gameInfo.ballArray[0].velocity = gameInfo.aimDirectionVector.times(
-			gameInfo.power
-		);
+		gameInfo.ballArray[0].velocity = gameInfo.aimDirectionVector.times(gameInfo.power);
 		gameInfo.shotReset = false;
 
 		// if (gameInfo.timerStarted == false) {

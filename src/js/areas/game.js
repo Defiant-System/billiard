@@ -54,6 +54,10 @@
 				Project.game.paused = false;
 				Project.game.state.start("play");
 				break;
+			case "put-ball-in-tray":
+				let ball = playState.gameInfo.ballArray[event.num];
+				playTrayAnimation(ball);
+				break;
 			case "game-stop":
 				Project.game.state.start("stop");
 				break;

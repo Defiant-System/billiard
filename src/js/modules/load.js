@@ -14,6 +14,7 @@ const loadState = {
 		this.load.image("pockets", "~/img/pockets.webp");
 		this.load.image("cloth", "~/img/cloth.webp");
 		this.load.image("tableTop", "~/img/tableTop.webp");
+		this.load.image("pottedTray", "~/img/pottedTray.webp");
 
 		this.load.image("shade", "~/icons/ball-shade.png");
 		this.load.image("highlight", "~/icons/ball-highlight.png");
