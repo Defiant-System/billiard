@@ -81,10 +81,12 @@ function onContact(data) {
 		}
 	}
 	if (data.target.stopper) {
-		// console.log(data);
+		// ball.active = false;
 		ball.stopper = true;
-		ball.position.x = 45000;
+		ball.position.y = 27850;
 		ball.velocity = new Vector2D(0, 0);
+		ball.spin = 0;
+		ball.english = 0;
 	}
 }
 
@@ -139,30 +141,19 @@ function playTrayAnimation(ball) {
 
 	function putInTray(ball) {
 		var scale = gameInfo.adjustmentScale;
-		var px = 15000;
 
 		ball.active = true;
 		ball.inTray = true;
-		ball.position = new Vector2D((px + 16000) * scale, (-11500) * scale);
-		ball.velocity = new Vector2D(100, 0).normalize().times(200);
+		ball.pocketTweenComplete = true;
+		if (ball.shadow) ball.shadow.visible = false;
+		ball.position = new Vector2D(15600 * scale, 17500 * scale); // tray entrance
+		ball.velocity = new Vector2D(0, 1).normalize().times(200);
 
-		gameInfo.shotRunning = true;
+		// gameInfo.shotRunning = true;
+		gameInfo.ballCanvas.removeChild(ball.mc);
+		gameInfo.tunnelCanvas.addChild(ball.mc);
 
-		// gameInfo.tunnelCanvas.removeChild(ball.mc);
-		// gameInfo.trayCanvas.addChild(ball.mc);
-
-
-		// var pocketTween = Project.game.add.tween(ball.mc);
-		// pocketTween.to({
-		// 		x: 450,
-		// 		y: 170
-		// 	},
-		// 	2000,
-		// 	Phaser.Easing.Linear.In
-		// );
-		// pocketTween.start();
 	}
-	
 }
 
 function playPocketAnimation(collisionData) {
@@ -206,8 +197,8 @@ function playPocketAnimation(collisionData) {
 		);
 		
 		if (ball.id != 0) {
-			// pocketTween2.onComplete.add(() => putInTray(ball), this);
-			pocketTween2.onComplete.add(() => removeMC(ball), this);
+			pocketTween2.onComplete.add(() => playTrayAnimation(ball), this);
+			// pocketTween2.onComplete.add(() => removeMC(ball), this);
 		} else {
 			pocketTween2.onComplete.add(() => returnCueBall(), this);
 		}

@@ -776,7 +776,7 @@ playState.update = function () {
 
 			if (collision.length > 0) {
 				//if more than one ball intersects, find closest to cueball
-				var closestDist = 100000000000;
+				var closestDist = 1e11;
 				for (var k = 0; k < collision.length; k++) {
 					var distSq =
 						(collision[k].position.x - cueBall.position.x) * (collision[k].position.x - cueBall.position.x) +
@@ -1681,7 +1681,7 @@ playState.update = function () {
 		var solidsRemaining = 0;
 		for (var n = 1; n < gameInfo.ballArray.length; n++) {
 			var ball = gameInfo.ballArray[n];
-			if (ball.active == true) {
+			if (!ball.inTray) {
 				if (ball.id < 8) {
 					solidsRemaining++;
 				}

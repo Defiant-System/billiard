@@ -10,18 +10,20 @@ function renderScreen() {
 			ball.mc.x = ball.position.x * gameInfo.physScale;
 			ball.mc.y = ball.position.y * gameInfo.physScale;
 
-			ball.shadow.x =
-				ball.mc.x +
-				0.7 *
-					gameInfo.ballRadius *
-					gameInfo.physScale *
-					(ball.mc.x / (300 * 2.4));
-			ball.shadow.y =
-				ball.mc.y +
-				0.7 *
-					gameInfo.ballRadius *
-					gameInfo.physScale *
-					(ball.mc.y / (150 * 2.4));
+			if (ball.shadow) {
+				ball.shadow.x =
+					ball.mc.x +
+					0.7 *
+						gameInfo.ballRadius *
+						gameInfo.physScale *
+						(ball.mc.x / (300 * 2.4));
+				ball.shadow.y =
+					ball.mc.y +
+					0.7 *
+						gameInfo.ballRadius *
+						gameInfo.physScale *
+						(ball.mc.y / (150 * 2.4));
+			}
 
 			if (n == 0) {
 				ball.mover.x = ball.mc.x;

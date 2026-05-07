@@ -57,7 +57,7 @@ const billiard = {
 				break;
 			case "window.close":
 				// save settings
-				window.settings.setItem("settings", Self.settings);
+				window.settings.setItem("settings", Self.settings.values);
 				// stop game
 				Project.game.destroy(true);
 				break;
