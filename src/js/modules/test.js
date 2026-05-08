@@ -53,7 +53,7 @@ let TestState = {
 
 let Test = {
 	init(APP) {
-		// return;
+		return;
 
 		// DEBUG = true;
 		
@@ -82,9 +82,9 @@ let Test = {
 		    //     message: "Player 1 potted cue ball",
 		    // }), 1500);
 
-		    return;
-			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 1 }), 200);
-			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 2 }), 1500);
+			return;
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 1 }), 900);
+			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 2 }), 1200);
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 3 }), 3000);
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 4 }), 4500);
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 5 }), 6000);

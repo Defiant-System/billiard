@@ -2119,25 +2119,6 @@ playState.update = function () {
 		}
 	}
 
-	function checkPositionOverlapping(_x, _y, _m=10) {
-		var overlapping = false;
-		//check for this position overlapping all balls except cue ball
-		for (var n = 1; n < gameInfo.ballArray.length; n++) {
-			var ball = gameInfo.ballArray[n];
-			if (ball.active == true) {
-				var distSq =
-					(ball.position.x - _x) * (ball.position.x - _x) +
-					(ball.position.y - _y) * (ball.position.y - _y);
-				if (distSq < gameInfo.ballRadius * 2 * gameInfo.ballRadius * 2 + _m) {
-					overlapping = true;
-					break;
-				}
-			}
-		}
-
-		return overlapping;
-	}
-
 	function checkPathClear(object1, object2) {
 		//checks the path is clear between the two objects, assuming all objects are of radius gameInfo.ballRadius
 		var clear = true;

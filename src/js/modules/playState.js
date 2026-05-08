@@ -117,7 +117,7 @@ playState.create = function () {
 	initGameInfo();
 	initCanvases();
 	initTable();
-	// initDebug(); //
+	// initDebug(); /**/
 	initBalls();
 	initGuide();
 	initCue();
@@ -135,8 +135,8 @@ playState.create = function () {
 
 	function setTurn() {
 		if (Project.lastBreaker == "none") {
-			gameInfo.turn = "p1";
-			// gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
+			// gameInfo.turn = "p1";
+			gameInfo.turn = Math.random() < 0.5 ? "p1" : "p2";
 		} else {
 			//this is a re-rack due to a foul, so switch turns
 			gameInfo.turn = Project.lastBreaker == "p2" ? "p1" : "p2";
@@ -407,7 +407,10 @@ playState.create = function () {
 
 
 		// array of four lines representing potted tray
-		/*                            G    A
+		/*                         H          I 
+		 *                          \        /
+		 *                           \      /
+		 *                            G    A
 		 *                            |    |
 		 *                            |    |
 		 *                            |    |
@@ -417,20 +420,21 @@ playState.create = function () {
 		 *  D---------------------------C
 		 */
 
-		let trayWidth = 3.35;
+		let trayWidth = 3.5;
 		gameInfo.lineArray.push({
 			name: "tAB",
-			p1: new Vector2D((23 + trayWidth) * tableScale, 27 * tableScale),
+			p1: new Vector2D((23 + trayWidth) * tableScale, 31.5 * tableScale),
 			p2: new Vector2D((23 + trayWidth) * tableScale, 37 * tableScale),
 		});
 		gameInfo.lineArray.push({
 			name: "tBC",
 			p1: new Vector2D((23 + trayWidth) * tableScale, 37 * tableScale),
-			p2: new Vector2D(25 * tableScale, (35.25 + trayWidth) * tableScale),
+			p2: new Vector2D(24.5 * tableScale, (35.25 + trayWidth) * tableScale),
 		});
 		gameInfo.lineArray.push({
 			name: "tCD",
-			p1: new Vector2D(25 * tableScale, (35.25 + trayWidth) * tableScale),
+			stabler: true,
+			p1: new Vector2D(24.5 * tableScale, (35.25 + trayWidth) * tableScale),
 			p2: new Vector2D(-30.5 * tableScale, (35.25 + trayWidth) * tableScale),
 		});
 		gameInfo.lineArray.push({
@@ -441,13 +445,30 @@ playState.create = function () {
 		});
 		gameInfo.lineArray.push({
 			name: "tEF",
+			stabler: true,
 			p1: new Vector2D(-30.5 * tableScale, 35.25 * tableScale),
 			p2: new Vector2D(23 * tableScale, 35.25 * tableScale),
 		});
 		gameInfo.lineArray.push({
 			name: "tFG",
 			p1: new Vector2D(23 * tableScale, 35.25 * tableScale),
-			p2: new Vector2D(23 * tableScale, 27 * tableScale),
+			p2: new Vector2D(23 * tableScale, 31.5 * tableScale),
+		});
+		gameInfo.lineArray.push({
+			name: "tGH",
+			p1: new Vector2D(23 * tableScale, 31.5 * tableScale),
+			p2: new Vector2D(19 * tableScale, 25 * tableScale),
+		});
+		gameInfo.lineArray.push({
+			name: "tHI",
+			bouncer: true,
+			p1: new Vector2D(19 * tableScale, 25 * tableScale),
+			p2: new Vector2D(30 * tableScale, 25 * tableScale),
+		});
+		gameInfo.lineArray.push({
+			name: "tIJ",
+			p1: new Vector2D(30 * tableScale, 25 * tableScale),
+			p2: new Vector2D((23 + trayWidth) * tableScale, 31.5 * tableScale),
 		});
 
 		//    \                  /  \                  /
@@ -869,6 +890,7 @@ playState.create = function () {
 		gameInfo.cue = new Phaser.Sprite(Project.game, 0, 0, "cue");
 		gameInfo.cueCanvas.addChild(gameInfo.cue);
 		gameInfo.cue.anchor = new Point(1, 0.5);
+		gameInfo.cueCanvas.visible = false;
 	}
 
 	function initContactListener() {

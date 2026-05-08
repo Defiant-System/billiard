@@ -80,6 +80,13 @@ function onContact(data) {
 			gameInfo.ballsRemaining--;
 		}
 	}
+	if (data.target.stabler) {
+		ball.position.y = 27850;
+		ball.velocity.y = 0;
+	}
+	if (data.target.bouncer) {
+		ball.velocity = new Vector2D(0, 1).normalize().times(250);
+	}
 	if (data.target.stopper) {
 		// ball.active = false;
 		ball.stopper = true;
@@ -136,24 +143,24 @@ function checkLevelComplete() {
 
 function playTrayAnimation(ball) {
 	var gameInfo = playState.gameInfo;
+	var scale = gameInfo.adjustmentScale;
 
-	putInTray(ball);
+	var trayX = 15600 * scale;
+	var trayY = 17500 * scale;
+	var ballInTunnel = checkPositionOverlapping(trayX, trayY);
+	if (ballInTunnel) return setTimeout(() => playTrayAnimation(ball), 300);
 
-	function putInTray(ball) {
-		var scale = gameInfo.adjustmentScale;
+	ball.active = true;
+	ball.inTray = true;
+	ball.pocketTweenComplete = true;
+	if (ball.shadow) ball.shadow.visible = false;
+	ball.position = new Vector2D(trayX, trayY); // tray entrance
+	ball.velocity = new Vector2D(0, 1).normalize().times(250);
 
-		ball.active = true;
-		ball.inTray = true;
-		ball.pocketTweenComplete = true;
-		if (ball.shadow) ball.shadow.visible = false;
-		ball.position = new Vector2D(15600 * scale, 17500 * scale); // tray entrance
-		ball.velocity = new Vector2D(0, 1).normalize().times(200);
+	// gameInfo.shotRunning = true;
 
-		// gameInfo.shotRunning = true;
-		gameInfo.ballCanvas.removeChild(ball.mc);
-		gameInfo.tunnelCanvas.addChild(ball.mc);
-
-	}
+	gameInfo.ballCanvas.removeChild(ball.mc);
+	gameInfo.tunnelCanvas.addChild(ball.mc);
 }
 
 function playPocketAnimation(collisionData) {
