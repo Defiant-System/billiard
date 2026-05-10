@@ -144,14 +144,18 @@ function checkLevelComplete() {
 function playTrayAnimation(ball) {
 	var gameInfo = playState.gameInfo;
 	var scale = gameInfo.adjustmentScale;
-
+	//console.log(ball);
 	var trayX = 15600 * scale;
 	var trayY = 17500 * scale;
 	var ballInTunnel = checkPositionOverlapping(trayX, trayY);
 	if (ballInTunnel) return setTimeout(() => playTrayAnimation(ball), 300);
 
+	ball.ySpin = 0;
+	ball.spin = 0;
+	ball.english = 0;
 	ball.active = true;
 	ball.inTray = true;
+	ball.propelling = false;
 	ball.pocketTweenComplete = true;
 	if (ball.shadow) ball.shadow.visible = false;
 	ball.position = new Vector2D(trayX, trayY); // tray entrance
