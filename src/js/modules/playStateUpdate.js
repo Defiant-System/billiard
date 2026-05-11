@@ -808,7 +808,7 @@ playState.update = function () {
 					ball.position.y + Math.sin((bearingBall * Math.PI) / 180) * mag
 				);
 				
-				let isBallOk = ["ANY", ball.targetType].includes(gameInfo.p1TargetType),
+				let isBallOk = ["ANY", ball.targetType].includes(gameInfo[`${gameInfo.turn}TargetType`]),
 					lineColor = isBallOk ? 0xffffff : 0xff0000;
 
 				if (Project.guideOn == true) {

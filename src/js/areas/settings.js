@@ -14,7 +14,8 @@
 			music: "off",
 			soundFx: "on",
 			guide: "on",
-			ai: .4,
+			vs: "on",
+			// ai: .4,
 		};
 		// music info
 		this.tune = { name: "tune-1" };
@@ -109,6 +110,27 @@
 				} else {
 					el.data({ value: "on" });
 					Project.guideOn = true;
+				}
+				break;
+			case "toggle-vs":
+				el = Self.els.el.find(`div[data-click="${event.type}"]`);
+				value = event.arg === undefined ? el.data("value") === "on" : event.arg;
+				if (value) {
+					el.removeAttr("data-value");
+					Project.mode = 2;
+				} else {
+					el.data({ value: "on" });
+					Project.mode = 1;
+					if (playState.gameInfo) {
+						if (playState.gameInfo.turn === "p2") {
+							playState.gameInfo.drawGuide = false;
+							playState.gameInfo.guideCanvas.visible = false;
+							playState.gameInfo.ballArray[0].mover.visible = false;
+						} else {
+							playState.gameInfo.drawGuide = true;
+							playState.gameInfo.guideCanvas.visible = true;
+						}
+					}
 				}
 				break;
 			case "set-ai-difficulty":

@@ -48,7 +48,7 @@
 				Project.levelComplete = false;
 				Project.guideOn = APP.settings.values.guide === "on" ? 1 : 0;
 				Project.aiRating = event.level || 2;
-				Project.mode = +event.arg || 1;
+				Project.mode = +event.arg || APP.settings.values === "on" ? 1 : 2;
 				Project.levelName = "1player_" + String(Project.aiRating);
 				Project.lastBreaker = "none";
 				Project.game.paused = false;
