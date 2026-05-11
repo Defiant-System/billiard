@@ -74,7 +74,9 @@ let Test = {
 		        arg: 1,
 		    });
 
-		    // setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 700);
+		    setTimeout(() => APP.game.els.el.find(`.menu[data-click="show-settings"]`).trigger("click"), 2200);
+		    // setTimeout(() => console.log(APP.settings.els.el), 3200);
+		    // setTimeout(() => APP.settings.dispatch({ type: "show-settings" }), 2200);
 			// setTimeout(() => APP.game.dispatch({ type: "game-pause" }), 500);
 
 		    // setTimeout(() => APP.game.dispatch({
@@ -99,7 +101,7 @@ let Test = {
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 14 }), 19500);
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 15 }), 21000);
 			setTimeout(() => APP.game.dispatch({ type: "put-ball-in-tray", num: 0 }), 22500);
-		}, 300);
+		}, 1300);
 		
 		// setTimeout(() => APP.els.content.find(`.button[data-click="open-help"]`).trigger("click"), 500);
 		// setTimeout(() => APP.spinSetter.dispatch({ type: "open-spin-setter" }), 500);
